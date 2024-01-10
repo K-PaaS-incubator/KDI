@@ -1,4 +1,4 @@
-package org.kPaas.kdi;
+package org.kPaas.kdi.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
