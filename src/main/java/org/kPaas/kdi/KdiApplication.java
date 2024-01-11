@@ -2,10 +2,11 @@ package org.kPaas.kdi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages= {"org.kPaas.kdi.controller"})
+@ComponentScan(basePackages= {"org.kPaas.kdi"})
 public class KdiApplication {
 
 	public static void main(String[] args) {
