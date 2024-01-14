@@ -21,7 +21,7 @@ li {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(144, 224, 239, 0.2);
 }
 
 .login {
@@ -36,7 +36,7 @@ li {
 }
 
 h2 {
-  color: tomato;
+  color: #03045E ;
   font-size: 2em;
 }
 .login_sns {
@@ -93,7 +93,7 @@ h2 {
 
 .login_etc {
   padding: 10px;
-  width: 80%;
+  width: 100%;
   font-size: 14px;
   display: flex;
   justify-content: space-between;
@@ -111,8 +111,9 @@ h2 {
   border: 0;
   outline: none;
   border-radius: 40px;
-  background: linear-gradient(to left, rgb(255, 77, 46), rgb(255, 155, 47));
+  background: linear-gradient(to left, rgb(3, 4, 94), rgb(0, 180, 216));
   color: white;
   font-size: 1.2em;
   letter-spacing: 2px;
+  cursor:pointer;
 }

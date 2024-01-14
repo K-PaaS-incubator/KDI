@@ -1,5 +1,6 @@
 package org.kPaas.kdi.controller;
 
+import org.kPaas.kdi.mapper.Mapper_KDI;
 import org.kPaas.kdi.service.impl.UserDetailsServiceImpl;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class KDIController {
 
     private static final String EXCAHGE_NAME = "pps.exchange";
-    
+	private Mapper_KDI mapper;
+	
     @Autowired
     UserDetailsServiceImpl service;
     
