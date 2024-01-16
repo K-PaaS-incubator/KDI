@@ -40,4 +40,14 @@ public class KDIController {
     public String test() {
         return "test" ; 
     }
+    
+    @RequestMapping("/signUp")
+    public String signUp() {
+        return "signUp" ; 
+    }
+    
+    @RequestMapping("/forgotPw")
+    public String forgotPw() {
+        return "forgotPw" ; 
+    }
 }

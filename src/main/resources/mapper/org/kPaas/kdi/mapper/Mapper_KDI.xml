@@ -4,8 +4,8 @@
 
 <mapper namespace="org.kPaas.kdi.mapper.Mapper_KDI">
 
-	<select id="getAllUser_info" resultType="org.kPaas.kdi.dto.User_VO">
-		select * from KDI_USER
+	<select id="getUser_Info" resultType="org.kPaas.kdi.dto.User_VO" parameterType="string">
+		SELECT * FROM KDI_USER WHERE usr_id = #{usr_id}
 	</select>
 
 

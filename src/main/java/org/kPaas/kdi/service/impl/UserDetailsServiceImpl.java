@@ -1,7 +1,7 @@
 package org.kPaas.kdi.service.impl;
 
 import org.kPaas.kdi.dto.User_VO;
-import org.kPaas.kdi.mapper.Mapper_KDI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,28 +13,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-	private Mapper_KDI mapper;
-	User_VO userVo;
+	@Autowired
+	UserInfoService service;
 	
 	@Override
 	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String usrId) throws UsernameNotFoundException {
-		// USER_VO = DB조회(email)
-		// if(USER_VO == null)
-		// UsernameNotFoundException
-		// return toUserDetails(USER_VO)
-		userVo.setUsrId(usrId);
+	public UserDetails loadUserByUsername(String usr_id) throws UsernameNotFoundException {
+		User_VO userVo = service.getUsrInfo(usr_id);
+		
 		if (userVo == null) {
-			System.out.println("여기에러");
-			throw new UsernameNotFoundException(usrId);
+			throw new UsernameNotFoundException(usr_id);
 		}
-		//return toUserDetails(user.getUsrId());
-		return toUserDetails(usrId);
+		return toUserDetails(userVo);
 	}
 
-	private UserDetails toUserDetails(String usrId) {
-		System.out.println("제발 여기");
-		return User.builder().username(usrId).password("$2a$10$99aMDIR613cYJfBfYO.CR.CPF7kQWHwzgoH/vwew/lrCol72y8eNm")
+	private UserDetails toUserDetails(User_VO userVo) {
+		return User.builder().username(userVo.getUsr_id()).password(userVo.getUsr_pw())
 				.authorities(new SimpleGrantedAuthority("ROLE_ADMIN")).build();
 	}
 }

@@ -24,19 +24,19 @@
 			<form action="/loginProc" method="POST" id="loginform">
 				<div class="login_id">
 					<h4>아이디</h4>
-					<input type="text" name="email" id="email" placeholder="ID">
+					<input type="text" name="usr_id" id="email" placeholder="ID">
 				</div>
 				<div class="login_pw">
 					<h4>비밀번호</h4>
-					<input type="password" name="password" id="password"
+					<input type="password" name="usr_pw" id="password"
 						placeholder="Password">
 				</div>
 				<div class="login_etc">
 					<div class="signup">
-						<a href="">회원가입</a>
+						<a href="/signUp">회원가입</a>
 					</div>
 					<div class="forgot_pw">
-						<a href="">비밀번호 찾기</a>
+						<a href="/forgotPw">비밀번호 찾기</a>
 					</div>
 				</div>
 				<div class="submit">

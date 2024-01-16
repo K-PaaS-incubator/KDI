@@ -2,6 +2,7 @@ package org.kPaas.kdi.config;
 
 import org.kPaas.kdi.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,7 +10,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -46,7 +46,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		http.headers().frameOptions().disable().and()
         .csrf().disable()  
 		.authorizeRequests()
-		.antMatchers("/login","/error").permitAll()
+		.requestMatchers(PathRequest.toH2Console()).permitAll()
+		.antMatchers("/login","/error","/signUp","/forgotPw").permitAll()
 		.antMatchers("/test").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
@@ -54,9 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.loginPage("/login")
 		.loginProcessingUrl("/loginProc")
 		.permitAll()
-		.usernameParameter("usrId")
-        .passwordParameter("usrPw")
-		.defaultSuccessUrl("/test")  
+		.usernameParameter("usr_id")
+        .passwordParameter("usr_pw") 
 		.failureHandler(customFailureHandler)
 		.successHandler(customSuccessHandler);
 
