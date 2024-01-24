@@ -1,12 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+	pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>ERROR</title>
+<style>
+.err {
+font-size: 100px;
+color : tomato;
+}
+</style>
 </head>
 <body>
-    TEST
+
+	<div class="err">ERROR !!!</div>
+	
 </body>
 </html>

@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>Insert title here</title>
+<title>Login</title>
 <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
@@ -40,7 +40,7 @@
 					</div>
 				</div>
 				<div class="submit">
-					<input type="submit" value="submit">
+					<input type="submit" value="로그인">
 				</div>
 			</form>
 		</div>

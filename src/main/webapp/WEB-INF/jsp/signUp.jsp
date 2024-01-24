@@ -1,84 +1,88 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+	pageEncoding="EUC-KR"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
-<title>signUp</title>
+<title>KDI SignUp</title>
+<link rel="stylesheet" href="css/signUp.css">
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 </head>
-
 <body>
-<section class="vh-100" style="background-color: #eee;">
-  <div class="container h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-lg-12 col-xl-11">
-        <div class="card text-black" style="border-radius: 25px;">
-          <div class="card-body p-md-5">
-            <div class="row justify-content-center">
-              <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-
-                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-
-                <form class="mx-1 mx-md-4">
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="text" id="form3Example1c" class="form-control" />
-                      <label class="form-label" for="form3Example1c">Your Name</label>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="email" id="form3Example3c" class="form-control" />
-                      <label class="form-label" for="form3Example3c">Your Email</label>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="password" id="form3Example4c" class="form-control" />
-                      <label class="form-label" for="form3Example4c">Password</label>
-                    </div>
-                  </div>
-
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      <input type="password" id="form3Example4cd" class="form-control" />
-                      <label class="form-label" for="form3Example4cd">Repeat your password</label>
-                    </div>
-                  </div>
-
-                  <div class="form-check d-flex justify-content-center mb-5">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
-                    <label class="form-check-label" for="form2Example3">
-                      I agree all statements in <a href="#!">Terms of service</a>
-                    </label>
-                  </div>
-
-                  <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-primary btn-lg">Register</button>
-                  </div>
-
-                </form>
-
-              </div>
-              <div class="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
-
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
-                  class="img-fluid" alt="Sample image">
-
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+	<div class="wrap">
+		<div class="signUp">
+			<h2>회원가입</h2>
+			<div class="signUpEx">
+				<span>
+					<p id="valid" class="alert alert-danger">${exception}</p>
+				</span>
+			</div>
+			<form action="/signUpProc" method="POST" id="signupUser">
+				<div class="insert">
+					<h4>사용하실 아이디를 입력해주세요.</h4>
+					<input type="text" name="usr_id" placeholder="ID" required> 
+					<span class="id_ok">사용 가능한 아이디입니다.</span> 
+					<span class="id_already">중복 아이디입니다!!!!!!XXXXXXXXX</span>
+					<button id="idbtn">ID 중복확인</button>
+				</div>
+				<div class="insert">
+					<h4>사용하실 비밀번호를 입력해주세요.</h4>
+					<input type="password" name="usr_pw" placeholder="PASSWORD"
+						required>
+				</div>
+				<div class="insert">
+					<h4>회원명 입력해주세요.</h4>
+					<input type="text" name="usr_nm" placeholder="NAME" required>
+				</div>
+				<div class="insert">
+					<h4>연락처를 입력해주세요.</h4>
+					<input type="tel" name="usr_phone" placeholder="010-1234-5678"
+						required>
+				</div>
+				<div class="insert">
+					<h4>이메일을 입력해주세요.</h4>
+					<input type="email" name="usr_email" placeholder="you@example.com"
+						required>
+				</div>
+				<div class="signUpEx">
+					<h4>※ 가입완료 후 관리자에게 권한을 요청하세요.</h4>
+				</div>
+				<div class="submit">
+					<input type="submit" value="회원가입">
+				</div>
+			</form>
+		</div>
+	</div>
 </body>
+
+<script>
+
+$('#idbtn').click(function checkId(){
+		var usr_id = $('input[name=usr_id]').val();
+		if(usr_id != ''){
+			$.ajax({
+				url: "/api/noAuth/idCheck", //컨트롤러에서 요청받을 주소
+				type: "POST",
+				data: {
+					"usr_id" : usr_id,
+				},
+				success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
+					if(result == 0) {
+						alert("사용가능한 아이디입니다.");
+					} else{
+						alert("중복된 아이디입니다.");
+						$('input[name=usr_id]').focus();
+					}
+				},
+				error : function(a,b,c) {
+					console.log(a,b,c);
+				}
+			});
+		}else {
+			alert('아이디를 입력하세요');
+			$('input[name=usr_id]').focus();
+		}
+	});
+			
+</script>
 </html>

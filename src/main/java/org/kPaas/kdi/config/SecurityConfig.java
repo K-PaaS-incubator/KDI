@@ -1,5 +1,7 @@
 package org.kPaas.kdi.config;
 
+import javax.servlet.http.HttpSession;
+
 import org.kPaas.kdi.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -47,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         .csrf().disable()  
 		.authorizeRequests()
 		.requestMatchers(PathRequest.toH2Console()).permitAll()
-		.antMatchers("/login","/error","/signUp","/forgotPw").permitAll()
+		.antMatchers("/login","/error","/signUp*","/forgotPw","/api/noAuth/*").permitAll()
 		.antMatchers("/test").hasAnyRole("ADMIN")
 		.anyRequest().authenticated()
 		.and()
@@ -58,7 +60,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.usernameParameter("usr_id")
         .passwordParameter("usr_pw") 
 		.failureHandler(customFailureHandler)
-		.successHandler(customSuccessHandler);
+		.successHandler(customSuccessHandler)
+        .and()
+        .logout()
+        .logoutUrl("/logout")   // 로그아웃 처리 URL (= form action url)
+        //.logoutSuccessUrl("/login") // 로그아웃 성공 후 targetUrl, 
+        // logoutSuccessHandler 가 있다면 효과 없으므로 주석처리.
+        .addLogoutHandler((request, response, authentication) -> { 
+            // 사실 굳이 내가 세션 무효화하지 않아도 됨. 
+            // LogoutFilter가 내부적으로 해줌.
+            HttpSession session = request.getSession();
+            if (session != null) {
+                session.invalidate();
+            }
+        })  // 로그아웃 핸들러 추가
+        .logoutSuccessHandler((request, response, authentication) -> {
+            response.sendRedirect("/login");
+        });
 
 	}
 	
