@@ -9,7 +9,7 @@
 <meta charset="UTF-8">
 <title>KDI</title>
 
-<link rel="stylesheet" href="${cssUrl}/main.css">
+<link rel="stylesheet" href="${cssUrl}/default/basic.css">
 </head>
 <body>
 	<!-- Page Header -->
