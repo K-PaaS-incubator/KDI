@@ -1,29 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/dsCss.css">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <div class="contents">
 
-		<div class="menuBox">
-			<div class="menuBar" onclick="location.href='/dsList'">╣╔юлем╪р╫╨</div>
-			<div class="menuBar" onclick="location.href='/linkList'" >©╛╟Х</div>
-			<div class="menuBar" onclick="location.href='/monitorList'">╦П╢оем╦╣</div>
-			<div class="menuBar" onclick="location.href='/userInfo'">╩Г©Кюз╟Э╦╝</div>	<!-- ╟Ха╓а╓╨╦ ╪Жа╓ -->
-			<div class="menuBar" onclick="location.href='/main'">What's KDI</div>
-		</div>
+	<div class="menuBox">
+		<div class="menuBar" onclick="location.href='/dsList'">К█╟Л²╢М└╟Л├▄Л┼╓</div>
+		<div class="menuBar" onclick="location.href='/link'">Л≈╟ЙЁ└</div>
+		<div class="menuBar" onclick="location.href='/monitorList'">К╙╗К▀┬М└╟К╖│</div>
+		<div class="menuBar" onclick="location.href='/userInfo'">Л┌╛Л ╘Л·░Й╢─К╕╛</div>
+		<!-- ЙЁ└Л═∙Л═∙КЁ╢ Л┬≤Л═∙ -->
+		<div class="menuBar" onclick="location.href='/main'">What's KDI</div>
+	</div>
 
-		<div class="sideMenu">
-			<div onclick="location.href='/dsList'">╣╔юлем╪р╫╨ а╤х╦</div>
-			<div>╣╔юлем╪р╫╨ ╣Н╥о</div>
-			<div>╣╔юлем╪р╫╨ ╨╞╟Ф</div>
-		</div>
-		
-		<div class="mainContent">
-		<div id="pageTitle">╣╔юлем╪р╫╨ ╟Э╦╝</div>
-		<h2>╣╔юлем╪р╫╨ ╪Ёа╓гьаж╪╪©Д</h2>
-		</div>
-	
+	<div class="sideMenu">
+		<div onclick="location.href='/dsList'">К█╟Л²╢М└╟Л├▄Л┼╓ Л║╟М ▄</div>
+		<div>К█╟Л²╢М└╟Л├▄Л┼╓ К⌠╠К║²</div>
+		<div>К█╟Л²╢М└╟Л├▄Л┼╓ КЁ─Й╡╫</div>
+	</div>
+
+	<div class="mainContent">
+		<div id="pageTitle">К█╟Л²╢М└╟Л├▄Л┼╓ Й╢─К╕╛</div>
+		<h2>К█╟Л²╢М└╟Л├▄Л┼╓ Л└╓Л═∙М∙╢Лё╪Л└╦Л ■</h2>
+	</div>
+
 </div>
 
- 

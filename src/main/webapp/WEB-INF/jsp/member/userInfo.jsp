@@ -1,45 +1,46 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/userInfo.css">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <div class="contents">
 
-		<div class="menuBox">
-			<div class="menuBar" onclick="location.href='/dsList'">µ¥ÀÌÅÍ¼Ò½º</div>
-			<div class="menuBar" onclick="location.href='/linkList'" >¿¬°è</div>
-			<div class="menuBar" onclick="location.href='/monitorList'">¸ð´ÏÅÍ¸µ</div>
-			<div class="menuBar" onclick="location.href='/userInfo'">»ç¿ëÀÚ°ü¸®</div>	<!-- °èÁ¤Á¤º¸ ¼öÁ¤ -->
-			<div class="menuBar" onclick="location.href='/main'">What's KDI</div>
-		</div>
+	<div class="menuBox">
+		<div class="menuBar" onclick="location.href='/dsList'">ë°ì´í„°ì†ŒìŠ¤</div>
+		<div class="menuBar" onclick="location.href='/link'">ì—°ê³„</div>
+		<div class="menuBar" onclick="location.href='/monitorList'">ëª¨ë‹ˆí„°ë§</div>
+		<div class="menuBar" onclick="location.href='/userInfo'">ì‚¬ìš©ìžê´€ë¦¬</div>
+		<!-- ê³„ì •ì •ë³´ ìˆ˜ì • -->
+		<div class="menuBar" onclick="location.href='/main'">What's KDI</div>
+	</div>
 
-		<div class="sideMenu">
-			<div>»ç¿ëÀÚ Á¤º¸ Á¶È¸</div>
-			<div>»ç¿ëÀÚ Á¤º¸ ¼öÁ¤</div>
-		</div>
-		
-		<div class="mainContent">
-			<div id="pageTitle">»ç¿ëÀÚ °èÁ¤ Á¤º¸</div>
-			<div class="usrInfoBox">
-				<div class="usrInfo">
-					<h4>¾ÆÀÌµð</h4><span>${userInfo.usr_id}</span>
-				</div>
-				<div class="usrInfo">
-					<h4>È¸¿ø¸í</h4>
-					<input type="text" name="usr_nm" placeholder="${userInfo.usr_nm}">
-				</div>
-				<div class="usrInfo">
-					<h4>¿¬¶ôÃ³</h4>
-					<input type="tel" name="usr_phone" placeholder="${userInfo.usr_phone}">
-				</div>
-				<div class="usrInfo">
-					<h4>ÀÌ¸ÞÀÏ</h4>
-					<input type="email" name="usr_email" placeholder="${userInfo.usr_email}">
-				</div>
+	<div class="sideMenu">
+		<div>ì‚¬ìš©ìž ì •ë³´ ì¡°íšŒ</div>
+		<div>ì‚¬ìš©ìž ì •ë³´ ìˆ˜ì •</div>
+	</div>
+
+	<div class="mainContent">
+		<div id="pageTitle">ì‚¬ìš©ìž ê³„ì • ì •ë³´</div>
+		<div class="usrInfoBox">
+			<div class="usrInfo">
+				<h4>ì•„ì´ë””</h4>
+				<span>${userInfo.usr_id}</span>
 			</div>
-			<button id="saveBtn">ÀúÀå</button>
+			<div class="usrInfo">
+				<h4>íšŒì›ëª…</h4>
+				<input type="text" name="usr_nm" placeholder="${userInfo.usr_nm}">
+			</div>
+			<div class="usrInfo">
+				<h4>ì—°ë½ì²˜</h4>
+				<input type="tel" name="usr_phone"
+					placeholder="${userInfo.usr_phone}">
+			</div>
+			<div class="usrInfo">
+				<h4>ì´ë©”ì¼</h4>
+				<input type="email" name="usr_email"
+					placeholder="${userInfo.usr_email}">
+			</div>
 		</div>
-	
+		<button id="saveBtn">ì €ìž¥</button>
+	</div>
+
 </div>
 
- 

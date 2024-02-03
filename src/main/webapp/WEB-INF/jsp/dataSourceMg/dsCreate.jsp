@@ -1,28 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="css/dsCss.css">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <div class="contents">
 
-		<div class="menuBox">
-			<div class="menuBar">╣╔юлем╪р╫╨</div>
-			<div class="menuBar">©╛╟Х</div>
-			<div class="menuBar">╦П╢оем╦╣</div>
-			<div class="menuBar">╩Г©Кюз╟Э╦╝</div>	<!-- ╟Ха╓а╓╨╦ ╪Жа╓ -->
-			<div class="menuBar">What's KDI</div>
-		</div>
+	<div class="menuBox">
+		<div class="menuBar">К█╟Л²╢М└╟Л├▄Л┼╓</div>
+		<div class="menuBar">Л≈╟ЙЁ└</div>
+		<div class="menuBar">К╙╗К▀┬М└╟К╖│</div>
+		<div class="menuBar">Л┌╛Л ╘Л·░Й╢─К╕╛</div>
+		<!-- ЙЁ└Л═∙Л═∙КЁ╢ Л┬≤Л═∙ -->
+		<div class="menuBar">What's KDI</div>
+	</div>
 
-		<div class="sideMenu">
-			<div onclick="location.href='/dsMain'">╣╔юлем╪р╫╨ а╤х╦</div>
-			<div>╣╔юлем╪р╫╨ ╣Н╥о</div>
-			<div>╣╔юлем╪р╫╨ ╨╞╟Ф</div>
-		</div>
-		
-		<div class="mainCont">
-		╣╔юлем╪р╫╨ ╪Ёа╓гьаж╪╪©Д
-		</div>
-	
+	<div class="sideMenu">
+		<div onclick="location.href='/dsMain'">К█╟Л²╢М└╟Л├▄Л┼╓ Л║╟М ▄</div>
+		<div>К█╟Л²╢М└╟Л├▄Л┼╓ К⌠╠К║²</div>
+		<div>К█╟Л²╢М└╟Л├▄Л┼╓ КЁ─Й╡╫</div>
+	</div>
+
+	<div class="mainCont">К█╟Л²╢М└╟Л├▄Л┼╓ Л└╓Л═∙М∙╢Лё╪Л└╦Л ■</div>
+
 </div>
 
- 

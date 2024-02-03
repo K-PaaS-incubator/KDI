@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:url var="cssUrl" value="/css" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +27,8 @@
 	color: #CAF0C8;
 }
 </style>
+
+<link rel="stylesheet" href="${cssUrl}/main.css">
 </head>
 <body>
 	<!-- Page Header -->

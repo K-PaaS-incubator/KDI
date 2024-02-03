@@ -1,17 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:url var="homeUrl" value="/"/>
+<c:url var="cssUrl" value="/css"/>
+<link rel="stylesheet" href="${cssUrl}/main.css">
 
-<body id="index" onload="redirectPage();">
-ÆäÀÌÁö ÀüÈ¯ Áß ÀÔ´Ï´Ù.
-</body>
+<div class="contents">
 
-<script>
-	function redirectPage() {
-<%-- ÆË¾÷ Çã¿ëµÇÀÖ°Å³ª ÆË¾÷±â´ÉÀ» »ç¿ëÇÏÁö ¾Ê¾Æ¾ß Á¤»óÀûÀ¸·Î ÆäÀÌÁö°¡ ³ëÃâµÈ´Ù.--%>
-		window.open('main', '_self').close();
-	}
-	//"trans_list.do"
-</script>
+	<div class="menuBox">
+		<div class="menuBar" onclick="location.href='${homeUrl}dsList'">ë°ì´í„°ì†ŒìŠ¤</div>
+		<div class="menuBar" onclick="location.href='${homeUrl}link'">ì—°ê³„</div>
+		<div class="menuBar" onclick="location.href='${homeUrl}monitorList'">ëª¨ë‹ˆí„°ë§</div>
+		<div class="menuBar" onclick="location.href='${homeUrl}userInfo'">ì‚¬ìš©ìžê´€ë¦¬</div>
+		<!-- ê³„ì •ì •ë³´ ìˆ˜ì • -->
+		<div class="menuBar" onclick="location.href='${homeUrl}'">What's KDI</div>
+	</div>
 
-</html>
+	<div style="height: 300px;">
+		<div id="pageTitle">TO DO: KDI MAIN ë° ì²«í™”ë©´ ë‚´ìš© ì¶”ê°€</div>
+		<h2>ì‚¬ìš©í•  ë©”ë‰´ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”.</h2>
+	</div>
+
+</div>

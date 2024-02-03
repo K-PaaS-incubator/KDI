@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-	pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Login</title>
 <link rel="stylesheet" href="css/login.css">
 </head>
@@ -18,24 +18,24 @@
 			</div>
 			<form action="/loginProc" method="POST" id="loginform">
 				<div class="login_id">
-					<h4>���̵�</h4>
+					<h4>아이디</h4>
 					<input type="text" name="usr_id" id="email" placeholder="ID">
 				</div>
 				<div class="login_pw">
-					<h4>��й�ȣ</h4>
+					<h4>비밀번호</h4>
 					<input type="password" name="usr_pw" id="password"
 						placeholder="Password">
 				</div>
 				<div class="login_etc">
 					<div class="signup">
-						<a href="/signUp">ȸ������</a>
+						<a href="/signUp">회원가입</a>
 					</div>
 					<div class="forgot_pw">
-						<a href="/forgotPw">��й�ȣ ã��</a>
+						<a href="/forgotPw">비밀번호 찾기</a>
 					</div>
 				</div>
 				<div class="submit">
-					<input type="submit" value="�α���">
+					<input type="submit" value="로그인">
 				</div>
 			</form>
 		</div>

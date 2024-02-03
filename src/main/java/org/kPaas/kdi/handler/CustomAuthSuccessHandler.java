@@ -17,28 +17,28 @@ import org.springframework.stereotype.Component;
 public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
 
 	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request,
-			HttpServletResponse response, Authentication authentication)
-					throws IOException, ServletException {
-		
-				String uri = "/";
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
+			Authentication authentication) throws IOException, ServletException {
 
-				RequestCache requestCache = new HttpSessionRequestCache();
-				SavedRequest savedRequest = requestCache.getRequest(request, response);
-				
-				String prevPage = (String) request.getSession().getAttribute("prevPage");
-				
-				if (prevPage != null) {
-					request.getSession().removeAttribute("prevPage");
-				}
+		String uri = "/";
 
-				if (savedRequest != null) {
-					uri = savedRequest.getRedirectUrl();
+		RequestCache requestCache = new HttpSessionRequestCache();
+		SavedRequest savedRequest = requestCache.getRequest(request, response);
 
-				} else if (prevPage != null && !prevPage.equals("")) {
-					uri = prevPage;
-				}
+		String prevPage = (String) request.getSession().getAttribute("prevPage");
 
-				response.sendRedirect(uri);
+		if (prevPage != null) {
+			request.getSession().removeAttribute("prevPage");
+		}
+
+		if (savedRequest != null) {
+			uri = savedRequest.getRedirectUrl();
+
+		} else if (prevPage != null && !prevPage.equals("")) {
+			uri = prevPage;
+		}
+
+		// 로그인 성공시 페이지
+		response.sendRedirect(uri);
 	}
 }

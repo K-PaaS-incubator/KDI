@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <div class="contents">
 
 	<div class="menuBox">
@@ -19,7 +20,7 @@
 	</div>
 
 	<div class="mainContent">
-		<div id="pageTitle">연계 서비스 관리</div>
+		<div id="pageTitle">TEST Create</div>
 	</div>
 
 </div>
