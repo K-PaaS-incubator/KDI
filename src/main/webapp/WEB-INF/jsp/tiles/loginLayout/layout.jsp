@@ -4,23 +4,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="cssUrl" value="/css" />
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>KDI</title>
 
 <style>
-.header {
+header {
 	background: #0077B6;
 	height: 100px;
 }
 
-.contents {
+section {
 	height: 100%;
 	background: rgba(144, 224, 239, 0.2);
 }
 
-.footer {
+footer {
 	background: #03045E;
 	height: 100px;
 	text-align: center;
@@ -28,14 +28,13 @@
 }
 </style>
 
-<link rel="stylesheet" href="${cssUrl}/main.css">
 </head>
 <body>
 	<!-- Page Header -->
 	<tiles:insertAttribute name="header" />
 
 	<!-- Page Contents -->
-	<tiles:insertAttribute name="body" />
+	<tiles:insertAttribute name="section" />
 
 	<!-- Page Footer -->
 	<tiles:insertAttribute name="footer" />

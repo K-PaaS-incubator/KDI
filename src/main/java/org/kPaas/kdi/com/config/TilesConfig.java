@@ -15,7 +15,7 @@ public class TilesConfig {
 	TilesConfigurer tilesConfigurer() {
 		final TilesConfigurer configurer = new TilesConfigurer();
 		// 해당 경로에 tiles.xml 파일을 넣음
-		configurer.setDefinitions(new String[] { "classpath:tiles/tiles.xml" });
+		configurer.setDefinitions(new String[] { "classpath:tiles/*.xml" });
 		configurer.setCheckRefresh(true);
 		// ViewPreparer에서 Autowired가 가능하게 하는 설정
 		configurer.setPreparerFactoryClass(SimpleSpringPreparerFactory.class);
