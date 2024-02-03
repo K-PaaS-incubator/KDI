@@ -9,31 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class KDIController {
+public class LinkController {
 
-	private static final String EXCAHGE_NAME = "pps.exchange";
-	
-	@Autowired
-	RabbitTemplate rabbitTemplate;
-	
 	@Autowired
 	UserInfoService service;
 
-	@PostMapping("pps/queue")
-	public @ResponseBody Object ppsPublish(String message) {
-		rabbitTemplate.convertAndSend(EXCAHGE_NAME, "pps.routing.#", message);
-		return message;
+	@RequestMapping("/linkList")
+	public String linkList() {
+		return "/linkService/linkList";
 	}
 
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
 	
-	@RequestMapping("/main")
-	public String test() {
-		return "main";
-	}
 	
+
 	
 }

@@ -38,18 +38,6 @@ h2 {
 	font-size: 2em;
 }
 
-.input-form {
-	max-width: 680px;
-	padding: 32px;
-	background: #fff;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
-	-webkit-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15);
-	box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.15)
-}
-
 input {
 	width: 100%;
 	height: 50px;
@@ -72,11 +60,15 @@ button {
 
 .insert {
 	margin-top: 20px;
-	width: 80%;
+}
+
+.insert h4 {
+	padding-left: 20px;
 }
 
 .submit {
-	width: 80%;
+	padding: 20px;
+	display: flex;
 }
 
 .submit input {
@@ -94,10 +86,10 @@ button {
 
 .id_ok {
 	color: #008000;
-	display:none;
+	display: none;
 }
 
 .id_already {
 	color: tomato;
-	display:none;
+	display: none;
 }

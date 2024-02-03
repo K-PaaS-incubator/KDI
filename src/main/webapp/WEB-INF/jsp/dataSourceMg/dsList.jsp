@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="EUC-KR"%>
 <link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/dsCss.css">
 
 <div class="contents">
 
@@ -12,11 +13,17 @@
 			<div class="menuBar" onclick="location.href='/main'">What's KDI</div>
 		</div>
 
-		<div style="height:300px;">
-		<div id="pageTitle">TO DO: KDI MAIN 및 첫화면 내용 추가</div>
-		<h2>사용할 메뉴를 선택해주세요.</h2>		
+		<div class="sideMenu">
+			<div onclick="location.href='/dsList'">데이터소스 조회</div>
+			<div>데이터소스 등록</div>
+			<div>데이터소스 변경</div>
 		</div>
-
+		
+		<div class="mainContent">
+		<div id="pageTitle">데이터소스 관리</div>
+		<h2>데이터소스 설정해주세요</h2>
+		</div>
+	
 </div>
 
  

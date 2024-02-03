@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.usrInfoBox {
+	margin:auto;
+}
+.usrInfo h4{
+	margin:30px 0 10px 0;
+	/*border:1px solid blue;*/
+}
+.usrInfo input,span {
+	font-size: 15px;
+}

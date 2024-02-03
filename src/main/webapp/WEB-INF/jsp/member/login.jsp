@@ -12,11 +12,6 @@
 		<div class="login">
 			<h2>KDI Log-in</h2>
 			<div class="login_sns">
-				<!-- 
-            <li><a href=""><i class="fab fa-instagram"></i></a></li>
-            <li><a href=""><i class="fab fa-facebook-f"></i></a></li>
-            <li><a href=""><i class="fab fa-twitter"></i></a></li>
-             -->
 				<span>
 					<p id="valid" class="alert alert-danger">${exception}</p>
 				</span>
