@@ -1,4 +1,4 @@
-package org.kPaas.kdi.controller;
+package org.kPaas.kdi.main.link.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

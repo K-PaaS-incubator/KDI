@@ -1,4 +1,4 @@
-package org.kPaas.kdi.handler;
+package org.kPaas.kdi.com.handler;
 
 import java.io.IOException;
 import java.net.URLEncoder;
