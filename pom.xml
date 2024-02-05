@@ -92,6 +92,24 @@
 	</dependencies>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.bk</exclude>
+					<exclude>**/*.bak</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/mapper</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.bk</exclude>
+					<exclude>**/*.bak</exclude>
+				</excludes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
