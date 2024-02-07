@@ -3,24 +3,18 @@
        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	<definition name="defaultLayout"
-		template="/WEB-INF/jsp/tiles/defaultLayout/layout.jsp">
-		<put-attribute name="header"
-			value="/WEB-INF/jsp/tiles/defaultLayout/header.jsp" />
+	<definition name="defaultLayout" template="/WEB-INF/jsp/tiles/defaultLayout/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/jsp/tiles/defaultLayout/header.jsp" />
 		<put-attribute name="section" value="" />
-		<put-attribute name="footer"
-			value="/WEB-INF/jsp/tiles/defaultLayout/footer.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/tiles/defaultLayout/footer.jsp" />
 	</definition>
 	<definition name="defaultLayout/*" extends="defaultLayout">
 		<put-attribute name="section" value="/WEB-INF/jsp/{1}.jsp" />
 	</definition>
 	<definition name="defaultLayout/*/*" extends="defaultLayout">
-		<put-attribute name="section"
-			value="/WEB-INF/jsp/{1}/{2}.jsp" />
+		<put-attribute name="section" value="/WEB-INF/jsp/{1}/{2}.jsp" />
 	</definition>
-	<definition name="defaultLayout/*/*/*"
-		extends="defaultLayout">
-		<put-attribute name="section"
-			value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+	<definition name="defaultLayout/*/*/*" extends="defaultLayout">
+		<put-attribute name="section" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
 	</definition>
 </tiles-definitions>

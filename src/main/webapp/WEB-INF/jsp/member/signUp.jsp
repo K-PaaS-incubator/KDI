@@ -15,8 +15,6 @@
 			<div class="insert">
 				<h4>사용하실 아이디를 입력해주세요.</h4>
 				<input type="text" name="usr_id" placeholder="ID" required>
-				<span class="id_ok">사용 가능한 아이디입니다.</span> <span class="id_already">중복
-					아이디입니다!! 다른 아이디를 시도해주세요.</span>
 				<button id="idbtn">ID 중복확인</button>
 			</div>
 			<div class="insert">

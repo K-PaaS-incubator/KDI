@@ -121,3 +121,7 @@ h2 {
 	letter-spacing: 2px;
 	cursor: pointer;
 }
+
+.submit input:hover {
+	background: linear-gradient(to left,rgb(0, 180, 216), rgb(3, 4, 94));
+}

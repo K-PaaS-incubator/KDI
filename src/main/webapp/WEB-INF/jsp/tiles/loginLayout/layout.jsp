@@ -3,12 +3,13 @@
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="cssUrl" value="/css" />
+<c:url var="jsUrl" value="/js" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <title>KDI</title>
-
+<script src="${jsUrl}/jquery/jquery-3.7.1.min.js"></script>
 <style>
 header {
 	background: #0077B6;

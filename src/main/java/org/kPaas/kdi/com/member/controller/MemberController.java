@@ -35,14 +35,15 @@ public class MemberController extends AbstractController {
 			@RequestParam(value = "exception", required = false) String exception, Model model) {
 		model.addAttribute("error", error);
 		model.addAttribute("exception", exception);
+		
 		return layout("login");
 	}
-
+	
 	@GetMapping("/signUp")
 	public String signUp() {
 		return layout("signUp");
 	}
-
+	
 	// 아이디 중복체크
 	@GetMapping(noAuth + "idCheck")
 	public @ResponseBody int idCheck(String usr_id) {
@@ -69,6 +70,7 @@ public class MemberController extends AbstractController {
 		return layout("forgotPw");
 	}
 
+	//사용자 관리메뉴에서 로그인한 회원정보 조회
 	@GetMapping("/userInfo")
 	public String userInfo(Principal principal, Model model) {
 		model.addAttribute("userInfo", service.getUsrInfo(principal.getName()));
