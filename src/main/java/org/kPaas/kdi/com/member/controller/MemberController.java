@@ -6,6 +6,7 @@ import org.kPaas.kdi.com.abs.AbstractController;
 import org.kPaas.kdi.com.member.dto.MemberVo;
 import org.kPaas.kdi.com.member.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,29 +42,35 @@ public class MemberController extends AbstractController {
 	
 	@GetMapping("/signUp")
 	public String signUp() {
+		
 		return layout("signUp");
 	}
 	
 	// 아이디 중복체크
-	@GetMapping(noAuth + "idCheck")
+	@PostMapping(noAuth + "idCheck")
 	public @ResponseBody int idCheck(String usr_id) {
 		int result = service.getSameIdCheck(usr_id);
 		return result;
 
 	}
-
 	@PostMapping("/signUpProc")
-	public String signupUser(MemberVo user_vo) {
+	//responseEntity는 rest api짤 때 리턴타입이랑 구문 출력이 가능
+	/*  ok는 http 200(성공메시지)을 전달하고
+		badRequest()는 400에러를 전달하고 body를 이용해서 
+		왜 실패한건지 전달하는 구조 */
+	public ResponseEntity<String> signupUser(MemberVo user_vo) {
 		int idCnt = 0;
 		idCnt = service.getSameIdCheck(user_vo.getUsr_id());
 		if (idCnt > 0) {
-			return layout("signUp");
+			//return layout("signUp");
+			return ResponseEntity.badRequest().body("중복아이디입니다.");
 		} else {
 			user_vo.setUsr_pw(passwordEncoder.encode(user_vo.getUsr_pw()));
 			service.signupUser(user_vo);
-			return layout("login");
+			//return layout("login");
+			return ResponseEntity.ok("회원가입 완료");
 		}
-	}
+	}	
 
 	@GetMapping("/forgotPw")
 	public String forgotPw() {
