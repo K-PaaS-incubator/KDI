@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="cssUrl" value="/css" />
 <link rel="stylesheet" href="${cssUrl}/signUp.css">
+
 <section class="wrap">
 	<div class="signUp">
 		<h2>회원가입</h2>
@@ -11,7 +12,7 @@
 				<span id="valid" class="alert alert-danger">${exception}</span>
 			</p>
 		</div>
-		<form action="/signUpProc" method="POST" id="signupUser" onsubmit="return false;">
+		<form action="/signUpProc" method="POST" id="signupUser" >
 		<!-- onsubmit="return false;"옵션은 해당 form태그안에 input type='text'가 1개일 경우 엔터키 입력시 자동으로 form태그의 action에 명시된 url을 통해서 submit이 호출되는것을 막아줌 -->
 			<div class="insert">
 				<h4>사용하실 아이디를 입력해주세요.</h4>
@@ -40,7 +41,7 @@
 				<h4>※ 가입완료 후 관리자에게 권한을 요청하세요.</h4>
 			</div>
 			<div class="submit">
-				<input type="submit" id="signupBtn" value="회원가입">
+				<input type="button" id="signupBtn" value="회원가입">
 			</div>
 		</form>
 	</div>
@@ -60,7 +61,9 @@
 			alert("ID를 입력해주세요.");
 			return false;
 		}
-		if(!RegExp.)
+		/* if(!RegExp){
+			
+		} */
 	}
 		$('#idbtn').click(function checkId() {
 			var usr_id = $('input[name=usr_id]').val();
@@ -91,7 +94,10 @@
 		
 		
 		$('#signupBtn').click(function signupCheck() {
-			var formData = $('form').serialize();
+			$("form").validate(); 
+
+			$('form').submit();
+			/*var formData = $('form').serialize();
 			$.ajax({
 				url : "/signUpProc",
 				type : "POST",
@@ -102,7 +108,7 @@
 				error : function(error) {
 					console.log("error :",error);
 				}
-			});
+			});*/
 		});
 	</script>
 </section>
