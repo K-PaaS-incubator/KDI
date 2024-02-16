@@ -11,7 +11,7 @@ public class DBCheckServiceImpl implements DBCheckService {
 	private DBCheckMapper mapper;
 
 	/**
-	 * 사용자테이블(KDI_USER) 존재유무 확인하는 기능
+	 * 테이블 존재유무 확인하는 기능
 	 */
 	@Override
 	public boolean isExists(final String tableName) {

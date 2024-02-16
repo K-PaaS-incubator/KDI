@@ -1,5 +1,9 @@
 package org.kPaas.kdi.main.datasource.service.impl;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
@@ -33,6 +37,14 @@ public class DatasourceServiceImpl implements DatasourceService {
 		mapper.insertDS(datasource_vo);
 	}
 	
-
-	
+	public boolean testConnection(DatasourceVo datasource_vo) {
+		String ds_url = datasource_vo.getDs_url();
+		String ds_usr_nm = datasource_vo.getDs_usr_nm();
+		String ds_usr_pw = datasource_vo.getDs_usr_pw();
+		try(Connection conn = DriverManager.getConnection(ds_url,ds_usr_nm,ds_usr_pw)) {
+			return true;
+		}catch(SQLException e) {
+			return false;
+		}
+	}
 }

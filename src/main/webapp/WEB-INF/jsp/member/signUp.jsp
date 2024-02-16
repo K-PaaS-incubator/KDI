@@ -94,7 +94,7 @@
 		
 		
 		$('#signupBtn').click(function signupCheck() {
-			$("form").validate(); 
+			$('form').validate(); 
 
 			$('form').submit();
 			/*var formData = $('form').serialize();

@@ -10,8 +10,7 @@ public class DatasourceVo {
 	public String ds_nm; //데이터소스명
 	public String ds_type; //DB타입
 	public String ds_driver; //드라이브
-	public String ds_addr; //DB URL주소
-	public String ds_port; //DB 포트
+	public String ds_url; //DB URL주소
 	public String ds_usr_nm; //DB유저명
 	public String ds_usr_pw; //DB패스워드
 	public String reg_id; //등록사용자용ID

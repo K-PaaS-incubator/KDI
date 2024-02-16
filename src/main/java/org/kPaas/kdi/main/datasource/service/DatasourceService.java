@@ -6,4 +6,6 @@ public interface DatasourceService {
 
 	public void insertDS(DatasourceVo datasource_vo) ;
 	
+	public boolean testConnection(DatasourceVo datasource_vo) ;
+	
 }

@@ -4,9 +4,9 @@
 
 <mapper namespace="org.kPaas.kdi.main.datasource.mapper.DatasourceMapper">
 
-	<insert id="dsCreate" parameterType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
+	<insert id="insertDS" parameterType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
 		INSERT INTO KDI_DATASOURCE
-		VALUES(#{ds_nm},#{ds_type},#{ds_driver},#{ds_addr},#{ds_port},#{ds_usr_nm},#{ds_usr_pw},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
+		VALUES(#{ds_nm},#{ds_type},#{ds_driver},#{ds_url},#{ds_usr_nm},#{ds_usr_pw},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
 	</insert>
 
 	<insert id="createTable">
@@ -14,8 +14,7 @@
 			`ds_nm`	varchar2(100)	NOT NULL,
 			`ds_type`	varchar2(100)	NULL,
 			`ds_driver`	varchar2(100)	NULL,
-			`ds_addr`	varchar2(100)	NULL,
-			`ds_port`	number	NULL,
+			`ds_url`	varchar2(100)	NULL,
 			`ds_usr_nm`	varchar2(100)	NULL,
 			`ds_usr_pw`	varchar2(100)	NULL,
 			`reg_id`	varchar2(20)	NULL,

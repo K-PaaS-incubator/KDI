@@ -10,6 +10,9 @@
 <meta charset="UTF-8">
 <title>KDI</title>
 <script src="${jsUrl}/jquery/jquery-3.7.1.min.js"></script>
+<script src="${jsUrl}/jquery/additional-methods.min.js"></script>
+<script src="${jsUrl}/jquery/jquery.validate.min.js"></script>
+<script src="${jsUrl}/jquery/messages_ko.min.js"></script>
 <style>
 header {
 	background: #0077B6;

@@ -28,6 +28,7 @@ public class DataSourceController extends AbstractController {
 
 	@PostMapping("/create")
 	public ResponseEntity<String> dsCreate(DatasourceVo datasource_vo) {
+		System.out.println("---------");
 		service.insertDS(datasource_vo);
 		//return layout("dsCreate");
 		return ResponseEntity.ok("데이터소스정보 등록완료");
@@ -36,5 +37,14 @@ public class DataSourceController extends AbstractController {
 	@GetMapping("edit")
 	public String dsEdit() {
 		return layout("dsEdit");
+	}
+	
+	@PostMapping("/testConnection")
+	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) {
+		System.out.println("-----testConnection----");
+		//datasource_vo
+		
+		
+		return ResponseEntity.ok("데이터소스정보 등록완료");
 	}
 }
