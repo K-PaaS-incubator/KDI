@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/ds")
 @Controller
@@ -25,6 +26,7 @@ public class DataSourceController extends AbstractController {
 		return layout("dsList");
 	}
 
+	@ResponseBody
 	@PostMapping("/create")
 	public ResponseEntity<String> dsCreate(DatasourceVo datasource_vo) {
 		return service.insertDS(datasource_vo);
@@ -35,6 +37,7 @@ public class DataSourceController extends AbstractController {
 		return layout("dsEdit");
 	}
 
+	@ResponseBody
 	@PostMapping("/testConnection")
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) {
 		return service.testConnection(datasource_vo);
