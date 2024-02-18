@@ -53,7 +53,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 			mapper.insertDS(datasource_vo);
 			result.put("state", "데이터소스정보 등록 완료");
 			return ResponseEntity.ok(result.toString());
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			result.put("state", "데이터소스정보 등록 실패");
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
