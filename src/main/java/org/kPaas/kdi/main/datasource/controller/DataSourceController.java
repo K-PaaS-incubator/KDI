@@ -1,7 +1,6 @@
 package org.kPaas.kdi.main.datasource.controller;
 
 import org.kPaas.kdi.com.abs.AbstractController;
-import org.kPaas.kdi.com.member.service.UserInfoService;
 import org.kPaas.kdi.main.datasource.dto.DatasourceVo;
 import org.kPaas.kdi.main.datasource.service.DatasourceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,29 +21,22 @@ public class DataSourceController extends AbstractController {
 	DatasourceService service;
 
 	@GetMapping()
-	public String dsList() { 
+	public String dsList() {
 		return layout("dsList");
 	}
 
 	@PostMapping("/create")
 	public ResponseEntity<String> dsCreate(DatasourceVo datasource_vo) {
-		System.out.println("---------");
-		service.insertDS(datasource_vo);
-		//return layout("dsCreate");
-		return ResponseEntity.ok("데이터소스정보 등록완료");
+		return service.insertDS(datasource_vo);
 	}
 
 	@GetMapping("edit")
 	public String dsEdit() {
 		return layout("dsEdit");
 	}
-	
+
 	@PostMapping("/testConnection")
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) {
-		System.out.println("-----testConnection----");
-		//datasource_vo
-		
-		
-		return ResponseEntity.ok("데이터소스정보 등록완료");
+		return service.testConnection(datasource_vo);
 	}
 }
