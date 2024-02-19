@@ -6,6 +6,7 @@ import org.kPaas.kdi.main.datasource.service.DatasourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +22,20 @@ public class DataSourceController extends AbstractController {
 	@Autowired
 	DatasourceService service;
 
-	@GetMapping()
-	public String dsList() {
+	@GetMapping("/dsList")
+	public String dsList(Model model) {
+		model.addAttribute("selectDsList",service.selectDsList());
 		return layout("dsList");
+	}
+	
+	@GetMapping("/dsCreate")
+	public String dsCreate() {
+		return layout("dsCreate");
 	}
 
 	@ResponseBody
-	@PostMapping("/create")
-	public ResponseEntity<String> dsCreate(DatasourceVo datasource_vo) {
+	@PostMapping("/dsCreateProc")
+	public ResponseEntity<String> dsCreateProc(DatasourceVo datasource_vo) {
 		return service.insertDS(datasource_vo);
 	}
 

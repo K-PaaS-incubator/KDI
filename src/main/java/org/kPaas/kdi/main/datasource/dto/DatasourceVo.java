@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 public class DatasourceVo {
 	
+	public int no; //rownum
 	public String ds_nm; //데이터소스명
 	public String ds_type; //DB타입
 	public String ds_driver; //드라이브

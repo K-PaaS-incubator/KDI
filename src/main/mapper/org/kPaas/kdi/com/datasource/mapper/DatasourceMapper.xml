@@ -24,4 +24,8 @@
 			PRIMARY KEY	(`ds_nm`)
 		)
 	</insert>
+	
+	<select id="selectDsList" resultType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
+		SELECT rownum as NO,* FROM KDI_DATASOURCE
+	</select>
 </mapper>

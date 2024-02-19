@@ -3,6 +3,7 @@ package org.kPaas.kdi.main.datasource.service.impl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -68,7 +69,7 @@ public class DatasourceServiceImpl implements DatasourceService {
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 		String ds_url = datasource_vo.getDs_url();
-		if (null != ds_url) {
+		if (null == ds_url) {
 			result.put("state", "테스트 실패");
 			result.put("msg", "DB URL정보가 누락되었습니다.");
 			return ResponseEntity.badRequest().body(result.toString());
@@ -83,5 +84,9 @@ public class DatasourceServiceImpl implements DatasourceService {
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
 		}
+	}
+	
+	public List<DatasourceVo> selectDsList(){
+		return mapper.selectDsList();
 	}
 }

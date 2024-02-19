@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+table{
+	border-collapse: separate;
+	border-spacing:0 0.5em;
+}
+
+td {
+	padding: 0.2em;
+    border-bottom: 1px solid #444444;
+}
+
+td:first-child, td:nth-child(2){
+	text-align:center;
+}
+
+tbody >tr{
+	margin:10rem;
+	cursor:pointer;
+}
+
+tbody >tr:hover{
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+	
