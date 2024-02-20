@@ -12,7 +12,7 @@
 				<span id="valid" class="alert alert-danger">${exception}</span>
 			</p>
 		</div>
-		<form action="/signUpProc" method="POST" id="signupUser" >
+		<form action="/signUpProc" method="POST" id="signupUser">
 		<!-- onsubmit="return false;"옵션은 해당 form태그안에 input type='text'가 1개일 경우 엔터키 입력시 자동으로 form태그의 action에 명시된 url을 통해서 submit이 호출되는것을 막아줌 -->
 			<div class="insert">
 				<h4>사용하실 아이디를 입력해주세요.</h4>
@@ -46,7 +46,7 @@
 		</form>
 	</div>
 	<script>
-	
+	var checkIdFlag = 'false';
 	function validation(){
 		var RegExp = /^[a-zA-Z0-9]{4,12}$/; //id와 pwassword 유효성 검사 정규식       
 		//이메일 유효성검사        
@@ -65,38 +65,33 @@
 			
 		} */
 	}
+	
 		$('#idbtn').click(function checkId() {
 			var usr_id = $('input[name=usr_id]').val();
 			if (usr_id != '') {
-				$.ajax({
-					url : "/api/noAuth/idCheck", //컨트롤러에서 요청받을 주소
-					type : "POST",
-					data : {
-						"usr_id" : usr_id,
-					},
-					success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
-						if (result == 0) {
-							alert("사용가능한 아이디입니다.");
-						} else {
-							alert("중복된 아이디입니다.");
-							$('input[name=usr_id]').focus();
-						}
-					},
-					error : function(a, b, c) {
-						console.log(a, b, c);
-					}
-				});
+				if(fn_check_duplicate_id()){
+					alert("사용가능한 아이디입니다.");
+				}else{
+					alert("중복된 아이디입니다.");
+					$('input[name=usr_id]').focus();
+				}
 			} else {
 				alert('아이디를 입력하세요');
 				$('input[name=usr_id]').focus();
 			}
+			
 		});
 		
 		
 		$('#signupBtn').click(function signupCheck() {
+			
 			$('form').validate(); 
-
-			$('form').submit();
+			if(fn_check_duplicate_id()){
+				$('form').submit();	
+			}else{
+				alert("아이디가 중복되었습니다.");
+			}
+			
 			/*var formData = $('form').serialize();
 			$.ajax({
 				url : "/signUpProc",
@@ -110,5 +105,30 @@
 				}
 			});*/
 		});
+		
+function fn_check_duplicate_id(){
+	var usr_id = $('input[name=usr_id]').val();
+	var checkResult = false;
+	$.ajax({
+		url : "/api/noAuth/idCheck", //컨트롤러에서 요청받을 주소
+		type : "POST",
+		async : false,
+		data : {
+			"usr_id" : usr_id,
+		},
+		success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
+			if (result == 0) {
+				
+				checkResult =  true;
+			} else {
+				checkResult = false;
+			}
+		},
+		error : function(a, b, c) {
+			console.log(a, b, c);
+		}
+	});
+	return checkResult;
+}
 	</script>
 </section>

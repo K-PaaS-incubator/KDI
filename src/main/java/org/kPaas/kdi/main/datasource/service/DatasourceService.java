@@ -12,5 +12,7 @@ public interface DatasourceService {
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) ;
 
 	public List<DatasourceVo> selectDsList();
+
+	public DatasourceVo selectDsInfo(String ds_nm);
 	
 }

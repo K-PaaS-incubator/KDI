@@ -11,7 +11,7 @@
 
 	<div class="mainContent">
 		<div id="pageTitle">데이터소스 관리</div>
-		<table>
+		<table id="dsTbl">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -31,12 +31,17 @@
 			</tbody>
 		</table>
 
-<div><input type="button" id="savebtn" value="등록" onclick="location.href='${homeUrl}dsCreate'"></div>
-    
-    
+	<div><input type="button" id="savebtn" value="등록" onclick="location.href='${homeUrl}dsCreate'"></div>
+        
 	</div>
 </section>
 
 
-
+<script>
+$( document ).ready(function() {
+	$("#dsTbl tr").click(function(){
+		location.href = "${homeUrl}dsEdit?ds_nm="+$(this).find("td:nth-child(2)").text();
+	});
+});
+</script>
 

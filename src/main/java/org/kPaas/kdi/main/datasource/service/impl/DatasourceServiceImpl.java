@@ -89,4 +89,10 @@ public class DatasourceServiceImpl implements DatasourceService {
 	public List<DatasourceVo> selectDsList(){
 		return mapper.selectDsList();
 	}
+
+	@Override
+	public DatasourceVo selectDsInfo(String ds_nm) {
+		// TODO Auto-generated method stub
+		return mapper.selectDsInfo(ds_nm);
+	}
 }

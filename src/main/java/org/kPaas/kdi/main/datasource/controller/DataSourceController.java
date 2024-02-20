@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @RequestMapping("/ds")
@@ -39,8 +40,9 @@ public class DataSourceController extends AbstractController {
 		return service.insertDS(datasource_vo);
 	}
 
-	@GetMapping("edit")
-	public String dsEdit() {
+	@GetMapping("/dsEdit")
+	public String dsEdit(Model model, @RequestParam("ds_nm")String ds_nm) {
+		model.addAttribute("selectDsInfo",service.selectDsInfo(ds_nm));
 		return layout("dsEdit");
 	}
 

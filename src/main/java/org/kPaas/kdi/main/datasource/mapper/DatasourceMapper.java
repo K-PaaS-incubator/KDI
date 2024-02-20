@@ -16,4 +16,6 @@ public interface DatasourceMapper {
 
 	public List<DatasourceVo> selectDsList();
 
+	public DatasourceVo selectDsInfo(String ds_nm);
+
 }

@@ -6,7 +6,7 @@
 
 	<insert id="insertDS" parameterType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
 		INSERT INTO KDI_DATASOURCE
-		VALUES(#{ds_nm},#{ds_type},#{ds_driver},#{ds_url},#{ds_usr_nm},#{ds_usr_pw},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
+		VALUES(#{ds_nm},#{ds_type},#{ds_driver},#{ds_addr},#{ds_port},#{ds_sid},#{ds_url},#{ds_usr_nm},#{ds_usr_pw},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
 	</insert>
 
 	<insert id="createTable">
@@ -14,6 +14,9 @@
 			`ds_nm`	varchar2(100)	NOT NULL,
 			`ds_type`	varchar2(100)	NULL,
 			`ds_driver`	varchar2(100)	NULL,
+			`ds_addr`	varchar2(100)	NULL,
+			`ds_port`	varchar2(100)	NULL,
+			`ds_sid`	varchar2(100)	NULL,
 			`ds_url`	varchar2(100)	NULL,
 			`ds_usr_nm`	varchar2(100)	NULL,
 			`ds_usr_pw`	varchar2(100)	NULL,
@@ -27,5 +30,12 @@
 	
 	<select id="selectDsList" resultType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
 		SELECT rownum as NO,* FROM KDI_DATASOURCE
+	</select>
+	
+	<select id="selectDsInfo" parameterType="String" resultType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
+		SELECT * FROM KDI_DATASOURCE 
+		<where>
+		ds_nm = #{ds_nm}
+		</where>
 	</select>
 </mapper>

@@ -1,10 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:url var="cssUrl" value="/css" />
+<link rel="stylesheet" href="${cssUrl}/ds.css">
 
 <section class="contents">
 
 	<div class="sideMenu">
-		<div onclick="location.href='/ds/dsList'">데이터소스 조회</div>
+		<div onclick="location.href='${homeUrl}dsList'">데이터소스 조회</div>
 	</div>
 
 	<div class="mainContent">
@@ -24,18 +28,19 @@
 		</select>
 		
 		<div>Server Host</div> <!-- IP주소 -->
-		<input type="text" id="dbHost" onkeyup="printName()" placeholder="localhost">
+		<input type="text" id="ds_addr"  name="ds_addr" onkeyup="printName()" placeholder="localhost" required>
 		<div>Port</div> <!-- DB포트 -->
-		<input type="number" id="dbPort" onkeyup="printName()" placeholder="PORT">
+		<input type="number" id="ds_port" name="ds_port" onkeyup="printName()" placeholder="PORT" required>
 		
 		<!-- 주소와 포트 자동완성-키업사용-->
 		<div>URL:</div><span id="ds_url_label"></span>
+		
 		<!-- Database/SID -->
 		<div>Database</div>
-		<input type="text" id="ds_sid" name="ds_sid" onkeyup="printName()"  required>
+		<input type="text" id="ds_sid" name="ds_sid" onkeyup="printName()" required>
 		<!-- DB계정 유저명 -->
 		<div>UserName</div>
-		<input type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()"  required>
+		<input type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()" required>
 		<!-- DB계정 패스워드 -->
 		<div>Password</div>
 		<input type="password" id="ds_usr_pw" name="ds_usr_pw" required>
@@ -64,25 +69,42 @@ const urlMap = {
 	  };
 	  
 function printName()  {
-	  var dbHost = document.getElementById('dbHost').value;
-	  var dbPort = document.getElementById('dbPort').value;
+	  var ds_addr = document.getElementById('ds_addr').value;
+	  var ds_port = document.getElementById('ds_port').value;
 	  var ds_sid = document.getElementById('ds_sid').value;
 	  var ds_type = $("select[name=ds_type]").val();
 
-	  if (dbHost==''){
-		  dbHost = 'localhost';
+	  if (ds_addr==''){
+		  ds_addr = 'localhost';
+		  $("#ds_addr").val('localhost');
 	  }
-	  if(dbPort==''){
-		  dbPort = portMap[ds_type];
+	  if(ds_port==''){
+		  ds_port = portMap[ds_type];
+		  $("#ds_port").val(portMap[ds_type]);
 	  }
-	  document.getElementById("ds_url_label").innerText = urlMap[ds_type]+dbHost+":"+dbPort+":"+ds_sid;
-	  $("#ds_url").val(urlMap[ds_type]+dbHost+":"+dbPort+":"+ds_sid);
+	  document.getElementById("ds_url_label").innerText = urlMap[ds_type]+ds_addr+":"+ds_port+":"+ds_sid;
+	  $("#ds_url").val(urlMap[ds_type]+ds_addr+":"+ds_port+":"+ds_sid);
 	}
 	
 $('#regBtn').click(function databaseCheck() {
 	$('form').validate(); 
-	
-	$('form').submit();
+	$.ajax({
+	    url : "/ds/dsCreateProc",
+		type : "POST",
+		data : $("form").serialize(),
+	    dataType : "JSON",
+	    success : function(result) {
+	        console.log("result:"+result.state);
+	        $('form').submit();
+	        location.href = "${homeUrl}dsList";
+	    },
+	    error : function(result) {
+	        console.log("statusCode:"+result.statusCode);
+	        console.log("responseJSON:"+result.responseJSON.state);
+	        console.log("responseJSON:"+result.responseJSON.msg);
+	        alert("데이터소스 등록 실패");
+		}
+	});	
 });	
 	
 $('#connTestBtn').click(function databaseCheck() {

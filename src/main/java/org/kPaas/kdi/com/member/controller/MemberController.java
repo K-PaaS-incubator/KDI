@@ -58,17 +58,19 @@ public class MemberController extends AbstractController {
 	/*  ok는 http 200(성공메시지)을 전달하고
 		badRequest()는 400에러를 전달하고 body를 이용해서 
 		왜 실패한건지 전달하는 구조 */
-	public ResponseEntity<String> signupUser(MemberVo user_vo) {
+	public String signupUser(MemberVo user_vo) {
 		int idCnt = 0;
 		idCnt = service.getSameIdCheck(user_vo.getUsr_id());
 		if (idCnt > 0) {
 			//return layout("signUp");
-			return ResponseEntity.badRequest().body("중복아이디입니다.");
+			ResponseEntity.badRequest().body("중복아이디입니다.");
+			return "redirect:/signUp";
 		} else {
 			user_vo.setUsr_pw(passwordEncoder.encode(user_vo.getUsr_pw()));
 			service.signupUser(user_vo);
+			ResponseEntity.ok("회원가입 완료");
 			//return layout("login");
-			return ResponseEntity.ok("회원가입 완료");
+			return "redirect:/login";
 		}
 	}	
 
