@@ -38,4 +38,21 @@
 		ds_nm = #{ds_nm}
 		</where>
 	</select>
+	
+	<update id="editDS" parameterType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
+		UPDATE KDI_DATASOURCE
+		SET ds_addr = #{ds_addr}, ds_port = #{ds_port}, ds_sid = #{ds_sid}, ds_usr_nm = #{ds_usr_nm}, ds_usr_pw = #{ds_usr_pw}
+		<where>
+		ds_nm = #{ds_nm}
+		</where>
+	</update>
+	
+	<delete id="deleteDS" parameterType="String">
+		DELETE 
+		FROM KDI_DATASOURCE
+		<where>
+		ds_nm = #{ds_nm}
+		</where>
+	</delete>
+	
 </mapper>

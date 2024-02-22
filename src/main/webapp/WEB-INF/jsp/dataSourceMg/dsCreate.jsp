@@ -13,39 +13,40 @@
 
 	<div class="mainContent">
 		<div id="pageTitle">데이터소스 등록</div>
+		
 		<form action="/ds/dsCreateProc" method="POST" id="dsCreate">
 		<input type="hidden" id="ds_url" name="ds_url">
 		<!-- 데이터소스명 -->
-		<div>데이터소스 제목</div>
+		<div class="divTitle">데이터소스 제목</div>
 		<input type="text" id="ds_nm" name="ds_nm" required>
 		<button>데이터소스 중복 체크</button>
 		
 		<!-- DB타입-->
-		<div>DB Type</div>
+		<div class="divTitle">DB Type</div>
 		<select name="ds_type" onchange="printName()">
 			<option value="oracle">Oracle</option>
 			<option value="mysql">Mysql</option>
 		</select>
 		
-		<div>Server Host</div> <!-- IP주소 -->
+		<div class="divTitle">Server Host</div> <!-- IP주소 -->
 		<input type="text" id="ds_addr"  name="ds_addr" onkeyup="printName()" placeholder="localhost" required>
-		<div>Port</div> <!-- DB포트 -->
+		<div class="divTitle">Port</div> <!-- DB포트 -->
 		<input type="number" id="ds_port" name="ds_port" onkeyup="printName()" placeholder="PORT" required>
 		
 		<!-- 주소와 포트 자동완성-키업사용-->
-		<div>URL:</div><span id="ds_url_label"></span>
-		
+		<div class="divTitle">URL:</div><span id="ds_url_label"></span>
 		<!-- Database/SID -->
-		<div>Database</div>
+		<div class="divTitle">Database</div>
 		<input type="text" id="ds_sid" name="ds_sid" onkeyup="printName()" required>
 		<!-- DB계정 유저명 -->
-		<div>UserName</div>
+		<div class="divTitle">UserName</div>
 		<input type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()" required>
 		<!-- DB계정 패스워드 -->
-		<div>Password</div>
+		<div class="divTitle">Password</div>
 		<input type="password" id="ds_usr_pw" name="ds_usr_pw" required>
 		<div id="test_result"></div>
 		<div id="test_result2"></div>
+
 		
 		<!-- 커넥션 테스트 기능 -->
 		<input type="button" value="연결테스트" id="connTestBtn">
@@ -86,7 +87,7 @@ function printName()  {
 	  $("#ds_url").val(urlMap[ds_type]+ds_addr+":"+ds_port+":"+ds_sid);
 	}
 	
-$('#regBtn').click(function databaseCheck() {
+$('#regBtn').click(function databaseSave() {
 	$('form').validate(); 
 	$.ajax({
 	    url : "/ds/dsCreateProc",

@@ -45,6 +45,12 @@ public class DataSourceController extends AbstractController {
 		model.addAttribute("selectDsInfo",service.selectDsInfo(ds_nm));
 		return layout("dsEdit");
 	}
+	
+	@ResponseBody
+	@PostMapping("/dsEditProc")
+	public ResponseEntity<String> dsEditProc(DatasourceVo datasource_vo) {
+		return service.editDS(datasource_vo);
+	}
 
 	@ResponseBody
 	@PostMapping("/testConnection")

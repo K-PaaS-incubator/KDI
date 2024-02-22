@@ -92,7 +92,37 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	@Override
 	public DatasourceVo selectDsInfo(String ds_nm) {
-		// TODO Auto-generated method stub
 		return mapper.selectDsInfo(ds_nm);
+	}
+
+	@Override
+	public ResponseEntity<String> editDS(DatasourceVo datasource_vo) {
+		
+		JSONObject result = new JSONObject();
+		selectDsInfo(null);
+		if (null == datasource_vo) {
+			result.put("state", "데이터소스정보 수정 실패");
+			result.put("msg", "입력정보 확인불가");
+			return ResponseEntity.badRequest().body(result.toString());
+		}
+		datasource_vo.setMod_id(SecurityContextHolder.getContext().getAuthentication().getName());
+		if (null == datasource_vo.getMod_id() || "".equals(datasource_vo.getMod_id())) {
+			result.put("state", "데이터소스정보 수정 실패");
+			result.put("msg", "수정자 ID 확인 실패");
+			return ResponseEntity.badRequest().body(result.toString());
+		}
+		try {
+			System.out.println("getDs_nm():"+datasource_vo.getDs_nm());
+			System.out.println("getDs_type():"+datasource_vo.getDs_type());
+			System.out.println("getDs_port():"+datasource_vo.getDs_port());
+			
+			mapper.editDS(datasource_vo);
+			result.put("state", "데이터소스정보 수정 완료");
+			return ResponseEntity.ok(result.toString());
+		} catch (Exception e) {
+			result.put("state", "데이터소스정보 수정 실패");
+			result.put("msg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		}
 	}
 }

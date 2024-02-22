@@ -14,5 +14,7 @@ public interface DatasourceService {
 	public List<DatasourceVo> selectDsList();
 
 	public DatasourceVo selectDsInfo(String ds_nm);
+
+	public ResponseEntity<String> editDS(DatasourceVo datasource_vo);
 	
 }
