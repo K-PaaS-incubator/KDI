@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.kPaas.kdi.main.datasource.dto.DatasourceVo;
+import org.springframework.http.ResponseEntity;
 
 @Mapper
 public interface DatasourceMapper {
@@ -19,5 +20,9 @@ public interface DatasourceMapper {
 	public DatasourceVo selectDsInfo(String ds_nm);
 	
 	public void editDS(DatasourceVo datasource_vo);
+
+	public Integer getSameDsCheck(String ds_nm);
+
+	public void deleteDS(String ds_nm);
 
 }

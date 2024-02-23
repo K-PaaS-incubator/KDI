@@ -39,6 +39,13 @@ public class DataSourceController extends AbstractController {
 	public ResponseEntity<String> dsCreateProc(DatasourceVo datasource_vo) {
 		return service.insertDS(datasource_vo);
 	}
+	
+	@PostMapping("/dsCheck")
+	public @ResponseBody int dsCheck(String ds_nm) {
+		int result = service.getSameDsCheck(ds_nm);
+		return result;
+
+	}
 
 	@GetMapping("/dsEdit")
 	public String dsEdit(Model model, @RequestParam("ds_nm")String ds_nm) {
@@ -50,6 +57,12 @@ public class DataSourceController extends AbstractController {
 	@PostMapping("/dsEditProc")
 	public ResponseEntity<String> dsEditProc(DatasourceVo datasource_vo) {
 		return service.editDS(datasource_vo);
+	}
+	
+	@ResponseBody
+	@PostMapping("/dsDelProc")
+	public ResponseEntity<String> dsDelProc(String ds_nm) {
+		return service.delDS(ds_nm);
 	}
 
 	@ResponseBody

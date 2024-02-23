@@ -14,15 +14,15 @@
 		<div id="pageTitle">데이터소스 수정</div>
 		
 		<form action="/ds/dsEditProc" method="POST" id="dsEdit">
-		<input type="hidden" id="ds_url" name="ds_url">
+		<input type="hidden" id="ds_url" name="ds_url"  value="${selectDsInfo.ds_url}" >
 		<!-- 데이터소스명 -->
 		<div class="divTitle">데이터소스 제목</div>
 		<label id="ds_nm">${selectDsInfo.ds_nm}</label>
-		<input type="hidden" id="ds_nm" name="ds_nm">
+		<input type="hidden" id="ds_nm" name="ds_nm"  value="${selectDsInfo.ds_nm}" >
 		<!-- DB타입-->
 		<div class="divTitle">DB Type</div>
 		<label id="ds_type">${selectDsInfo.ds_type}</label>
-		<input type="hidden" id="ds_type" name="ds_type">
+		<input type="hidden" id="ds_type" name="ds_type"  value="${selectDsInfo.ds_type}" >
 		
 		<div class="divTitle">Server Host</div> <!-- IP주소 -->
 		<input type="text" id="ds_addr" name="ds_addr" value="${selectDsInfo.ds_addr}" onkeyup="printName()">
@@ -44,9 +44,9 @@
 		<div id="test_result2"></div>
 		
 		<!-- 커넥션 테스트 기능 -->
-		<input type="button" value="연결테스트" id="connTestBtn">
-		<input type="button" value="접속정보수정" id="modifyBtn">
-		<input type="button" value="접속정보삭제" id="deleteBtn">
+		<input type="button" value="테스트" id="connTestBtn">
+		<input type="button" value="수정" id="modifyBtn">
+		<input type="button" value="삭제" id="deleteBtn">
 		</form>
 	</div>
 	
@@ -119,6 +119,34 @@ $('#connTestBtn').click(function databaseCheck() {
 	        document.getElementById("test_result2").innerText = result.responseJSON.msg;
 		}
 	});
+});
+
+
+$('#deleteBtn').click(function databaseDel() {
+	if(confirm("데이터소스를 삭제하시겠습니까?")){
+		$.ajax({
+		    url : "/ds/dsDelProc",
+			type : "POST",
+			data : $("form").serialize(),
+		    dataType : "JSON",
+		    success : function(result) {
+		        console.log("result:"+result.state);
+		        $('form').submit();
+		        location.href = "${homeUrl}dsList";
+		        alert("정상적으로 삭제되었습니다.");
+		    },
+		    error : function(result) {
+		    	console.log(result);
+		        console.log("statusCode:"+result.statusCode);
+		        console.log("responseJSON:"+result.responseJSON.state);
+		        console.log("responseJSON:"+result.responseJSON.msg);
+		        alert("데이터소스 삭제 실패");
+			}
+		});		
+	}else{
+		alert("삭제 취소");
+	}
+	
 });
 </script>
 

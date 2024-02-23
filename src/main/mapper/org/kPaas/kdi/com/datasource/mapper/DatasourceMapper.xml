@@ -28,6 +28,11 @@
 		)
 	</insert>
 	
+	<select id="getSameDsCheck" resultType="Integer">
+		SELECT count(*) FROM KDI_DATASOURCE
+		<where>ds_nm = #{ds_nm}</where>
+	</select>
+	
 	<select id="selectDsList" resultType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
 		SELECT rownum as NO,* FROM KDI_DATASOURCE
 	</select>
@@ -41,7 +46,7 @@
 	
 	<update id="editDS" parameterType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
 		UPDATE KDI_DATASOURCE
-		SET ds_addr = #{ds_addr}, ds_port = #{ds_port}, ds_sid = #{ds_sid}, ds_usr_nm = #{ds_usr_nm}, ds_usr_pw = #{ds_usr_pw}
+		SET ds_url = #{ds_url}, ds_addr = #{ds_addr}, ds_port = #{ds_port}, ds_sid = #{ds_sid}, ds_usr_nm = #{ds_usr_nm}, ds_usr_pw = #{ds_usr_pw}
 		<where>
 		ds_nm = #{ds_nm}
 		</where>

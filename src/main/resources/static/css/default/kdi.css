@@ -82,7 +82,7 @@ section.contents .sideMenu div:hover {
 section.contents .mainContent {
 	display: flex;
 	flex-direction: column;
-	border: 1px solid red;
+	/*border: 1px solid red;*/
 }
 
 section.contents .mainContent #pageTitle {

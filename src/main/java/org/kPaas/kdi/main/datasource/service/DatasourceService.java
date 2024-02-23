@@ -16,5 +16,9 @@ public interface DatasourceService {
 	public DatasourceVo selectDsInfo(String ds_nm);
 
 	public ResponseEntity<String> editDS(DatasourceVo datasource_vo);
+
+	public Integer getSameDsCheck(String ds_nm);
+
+	public ResponseEntity<String> delDS(String ds_nm);
 	
 }

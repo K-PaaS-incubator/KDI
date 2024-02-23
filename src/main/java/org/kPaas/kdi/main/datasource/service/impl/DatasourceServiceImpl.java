@@ -60,6 +60,11 @@ public class DatasourceServiceImpl implements DatasourceService {
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 	}
+	
+	@Override
+	public Integer getSameDsCheck(String ds_nm) {
+		return mapper.getSameDsCheck(ds_nm);
+	}
 
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) {
 		JSONObject result = new JSONObject();
@@ -97,7 +102,6 @@ public class DatasourceServiceImpl implements DatasourceService {
 
 	@Override
 	public ResponseEntity<String> editDS(DatasourceVo datasource_vo) {
-		
 		JSONObject result = new JSONObject();
 		selectDsInfo(null);
 		if (null == datasource_vo) {
@@ -112,10 +116,6 @@ public class DatasourceServiceImpl implements DatasourceService {
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 		try {
-			System.out.println("getDs_nm():"+datasource_vo.getDs_nm());
-			System.out.println("getDs_type():"+datasource_vo.getDs_type());
-			System.out.println("getDs_port():"+datasource_vo.getDs_port());
-			
 			mapper.editDS(datasource_vo);
 			result.put("state", "데이터소스정보 수정 완료");
 			return ResponseEntity.ok(result.toString());
@@ -125,4 +125,20 @@ public class DatasourceServiceImpl implements DatasourceService {
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 	}
+
+	@Override
+	public ResponseEntity<String> delDS(String ds_nm) {
+		JSONObject result = new JSONObject();
+		try {
+			mapper.deleteDS(ds_nm);
+			result.put("state", "데이터소스정보 삭제 완료!!");
+			return ResponseEntity.ok(result.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+			result.put("state", "데이터소스정보 삭제 실패!!");
+			result.put("msg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		}
+	}
+
 }

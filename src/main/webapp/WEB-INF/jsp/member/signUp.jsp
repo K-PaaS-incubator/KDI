@@ -17,7 +17,6 @@
 			<div class="insert">
 				<h4>사용하실 아이디를 입력해주세요.</h4>
 				<input type="text" name="usr_id" placeholder="ID" required>
-				<button id="idbtn">ID 중복확인</button>
 			</div>
 			<div class="insert">
 				<h4>사용하실 비밀번호를 입력해주세요.</h4>
@@ -46,7 +45,6 @@
 		</form>
 	</div>
 	<script>
-	var checkIdFlag = 'false';
 	function validation(){
 		var RegExp = /^[a-zA-Z0-9]{4,12}$/; //id와 pwassword 유효성 검사 정규식       
 		//이메일 유효성검사        
@@ -56,55 +54,18 @@
 		var usr_pw = document.getElementByName('usr_pw').value;
 		var usr_phone = document.getElementByName('usr_phone').value;
 		var usr_email = document.getElementByName('usr_email').value;
-		
-		if(usr_id==''){
-			alert("ID를 입력해주세요.");
-			return false;
-		}
-		/* if(!RegExp){
-			
-		} */
 	}
-	
-		$('#idbtn').click(function checkId() {
-			var usr_id = $('input[name=usr_id]').val();
-			if (usr_id != '') {
-				if(fn_check_duplicate_id()){
-					alert("사용가능한 아이디입니다.");
-				}else{
-					alert("중복된 아이디입니다.");
-					$('input[name=usr_id]').focus();
-				}
-			} else {
-				alert('아이디를 입력하세요');
-				$('input[name=usr_id]').focus();
-			}
-			
-		});
 		
-		
-		$('#signupBtn').click(function signupCheck() {
-			
-			$('form').validate(); 
-			if(fn_check_duplicate_id()){
-				$('form').submit();	
-			}else{
-				alert("아이디가 중복되었습니다.");
-			}
-			
-			/*var formData = $('form').serialize();
-			$.ajax({
-				url : "/signUpProc",
-				type : "POST",
-				data : formData,
-				success : function(response) { 
-					console.log("success :",response);
-				},
-				error : function(error) {
-					console.log("error :",error);
-				}
-			});*/
-		});
+	$('#signupBtn').click(function signupCheck() {
+		$('form').validate(); 
+		console.log("flag:"+fn_check_duplicate_id());
+		if(fn_check_duplicate_id()){
+			$('form').submit();	
+			alert("회원가입 완료");
+		}else{
+			alert("아이디가 중복되었습니다.");
+		}
+	});
 		
 function fn_check_duplicate_id(){
 	var usr_id = $('input[name=usr_id]').val();
@@ -118,7 +79,6 @@ function fn_check_duplicate_id(){
 		},
 		success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
 			if (result == 0) {
-				
 				checkResult =  true;
 			} else {
 				checkResult = false;

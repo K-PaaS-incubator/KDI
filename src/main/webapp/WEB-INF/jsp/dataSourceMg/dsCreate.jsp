@@ -19,7 +19,6 @@
 		<!-- 데이터소스명 -->
 		<div class="divTitle">데이터소스 제목</div>
 		<input type="text" id="ds_nm" name="ds_nm" required>
-		<button>데이터소스 중복 체크</button>
 		
 		<!-- DB타입-->
 		<div class="divTitle">DB Type</div>
@@ -43,14 +42,14 @@
 		<input type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()" required>
 		<!-- DB계정 패스워드 -->
 		<div class="divTitle">Password</div>
-		<input type="password" id="ds_usr_pw" name="ds_usr_pw" required>
+		<input type="password" id="ds_usr_pw" name="ds`2010_usr_pw" required>
 		<div id="test_result"></div>
 		<div id="test_result2"></div>
 
 		
 		<!-- 커넥션 테스트 기능 -->
-		<input type="button" value="연결테스트" id="connTestBtn">
-		<input type="button" value="접속정보등록" id="regBtn">
+		<input type="button" value="테스트" id="connTestBtn">
+		<input type="button" value="등록" id="regBtn">
 		</form>
 	</div>
 	
@@ -88,25 +87,38 @@ function printName()  {
 	}
 	
 $('#regBtn').click(function databaseSave() {
+	var ds_nm = document.getElementById('ds_nm').value;
 	$('form').validate(); 
-	$.ajax({
-	    url : "/ds/dsCreateProc",
-		type : "POST",
-		data : $("form").serialize(),
-	    dataType : "JSON",
-	    success : function(result) {
-	        console.log("result:"+result.state);
-	        $('form').submit();
-	        location.href = "${homeUrl}dsList";
-	    },
-	    error : function(result) {
-	        console.log("statusCode:"+result.statusCode);
-	        console.log("responseJSON:"+result.responseJSON.state);
-	        console.log("responseJSON:"+result.responseJSON.msg);
-	        alert("데이터소스 등록 실패");
-		}
-	});	
+	 if(fn_check_duplicate_ds()){
+			$('form').submit();	
+			//alert("데이터소스가 등록되었습니다.");
+			//location.href = "${homeUrl}dsList";
+	}		
 });	
+
+function fn_check_duplicate_ds(){
+	var ds_nm = $('input[name=ds_nm]').val();
+	var checkResult = false;
+	$.ajax({
+		url : "/ds/dsCheck", //컨트롤러에서 요청받을 주소
+		type : "POST",
+		async : false,
+		data : {
+			"ds_nm" : ds_nm,
+		},
+		success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
+			if (result == 0) {
+				checkResult =  true;
+			} else {
+				checkResult = false;
+			}
+		},
+		error : function(a, b, c) {
+			console.log(a, b, c);
+		}
+	});
+	return checkResult;
+}
 	
 $('#connTestBtn').click(function databaseCheck() {
 	$('form').validate(); 
