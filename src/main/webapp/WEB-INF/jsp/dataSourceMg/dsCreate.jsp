@@ -14,7 +14,7 @@
 	<div class="mainContent">
 		<div id="pageTitle">데이터소스 등록</div>
 		
-		<form action="/ds/dsCreateProc" method="POST" id="dsCreate">
+		<form <%-- action="${homeUrl}dsCheck" method="POST"  --%>id="dsCreate">
 		<input type="hidden" id="ds_url" name="ds_url">
 		<!-- 데이터소스명 -->
 		<div class="divTitle">데이터소스 제목</div>
@@ -23,7 +23,7 @@
 		<!-- DB타입-->
 		<div class="divTitle">DB Type</div>
 		<select name="ds_type" onchange="printName()">
-			<option value="oracle">Oracle</option>
+			<option value="oracle" selected="selected">Oracle</option>
 			<option value="mysql">Mysql</option>
 		</select>
 		
@@ -42,10 +42,9 @@
 		<input type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()" required>
 		<!-- DB계정 패스워드 -->
 		<div class="divTitle">Password</div>
-		<input type="password" id="ds_usr_pw" name="ds`2010_usr_pw" required>
+		<input type="password" id="ds_usr_pw" name="ds_usr_pw" required>
 		<div id="test_result"></div>
 		<div id="test_result2"></div>
-
 		
 		<!-- 커넥션 테스트 기능 -->
 		<input type="button" value="테스트" id="connTestBtn">
@@ -69,42 +68,53 @@ const urlMap = {
 	  };
 	  
 function printName()  {
-	  var ds_addr = document.getElementById('ds_addr').value;
-	  var ds_port = document.getElementById('ds_port').value;
-	  var ds_sid = document.getElementById('ds_sid').value;
-	  var ds_type = $("select[name=ds_type]").val();
+	  var ds_addr = $('#ds_addr').val();
+	  var ds_port = $('#ds_port').val();
+	  var ds_sid = $('#ds_sid').val();
+	  var ds_type = $("select[name='ds_type']").val();
 
 	  if (ds_addr==''){
 		  ds_addr = 'localhost';
-		  $("#ds_addr").val('localhost');
+		  $('#ds_addr').val('localhost');
 	  }
 	  if(ds_port==''){
 		  ds_port = portMap[ds_type];
-		  $("#ds_port").val(portMap[ds_type]);
+		  $('#ds_port').val(portMap[ds_type]);
 	  }
-	  document.getElementById("ds_url_label").innerText = urlMap[ds_type]+ds_addr+":"+ds_port+":"+ds_sid;
-	  $("#ds_url").val(urlMap[ds_type]+ds_addr+":"+ds_port+":"+ds_sid);
+	  $('#ds_url_label').text(urlMap[ds_type]+ds_addr+':'+ds_port+':'+ds_sid);
+	  $('#ds_url').val(urlMap[ds_type]+ds_addr+':'+ds_port+':'+ds_sid);
 	}
 	
 $('#regBtn').click(function databaseSave() {
-	var ds_nm = document.getElementById('ds_nm').value;
 	$('form').validate(); 
-	 if(fn_check_duplicate_ds()){
-			$('form').submit();	
-			//alert("데이터소스가 등록되었습니다.");
-			//location.href = "${homeUrl}dsList";
-	}		
+	 if(!fn_check_duplicate_ds()){
+		 alert('제목이 중복되었습니다.');
+		 return;
+	 }
+	$.ajax({
+		url : '${homeUrl}dsWrite', //컨트롤러에서 요청받을 주소
+		type : 'POST',
+		async : false,
+		data :  $('#dsCreate').serialize(),
+		success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
+			alert('등록 완료');
+			location.href='${homeUrl}dsList';
+		},
+		error : function(a, b, c) {
+			console.log(a, b, c);
+		}
+	});
 });	
 
 function fn_check_duplicate_ds(){
 	var ds_nm = $('input[name=ds_nm]').val();
 	var checkResult = false;
 	$.ajax({
-		url : "/ds/dsCheck", //컨트롤러에서 요청받을 주소
-		type : "POST",
+		url : '/ds/dsCntCheck', //컨트롤러에서 요청받을 주소
+		type : 'POST',
 		async : false,
 		data : {
-			"ds_nm" : ds_nm,
+			'ds_nm' : ds_nm,
 		},
 		success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
 			if (result == 0) {
@@ -123,21 +133,20 @@ function fn_check_duplicate_ds(){
 $('#connTestBtn').click(function databaseCheck() {
 	$('form').validate(); 
 	$.ajax({
-	    url : "/ds/testConnection",
-		type : "POST",
-		data : $("form").serialize(),
-	    dataType : "JSON",
+	    url : '/ds/testConnection',
+		type : 'POST',
+		data : $('form').serialize(),
+	    dataType : 'JSON',
 	    success : function(result) {
-	        console.log("result:"+result.state);
-	        document.getElementById("test_result").innerText = '접속 테스트 성공';
-	        document.getElementById("test_result2").innerText = '';
+	        console.log('result:'+result.state);
+	        $('#test_result').text('접속 테스트 성공');
 	    },
 	    error : function(result) {
-	        console.log("statusCode:"+result.statusCode);
-	        console.log("responseJSON:"+result.responseJSON.state);
-	        console.log("responseJSON:"+result.responseJSON.msg);
-	        document.getElementById("test_result").innerText = '접속 테스트 실패';
-	        document.getElementById("test_result2").innerText = result.responseJSON.msg;
+	        console.log('statusCode:'+result.statusCode);
+	        console.log('responseJSON:'+result.responseJSON.state);
+	        console.log('responseJSON:'+result.responseJSON.msg);
+	        $('#test_result').text('접속 테스트 실패');
+	        $('#test_result2').text(result.responseJSON.msg);
 		}
 	});
 });

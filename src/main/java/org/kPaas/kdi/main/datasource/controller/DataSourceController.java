@@ -25,40 +25,50 @@ public class DataSourceController extends AbstractController {
 
 	@GetMapping("/dsList")
 	public String dsList(Model model) {
-		model.addAttribute("selectDsList",service.selectDsList());
+		model.addAttribute("selectDsList", service.selectDsList());
 		return layout("dsList");
 	}
-	
+
 	@GetMapping("/dsCreate")
 	public String dsCreate() {
 		return layout("dsCreate");
 	}
 
-	@ResponseBody
-	@PostMapping("/dsCreateProc")
-	public ResponseEntity<String> dsCreateProc(DatasourceVo datasource_vo) {
-		return service.insertDS(datasource_vo);
-	}
-	
-	@PostMapping("/dsCheck")
-	public @ResponseBody int dsCheck(String ds_nm) {
+	@PostMapping("dsCntCheck")
+	public @ResponseBody int dsCntCheck(String ds_nm) {
 		int result = service.getSameDsCheck(ds_nm);
 		return result;
+	}
 
+	@PostMapping("/dsCheck")
+	public ResponseEntity<String> dsCheck(DatasourceVo datasource_vo) {
+		int dsCnt = 0;
+		dsCnt = service.getSameDsCheck(datasource_vo.getDs_nm());
+		if (dsCnt > 0) {
+			return ResponseEntity.badRequest().body("중복제목입니다.");
+		} else {
+			return ResponseEntity.ok("정상");
+		}
+	}
+
+	@PostMapping("/dsWrite")
+	public ResponseEntity<String> dsWrite(DatasourceVo datasource_vo) {
+		service.insertDS(datasource_vo);
+		return ResponseEntity.ok("등록 완료");
 	}
 
 	@GetMapping("/dsEdit")
-	public String dsEdit(Model model, @RequestParam("ds_nm")String ds_nm) {
-		model.addAttribute("selectDsInfo",service.selectDsInfo(ds_nm));
+	public String dsEdit(Model model, @RequestParam("ds_nm") String ds_nm) {
+		model.addAttribute("selectDsInfo", service.selectDsInfo(ds_nm));
 		return layout("dsEdit");
 	}
-	
+
 	@ResponseBody
 	@PostMapping("/dsEditProc")
 	public ResponseEntity<String> dsEditProc(DatasourceVo datasource_vo) {
 		return service.editDS(datasource_vo);
 	}
-	
+
 	@ResponseBody
 	@PostMapping("/dsDelProc")
 	public ResponseEntity<String> dsDelProc(String ds_nm) {
@@ -70,4 +80,5 @@ public class DataSourceController extends AbstractController {
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) {
 		return service.testConnection(datasource_vo);
 	}
+
 }

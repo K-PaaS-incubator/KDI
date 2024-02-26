@@ -12,7 +12,7 @@
 				<span id="valid" class="alert alert-danger">${exception}</span>
 			</p>
 		</div>
-		<form action="/signUpProc" method="POST" id="signupUser">
+		<form id="signupUser">
 		<!-- onsubmit="return false;"옵션은 해당 form태그안에 input type='text'가 1개일 경우 엔터키 입력시 자동으로 form태그의 action에 명시된 url을 통해서 submit이 호출되는것을 막아줌 -->
 			<div class="insert">
 				<h4>사용하실 아이디를 입력해주세요.</h4>
@@ -45,37 +45,51 @@
 		</form>
 	</div>
 	<script>
-	function validation(){
+	function validation(){ //사용안하는중
 		var RegExp = /^[a-zA-Z0-9]{4,12}$/; //id와 pwassword 유효성 검사 정규식       
 		//이메일 유효성검사        
 		var e_RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;      
 		var n_RegExp = /^[가-힣]{2,15}$/; //이름 유효성검사 정규식
-		var usr_id = document.getElementByName('usr_id').value;
-		var usr_pw = document.getElementByName('usr_pw').value;
-		var usr_phone = document.getElementByName('usr_phone').value;
-		var usr_email = document.getElementByName('usr_email').value;
+		var usr_id =  $("[name='usr_id']").val();
+		var usr_pw = $("[name='usr_pw']").val();
+		var usr_phone = $("[name='usr_phone']").val();
+		var usr_email = $("[name='usr_email']").val();
 	}
 		
 	$('#signupBtn').click(function signupCheck() {
 		$('form').validate(); 
-		console.log("flag:"+fn_check_duplicate_id());
-		if(fn_check_duplicate_id()){
-			$('form').submit();	
-			alert("회원가입 완료");
-		}else{
-			alert("아이디가 중복되었습니다.");
+		if(!fn_check_duplicate_id()){
+			alert('아이디가 중복되었습니다.');
+			return;
 		}
+		$.ajax({
+			url : '${homeUrl}signUpProc', //컨트롤러에서 요청받을 주소
+			type : 'POST',
+			async : false,
+			data :  $('#signupUser').serialize(),
+			success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
+				alert('회원가입 완료');
+				location.href='${homeUrl}login';
+			},
+			error : function(result) {
+		    	console.log(result);
+		        console.log('statusCode:'+result.statusCode);
+		        console.log('responseJSON:'+result.responseJSON.state);
+		        console.log('responseJSON:'+result.responseJSON.msg);
+		        alert('회원가입 실패');
+			}
+		});
 	});
 		
 function fn_check_duplicate_id(){
 	var usr_id = $('input[name=usr_id]').val();
 	var checkResult = false;
 	$.ajax({
-		url : "/api/noAuth/idCheck", //컨트롤러에서 요청받을 주소
-		type : "POST",
+		url : '/api/noAuth/idCheck', //컨트롤러에서 요청받을 주소
+		type : 'POST',
 		async : false,
 		data : {
-			"usr_id" : usr_id,
+			'usr_id' : usr_id,
 		},
 		success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
 			if (result == 0) {

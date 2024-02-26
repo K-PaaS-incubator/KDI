@@ -13,7 +13,7 @@
 	<div class="mainContent">
 		<div id="pageTitle">데이터소스 수정</div>
 		
-		<form action="/ds/dsEditProc" method="POST" id="dsEdit">
+		<form id="dsEdit" onsubmit="return false;">
 		<input type="hidden" id="ds_url" name="ds_url"  value="${selectDsInfo.ds_url}" >
 		<!-- 데이터소스명 -->
 		<div class="divTitle">데이터소스 제목</div>
@@ -22,7 +22,7 @@
 		<!-- DB타입-->
 		<div class="divTitle">DB Type</div>
 		<label id="ds_type">${selectDsInfo.ds_type}</label>
-		<input type="hidden" id="ds_type" name="ds_type"  value="${selectDsInfo.ds_type}" >
+		<input type="hidden" name="ds_type"  value="${selectDsInfo.ds_type}" >
 		
 		<div class="divTitle">Server Host</div> <!-- IP주소 -->
 		<input type="text" id="ds_addr" name="ds_addr" value="${selectDsInfo.ds_addr}" onkeyup="printName()">
@@ -59,42 +59,39 @@ const urlMap = {
 
 $( document ).ready(function() {
 	printName();
-	document.getElementById("ds_url_label").innerText = '${selectDsInfo.ds_url}';
-	
-
+	$('#ds_url_label').text(ds_url);
 });
 
 function printName()  {
-	  var ds_addr = document.getElementById('ds_addr').value;
-	  var ds_port = document.getElementById('ds_port').value;
-	  var ds_sid = document.getElementById('ds_sid').value;
+	  var ds_addr = $('#ds_addr').val();
+	  var ds_port = $('#ds_port').val();
+	  var ds_sid = $('#ds_sid').val();
 	  var urlDriver = null;
 		if(ds_url.includes('oracle')){
 			urlDriver=urlMap['oracle'];
 		}else if(ds_url.includes('mysql')){
 			urlDriver=urlMap['mysql'];
 		}
-	  document.getElementById("ds_url_label").innerText = urlDriver+ds_addr+":"+ds_port+":"+ds_sid;
-	  $("#ds_url").val(urlDriver+ds_addr+":"+ds_port+":"+ds_sid);
+	  $('#ds_url_label').text(urlDriver+ds_addr+':'+ds_port+':'+ds_sid);
+	  $('#ds_url').val(urlDriver+ds_addr+':'+ds_port+':'+ds_sid);
 	}
 	
 $('#modifyBtn').click(function databaseSave() {
 	$('form').validate();
 	$.ajax({
-	    url : "/ds/dsEditProc",
-		type : "POST",
-		data : $("form").serialize(),
-	    dataType : "JSON",
+	    url : '/ds/dsEditProc',
+		type : 'POST',
+		data : $('form').serialize(),
+	    dataType : 'JSON',
 	    success : function(result) {
-	        console.log("result:"+result.state);
-	        $('form').submit();
-	        location.href = "${homeUrl}dsList";
+	        console.log('result:'+result.state);
+	        location.href = '${homeUrl}dsList';
 	    },
 	    error : function(result) {
-	        console.log("statusCode:"+result.statusCode);
-	        console.log("responseJSON:"+result.responseJSON.state);
-	        console.log("responseJSON:"+result.responseJSON.msg);
-	        alert("데이터소스 등록 실패");
+	        console.log('statusCode:'+result.statusCode);
+	        console.log('responseJSON:'+result.responseJSON.state);
+	        console.log('responseJSON:'+result.responseJSON.msg);
+	        alert('데이터소스 등록 실패');
 		}
 	});
 });	
@@ -102,49 +99,48 @@ $('#modifyBtn').click(function databaseSave() {
 $('#connTestBtn').click(function databaseCheck() {
 	$('form').validate(); 
 	$.ajax({
-	    url : "/ds/testConnection",
-		type : "POST",
-		data : $("form").serialize(),
-	    dataType : "JSON",
+	    url : '/ds/testConnection',
+		type : 'POST',
+		data : $('form').serialize(),
+	    dataType : 'JSON',
 	    success : function(result) {
-	        console.log("result:"+result.state);
-	        document.getElementById("test_result").innerText = '접속 테스트 성공';
-	        document.getElementById("test_result2").innerText = '';
+	        console.log('result:'+result.state);
+	        $('#test_result').text('접속 테스트 성공');
 	    },
 	    error : function(result) {
-	        console.log("statusCode:"+result.statusCode);
-	        console.log("responseJSON:"+result.responseJSON.state);
-	        console.log("responseJSON:"+result.responseJSON.msg);
-	        document.getElementById("test_result").innerText = '접속 테스트 실패';
-	        document.getElementById("test_result2").innerText = result.responseJSON.msg;
+	        console.log('statusCode:'+result.statusCode);
+	        console.log('responseJSON:'+result.responseJSON.state);
+	        console.log('responseJSON:'+result.responseJSON.msg);
+	        $('#test_result').text('접속 테스트 실패');
+	        $('#test_result2').text(result.responseJSON.msg);
 		}
 	});
 });
 
 
 $('#deleteBtn').click(function databaseDel() {
-	if(confirm("데이터소스를 삭제하시겠습니까?")){
+	if(confirm('데이터소스를 삭제하시겠습니까?')){
 		$.ajax({
-		    url : "/ds/dsDelProc",
-			type : "POST",
-			data : $("form").serialize(),
-		    dataType : "JSON",
+		    url : '/ds/dsDelProc',
+			type : 'POST',
+			data : $('form').serialize(),
+		    dataType : 'JSON',
 		    success : function(result) {
-		        console.log("result:"+result.state);
+		        console.log('result:'+result.state);
 		        $('form').submit();
-		        location.href = "${homeUrl}dsList";
-		        alert("정상적으로 삭제되었습니다.");
+		        location.href = '${homeUrl}dsList';
+		        alert('정상적으로 삭제되었습니다.');
 		    },
 		    error : function(result) {
 		    	console.log(result);
-		        console.log("statusCode:"+result.statusCode);
-		        console.log("responseJSON:"+result.responseJSON.state);
-		        console.log("responseJSON:"+result.responseJSON.msg);
-		        alert("데이터소스 삭제 실패");
+		        console.log('statusCode:'+result.statusCode);
+		        console.log('responseJSON:'+result.responseJSON.state);
+		        console.log('responseJSON:'+result.responseJSON.msg);
+		        alert('데이터소스 삭제 실패');
 			}
 		});		
 	}else{
-		alert("삭제 취소");
+		alert('삭제 취소');
 	}
 	
 });
