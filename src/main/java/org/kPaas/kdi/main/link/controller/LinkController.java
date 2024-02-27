@@ -12,12 +12,12 @@ public class LinkController extends AbstractController {
 		super("linkService");
 	}
 
-	@GetMapping()
-	public String getList() {
+	@GetMapping("/linkList")
+	public String getPubList() {
 		return layout("linkList");
 	}
 
-	@GetMapping("create")
+	@GetMapping("/linkCreate")
 	public String getCreate() {
 		return layout("linkCreate");
 	}
