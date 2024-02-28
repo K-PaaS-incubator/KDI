@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="cssUrl" value="/css" />
 <link rel="stylesheet" href="${cssUrl}/ds.css">
+
 <section class="contents">
 
 	<div class="sideMenu">

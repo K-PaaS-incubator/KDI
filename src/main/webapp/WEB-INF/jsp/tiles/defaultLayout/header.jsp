@@ -13,7 +13,11 @@
 	</section>
 	<nav class="menuBox">
 		<div class="menuBar" onclick="location.href='${homeUrl}ds/dsList'">데이터소스</div>
+<<<<<<< HEAD
 		<div class="menuBar" onclick="location.href='${homeUrl}link/linkList'">연계</div>
+=======
+		<div class="menuBar" onclick="location.href='${homeUrl}link/linkList'">연계서비스</div>
+>>>>>>> branch 'main' of http://git.biz.ppsystem.co.kr/cloud/kdi.git
 		<div class="menuBar" onclick="location.href='${homeUrl}monitoring'">모니터링</div>
 		<div class="menuBar" onclick="location.href='${homeUrl}member/userInfo'">사용자정보</div>
 		<!-- 계정정보 수정 -->

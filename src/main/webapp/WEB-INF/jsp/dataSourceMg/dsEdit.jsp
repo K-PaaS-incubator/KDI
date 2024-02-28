@@ -11,7 +11,7 @@
 	</div>
 
 	<div class="mainContent">
-		<div id="pageTitle">데이터소스 수정</div>
+		<div id="pageTitle">데이터소스 상세</div>
 		
 		<form id="dsEdit" onsubmit="return false;">
 		<input type="hidden" id="ds_url" name="ds_url"  value="${selectDsInfo.ds_url}" >
