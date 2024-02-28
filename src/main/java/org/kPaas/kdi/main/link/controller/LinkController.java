@@ -14,10 +14,7 @@ public class LinkController extends AbstractController {
 		super("linkService");
 	}
 
-<<<<<<< HEAD
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
-=======
->>>>>>> branch 'main' of http://git.biz.ppsystem.co.kr/cloud/kdi.git
 	@GetMapping("/linkList")
 	public String getPubList() {
 		return layout("linkList");
