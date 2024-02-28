@@ -1,23 +1,26 @@
 package org.kPaas.kdi.main.link.controller;
 
 import org.kPaas.kdi.com.abs.AbstractController;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-@RequestMapping("/link")
+@PreAuthorize("hasRole('ADMIN')") // 관리자
+@RequestMapping("link")
 @Controller
 public class LinkController extends AbstractController {
 	public LinkController() {
 		super("linkService");
 	}
 
-	@GetMapping()
-	public String getList() {
+	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
+	@GetMapping("/linkList")
+	public String getPubList() {
 		return layout("linkList");
 	}
 
-	@GetMapping("create")
+	@GetMapping("/linkCreate")
 	public String getCreate() {
 		return layout("linkCreate");
 	}

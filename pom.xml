@@ -96,16 +96,16 @@
 		</dependency>
 		<!-- ojdbc 추가 -->
 		<dependency>
-    		<groupId>com.oracle.database.jdbc</groupId>
-    		<artifactId>ojdbc11</artifactId>
-    		<version>23.2.0.0</version>
+			<groupId>com.oracle.database.jdbc</groupId>
+			<artifactId>ojdbc11</artifactId>
+			<version>23.2.0.0</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
 		<dependency>
-    		<groupId>mysql</groupId>
-    		<artifactId>mysql-connector-java</artifactId>
-    		<version>8.0.30</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.30</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
-		
+
 	</dependencies>
 
 	<build>
