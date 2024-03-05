@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kPaas.kdi.main.link.mapper.LinkMapper">
+
+	<insert id="createTable">
+		CREATE TABLE `KDI_LINK_SERVICE` (
+			`svc_id` numeric NOT NULL,
+			`ds_nm` varchar2(100) NOT NULL,
+			`svc_nm` varchar2(100) NULL,
+			`svc_type` char(1) NULL,
+			`reg_id` varchar2(20) NULL,
+			`reg_dt` date NULL,
+			`mod_id` varchar2(20) NULL,
+			`mod_dt` date NULL,
+			PRIMARY KEY (`svc_id`)
+		)
+	</insert>
+	
+	<select id="selectDsList" resultType="String">
+		SELECT ds_nm FROM KDI_DATASOURCE
+	</select>
+
+</mapper>

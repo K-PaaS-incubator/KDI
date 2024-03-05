@@ -35,7 +35,7 @@
 
 
 		<div>
-			<input type="button" id="savebtn" value="등록" onclick="location.href='${homeUrl}linkCreate'">
+			<input type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}linkService'">
 		</div>
 
 

@@ -78,7 +78,7 @@ section.contents .sideMenu div:hover {
 
 section.contents .mainContent {
 	display: flex;
-	flex-direction: column;
+	flex-direction:column;
 	/*border: 1px solid red;*/
 }
 
@@ -89,6 +89,11 @@ section.contents .mainContent #pageTitle {
 	height: 50px;
 	padding: 10px 0 8px 10px;
 	border-bottom: 3px double #03045E;
+}
+
+section.contents .mainContent .divTitle {
+	font-weight: bold;
+	margin:0.5rem 0 0.3rem 0;
 }
 
 section.contents #saveBtn {
@@ -108,6 +113,20 @@ section.contents #saveBtn:hover {
 	background: linear-gradient(to left,rgb(0, 180, 216), rgb(3, 4, 94));
 }
 
+section.contents #regbtn {
+	width:6em;
+	height:2em;
+	margin:1em 0 1em 0;
+	border: none;
+	font-size:1em;
+	text-align:center;
+	letter-spacing: 0.3em;
+	background: #CAF0F8;
+}
+section.contents #regbtn:hover {
+	cursor: pointer;
+	box-shadow: 2px 2px 2px #03045E;
+}
 
 /* section END */
 

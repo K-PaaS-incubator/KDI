@@ -10,7 +10,16 @@
 	</div>
 
 	<div class="mainContent">
-		<div id="pageTitle">연계 서비스 상세 관리</div>
+		<div id="pageTitle">연계서비스 테이블 상세</div>
+		
+		<form>
+			<div>테이블명 : </div>
+			<input type="button" value="등록" id="regbtn" onclick="location.href='${homeUrl}linkList'">
+		</form>
 	</div>
+
+	<script>
+		
+	</script>
 
 </section>

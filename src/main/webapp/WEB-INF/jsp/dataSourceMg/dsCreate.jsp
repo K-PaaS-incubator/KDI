@@ -48,7 +48,7 @@
 		
 		<!-- 커넥션 테스트 기능 -->
 		<input type="button" value="테스트" id="connTestBtn">
-		<input type="button" value="등록" id="regBtn">
+		<input type="button" value="등록" id="regbtn">
 		</form>
 	</div>
 	
@@ -85,7 +85,7 @@ function printName()  {
 	  $('#ds_url').val(urlMap[ds_type]+ds_addr+':'+ds_port+':'+ds_sid);
 	}
 	
-$('#regBtn').click(function databaseSave() {
+$('#regbtn').click(function databaseSave() {
 	$('form').validate(); 
 	 if(!fn_check_duplicate_ds()){
 		 alert('제목이 중복되었습니다.');

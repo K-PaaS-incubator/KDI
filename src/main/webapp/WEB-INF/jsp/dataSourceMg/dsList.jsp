@@ -32,7 +32,7 @@
 			</tbody>
 		</table>
 
-	<div><input type="button" id="savebtn" value="등록" onclick="location.href='${homeUrl}dsCreate'"></div>
+	<div><input type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}dsCreate'"></div>
         
 	</div>
 </section>
