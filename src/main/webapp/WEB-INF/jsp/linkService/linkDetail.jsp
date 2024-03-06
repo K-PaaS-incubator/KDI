@@ -31,7 +31,7 @@
 				<div class="subTitle">데이터소스제목 - 스키마명1</div>
 				<!--  //TODO 테이블명 검색기능 -->
 				<div id="searchBox"><span>🔎 </span>검색어를 입력하세요</div>
-					<table>
+					<table id="detailTbl">
 						<thead>
 							<tr>
 								<th>No</th>
@@ -41,13 +41,13 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr>
+							<tr class="detailTr">
 								<td>1</td>
 								<td>PUB_TEST_TABLE</td>
 								<td>N</td>
 								<td></td>
 							</tr>
-							<tr>
+							<tr class="detailTr">
 								<td>2</td>
 								<td>PUB_TEST_TABLE2</td>
 								<td>N</td>

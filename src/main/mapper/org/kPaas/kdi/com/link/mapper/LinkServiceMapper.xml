@@ -16,10 +16,10 @@
 			`mod_dt` date NULL,
 			PRIMARY KEY (`svc_id`)
 		)
-	</insert>
-	
-	<select id="selectDsList" resultType="String">
-		SELECT ds_nm FROM KDI_DATASOURCE
+	</insert>	
+		
+	<select id="selectLinkList" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
+		SELECT rownum as NO,* FROM KDI_LINK_SERVICE
 	</select>
 
 </mapper>

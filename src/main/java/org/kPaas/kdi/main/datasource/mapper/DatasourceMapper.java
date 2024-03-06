@@ -3,7 +3,7 @@ package org.kPaas.kdi.main.datasource.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kPaas.kdi.main.datasource.dto.DatasourceVo;
+import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.springframework.http.ResponseEntity;
 
 @Mapper

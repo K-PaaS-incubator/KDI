@@ -12,7 +12,7 @@
 	<div class="mainContent">
 		<div id="pageTitle">연계 서비스 관리</div>
 
-		<table id="dsTbl">
+		<table id="lnkTbl">
 			<thead>
 				<tr>
 					<th>No</th>
@@ -21,15 +21,13 @@
 				</tr>
 			</thead>
 			<tbody>
-				<!-- 
-				<c:forEach var="dsList" items="${selectDsList}">
+				<c:forEach var="linkList" items="${selectLinkList}">
 					<tr>
-						<td>${dsList.no}</td>
-						<td>${dsList.ds_nm}</td>
-						<td>${dsList.ds_url}</td>
+						<td>${linkList.no}</td>
+						<td>${linkList.svc_nm}</td>
+						<td>${linkList.ds_nm}</td>
 					</tr>
 				</c:forEach>
- -->
 			</tbody>
 		</table>
 

@@ -2,16 +2,12 @@ package org.kPaas.kdi.main.link.service.impl;
 
 
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
-import org.json.JSONObject;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
-import org.kPaas.kdi.main.datasource.dto.DatasourceVo;
 import org.kPaas.kdi.main.link.mapper.LinkMapper;
 import org.kPaas.kdi.main.link.service.LinkService;
-import org.springframework.http.ResponseEntity;
+import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,9 +30,8 @@ public class LinkServiceImpl implements LinkService {
 		}
 	}
 	
-	public List<String> selectDsList() {
-		return mapper.selectDsList();
+	public List<LinkServiceVo> selectLinkList() {
+		return mapper.selectLinkList();
 	}
-
 
 }

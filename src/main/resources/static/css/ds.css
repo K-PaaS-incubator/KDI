@@ -4,7 +4,10 @@ table{
 	border-collapse: separate;
 	border-spacing:0 0.5em;
 }
-
+th{
+	background-color: rgb(0, 119, 182, 0.4);
+	padding: 0.5em;
+}
 td {
 	padding: 0.2em;
     border-bottom: 1px solid #444444;

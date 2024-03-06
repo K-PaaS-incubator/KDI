@@ -2,7 +2,7 @@ package org.kPaas.kdi.main.datasource.service;
 
 import java.util.List;
 
-import org.kPaas.kdi.main.datasource.dto.DatasourceVo;
+import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.springframework.http.ResponseEntity;
 
 public interface DatasourceService {

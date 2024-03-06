@@ -2,7 +2,7 @@ package org.kPaas.kdi.com.member.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.kPaas.kdi.com.member.dto.MemberVo;
+import org.kPaas.kdi.com.member.vo.MemberVo;
 
 @Mapper
 public interface MemberMapper {

@@ -1,4 +1,4 @@
-package org.kPaas.kdi.com.member.dto;
+package org.kPaas.kdi.com.member.vo;
 
 import lombok.Getter;
 import lombok.Setter;

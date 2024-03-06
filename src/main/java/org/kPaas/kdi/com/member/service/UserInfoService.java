@@ -1,6 +1,6 @@
 package org.kPaas.kdi.com.member.service;
 
-import org.kPaas.kdi.com.member.dto.MemberVo;
+import org.kPaas.kdi.com.member.vo.MemberVo;
 import org.springframework.http.ResponseEntity;
 
 public interface UserInfoService {

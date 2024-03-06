@@ -10,9 +10,9 @@ import javax.annotation.Resource;
 
 import org.json.JSONObject;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
-import org.kPaas.kdi.main.datasource.dto.DatasourceVo;
 import org.kPaas.kdi.main.datasource.mapper.DatasourceMapper;
 import org.kPaas.kdi.main.datasource.service.DatasourceService;
+import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

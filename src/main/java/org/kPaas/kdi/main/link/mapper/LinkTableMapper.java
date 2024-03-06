@@ -7,12 +7,16 @@ import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.springframework.http.ResponseEntity;
 
 @Mapper
-public interface LinkMapper {
+public interface LinkTableMapper {
 
 	// 연계서비스 테이블 생성
 	public void createTable();
 
-	//연계서비스 조회
+	//
 	public List<LinkServiceVo> selectLinkList();
 	
+	public List<String> selectDsList();
+	public Integer getSameLinkCheck(String svc_nm);
+	public void insertLink(LinkServiceVo linkService_vo);
+
 }

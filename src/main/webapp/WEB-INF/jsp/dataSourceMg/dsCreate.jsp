@@ -92,7 +92,7 @@ $('#regbtn').click(function databaseSave() {
 		 return;
 	 }
 	$.ajax({
-		url : '${homeUrl}dsWrite', //컨트롤러에서 요청받을 주소
+		url : '${homeUrl}dsInsert', //컨트롤러에서 요청받을 주소
 		type : 'POST',
 		async : false,
 		data :  $('#dsCreate').serialize(),

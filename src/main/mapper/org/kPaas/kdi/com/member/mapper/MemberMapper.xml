@@ -5,7 +5,7 @@
 <mapper namespace="org.kPaas.kdi.com.member.mapper.MemberMapper">
 
 	<select id="getUser_Info"
-		resultType="org.kPaas.kdi.com.member.dto.MemberVo">
+		resultType="org.kPaas.kdi.com.member.vo.MemberVo">
 		SELECT * FROM KDI_USER
 		<where>usr_id = #{usr_id}</where>
 	</select>
@@ -16,7 +16,7 @@
 	</select>
 
 	<insert id="signupUser"
-		parameterType="org.kPaas.kdi.com.member.dto.MemberVo">
+		parameterType="org.kPaas.kdi.com.member.vo.MemberVo">
 		INSERT INTO KDI_USER
 		VALUES(#{usr_id},#{usr_pw},#{usr_nm},#{usr_phone},#{usr_email},'1',current_timestamp(),current_timestamp())
 	</insert>

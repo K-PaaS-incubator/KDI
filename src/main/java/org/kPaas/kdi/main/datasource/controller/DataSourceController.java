@@ -1,8 +1,8 @@
 package org.kPaas.kdi.main.datasource.controller;
 
 import org.kPaas.kdi.com.abs.AbstractController;
-import org.kPaas.kdi.main.datasource.dto.DatasourceVo;
 import org.kPaas.kdi.main.datasource.service.DatasourceService;
+import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -54,7 +54,7 @@ public class DataSourceController extends AbstractController {
 		}
 	}
 
-	@PostMapping("/dsWrite")
+	@PostMapping("/dsInsert")
 	public ResponseEntity<String> dsWrite(DatasourceVo datasource_vo) {
 		service.insertDS(datasource_vo);
 		return ResponseEntity.ok("등록 완료");

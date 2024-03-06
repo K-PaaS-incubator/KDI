@@ -1,7 +1,7 @@
 package org.kPaas.kdi.com.member.service.impl;
 
-import org.kPaas.kdi.com.member.dto.MemberVo;
 import org.kPaas.kdi.com.member.service.UserInfoService;
+import org.kPaas.kdi.com.member.vo.MemberVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;

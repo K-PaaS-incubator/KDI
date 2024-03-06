@@ -4,7 +4,7 @@
 
 <mapper namespace="org.kPaas.kdi.main.datasource.mapper.DatasourceMapper">
 
-	<insert id="insertDS" parameterType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
+	<insert id="insertDS" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
 		INSERT INTO KDI_DATASOURCE
 		VALUES(#{ds_nm},#{ds_type},#{ds_driver},#{ds_addr},#{ds_port},#{ds_sid},#{ds_url},#{ds_usr_nm},#{ds_usr_pw},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
 	</insert>
@@ -33,18 +33,18 @@
 		<where>ds_nm = #{ds_nm}</where>
 	</select>
 	
-	<select id="selectDsList" resultType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
+	<select id="selectDsList" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
 		SELECT rownum as NO,* FROM KDI_DATASOURCE
 	</select>
 	
-	<select id="selectDsInfo" parameterType="String" resultType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
+	<select id="selectDsInfo" parameterType="String" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
 		SELECT * FROM KDI_DATASOURCE 
 		<where>
 		ds_nm = #{ds_nm}
 		</where>
 	</select>
 	
-	<update id="editDS" parameterType="org.kPaas.kdi.main.datasource.dto.DatasourceVo">
+	<update id="editDS" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
 		UPDATE KDI_DATASOURCE
 		SET ds_url = #{ds_url}, ds_addr = #{ds_addr}, ds_port = #{ds_port}, ds_sid = #{ds_sid}, ds_usr_nm = #{ds_usr_nm}, ds_usr_pw = #{ds_usr_pw}
 		<where>

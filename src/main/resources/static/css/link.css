@@ -1,5 +1,6 @@
 @charset "UTF-8";
  
+ /*linkDetail.jsp*/
  #inContent {
  	display:flex;
  	margin-top:1em;
@@ -11,13 +12,13 @@
 }
  #rightContent {
     display:inline-block;
-	border-left:0.5em groove #03045E;
+	border-left:0.3em solid rgb(3, 4, 94, 0.8);
 	width:70%;
 	padding:1em;
 }
 #searchBox{
 	float:right;
-	margin-top:0.5em;
+	margin:0.5em 0 1.5em 0;
 	padding:0.3em;
 	width:15em;
 	border:0.2em solid lightgray;
@@ -36,31 +37,61 @@
 	padding-bottom:0.5em;
 	border-bottom:0.2em solid black;
 }
-
 li{
 	margin:0.5em;
 }
 
-table{
+#lnkTbl, #detailTbl, #lnktableTbl{
 	width:100%;
 	border-collapse: separate;
 	border-spacing:0 0.5em;
 }
 
-tr,td{
-	text-align:center;
+#lnkTbl > thead > tr > th , #detailTbl > thead > tr > th , #lnktableTbl > thead > tr > th {
+	background-color: rgb(0, 119, 182, 0.4);
+	padding: 0.5em;
 }
 
-td {
+#lnkTbl>tbody>tr>td, .detailTr > td, #lnktableTbl>tbody>tr>td {
 	padding: 0.2em;
+	text-align:center;
     border-bottom: 1px solid #444444;
 }
-tbody >tr{
-	margin:10rem;
-	cursor:pointer;
-}
 
-tbody >tr:hover{
+.detailTr:hover{
+	cursor:pointer;
 	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
 }
 
+/*linkTable.jsp*/
+.inputTitle{
+	margin:0.5em;
+}
+.inputTitle > div{
+	width:15%;
+	display:inline-block;
+}
+#radioBox{
+	width:30%;
+}
+#lnktableTbl{
+	margin:1em 0 2em 0;
+}
+#lnktableTbl>tbody>tr>td{
+	padding: 0 0 0.5em 0;
+}
+#queryBox{
+	width:95%;
+	height:10em;
+	padding:0.5em;
+	margin:0 auto;
+	background-color: rgb(0, 119, 182, 0.4);
+	border:1px solid green;
+}
+#infoIcon {
+	font-size:1.3em;
+}
+
+#infoBox{
+	position:relative;
+}

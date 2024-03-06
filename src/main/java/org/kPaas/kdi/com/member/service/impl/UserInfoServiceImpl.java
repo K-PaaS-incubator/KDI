@@ -4,9 +4,9 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.json.JSONObject;
-import org.kPaas.kdi.com.member.dto.MemberVo;
 import org.kPaas.kdi.com.member.mapper.MemberMapper;
 import org.kPaas.kdi.com.member.service.UserInfoService;
+import org.kPaas.kdi.com.member.vo.MemberVo;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
