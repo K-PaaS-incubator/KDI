@@ -20,4 +20,12 @@ public class LinkTableController extends AbstractController {
 	public LinkTableController() {
 		super("linkService");
 	}
+	
+	//연계서비스 등록 세번째화면 - 연계테이블상세
+	@GetMapping("/linkTable")
+	public String linkTable() {
+		return layout("linkTable");
+	}
+
+
 }

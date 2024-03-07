@@ -6,7 +6,7 @@
 
 	<insert id="createTable">
 		CREATE TABLE `KDI_LINK_SERVICE` (
-			`svc_id` numeric NOT NULL,
+			`svc_id` numeric NOT NULL AUTO_INCREMENT,
 			`ds_nm` varchar2(100) NOT NULL,
 			`svc_nm` varchar2(100) NULL,
 			`svc_type` char(1) NULL,
@@ -21,5 +21,21 @@
 	<select id="selectLinkList" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
 		SELECT rownum as NO,* FROM KDI_LINK_SERVICE
 	</select>
+	
+	<!-- 연계서비스 등록 시작 -->
+	
+	<select id="selectDsList" resultType="String">
+		SELECT ds_nm FROM KDI_DATASOURCE
+	</select>
+	
+	<select id="getSameLinkCheck" resultType="Integer">
+		SELECT count(*) FROM KDI_LINK_SERVICE
+		<where>svc_nm = #{svc_nm}</where>
+	</select>
+	
+	<insert id="insertLink" parameterType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
+		INSERT INTO KDI_LINK_SERVICE(ds_nm,svc_nm,svc_type,reg_id,reg_dt,mod_id,mod_dt)
+		VALUES(#{ds_nm},#{svc_nm},#{svc_type},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
+	</insert>
 
 </mapper>

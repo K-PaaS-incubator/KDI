@@ -31,12 +31,17 @@
 			</tbody>
 		</table>
 
-
 		<div>
 			<input type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}linkService'">
 		</div>
 
-
 	</div>
 
+	<script>
+	$( document ).ready(function() {
+		$("#lnkTbl tr").click(function(){
+			location.href = "${homeUrl}linkDetail?svc_nm="+$(this).find("td:nth-child(2)").text();
+		});
+	});
+	</script>
 </section>

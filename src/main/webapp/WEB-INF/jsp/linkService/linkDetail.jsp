@@ -16,7 +16,7 @@
 			<div id="inContent">
 				<div id="leftContent">
 					<!-- //TODO 선택한 ds_nm이 와야함 -->
-					<div class="leftTitle">데이터소스제목</div>
+					<div class="leftTitle">${getLinkService.ds_nm}</div>
 					<div></div>
 					<div class="subTitle">스키마 선택</div>
 					<ul><!-- //TODO 스키마명 많을 경우 스크롤로 볼 수 있게 개발 -->
@@ -63,6 +63,26 @@
 	</div>
 
 	<script>
+	
+	function linkgetDs(){
+		var svc_nm = $('#svc_nm').val();
+		var checkResult = false;
+		$.ajax({
+			url : '/link/getLinkService', //컨트롤러에서 요청받을 주소
+			type : 'POST',
+			async : false,
+			data : {
+				'svc_nm' : svc_nm,
+			},
+			success : function(result) {
+				consol.log("여기로 오나보자:" + svc_nm);
+			},
+			error : function(a, b, c) {
+				console.log(a, b, c);
+			}
+		});
+		return checkResult;
+	}
 		
 	</script>
 

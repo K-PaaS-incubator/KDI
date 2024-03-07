@@ -58,7 +58,7 @@ li{
     border-bottom: 1px solid #444444;
 }
 
-.detailTr:hover{
+.detailTr:hover,#lnkTbl>tbody>tr:hover{
 	cursor:pointer;
 	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
 }
