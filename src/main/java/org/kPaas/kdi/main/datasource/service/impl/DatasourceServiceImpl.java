@@ -40,21 +40,25 @@ public class DatasourceServiceImpl implements DatasourceService {
 	public ResponseEntity<String> insertDS(DatasourceVo datasource_vo) {
 		JSONObject result = new JSONObject();
 		if (null == datasource_vo) {
+			result.put("stateCode", 1);
 			result.put("state", "데이터소스정보 등록 실패");
 			result.put("msg", "입력정보 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 		datasource_vo.setReg_id(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (null == datasource_vo.getReg_id() || "".equals(datasource_vo.getReg_id())) {
+			result.put("stateCode", 2);
 			result.put("state", "데이터소스정보 등록 실패");
 			result.put("msg", "등록자 ID 확인 실패");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 		try {
 			mapper.insertDS(datasource_vo);
+			result.put("stateCode", 0);
 			result.put("state", "데이터소스정보 등록 완료");
 			return ResponseEntity.ok(result.toString());
 		} catch (Exception e) {
+			result.put("stateCode", 3);
 			result.put("state", "데이터소스정보 등록 실패");
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());

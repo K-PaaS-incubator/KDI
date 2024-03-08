@@ -50,8 +50,7 @@ public class DataSourceController extends AbstractController {
 
 	@PostMapping("/dsInsert")
 	public ResponseEntity<String> dsWrite(DatasourceVo datasource_vo) {
-		service.insertDS(datasource_vo);
-		return ResponseEntity.ok("등록 완료");
+		return service.insertDS(datasource_vo);
 	}
 
 	@GetMapping("/dsEdit")
