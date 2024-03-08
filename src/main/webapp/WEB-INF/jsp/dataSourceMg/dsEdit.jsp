@@ -36,10 +36,10 @@
 		<input type="text" id="ds_sid" name="ds_sid" value="${selectDsInfo.ds_sid}" onkeyup="printName()"  required>
 		<!-- DB계정 유저명 -->
 		<div class="divTitle">UserName</div>
-		<input type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()"  required>
+		<input type="text" id="ds_usr_nm" name="ds_usr_nm" value="${selectDsInfo.ds_usr_nm}" onkeyup="printName()"  required>
 		<!-- DB계정 패스워드 -->
 		<div class="divTitle">Password</div>
-		<input type="password" id="ds_usr_pw" name="ds_usr_pw" required>
+		<input type="password" id="ds_usr_pw" name="ds_usr_pw" value="${selectDsInfo.ds_usr_pw}" required>
 		<div id="test_result"></div>
 		<div id="test_result2"></div>
 		
@@ -91,7 +91,7 @@ $('#modifyBtn').click(function databaseSave() {
 	        console.log('statusCode:'+result.statusCode);
 	        console.log('responseJSON:'+result.responseJSON.state);
 	        console.log('responseJSON:'+result.responseJSON.msg);
-	        alert('데이터소스 등록 실패');
+	        alert('데이터소스 수정 실패');
 		}
 	});
 });	

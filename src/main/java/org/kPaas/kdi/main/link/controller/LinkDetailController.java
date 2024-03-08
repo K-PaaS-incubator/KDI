@@ -33,6 +33,7 @@ public class LinkDetailController extends AbstractController {
 	@GetMapping("/getLinkService")
 	public String getLinkService(Model model,@RequestParam("svc_nm") String svc_nm) {
 		model.addAttribute("getLinkService", service.getLinkService(svc_nm));
+		//model.addAttribute("getDbSchema",service.getDbSchema());
 		return layout("linkDetail");
 	}
 

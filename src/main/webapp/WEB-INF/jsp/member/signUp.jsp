@@ -62,12 +62,12 @@
 				return;
 			}
 			$.ajax({
-				url : '${homeUrl}member/signUp', //컨트롤러에서 요청받을 주소
+				url : '${homeUrl}member/signUp', 
 				type : 'POST',
 				async : false,
 				data : $('#signupUser').serialize(),
 				dataType : 'json',
-				success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
+				success : function(result) { 
 					alert('회원가입 완료');
 					location.href = '${homeUrl}member/login';
 				},
@@ -84,12 +84,12 @@
 		function fn_check_duplicate_id() {
 			var check = false;
 			$.ajax({
-				url : '${homeUrl}member/idCheck', //컨트롤러에서 요청받을 주소
+				url : '${homeUrl}member/idCheck', 
 				type : 'POST',
 				async : false,
 				data : $('input[name=usr_id]').serialize(),
 				dataType : 'json',
-				success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
+				success : function(result) {
 					console.log(result)
 					if (!result.state) {
 						check = false;

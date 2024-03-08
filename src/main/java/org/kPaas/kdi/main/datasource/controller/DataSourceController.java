@@ -37,12 +37,6 @@ public class DataSourceController extends AbstractController {
 		return layout("dsCreate");
 	}
 
-	@PostMapping("dsCntCheck")
-	public @ResponseBody int dsCntCheck(String ds_nm) {
-		int result = service.getSameDsCheck(ds_nm);
-		return result;
-	}
-
 	@PostMapping("/dsCheck")
 	public ResponseEntity<String> dsCheck(DatasourceVo datasource_vo) {
 		int dsCnt = 0;

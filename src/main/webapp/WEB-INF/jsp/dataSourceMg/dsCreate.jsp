@@ -96,12 +96,14 @@ $('#regbtn').click(function databaseSave() {
 		type : 'POST',
 		async : false,
 		data :  $('#dsCreate').serialize(),
-		success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
+		success : function(result) { 
 			alert('등록 완료');
 			location.href='${homeUrl}dsList';
 		},
-		error : function(a, b, c) {
-			console.log(a, b, c);
+		error : function(result) {
+	        console.log('statusCode:'+result.statusCode);
+	        console.log('responseJSON:'+result.responseJSON.state);
+	        console.log('responseJSON:'+result.responseJSON.msg);
 		}
 	});
 });	
@@ -110,21 +112,22 @@ function fn_check_duplicate_ds(){
 	var ds_nm = $('input[name=ds_nm]').val();
 	var checkResult = false;
 	$.ajax({
-		url : '/ds/dsCntCheck', //컨트롤러에서 요청받을 주소
+		url : '/ds/dsCheck', //컨트롤러에서 요청받을 주소
 		type : 'POST',
 		async : false,
 		data : {
 			'ds_nm' : ds_nm,
 		},
-		success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
-			if (result == 0) {
+		success : function(result) {
+			console.log(result);
+			if (result == '정상') {
 				checkResult =  true;
 			} else {
 				checkResult = false;
 			}
 		},
-		error : function(a, b, c) {
-			console.log(a, b, c);
+		error : function(result) {
+	        console.log('statusCode:'+result.statusCode);
 		}
 	});
 	return checkResult;
