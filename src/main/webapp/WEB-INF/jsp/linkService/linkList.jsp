@@ -40,7 +40,7 @@
 	<script>
 	$( document ).ready(function() {
 		$("#lnkTbl tr").click(function(){
-			location.href = "${homeUrl}linkDetail?svc_nm="+$(this).find("td:nth-child(2)").text();
+			location.href = "${homeUrl}getLinkService?svc_nm="+$(this).find("td:nth-child(2)").text();
 		});
 	});
 	</script>

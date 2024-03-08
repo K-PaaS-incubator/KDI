@@ -27,13 +27,12 @@ public class LinkDetailController extends AbstractController {
 	public String linkDetail() {
 		return layout("linkDetail");
 	}
-	
+	 
 	//연계서비스 항목 설정 시작
 	
 	@GetMapping("/getLinkService")
 	public String getLinkService(Model model,@RequestParam("svc_nm") String svc_nm) {
 		model.addAttribute("getLinkService", service.getLinkService(svc_nm));
-		System.out.println(svc_nm);
 		return layout("linkDetail");
 	}
 

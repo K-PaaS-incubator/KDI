@@ -76,7 +76,7 @@
 			async : false,
 			data :  $('#linkCreate').serialize(),
 			success : function(result) {
-				location.href='${homeUrl}linkDetail';
+				location.href='${homeUrl}getLinkService?svc_nm='+$("#svc_nm").val();
 			},
 			error : function(result) {
 				console.log('statusCode:'+result.statusCode);
