@@ -1,6 +1,8 @@
 package org.kPaas.kdi.main.link.controller;
 
 import org.kPaas.kdi.com.abs.AbstractController;
+import org.kPaas.kdi.main.datasource.service.DatasourceService;
+import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.kPaas.kdi.main.link.service.LinkDetailService;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class LinkDetailController extends AbstractController {
 	@Autowired
 	LinkDetailService service;
 	
+	
 	//연계서비스 등록 두번째화면 - 연계서비스항목
 	@GetMapping("/linkDetail")
 	public String linkDetail() {
@@ -33,6 +36,7 @@ public class LinkDetailController extends AbstractController {
 	@GetMapping("/getLinkService")
 	public String getLinkService(Model model,@RequestParam("svc_nm") String svc_nm) {
 		model.addAttribute("getLinkService", service.getLinkService(svc_nm));
+		service.connectLinkDs(svc_nm);
 		//model.addAttribute("getDbSchema",service.getDbSchema());
 		return layout("linkDetail");
 	}

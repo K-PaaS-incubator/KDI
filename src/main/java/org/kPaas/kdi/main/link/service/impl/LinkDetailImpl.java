@@ -3,6 +3,7 @@ package org.kPaas.kdi.main.link.service.impl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -25,8 +26,9 @@ public class LinkDetailImpl implements LinkDetailService {
 		return mapper.getLinkService(svc_nm);
 	}
 	
-	public ResponseEntity<String> getDbSchema(DatasourceVo datasource_vo) {
+	public ResponseEntity<String> connectLinkDs(String svc_nm) {
 		JSONObject result = new JSONObject();
+		DatasourceVo datasource_vo = mapper.connectLinkDs(svc_nm);
 		String ds_url = datasource_vo.getDs_url();
 		if (null == ds_url) {
 			result.put("state", "테스트 실패");
@@ -44,4 +46,6 @@ public class LinkDetailImpl implements LinkDetailService {
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 	}
+	
+	
 }

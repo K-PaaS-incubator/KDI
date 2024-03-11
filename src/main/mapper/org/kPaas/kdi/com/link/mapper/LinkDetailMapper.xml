@@ -9,5 +9,13 @@
 		<where>svc_nm = #{svc_nm}</where>
 	</select>
 	
+	<select id="connectLinkDs" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo" parameterType="String">
+		SELECT * FROM KDI_DATASOURCE  
+ 		<where>
+ 		ds_nm = (SELECT ds_nm FROM KDI_LINK_SERVICE  
+ 		WHERE svc_nm = #{svc_nm})
+ 		</where>
+	</select>
+	
 
 </mapper>

@@ -56,21 +56,25 @@ public class LinkServiceImpl implements LinkService {
 	public ResponseEntity<String> insertLink(LinkServiceVo linkService_vo) {
 		JSONObject result = new JSONObject();
 		if (null == linkService_vo) {
+			result.put("stateCode", 1);
 			result.put("state", "연계서비스 등록 실패");
 			result.put("msg", "입력정보 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 		linkService_vo.setReg_id(SecurityContextHolder.getContext().getAuthentication().getName());
 		if (null == linkService_vo.getReg_id() || "".equals(linkService_vo.getReg_id())) {
+			result.put("stateCode", 2);
 			result.put("state", "연계서비스 등록 실패");
 			result.put("msg", "등록자 ID 확인 실패");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 		try {
 			mapper.insertLink(linkService_vo);
+			result.put("stateCode", 0);
 			result.put("state", "연계서비스 등록 성공");
 			return ResponseEntity.ok(result.toString());
 		} catch (Exception e) {
+			result.put("stateCode", 3);
 			result.put("state", "연계서비스 등록 실패");
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
