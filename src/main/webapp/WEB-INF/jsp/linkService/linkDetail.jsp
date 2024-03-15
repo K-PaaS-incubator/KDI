@@ -19,18 +19,22 @@
 					<div class="leftTitle">${getLinkService.ds_nm}</div>
 					<div></div>
 					<div class="subTitle">스키마 선택</div>
-					<ul><!-- //TODO 스키마명 많을 경우 스크롤로 볼 수 있게 개발 -->
-						<li>스키마명1</li>
-						<li>스키마명2</li>
-						<li>스키마명3</li>
+					<ul>
+						<!-- //TODO 스키마명 많을 경우 스크롤로 볼 수 있게 개발 -->
+						<c:forEach var="connectLinkDs" items="${connectLinkDs}">
+							<li class="selectSch"><input type="hidden" name="schemaName" value="${connectLinkDs}">${connectLinkDs}</li>
+						</c:forEach>
 					</ul>
 				</div>
 
 				<div id="rightContent">
-				<!--  //TODO 선택한 ds_nm과 선택한 스키마명이 와야함 -->
-				<div class="subTitle">데이터소스제목 - 스키마명1</div>
-				<!--  //TODO 테이블명 검색기능 -->
-				<div id="searchBox"><span>🔎 </span>검색어를 입력하세요</div>
+					<!--  //TODO 선택한 ds_nm과 선택한 스키마명이 와야함 -->
+					<div class="subTitle">${getLinkService.ds_nm}<div id="schemaTitle"></div>
+					</div>
+					<!--  //TODO 테이블명 검색기능 -->
+					<div id="searchBox">
+						<span>🔎 </span>검색어를 입력하세요
+					</div>
 					<table id="detailTbl">
 						<thead>
 							<tr>
@@ -61,28 +65,30 @@
 			<input type="button" value="다음🔜" id="regbtn" onclick="location.href='${homeUrl}linkTable'">
 		</form>
 	</div>
-
+	<table hidden="hidden">
+		<tbody id="detailTblFormat">
+			<tr class="detailTr">
+				<td>#NO</td>
+				<td>#TABLE_KR</td>
+				<td>#LINK_YN</td>
+				<td>#COMMENT</td>
+			</tr>
+		</tbody>
+	</table>
+	
 	<script>
 	
-	function linkgetDs(){
-		var svc_nm = $('#svc_nm').val();
-		var checkResult = false;
-		$.ajax({
-			url : '/link/getLinkService', //컨트롤러에서 요청받을 주소
-			type : 'POST',
-			async : false,
-			data : {
-				'svc_nm' : svc_nm,
-			},
-			success : function(result) {
-				consol.log("여기로 오나보자:" + svc_nm);
-			},
-			error : function(a, b, c) {
-				console.log(a, b, c);
-			}
+		$('.selectSch').click(function() {
+			var schemaName = $(this).children("input[name='schemaName']").val();
+							$('#schemaTitle').text(schemaName);
+							$("#@#####").load("asbvd/asdf34r?schemaName="+schemaName);
+							location.href="asbvd/asdf34r?schemaName="+schemaName;
 		});
-		return checkResult;
-	}
+		
+		
+		//var aa = $("#detailTblFormat").html();
+		//aa = aa.replace('#NO', 111).replace("#LINK_YN","X")
+		//$("#detailTbl tbody").html(aa);
 		
 	</script>
 

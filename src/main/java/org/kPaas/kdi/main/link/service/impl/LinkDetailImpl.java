@@ -2,7 +2,10 @@ package org.kPaas.kdi.main.link.service.impl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -26,26 +29,28 @@ public class LinkDetailImpl implements LinkDetailService {
 		return mapper.getLinkService(svc_nm);
 	}
 	
-	public ResponseEntity<String> connectLinkDs(String svc_nm) {
-		JSONObject result = new JSONObject();
+	public List<String> connectLinkDs(String svc_nm) {
+		List<String> schemaNm = new ArrayList<>();
 		DatasourceVo datasource_vo = mapper.connectLinkDs(svc_nm);
 		String ds_url = datasource_vo.getDs_url();
-		if (null == ds_url) {
-			result.put("state", "테스트 실패");
-			result.put("msg", "DB URL정보가 누락되었습니다.");
-			return ResponseEntity.badRequest().body(result.toString());
-		}
 		String ds_usr_nm = datasource_vo.getDs_usr_nm();
 		String ds_usr_pw = datasource_vo.getDs_usr_pw();
 		try (Connection conn = DriverManager.getConnection(ds_url, ds_usr_nm, ds_usr_pw)) {
-			result.put("state", "테스트 성공");
-			return ResponseEntity.ok(result.toString());
+			String sql = String.format("		SELECT username \n"
+					+ "		FROM dba_users\n"
+					+ "		WHERE username NOT IN ('APEX_040200', 'DVF', 'MDDATA', 'LBACSYS','SYS', 'SYSTEM', 'SYSDG', 'SYSBACKUP', 'SYSKM', 'SYSRAC', 'DBSNMP', 'OUTLN', 'AUDSYS', 'GSMADMIN_INTERNAL', 'GSMCATUSER', 'GSMUSER', 'DIP', 'REMOTE_SCHEDULER_AGENT', 'XS$NULL', 'ORACLE_OCM', 'WMSYS', 'APPQOSSYS', 'OJVMSYS', 'ORDDATA', 'ORDPLUGINS', 'ORDSYS', 'SI_INFORMTN_SCHEMA', 'MDSYS', 'CTXSYS', 'ANONYMOUS', 'XDB', 'APEX_040000', 'APEX_050000', 'APEX_060000', 'FLOWS_FILES', 'APEX_PUBLIC_USER', 'SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR', 'OLAPSYS', 'EXFSYS', 'BI', 'GSMROOTUSER', 'DVSYS', 'DBSFWUSER', 'ORACLE_SCRIPT', 'APEX_LISTENER', 'APEX_REST_PUBLIC_USER', 'APEX_INSTANCE_ADMIN_USER')\n"
+					+ "		ORDER BY username");
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while(rs.next()) {
+				schemaNm.add(rs.getString(1));
+			}
+			return schemaNm;
 		} catch (SQLException e) {
-			result.put("state", "테스트 실패");
-			result.put("msg", e.getMessage());
-			return ResponseEntity.badRequest().body(result.toString());
+			e.printStackTrace();
+			return null;
 		}
 	}
-	
+		
 	
 }

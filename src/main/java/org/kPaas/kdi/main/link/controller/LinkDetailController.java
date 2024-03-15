@@ -1,11 +1,17 @@
 package org.kPaas.kdi.main.link.controller;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.tomcat.util.json.JSONParser;
+import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractController;
-import org.kPaas.kdi.main.datasource.service.DatasourceService;
-import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.kPaas.kdi.main.link.service.LinkDetailService;
-import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,13 +38,15 @@ public class LinkDetailController extends AbstractController {
 	}
 	 
 	//연계서비스 항목 설정 시작
-	
 	@GetMapping("/getLinkService")
 	public String getLinkService(Model model,@RequestParam("svc_nm") String svc_nm) {
-		model.addAttribute("getLinkService", service.getLinkService(svc_nm));
-		service.connectLinkDs(svc_nm);
-		//model.addAttribute("getDbSchema",service.getDbSchema());
+		model.addAttribute("getLinkService", service.getLinkService(svc_nm));	
+		model.addAttribute("connectLinkDs",service.connectLinkDs(svc_nm));
 		return layout("linkDetail");
 	}
+	
+	
+	
+	
 
 }
