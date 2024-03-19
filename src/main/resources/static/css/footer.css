@@ -1,0 +1,36 @@
+.footer-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    height: 256px;
+    background-color: #2D2D2D;
+    padding: 0 264px;
+    color: white;
+}
+
+.footer-main{
+    margin-top: 64px;
+}
+
+.footer-sub{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 56px;
+    font-weight: 500;
+    color: #B8B8B8;
+}
+.footer-info{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 12px;
+}
+
+.footer-info p {
+    margin-right: 32px;
+}
+.title-text{
+    font-weight: 600;
+    font-size: 18px;
+}
+

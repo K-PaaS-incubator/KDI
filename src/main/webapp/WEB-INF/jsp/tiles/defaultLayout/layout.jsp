@@ -10,6 +10,7 @@
 <meta charset="UTF-8">
 <title>KDI</title>
 <link rel="stylesheet" href="${cssUrl}/default/basic.css">
+	<link rel="stylesheet" href="${cssUrl}/default/common.css">
 <script src="${jsUrl}/jquery/jquery-3.7.1.min.js"></script>
 <script src="${jsUrl}/jquery/additional-methods.min.js"></script>
 <script src="${jsUrl}/jquery/jquery.validate.min.js"></script>

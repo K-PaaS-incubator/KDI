@@ -1,0 +1,51 @@
+.header-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    height: 100px;
+    padding: 0 48px;
+}
+
+.header-title{
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.menu-wrapper{
+    height: 100%;
+}
+
+.menuBox{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.menuBar{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+    height: 100%;
+    margin-right: 5.5rem;
+    border-bottom: 0px solid transparent;
+    transition: border-bottom 0.1s ease-in-out;
+}
+
+.menuBar:hover{
+    color: #3E7CFA;
+    border-bottom: 5px solid #3E7CFA;
+}
+
+/* 화면이 작을 때 메뉴 버튼 간격 줄임 */
+@media (max-width: 1500px) {
+    .menuBar {
+        margin-right: 32px;
+    }
+}

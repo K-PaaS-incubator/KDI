@@ -1,0 +1,16 @@
+.button-primary {
+    border-radius: 8px;
+    padding: 12px 36px;
+    background-color: #3E7CFA;
+    font-weight: 600;
+    color: white;
+}
+
+.button-second {
+    border-radius: 8px;
+    padding: 12px 40px;
+    background-color: white;
+    font-weight: 600;
+    color: #3E7CFA;
+    border: 1px solid #3E7CFA;
+}
