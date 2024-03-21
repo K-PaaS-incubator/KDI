@@ -1,30 +1,34 @@
 package org.kPaas.kdi.main.datasource.service.impl;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.json.JSONObject;
+import org.kPaas.kdi.com.abs.AbstractService;
+import org.kPaas.kdi.com.config.KdiRoutingDataSource;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.main.datasource.mapper.DatasourceMapper;
 import org.kPaas.kdi.main.datasource.service.DatasourceService;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
+import org.mybatis.spring.MyBatisSystemException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DatasourceServiceImpl implements DatasourceService {
+public class DatasourceServiceImpl extends AbstractService implements DatasourceService {
 
 	@Resource
 	private DatasourceMapper mapper;
 
 	@Resource
 	private DBCheckService dbCheckService;
+	
+	@Autowired
+	private KdiRoutingDataSource kdiRoutingDataSource;
 
 	/**
 	 * 최초 기동시에 데이터소스테이블(KDI_DATASOURCE)의 유무를 확인하고<br>
@@ -85,17 +89,39 @@ public class DatasourceServiceImpl implements DatasourceService {
 			result.put("msg", "DB URL정보가 확인되지 않습니다.");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		String ds_usr_nm = datasource_vo.getDs_usr_nm();
-		String ds_usr_pw = datasource_vo.getDs_usr_pw();
-		try (Connection conn = DriverManager.getConnection(ds_url, ds_usr_nm, ds_usr_pw)) {
+		// 현제 쓰레드의 데이터소스명 저장
+		String orgContext = getContext();
+		// 임시로 사용할 DataSourceName 정의
+		String testDataSourceName = System.currentTimeMillis() + "-" + Thread.currentThread().threadId();
+		try {
+			datasource_vo.setDs_nm(testDataSourceName);
+			kdiRoutingDataSource.put(datasource_vo);
+			// 현재 쓰레드의 데이터소스를 변경하는 행위
+			setContext(testDataSourceName);
+			// 디비접속이 되면 쿼리가 수행됨
+			String validationResult = mapper.validationQuery(datasource_vo.getDs_type());
+			if (null == validationResult) {
+				result.put("stateCode", 4);
+				result.put("state", "테스트 실패");
+				result.put("msg", "ValidationQuery 수행실패");
+				log.trace("ValidationQuery 수행실패. ds_nm=" + getContext());
+				return ResponseEntity.badRequest().body(result.toString());
+			}
 			result.put("stateCode", 0);
 			result.put("state", "테스트 성공");
+			log.debug("테스트 성공. ds_nm=" + getContext() + ",ValidationQueryResult=" + validationResult);
 			return ResponseEntity.ok(result.toString());
-		} catch (SQLException e) {
+		} catch (MyBatisSystemException e) {
 			result.put("stateCode", 3);
 			result.put("state", "테스트 실패");
-			result.put("msg", e.getMessage());
+			result.put("msg", e.getRootCause().getMessage());
+			log.error("접속 테스트 실패", e);
 			return ResponseEntity.badRequest().body(result.toString());
+		} finally {
+			// 테스트를위한 임시 DataSource 삭제
+			kdiRoutingDataSource.remove(testDataSourceName);
+			// 현재 쓰레드의 데이터소스를 원복하는 행위
+			setContext(orgContext);
 		}
 	}
 	
