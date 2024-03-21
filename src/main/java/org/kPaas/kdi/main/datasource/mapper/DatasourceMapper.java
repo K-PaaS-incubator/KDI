@@ -3,8 +3,8 @@ package org.kPaas.kdi.main.datasource.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
-import org.springframework.http.ResponseEntity;
 
 @Mapper
 public interface DatasourceMapper {
@@ -18,11 +18,13 @@ public interface DatasourceMapper {
 	public List<DatasourceVo> selectDsList();
 
 	public DatasourceVo selectDsInfo(String ds_nm);
-	
+
 	public void editDS(DatasourceVo datasource_vo);
 
 	public Integer getSameDsCheck(String ds_nm);
 
 	public void deleteDS(String ds_nm);
+
+	public String validationQuery(@Param("ds_type") String ds_type);
 
 }

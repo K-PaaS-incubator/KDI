@@ -11,53 +11,73 @@
 
 	<insert id="createTable">
 		CREATE TABLE `KDI_DATASOURCE` (
-			`ds_nm`	varchar2(100)	NOT NULL,
-			`ds_type`	varchar2(100)	NULL,
-			`ds_driver`	varchar2(100)	NULL,
-			`ds_addr`	varchar2(100)	NULL,
-			`ds_port`	varchar2(100)	NULL,
-			`ds_sid`	varchar2(100)	NULL,
-			`ds_url`	varchar2(100)	NULL,
-			`ds_usr_nm`	varchar2(100)	NULL,
-			`ds_usr_pw`	varchar2(100)	NULL,
-			`reg_id`	varchar2(20)	NULL,
-			`reg_dt`	date	NULL,
-			`mod_id`	varchar2(20)	NULL,
-			`mod_dt`	date	NULL,
-			PRIMARY KEY	(`ds_nm`)
+		`ds_nm` varchar2(100) NOT NULL,
+		`ds_type` varchar2(100) NULL,
+		`ds_driver` varchar2(100) NULL,
+		`ds_addr` varchar2(100) NULL,
+		`ds_port`
+		varchar2(100) NULL,
+		`ds_sid` varchar2(100) NULL,
+		`ds_url` varchar2(100) NULL,
+		`ds_usr_nm` varchar2(100) NULL,
+		`ds_usr_pw` varchar2(100) NULL,
+		`reg_id` varchar2(20) NULL,
+		`reg_dt` date NULL,
+		`mod_id` varchar2(20) NULL,
+		`mod_dt` date NULL,
+		PRIMARY KEY (`ds_nm`)
 		)
 	</insert>
-	
+
 	<select id="getSameDsCheck" resultType="Integer">
 		SELECT count(*) FROM KDI_DATASOURCE
 		<where>ds_nm = #{ds_nm}</where>
 	</select>
-	
+
 	<select id="selectDsList" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
 		SELECT rownum as NO,* FROM KDI_DATASOURCE
 	</select>
-	
+
 	<select id="selectDsInfo" parameterType="String" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
-		SELECT * FROM KDI_DATASOURCE 
+		SELECT * FROM KDI_DATASOURCE
 		<where>
-		ds_nm = #{ds_nm}
+			ds_nm = #{ds_nm}
 		</where>
 	</select>
-	
+
 	<update id="editDS" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
 		UPDATE KDI_DATASOURCE
-		SET ds_url = #{ds_url}, ds_addr = #{ds_addr}, ds_port = #{ds_port}, ds_sid = #{ds_sid}, ds_usr_nm = #{ds_usr_nm}, ds_usr_pw = #{ds_usr_pw}
+		<set>
+			ds_url = #{ds_url},
+			ds_addr = #{ds_addr},
+			ds_port = #{ds_port},
+			ds_sid = #{ds_sid},
+			ds_usr_nm = #{ds_usr_nm},
+			ds_usr_pw = #{ds_usr_pw}
+		</set>
 		<where>
-		ds_nm = #{ds_nm}
+			ds_nm = #{ds_nm}
 		</where>
 	</update>
-	
+
 	<delete id="deleteDS" parameterType="String">
-		DELETE 
-		FROM KDI_DATASOURCE
+		DELETE
+		FROM
+			KDI_DATASOURCE
 		<where>
-		ds_nm = #{ds_nm}
+			ds_nm = #{ds_nm}
 		</where>
 	</delete>
-	
+	<select id="validationQuery" resultType="String">
+		<choose>
+			<when test="ds_type == 'h2'">select 1</when>
+			<when test="ds_type == 'mysql'">select 1</when>
+			<when test="ds_type == 'mariadb'">select 1</when>
+			<when test="ds_type == 'postgresql'">select 1</when>
+			<when test="ds_type == 'sybase'">select 1</when>
+			<when test="ds_type == 'mssql'">select GETDATE()</when>
+			<when test="ds_type == 'as400'">SELECT current date FROM sysibm.sysdummy1</when>
+			<otherwise>select 1 from dual</otherwise>
+		</choose>
+	</select>
 </mapper>
