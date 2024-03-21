@@ -8,9 +8,16 @@
     padding: 0 48px;
 }
 
+.logo-box{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .header-title{
     font-size: 30px;
     cursor: pointer;
+    margin-left: 14px;
 }
 
 .menu-wrapper{

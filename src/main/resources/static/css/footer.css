@@ -11,6 +11,9 @@
 
 .footer-main{
     margin-top: 64px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .footer-sub{
@@ -29,8 +32,9 @@
 .footer-info p {
     margin-right: 32px;
 }
-.title-text{
+.logo-text{
     font-weight: 600;
     font-size: 18px;
+    margin-left: 14px;
 }
 

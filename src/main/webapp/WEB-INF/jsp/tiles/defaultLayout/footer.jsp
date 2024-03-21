@@ -4,7 +4,8 @@
 <footer>
     <div class="footer-wrapper">
         <div class="footer-main">
-            <p class="title-text">K-PaaS Data Integration</p>
+            <img src="/img/logo-kdi-footer.png" alt="">
+            <p class="logo-text">K-PaaS Data Integration</p>
         </div>
         <div class="footer-sub">
             <div class="footer-info">
