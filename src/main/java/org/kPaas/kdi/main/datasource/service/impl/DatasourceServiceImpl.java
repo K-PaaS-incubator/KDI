@@ -39,6 +39,13 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		if (!dbCheckService.isExists("KDI_DATASOURCE")) {
 			mapper.createTable();
 		}
+		
+		/**
+		 * 기입력된 데이터소스목록을 KdiRoutingDataSource에 불러오는 기능
+		 */
+		for (DatasourceVo vo : selectDsList()) {
+			loadDataSource(vo);
+		}
 	}
 
 	public ResponseEntity<String> insertDS(DatasourceVo datasource_vo) {
@@ -58,6 +65,9 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		}
 		try {
 			mapper.insertDS(datasource_vo);
+			// 신규데이터소스를 불러오는 행위
+			loadDataSource(datasource_vo);
+			
 			result.put("stateCode", 0);
 			result.put("state", "데이터소스정보 등록 완료");
 			return ResponseEntity.ok(result.toString());
@@ -155,6 +165,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			mapper.editDS(datasource_vo);
 			result.put("stateCode", 0);
 			result.put("state", "데이터소스정보 수정 완료");
+			loadDataSource(datasource_vo);
 			return ResponseEntity.ok(result.toString());
 		} catch (Exception e) {
 			result.put("state", "데이터소스정보 수정 실패");
@@ -169,6 +180,8 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		JSONObject result = new JSONObject();
 		try {
 			mapper.deleteDS(ds_nm);
+			log.info("Remove DataSource - '" + ds_nm + "'");
+			kdiRoutingDataSource.remove(ds_nm);
 			result.put("stateCode", 0);
 			result.put("state", "데이터소스정보 삭제 완료!!");
 			return ResponseEntity.ok(result.toString());
@@ -179,6 +192,15 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
 		}
+	}
+	
+
+	/**
+	 * KdiRoutingDataSource에 DataSource를 불러오는 기능
+	 */
+	private void loadDataSource(DatasourceVo vo) {
+		kdiRoutingDataSource.put(vo);
+		log.info("Load DataSource - '" + vo.getDs_nm() + "'");
 	}
 
 }
