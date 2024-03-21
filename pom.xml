@@ -47,6 +47,12 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 		</dependency>
+		<!-- @ConfigurationProperties -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<!--  사용자 인증 및 권한 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -105,7 +111,6 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.30</version><!--$NO-MVN-MAN-VER$-->
 		</dependency>
-
 	</dependencies>
 
 	<build>
