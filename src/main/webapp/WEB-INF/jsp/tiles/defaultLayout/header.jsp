@@ -5,12 +5,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:url var="homeUrl" value="/"/>
 <c:url var="cssUrl" value="/css"/>
+<c:url var="imgUrl" value="/img"/>
 <link rel="stylesheet" href="${cssUrl}/header.css">
 <header>
     <section class="title">
         <div class="header-wrapper">
-            <div>
-                <h1 class="header-title" onclick="location.href='${homeUrl}'">K-PaaS Data Integration</h1>
+            <div class="logo-box" onclick="location.href='${homeUrl}'">
+                <img src="${imgUrl}/logo-kdi.png" alt="">
+                <h1 class="header-title" >K-PaaS Data Integration</h1>
             </div>
             <div class="menu-wrapper">
                 <nav class="menuBox">
