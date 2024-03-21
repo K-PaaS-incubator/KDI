@@ -1,3 +1,28 @@
+/*디자인 시스템*/
+.header1{font-weight: 700;font-size: 56px;}
+.header2{font-weight: 700;font-size: 46px;}
+.header3{font-weight: 700;font-size: 40px;}
+.header4{font-weight: 700;font-size: 24px;}
+.header5{font-weight: 700;font-size: 20px;}
+.header6{font-weight: 700;font-size: 18px;}
+.header7{font-weight: 700;font-size: 16px;}
+.header8{font-weight: 700;font-size: 12px;}
+.body1{font-weight: 500;font-size: 18px;}
+.body2{font-weight: 500;font-size: 16px;}
+.subtitle2{font-weight: 500;font-size: 16px;}
+.primary {color: #336AEA;}
+.secondary {color: #054BD6;}
+.bg-blue40{background-color: rgba(51, 106, 234, 0.40)}
+.bg-blue30{background-color: rgba(51, 106, 234, 0.30)}
+.bg-blue10{background-color: rgba(51, 106, 234, 0.10)}
+.bg-blue{background-color: #F6F9FF}
+.gray500{color: #323232;}
+.gray400{color: #545454;}
+.gray300{color: #C6C6C6;}
+.gray200{color: #F8F8F8;}
+.gray100{color: #F5F5F5;}
+
+/*버튼*/
 .button-primary {
     border-radius: 8px;
     padding: 12px 36px;
@@ -14,3 +39,4 @@
     color: #3E7CFA;
     border: 1px solid #3E7CFA;
 }
+

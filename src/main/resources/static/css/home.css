@@ -10,7 +10,7 @@
 
 .img-content{
     height: auto;
-    object-fit: contain;
+    object-fit: fill;
 }
 
 .bottom-box{
