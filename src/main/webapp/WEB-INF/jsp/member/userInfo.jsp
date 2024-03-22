@@ -2,8 +2,23 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="cssUrl" value="/css" />
-<link rel="stylesheet" href="${cssUrl}/userInfo.css">
 
+<html lang="ko">
+<head>
+	<link rel="stylesheet" href="${cssUrl}/userInfo.css">
+	<link rel="stylesheet" href="${cssUrl}/ds.css">
+	<meta charset="UTF-8">
+
+	<title>사용자 계정 정보</title>
+	<script>
+		$(document).ready(function () {
+			$('.banner-title').text('사용자 계정 정보')
+			$('.banner-sub-title').text('사용자 정보를 확인 및 수정할 수 있습니다')
+		});
+	</script>
+</head>
+<body>
+<jsp:include page="../tiles/bannerLayout.jsp"></jsp:include>
 <section class="contents">
 
 	<div class="sideMenu">
@@ -36,4 +51,6 @@
 	</div>
 
 </section>
+</body>
+</html>
 

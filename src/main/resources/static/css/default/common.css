@@ -9,18 +9,24 @@
 .header8{font-weight: 700;font-size: 12px;}
 .body1{font-weight: 500;font-size: 18px;}
 .body2{font-weight: 500;font-size: 16px;}
-.subtitle2{font-weight: 500;font-size: 16px;}
+.subtitle2{font-weight: 400;font-size: 16px;}
+.subtitle2{font-weight: 400;font-size: 12px;}
 .primary {color: #336AEA;}
 .secondary {color: #054BD6;}
 .bg-blue40{background-color: rgba(51, 106, 234, 0.40)}
 .bg-blue30{background-color: rgba(51, 106, 234, 0.30)}
 .bg-blue10{background-color: rgba(51, 106, 234, 0.10)}
 .bg-blue{background-color: #F6F9FF}
+.bg-blue{background-color: #F6F9FF}
+.white100{color: #ffffff}
+.white80{color: rgba(255, 255, 255, 0.80)}
 .gray500{color: #323232;}
 .gray400{color: #545454;}
 .gray300{color: #C6C6C6;}
 .gray200{color: #F8F8F8;}
 .gray100{color: #F5F5F5;}
+.flex-row{display: flex; flex-direction: row}
+.flex-col{display: flex; flex-direction: column}
 
 /*버튼*/
 .button-primary {
