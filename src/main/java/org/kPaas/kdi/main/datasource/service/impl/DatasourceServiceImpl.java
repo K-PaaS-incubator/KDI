@@ -102,7 +102,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		// 현제 쓰레드의 데이터소스명 저장
 		String orgContext = getContext();
 		// 임시로 사용할 DataSourceName 정의
-		String testDataSourceName = System.currentTimeMillis() + "-" + Thread.currentThread().threadId();
+		String testDataSourceName = System.currentTimeMillis() + "-" + Thread.currentThread().getId();
 		try {
 			datasource_vo.setDs_nm(testDataSourceName);
 			kdiRoutingDataSource.put(datasource_vo);
