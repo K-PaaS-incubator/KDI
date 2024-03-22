@@ -30,8 +30,6 @@
     align-items: center;
     height: 100%;
     width: 100%;
-    font-size: 20px;
-    font-weight: 600;
 }
 
 .menuBar{
@@ -47,11 +45,11 @@
 
 .menuBar:hover{
     color: #3E7CFA;
-    border-bottom: 5px solid #3E7CFA;
+    border-bottom: 6px solid #3E7CFA;
 }
 
 /* 화면이 작을 때 메뉴 버튼 간격 줄임 */
-@media (max-width: 1500px) {
+@media (max-width: 1540px) {
     .menuBar {
         margin-right: 32px;
     }

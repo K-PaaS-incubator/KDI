@@ -15,7 +15,7 @@
                 <h1 class="header-title" >K-PaaS Data Integration</h1>
             </div>
             <div class="menu-wrapper">
-                <nav class="menuBox">
+                <nav class="menuBox header5">
                     <div class="menuBar" onclick="location.href='${homeUrl}ds/dsList'">데이터소스</div>
                     <div class="menuBar" onclick="location.href='${homeUrl}link/linkList'">연계서비스</div>
                     <div class="menuBar" onclick="location.href='${homeUrl}monitoring'">모니터링</div>
