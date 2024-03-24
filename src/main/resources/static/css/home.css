@@ -47,9 +47,8 @@
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-bottom: 224px;
+    margin-bottom: 100px;
 }
-
 .link-card{
     display: flex;
     flex-direction: column;
@@ -67,4 +66,18 @@
 }
 .card-text{
     font-size : 20px;
+    word-break: break-word;
+    text-align: center;
+}
+@media (max-width: 1500px) {
+    .bottom-box{
+        padding: 0 130px;
+    }
+    .link-card{
+        width: 220px;
+        height: 200px;
+    }
+    .card-img{
+        height: 88px;
+    }
 }

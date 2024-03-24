@@ -17,7 +17,15 @@
 .header-title{
     font-size: 30px;
     cursor: pointer;
+    font-weight: 500;
     margin-left: 14px;
+}
+@media (max-width: 1300px) {
+    .header-title{
+        font-size: 24px;
+        width: 156px;
+        word-break: break-word;
+    }
 }
 
 .menu-wrapper{

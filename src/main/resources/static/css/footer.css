@@ -8,6 +8,17 @@
     padding: 0 264px;
     color: white;
 }
+@media (max-width: 1500px) {
+    .footer-wrapper{
+        padding: 0 130px;
+    }
+}
+@media (max-width: 768px) {
+    .footer-wrapper{
+        padding: 0 84px;
+    }
+}
+
 
 .footer-main{
     margin-top: 64px;
