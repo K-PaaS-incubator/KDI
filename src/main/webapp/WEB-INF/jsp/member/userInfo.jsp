@@ -3,31 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="cssUrl" value="/css" />
 
-<html lang="ko">
-<head>
-	<link rel="stylesheet" href="${cssUrl}/userInfo.css">
-	<link rel="stylesheet" href="${cssUrl}/ds.css">
-	<meta charset="UTF-8">
-
-	<title>사용자 계정 정보</title>
-	<script>
-		$(document).ready(function () {
-			$('.banner-title').text('사용자 계정 정보')
-			$('.banner-sub-title').text('사용자 정보를 확인 및 수정할 수 있습니다')
-		});
-	</script>
-</head>
-<body>
-<jsp:include page="../tiles/bannerLayout.jsp"></jsp:include>
+<jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
-
+	<jsp:include page="../component/subTitle.jsp"></jsp:include>
 	<div class="sideMenu">
 		<div>사용자 정보</div>
 	</div>
 
 	<div class="mainContent">
 		<div id="pageTitle">사용자 계정 정보</div>
-		
 		<div class="usrInfoBox">
 			<div class="usrInfo">
 				<h4>아이디</h4>
@@ -51,6 +35,19 @@
 	</div>
 
 </section>
-</body>
-</html>
+<script defer>
+	$(document).ready(function () {
+		$('.banner-title').text('사용자 계정 정보')
+		$('.banner-sub-title').text('사용자 정보를 확인 및 수정할 수 있습니다')
+	});
+	//페이지 타이틀 세팅
+	$('.main-title-text').text('사용자 계정 정보');
+	$('.navi-arrow').text(' > 사용자 정보')
+
+	const subTitleArray = ['사용자 정보'];
+	subTitleArray.forEach(function (subtitle){
+		let html = '<div class="current-title header6">' + subtitle + '</div>'
+		$('.current-title-box').append(html);
+	})
+</script>
 

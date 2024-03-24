@@ -54,10 +54,21 @@ a {
 
 /* section START */
 section.contents {
-	background: rgba(144, 224, 239, 0.2);
+	background-color: white;
 	min-height: 16em;
+	padding: 80px 260px;
 }
 
+@media (max-width: 1500px) {
+	section.contents {
+		padding: 80px 130px;
+	}
+}
+@media (max-width: 768px) {
+	section.contents {
+		padding: 80px 84px;
+	}
+}
 section.contents .sideMenu {
 	position: sticky;
 	float: left;
