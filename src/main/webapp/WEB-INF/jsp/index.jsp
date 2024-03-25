@@ -8,7 +8,7 @@
 <section>
     <div class="container">
         <div class="img-box">
-            <img class="img-content" src="${imgUrl}/bg-img-01.png" alt="">
+            <img class="img-content" src="${imgUrl}/bg-img-02.png" alt="">
         </div>
         <div class="bottom-box">
             <div class="description-box">
