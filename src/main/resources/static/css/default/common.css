@@ -17,7 +17,7 @@
 .bg-blue30{background-color: rgba(51, 106, 234, 0.30)}
 .bg-blue10{background-color: rgba(51, 106, 234, 0.10)}
 .bg-blue{background-color: #F6F9FF}
-.bg-blue{background-color: #F6F9FF}
+.bg-light-blue{background-color: #F8FAFF}
 .white100{color: #ffffff}
 .white80{color: rgba(255, 255, 255, 0.80)}
 .gray500{color: #323232;}
@@ -30,19 +30,28 @@
 
 /*버튼*/
 .button-primary {
-    border-radius: 8px;
-    padding: 12px 36px;
-    background-color: #3E7CFA;
+    border-radius: 3px;
+    padding: 12px 64px;
+    background-color: #336AEA;
     font-weight: 600;
+    font-size: 18px;
     color: white;
+    cursor: pointer;
 }
-
+.button-primary:hover {
+    background-color: #054BD6;
+}
 .button-second {
-    border-radius: 8px;
-    padding: 12px 40px;
+    border-radius: 3px;
+    padding: 12px 64px;
     background-color: white;
     font-weight: 600;
-    color: #3E7CFA;
-    border: 1px solid #3E7CFA;
+    font-size: 18px;
+    color: #336AEA;
+    border: 1px solid #336AEA;
+    cursor: pointer;
+}
+.button-second:hover {
+    background-color: rgba(51, 106, 234, 0.1);
 }
 

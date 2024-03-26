@@ -126,20 +126,20 @@ section.contents #saveBtn:hover {
 	background: linear-gradient(to left,rgb(0, 180, 216), rgb(3, 4, 94));
 }
 
-section.contents #regbtn {
-	width:6em;
-	height:2em;
-	margin:1em 0 1em 0;
-	border: none;
-	font-size:1em;
-	text-align:center;
-	letter-spacing: 0.3em;
-	background: #CAF0F8;
-}
-section.contents #regbtn:hover {
-	cursor: pointer;
-	box-shadow: 2px 2px 2px #03045E;
-}
+/*section.contents #regbtn {*/
+/*	width:6em;*/
+/*	height:2em;*/
+/*	margin:1em 0 1em 0;*/
+/*	border: none;*/
+/*	font-size:1em;*/
+/*	text-align:center;*/
+/*	letter-spacing: 0.3em;*/
+/*	background: #CAF0F8;*/
+/*}*/
+/*section.contents #regbtn:hover {*/
+/*	cursor: pointer;*/
+/*	box-shadow: 2px 2px 2px #03045E;*/
+/*}*/
 
 /* section END */
 
