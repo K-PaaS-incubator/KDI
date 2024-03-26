@@ -19,6 +19,7 @@
                     <th>데이터소스 제목</th>
                     <th>URL</th>
                 </tr>
+                <tr class="table-spacing"></tr>
             </thead>
             <tbody id="dsTbl" class="list-body">
                 <c:forEach var="dsList" items="${selectDsList}">
@@ -27,6 +28,7 @@
                         <td><a>${dsList.ds_nm}</a></td>
                         <td>${dsList.ds_url}</td>
                     </tr>
+                    <tr class="table-spacing"></tr>
                 </c:forEach>
             </tbody>
         </table>
