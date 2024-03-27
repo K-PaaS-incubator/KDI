@@ -26,9 +26,11 @@
     border-radius: 3px;
     width: 100%;
 }
-.data-sources-list .list-body tr a:hover{
+.data-sources-list .list-body tr:hover{
     color: #336AEA;
     cursor: pointer;
+    border: 1px solid rgba(51, 106, 234, 0.40);
+    background-color: #F8FAFF;
 }
 .data-sources-list .list-body tr td:first-child{
     text-align: center;
