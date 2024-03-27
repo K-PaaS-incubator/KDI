@@ -5,6 +5,6 @@
         <span><img src="/img/icon-home.png" alt=""></span>
         <span class="navi-arrow"></span>
     </div>
-    <div class="flex-row current-title-box">
-    </div>
+<%--    <div class="flex-row current-title-box">--%>
+<%--    </div>--%>
 </div>

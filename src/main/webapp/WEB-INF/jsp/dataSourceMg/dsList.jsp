@@ -25,7 +25,7 @@
                 <c:forEach var="dsList" items="${selectDsList}">
                     <tr class="subtitle1 gray500">
                         <td>${dsList.no}</td>
-                        <td><a>${dsList.ds_nm}</a></td>
+                        <td>${dsList.ds_nm}</td>
                         <td>${dsList.ds_url}</td>
                     </tr>
                     <tr class="table-spacing"></tr>
@@ -41,25 +41,25 @@
             //배너 타이틀 세팅
             $('.banner-title').text('데이터 소스')
             $('.banner-sub-title').text('데이터 정보를 한눈에 볼 수 있습니다')
-            $("#dsTbl tr td a").click(function () {
+            //페이지 타이틀 세팅
+            $('.main-title-text').text('데이터소스 조회');
+            $('.navi-arrow').text(' > 데이터소스 > 데이터소스 조회')
+
+            $("#dsTbl tr").click(function () {
                 location.href = "${homeUrl}dsEdit?ds_nm=" + $(this).find("td:nth-child(2)").text();
             });
-            //페이지 타이틀 세팅
-            $('.main-title-text').text('데이터소스 관리');
-            $('.navi-arrow').text(' > 데이터소스 > 데이터소스 관리 > 데이터소스 조회')
 
             //차후 데이터베이스가 생기면 DB에서 불러오기. 현재는 tempData 활용
-            const subTitleArray = [
-                {subTitle: '데이터소스 조회', url: 'dsList'},
-                {subTitle: '데이터소스 등록', url: 'dsCreate'},
-                {subTitle: '데이터소스 수정', url: 'dsEdit'},
-            ];
-            subTitleArray.forEach(function (el) {
-                let html = '<div class="current-title header6" id="' + el.url + '">' + el.subTitle + '</div>';
-                $('.current-title-box').append(html);
-                $("#dsList").css('color', '#336AEA');
-                $("#dsList").css('border-bottom', '6px solid #336AEA');
-            })
+            // const subTitleArray = [
+            //     {subTitle: '데이터소스 조회', url: 'dsList'},
+            //     {subTitle: '데이터소스 등록', url: 'dsCreate'},
+            // ];
+            // subTitleArray.forEach(function (el) {
+            //     let html = '<div class="current-title header6" id="' + el.url + '">' + el.subTitle + '</div>';
+            //     $('.current-title-box').append(html);
+            //     $("#dsList").css('color', '#336AEA');
+            //     $("#dsList").css('border-bottom', '6px solid #336AEA');
+            // })
         });
     </script>
 </section>
