@@ -7,14 +7,12 @@
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
-
     <div class="mainContent">
-
         <form <%-- action="${homeUrl}dsCheck" method="POST"  --%>id="dsCreate">
             <input type="hidden" id="ds_url" name="ds_url">
             <!-- 데이터소스명 -->
-            <div class="ds-create-wrapper">
-                <div class="ds-create-box-left">
+            <div class="ds-wrapper">
+                <div class="ds-box-left">
                     <div class="ds-input-box">
                         <div class="header6 label-title">데이터소스 제목</div>
                         <input class="ds-input subtitle1 gray400" type="text" id="ds_nm" name="ds_nm" required>
@@ -33,7 +31,7 @@
                         <input class="ds-input subtitle1 gray400" type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()" required>
                     </div>
                 </div>
-                <div class="ds-create-box-right">
+                <div class="ds-box-right">
                     <div class="ds-input-box">
                         <div class="header6 label-title">DB Type</div>
                         <select class="ds-input subtitle1 gray400" name="ds_type" onchange="printName()">
@@ -74,7 +72,7 @@
     <script>
         $(document).ready(function () {
             //배너 타이틀 세팅
-            $('.banner-title').text('데이터 소스')
+            $('.banner-title').text('데이터소스')
             $('.banner-sub-title').text('데이터 정보를 한눈에 볼 수 있습니다')
             //페이지 타이틀 세팅
             $('.main-title-text').text('데이터소스 등록');
