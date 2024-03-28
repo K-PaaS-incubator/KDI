@@ -39,7 +39,7 @@
     <script defer>
         $(document).ready(function () {
             //배너 타이틀 세팅
-            $('.banner-title').text('데이터 소스')
+            $('.banner-title').text('데이터소스')
             $('.banner-sub-title').text('데이터 정보를 한눈에 볼 수 있습니다')
             //페이지 타이틀 세팅
             $('.main-title-text').text('데이터소스 조회');
