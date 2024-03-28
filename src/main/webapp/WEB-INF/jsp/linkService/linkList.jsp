@@ -5,34 +5,34 @@
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
-    <div class="sideMenu">
-        <div onclick="location.href='${homeUrl}linkList'">데이터소스 조회</div>
-    </div>
-
     <div class="mainContent">
-        <div id="pageTitle">연계 서비스 관리</div>
-
-        <table id="lnkTbl">
-            <thead>
-                <tr>
+        <table id="lnkTbl" class="data-list">
+            <colgroup>
+                <col width="15%">
+                <col width="40%">
+                <col width="45%">
+            </colgroup>
+            <thead class="list-head">
+                <tr class="subtitle1 gray500">
                     <th>No</th>
                     <th>연계서비스 제목</th>
                     <th>데이터소스 제목</th>
                 </tr>
+                <tr class="table-spacing"></tr>
             </thead>
-            <tbody>
+            <tbody class="list-body">
                 <c:forEach var="linkList" items="${selectLinkList}">
-                    <tr>
+                    <tr class="subtitle1 gray500">
                         <td>${linkList.no}</td>
                         <td>${linkList.svc_nm}</td>
                         <td>${linkList.ds_nm}</td>
                     </tr>
+                    <tr class="table-spacing"></tr>
                 </c:forEach>
             </tbody>
         </table>
-
         <div>
-            <input type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}linkService'">
+            <input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}linkService'">
         </div>
 
     </div>
@@ -40,20 +40,14 @@
 <script defer>
     $(document).ready(function () {
         //배너 타이틀 세팅
-        $('.banner-title').text('연계 서비스')
-        $('.banner-sub-title').text('연계 서비스를 제공합니다')
+        $('.banner-title').text('연계서비스')
+        $('.banner-sub-title').text('연계서비스를 제공합니다')
+        //페이지 타이틀 세팅
+        $('.main-title-text').text('연계서비스 조회');
+        $('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회')
+
         $("#lnkTbl tr").click(function () {
             location.href = "${homeUrl}getLinkService?svc_nm=" + $(this).find("td:nth-child(2)").text();
         });
-
-        //페이지 타이틀 세팅
-        $('.main-title-text').text('연계 서비스 조회');
-        $('.navi-arrow').text(' > 연계 서비스 > 연계 서비스 조회')
-
-        const subTitleArray = ['연계서비스 조회', '연계서비스 등록'];
-        subTitleArray.forEach(function (subtitle){
-            let html = '<div class="current-title header6">' + subtitle + '</div>'
-            $('.current-title-box').append(html);
-        })
     });
 </script>

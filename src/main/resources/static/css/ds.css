@@ -69,7 +69,7 @@ tbody >tr:hover{
 	justify-content: space-between;
 	margin-top: 28px;
 }
-.ds-button-box div input:nth-child(2){
+.ds-button-box div input:nth-child(n+2){
 	margin-left: 20px;
 }
 
