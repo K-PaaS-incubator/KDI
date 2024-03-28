@@ -54,4 +54,17 @@
 .button-second:hover {
     background-color: rgba(51, 106, 234, 0.1);
 }
+.button-second-gray {
+    border-radius: 3px;
+    padding: 12px 64px;
+    background-color: white;
+    font-weight: 600;
+    font-size: 18px;
+    color: #545454;
+    border: 1px solid #C6C6C6;
+    cursor: pointer;
+}
+.button-second-gray:hover {
+    background-color: #FAFAFA;
+}
 

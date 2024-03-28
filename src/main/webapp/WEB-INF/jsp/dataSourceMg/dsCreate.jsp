@@ -6,56 +6,79 @@
 <link rel="stylesheet" href="${cssUrl}/ds.css">
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
-	<jsp:include page="../component/subTitle.jsp"></jsp:include>
+    <jsp:include page="../component/subTitle.jsp"></jsp:include>
 
     <div class="mainContent">
-    
+
         <form <%-- action="${homeUrl}dsCheck" method="POST"  --%>id="dsCreate">
             <input type="hidden" id="ds_url" name="ds_url">
             <!-- 데이터소스명 -->
-            <div class="divTitle">데이터소스 제목</div>
-            <input type="text" id="ds_nm" name="ds_nm" required>
+            <div class="ds-create-wrapper">
+                <div class="ds-create-box-left">
+                    <div class="ds-input-box">
+                        <div class="header6 label-title">데이터소스 제목</div>
+                        <input class="ds-input subtitle1 gray400" type="text" id="ds_nm" name="ds_nm" required>
+                    </div>
+                    <div class="ds-input-box">
+                        <div class="header6 label-title">Server Host</div> <!-- IP주소 -->
+                        <input class="ds-input subtitle1 gray400" type="text" id="ds_addr" name="ds_addr" onkeyup="printName()" placeholder="localhost" required>
 
-            <!-- DB타입-->
-            <div class="divTitle">DB Type</div>
-            <select name="ds_type" onchange="printName()">
-                <option value="oracle" selected="selected">Oracle</option>
-                <option value="mysql">Mysql</option>
-            </select>
-
-            <div class="divTitle">Server Host</div> <!-- IP주소 -->
-            <input type="text" id="ds_addr" name="ds_addr" onkeyup="printName()" placeholder="localhost" required>
-            <div class="divTitle">Port</div> <!-- DB포트 -->
-            <input type="number" id="ds_port" name="ds_port" onkeyup="printName()" placeholder="PORT" required>
-
-            <!-- 주소와 포트 자동완성-키업사용-->
-            <div class="divTitle">URL:</div><span id="ds_url_label"></span>
-            <!-- Database/SID -->
-            <div class="divTitle">Database</div>
-            <input type="text" id="ds_sid" name="ds_sid" onkeyup="printName()" required>
-            <!-- DB계정 유저명 -->
-            <div class="divTitle">UserName</div>
-            <input type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()" required>
-            <!-- DB계정 패스워드 -->
-            <div class="divTitle">Password</div>
-            <input type="password" id="ds_usr_pw" name="ds_usr_pw" required>
-            <div id="test_result"></div>
-            <div id="test_result2"></div>
-
-            <!-- 커넥션 테스트 기능 -->
-            <input type="button" value="테스트" id="connTestBtn">
-            <input type="button" value="등록" id="regbtn">
+                    </div>
+                    <div class="ds-input-box">
+                        <div class="header6 label-title">Database</div>
+                        <input class="ds-input subtitle1 gray400" type="text" id="ds_sid" name="ds_sid" onkeyup="printName()" required>
+                    </div>
+                    <div class="ds-input-box">
+                        <div class="header6 label-title">UserName</div>
+                        <input class="ds-input subtitle1 gray400" type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()" required>
+                    </div>
+                </div>
+                <div class="ds-create-box-right">
+                    <div class="ds-input-box">
+                        <div class="header6 label-title">DB Type</div>
+                        <select class="ds-input subtitle1 gray400" name="ds_type" onchange="printName()">
+                            <option value="oracle" selected="selected">Oracle</option>
+                            <option value="mysql">Mysql</option>
+                        </select>
+                    </div>
+                    <div class="ds-input-box">
+                        <div class="header6 label-title">Port</div> <!-- DB포트 -->
+                        <input class="ds-input subtitle1 gray400" type="number" id="ds_port" name="ds_port" onkeyup="printName()" placeholder="PORT" required>
+                    </div>
+                    <div class="ds-input-box">
+                        <!-- 주소와 포트 자동완성-키업사용-->
+                        <div class="header6 label-title">URL:</div>
+                        <input class="ds-input subtitle1 gray400" id="ds_url_label" readonly/>
+                    </div>
+                    <div class="ds-input-box">
+                        <div class="header6 label-title">Password</div>
+                        <input class="ds-input subtitle1 gray400" type="password" id="ds_usr_pw" name="ds_usr_pw" required>
+                        <div id="test_result"></div>
+                        <div id="test_result2"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="ds-button-box">
+                <div>
+                    <!-- 커넥션 테스트 기능 -->
+                    <input class="button-second" type="button" value="테스트" id="connTestBtn">
+                    <input class="button-second" type="button" value="등록" id="regbtn">
+                </div>
+                <div>
+                    <input class="button-second-gray" type="button" value="취소" onclick="location.href='${homeUrl}dsList'">
+                </div>
+            </div>
         </form>
     </div>
 
     <script>
         $(document).ready(function () {
-			//배너 타이틀 세팅
-			$('.banner-title').text('데이터 소스')
-			$('.banner-sub-title').text('데이터 정보를 한눈에 볼 수 있습니다')
-			//페이지 타이틀 세팅
-			$('.main-title-text').text('데이터소스 등록');
-			$('.navi-arrow').text(' > 데이터소스 > 데이터소스 등록')
+            //배너 타이틀 세팅
+            $('.banner-title').text('데이터 소스')
+            $('.banner-sub-title').text('데이터 정보를 한눈에 볼 수 있습니다')
+            //페이지 타이틀 세팅
+            $('.main-title-text').text('데이터소스 등록');
+            $('.navi-arrow').text(' > 데이터소스 > 데이터소스 등록')
             printName();
         });
 
@@ -84,7 +107,7 @@
                 ds_port = portMap[ds_type];
                 $('#ds_port').val(portMap[ds_type]);
             }
-            $('#ds_url_label').text(urlMap[ds_type] + ds_addr + ':' + ds_port + ':' + ds_sid);
+            $('#ds_url_label').val(urlMap[ds_type] + ds_addr + ':' + ds_port + ':' + ds_sid);
             $('#ds_url').val(urlMap[ds_type] + ds_addr + ':' + ds_port + ':' + ds_sid);
         }
 

@@ -26,3 +26,51 @@ tbody >tr:hover{
 	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
 }
 
+.ds-create-wrapper{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 100%;
+}
+.ds-create-box-left{
+	display: flex;
+	flex-direction: column;
+	width: 44%;
+}
+.ds-create-box-right{
+	display: flex;
+	flex-direction: column;
+	width: 44%;
+}
+.ds-input-box{
+	margin-bottom: 32px;
+}
+.ds-input{
+	width: 100%;
+	height: 60px;
+	padding: 0 24px;
+	border: 1px solid #C6C6C6;
+	border-radius: 3px;
+}
+.ds-input:focus{
+	background-color: rgba(248, 250, 255, 1);
+	border: 1px solid rgba(51, 106, 234, 0.4);
+}
+.ds-input:read-only{
+	background-color: #F8F8F8;
+}
+.label-title{
+	margin-bottom: 16px;
+}
+.ds-button-box{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 28px;
+}
+.ds-button-box div input{
+	margin-right: 20px;
+}
+
+
+

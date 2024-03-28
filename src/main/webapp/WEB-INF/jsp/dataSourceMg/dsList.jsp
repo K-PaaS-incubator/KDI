@@ -49,7 +49,7 @@
                 location.href = "${homeUrl}dsEdit?ds_nm=" + $(this).find("td:nth-child(2)").text();
             });
 
-            //차후 데이터베이스가 생기면 DB에서 불러오기. 현재는 tempData 활용
+            //서브 메뉴 버튼, 기획 수정으로 제거 됨. 이후에 사용할 수도 있어서 일단 legacy
             // const subTitleArray = [
             //     {subTitle: '데이터소스 조회', url: 'dsList'},
             //     {subTitle: '데이터소스 등록', url: 'dsCreate'},
