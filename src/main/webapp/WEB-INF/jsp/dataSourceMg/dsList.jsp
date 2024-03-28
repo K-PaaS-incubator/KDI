@@ -7,7 +7,7 @@
 <section class="contents">
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
     <div class="mainContent">
-        <table class="data-sources-list" style="margin-bottom: 40px;">
+        <table class="data-list">
             <colgroup>
                 <col width="15%">
                 <col width="40%">
