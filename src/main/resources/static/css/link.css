@@ -5,17 +5,21 @@
  	display:flex;
  	margin-top:1em;
  }
- #leftContent {
-    display:inline-block;
-	width:30%;
-	padding:0 1em 1em 1em;
+.content-wrapper{
+	display: flex;
+	flex-direction: row;
 }
- #rightContent {
-    display:inline-block;
-	border-left:0.3em solid rgb(3, 4, 94, 0.8);
-	width:70%;
-	padding:1em;
-}
+/* #leftContent {*/
+/*    display:inline-block;*/
+/*	width:30%;*/
+/*	padding:0 1em 1em 1em;*/
+/*}*/
+/* #rightContent {*/
+/*    display:inline-block;*/
+/*	border-left:0.3em solid rgb(3, 4, 94, 0.8);*/
+/*	width:70%;*/
+/*	padding:1em;*/
+/*}*/
 /*#searchBox{*/
 /*	float:right;*/
 /*	margin:0.5em 0 1.5em 0;*/
@@ -24,12 +28,6 @@
 /*	border:0.2em solid lightgray;*/
 /*}*/
 
-.leftTitle{
-	line-height:2;
-	margin-bottom:0.5em;
-	font-size:1.2em;
-	font-weight:bold;
-}
 .subTitle{
 	display:inline-block;
 	font-weight:bold;
@@ -37,60 +35,49 @@
 	padding-bottom:0.5em;
 	border-bottom:0.2em solid black;
 }
-#schemaTitle{
-	font-weight:normal;
-	margin-top:1em;
-}
-.selectSch{
-	margin:0.5em;
-}
-#lnkTbl, #detailTbl, #lnktableTbl{
-	width:100%;
-	border-collapse: separate;
-	border-spacing:0 0.5em;
-}
 
-#lnkTbl > thead > tr > th , #detailTbl > thead > tr > th , #lnktableTbl > thead > tr > th {
-	background-color: rgb(0, 119, 182, 0.4);
-	padding: 0.5em;
-}
+/*#lnkTbl, #detailTbl, #lnktableTbl{*/
+/*	width:100%;*/
+/*	border-collapse: separate;*/
+/*	border-spacing:0 0.5em;*/
+/*}*/
 
-#lnkTbl>tbody>tr>td, .detailTr > td, #lnktableTbl>tbody>tr>td {
-	padding: 0.2em;
-	text-align:center;
-    border-bottom: 1px solid #444444;
-}
+/*#lnkTbl > thead > tr > th , #detailTbl > thead > tr > th , #lnktableTbl > thead > tr > th {*/
+/*	background-color: rgb(0, 119, 182, 0.4);*/
+/*	padding: 0.5em;*/
+/*}*/
 
-.detailTr:hover,#lnkTbl>tbody>tr:hover,.selectSch:hover{
-	cursor:pointer;
-	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4), -3px -3px 5px rgba(0, 0, 0, 0.1);
-}
+/*#lnkTbl>tbody>tr>td, .detailTr > td, #lnktableTbl>tbody>tr>td {*/
+/*	padding: 0.2em;*/
+/*	text-align:center;*/
+/*    border-bottom: 1px solid #444444;*/
+/*}*/
 
 /*linkTable.jsp*/
-.inputTitle{
-	margin:0.5em;
-}
-.inputTitle > div{
-	width:15%;
-	display:inline-block;
-}
-#radioBox{
-	width:30%;
-}
-#lnktableTbl{
-	margin:1em 0 2em 0;
-}
-#lnktableTbl>tbody>tr>td{
-	padding: 0 0 0.5em 0;
-}
-#queryBox{
-	width:95%;
-	height:10em;
-	padding:0.5em;
-	margin:0 auto;
-	background-color: rgb(0, 119, 182, 0.4);
-	border:1px solid green;
-}
+/*.inputTitle{*/
+/*	margin:0.5em;*/
+/*}*/
+/*.inputTitle > div{*/
+/*	width:15%;*/
+/*	display:inline-block;*/
+/*}*/
+/*#radioBox{*/
+/*	width:30%;*/
+/*}*/
+/*#lnktableTbl{*/
+/*	margin:1em 0 2em 0;*/
+/*}*/
+/*#lnktableTbl>tbody>tr>td{*/
+/*	padding: 0 0 0.5em 0;*/
+/*}*/
+/*#queryBox{*/
+/*	width:95%;*/
+/*	height:10em;*/
+/*	padding:0.5em;*/
+/*	margin:0 auto;*/
+/*	background-color: rgb(0, 119, 182, 0.4);*/
+/*	border:1px solid green;*/
+/*}*/
 #infoIcon {
 	font-size:1.3em;
 }
@@ -115,27 +102,6 @@
 	flex-direction: column;
 	width: 44%;
 }
-.link-input-box{
-	margin-bottom: 32px;
-}
-.link-input{
-	width: 100%;
-	height: 60px;
-	padding: 0 24px;
-	border: 1px solid #C6C6C6;
-	border-radius: 3px;
-	box-sizing: border-box;
-}
-.link-input:focus{
-	background-color: rgba(248, 250, 255, 1);
-	border: 1px solid rgba(51, 106, 234, 0.4);
-}
-.link-input:read-only{
-	background-color: #F8F8F8;
-}
-.label-title{
-	margin-bottom: 16px;
-}
 .link-button-box{
 	display: flex;
 	flex-direction: row;
@@ -154,4 +120,145 @@
 }
 .link-radio-box label{
 	margin-right: 16px;
+}
+.left-content{
+	min-width: 220px;
+	max-width: 600px;
+	display: flex;
+	flex-direction: column;
+	margin-right: 20px;
+}
+.left-content-title{
+	width: 100%;
+	height: 40px;
+	padding: 0 4px;
+	margin-bottom: 28px;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.left-content-box{
+	width: 100%;
+	border-radius: 3px;
+	border: 1px solid #E3E5E8;
+}
+.left-title{
+	height: 48px;
+	border-radius: 3px 3px 0px 0px ;
+	background-color: #336AEA;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.left-content-list-box{
+	width: 100%;
+	display: inline-block;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	max-height: 580px;
+	overflow-y: auto;
+}
+.left-content-list-box li{
+	width: 100%;
+	height: 40px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.left-content-list-box li:hover{
+	cursor: pointer;
+	background-color: rgba(51, 106, 234, 0.1);
+}
+.right-content{
+	width: 100%;
+}
+.right-content-top{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 40px;
+	margin-bottom: 28px;
+}
+.link-table-wrapper{
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.link-table-box-top{
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 60px;
+}
+.link-table-box-top-left{
+	display: flex;
+	flex-direction: column;
+	width: 65%;
+}
+.link-inputs-row{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+.link-inputs-row div{
+	width: 48%;
+}
+.link-table-box-top-right{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 30%;
+}
+.flag-title{
+	height: 60px;
+	width: 300px;
+	border-radius: 3px 3px 0 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+.flag-radio-box{
+	display: flex;
+	flex-direction: column;
+}
+.flag-radio-box div{
+	height: 60px;
+	border: 1px solid #C6C6C6;
+	border-top: none;
+	width: 300px;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+/*연계서비스 테이블 상세 리스트 정렬*/
+.link-table-box-bottom .list-head tr th:nth-child(1){
+	text-align: left;
+	padding-left: 20px;
+}
+.link-table-box-bottom .list-head tr th:nth-child(4){
+	text-align: center;
+}
+.link-table-box-bottom .list-body tr td:nth-child(1){
+	text-align: left;
+	padding-left: 20px;
+}
+.link-table-box-bottom .list-body tr td:nth-child(4){
+	text-align: center;
+}
+.query-box{
+ 	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+.query-title{
+	margin-bottom: 16px;
+}
+.query-text{
+	padding: 20px;
 }

@@ -18,6 +18,8 @@
 .bg-blue10{background-color: rgba(51, 106, 234, 0.10)}
 .bg-blue{background-color: #F6F9FF}
 .bg-light-blue{background-color: #F8FAFF}
+.bg-gray200{background-color: #F8F8F8}
+.border-gray300{border: 1px solid #C6C6C6}
 .white100{color: #ffffff}
 .white80{color: rgba(255, 255, 255, 0.80)}
 .gray500{color: #323232;}
@@ -70,7 +72,6 @@
 }
 /*검색 bar*/
 .search-box{
-    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -101,5 +102,25 @@
     position: absolute;
     left: 18px;
 }
-
-
+/*인풋 스타일*/
+.common-input-box{
+    margin-bottom: 32px;
+}
+.common-input{
+    width: 100%;
+    height: 60px;
+    padding: 0 24px;
+    border: 1px solid #C6C6C6;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+.common-input:focus{
+    background-color: rgba(248, 250, 255, 1);
+    border: 1px solid rgba(51, 106, 234, 0.4);
+}
+.common-input:read-only{
+    background-color: #F8F8F8;
+}
+.label-title{
+    margin-bottom: 16px;
+}

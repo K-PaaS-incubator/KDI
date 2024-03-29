@@ -45,7 +45,7 @@
                     </div>
                     <div class="ds-input-box">
                         <!-- 주소와 포트 자동완성-키업사용-->
-                        <div class="header6 label-title">URL:</div>
+                        <div class="header6 label-title">URL</div>
                         <input class="ds-input subtitle1 gray400" id="ds_url_label" readonly/>
                     </div>
                     <div class="ds-input-box">
