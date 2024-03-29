@@ -33,6 +33,13 @@
         </table>
         <div>
             <input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}linkService'">
+            <div>
+                <a class="header8 primary" href=""> < </a>
+                <a class="header8 primary" href=""> 1 </a>
+                <a class="header8 primary" href=""> 2 </a>
+                <a class="header8 primary" href=""> 3 </a>
+                <a class="header8 primary" href="">  > </a>
+            </div>
         </div>
 
     </div>

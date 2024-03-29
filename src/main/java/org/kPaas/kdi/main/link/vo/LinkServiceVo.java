@@ -20,5 +20,6 @@ public class LinkServiceVo {
 	String reg_dt;	
 	String mod_id;
 	String mod_dt;
+	int page_num;
 	
 }
