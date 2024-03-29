@@ -21,6 +21,11 @@
 	<select id="selectLinkList" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
 		SELECT rownum as NO,* FROM KDI_LINK_SERVICE
 	</select>
+
+	<select id="selectLinkListPage" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
+		SELECT * FROM(SELECT ROWNUM AS NO, * FROM KDI_LINK_SERVICE)
+		         WHERE NO <![CDATA[>=]]> '1' AND NO <![CDATA[<=]]> '20'
+	</select>
 	
 	<!-- 연계서비스 등록 시작 -->
 	

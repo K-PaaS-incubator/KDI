@@ -14,6 +14,7 @@ public interface LinkTableMapper {
 
 	//
 	public List<LinkServiceVo> selectLinkList();
+	public List<LinkServiceVo> selectLinkListPage();
 	
 	public List<String> selectDsList();
 	public Integer getSameLinkCheck(String svc_nm);

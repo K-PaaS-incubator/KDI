@@ -12,6 +12,7 @@ public interface LinkMapper {
 
 	//연계서비스 조회
 	public List<LinkServiceVo> selectLinkList();
+	public List<LinkServiceVo> selectLinkListPage();
 	
 	//연계서비스 등록 시작
 	public List<String> selectDsList();

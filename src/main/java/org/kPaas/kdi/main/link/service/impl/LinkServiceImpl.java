@@ -38,6 +38,9 @@ public class LinkServiceImpl implements LinkService {
 	public List<LinkServiceVo> selectLinkList() {
 		return mapper.selectLinkList();
 	}
+	public List<LinkServiceVo> selectLinkListPage() {
+		return mapper.selectLinkListPage();
+	}
 
 	
 	//연계서비스 등록 시작
@@ -55,6 +58,7 @@ public class LinkServiceImpl implements LinkService {
 	@Override
 	public ResponseEntity<String> insertLink(LinkServiceVo linkService_vo) {
 		JSONObject result = new JSONObject();
+
 		if (null == linkService_vo) {
 			result.put("stateCode", 1);
 			result.put("state", "연계서비스 등록 실패");
