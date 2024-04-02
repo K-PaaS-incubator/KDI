@@ -1,6 +1,7 @@
 /*데이터 소스 관리 리스트*/
 .data-list{
     margin-bottom: 40px;
+    width: 100%;
 }
 .data-list .list-head tr{
     border: 1px solid rgba(51, 106, 234, 0.30);
@@ -41,4 +42,53 @@
 .table-spacing{
     height: 10px !important;
     border: none !important;
+}
+.schema-list{
+    width:100%;
+    margin-bottom: 40px;
+}
+.schema-list .list-head{
+    border-radius: 3px;
+}
+.schema-list .list-head tr{
+    border: 1px solid rgba(51, 106, 234, 0.30);
+    background-color: #F8FAFF;
+    height: 48px;
+    border-radius: 3px;
+    width: 100%;
+}
+.schema-list .list-head tr th:first-child{
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 8px;
+}
+.schema-list .list-head tr th{
+    text-align: left;
+    vertical-align: middle;
+}
+.schema-list .list-body tr{
+    border: 1px solid #E3E5E8;
+    background-color: white;
+    height: 48px;
+    border-radius: 3px;
+    width: 100%;
+}
+.schema-list .list-body tr:hover{
+    color: #336AEA;
+    cursor: pointer;
+    border: 1px solid rgba(51, 106, 234, 0.40);
+    background-color: #F8FAFF;
+}
+.schema-list .list-body tr td:first-child{
+    text-align: center;
+    vertical-align: middle;
+}
+.schema-list .list-body tr td{
+    text-align: left;
+    vertical-align: middle;
+}
+.table-spacing{
+    height: 10px !important;
+    border: none !important;
+    background: none;
 }
