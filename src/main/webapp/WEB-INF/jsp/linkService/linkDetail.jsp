@@ -16,7 +16,7 @@
                         <ul class="left-content-list-box">
                             <!-- //TODO 스키마명 많을 경우 스크롤로 볼 수 있게 개발 -->
                             <c:forEach var="connectLinkDs" items="${connectLinkDs}">
-                                <li class="body2 gray400 selectSch">
+                                <li class="body2 gray400 selectSch" id="${connectLinkDs}">
                                     <input type="hidden" name="schemaName" value="${connectLinkDs}">${connectLinkDs}
                                 </li>
                             </c:forEach>
@@ -99,7 +99,11 @@
 
         $('.selectSch').click(function () {
             var schemaName = $(this).children("input[name='schemaName']").val();
+
             $('#schemaTitle').text(schemaName);
+            $(".left-content-list-box li").css('background-color', '#ffffff');
+            $('#' + schemaName).css('background-color', 'rgba(51, 106, 234, 0.10)');
+
             $("#@#####").load("asbvd/asdf34r?schemaName=" + schemaName);
             location.href = "asbvd/asdf34r?schemaName=" + schemaName;
         });

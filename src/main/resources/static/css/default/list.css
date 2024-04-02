@@ -87,8 +87,38 @@
     text-align: left;
     vertical-align: middle;
 }
-.table-spacing{
-    height: 10px !important;
-    border: none !important;
-    background: none;
+
+.link-table-list{
+    margin-bottom: 40px;
+    width: 100%;
+}
+.link-table-list .list-head tr{
+    border: 1px solid rgba(51, 106, 234, 0.30);
+    background-color: #F8FAFF;
+    height: 48px;
+    border-radius: 3px;
+    width: 100%;
+}
+.link-table-list .list-head tr th:first-child{
+    text-align: center;
+    vertical-align: middle;
+}
+.link-table-list .list-head tr th{
+    text-align: left;
+    vertical-align: middle;
+}
+.link-table-list .list-body tr{
+    border: 1px solid #E3E5E8;
+    background-color: white;
+    height: 48px;
+    border-radius: 3px;
+    width: 100%;
+}
+.link-table-list .list-body tr td:first-child{
+    text-align: center;
+    vertical-align: middle;
+}
+.link-table-list .list-body tr td{
+    text-align: left;
+    vertical-align: middle;
 }

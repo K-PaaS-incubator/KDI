@@ -10,9 +10,9 @@
         <form id="linkCreate">
             <div class="link-wrapper">
                 <div class="link-box-left">
-                    <div class="link-input-box">
+                    <div class="common-input-box">
                         <div class="header6 label-title">연계서비스 제목</div>
-                        <input class="link-input subtitle1 gray400" type="text" id="svc_nm" name="svc_nm" required>
+                        <input class="common-input subtitle1 gray400" type="text" id="svc_nm" name="svc_nm" required>
                     </div>
                     <div class="link-input-box">
                         <div class="header6 label-title">데이터소스 선택</div>
@@ -77,7 +77,6 @@
         }
 
         $('#regbtn').click(function LinkServiceSave() {
-            console.log("데이터소스 선택: " + $('#ds_nm').val());
             $('form').validate();
             if (!fn_check_duplicate_link()) {
                 alert('제목이 중복되었습니다.');
