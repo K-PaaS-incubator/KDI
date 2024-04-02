@@ -19,6 +19,9 @@
 .bg-blue{background-color: #F6F9FF}
 .bg-light-blue{background-color: #F8FAFF}
 .bg-gray200{background-color: #F8F8F8}
+.bg-gray300{background-color: #C6C6C6}
+.bg-gray400{background-color: #545454}
+.bg-gray500{background-color: #323232}
 .border-gray300{border: 1px solid #C6C6C6}
 .white100{color: #ffffff}
 .white80{color: rgba(255, 255, 255, 0.80)}

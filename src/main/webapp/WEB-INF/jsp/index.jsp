@@ -29,7 +29,7 @@
 					<div class="card-text">GitHub</div>
 				</a>
 				<a class="link-card" href="https://github.com/K-PaaS-incubator/KDI">
-					<img class="card-img" src="${imgUrl}/icon-guide.png" alt="">
+					<img class="card-img" src="${imgUrl}/icon-user.png" alt="">
 					<div class="card-text">User Guide</div>
 				</a>
 			</div>
