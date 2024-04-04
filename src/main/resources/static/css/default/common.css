@@ -127,3 +127,14 @@
 .label-title{
     margin-bottom: 16px;
 }
+/*로고 폰트*/
+.logo-box{
+    display: flex;
+    flex-direction: row;
+}
+.logo-font{
+    font-size: 30px;
+    font-weight: 500;
+    margin-left: 14px;
+    letter-spacing: -1.5px;
+}

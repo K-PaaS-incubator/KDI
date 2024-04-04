@@ -9,25 +9,26 @@
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
     <div class="mainContent">
         <div class="user-info-box">
-            <div class="user-info-content-box">
+            <div class="common-input-box">
                 <div class="header6 label-title">아이디</div>
-                <div class="user-info-content subtitle1 gray400"> ${userInfo.usr_id}</div>
+                <input class="common-input subtitle1 gray400" value="${userInfoEdit.usr_id}" type="text" readonly>
             </div>
-            <div class="user-info-content-box">
+            <div class="common-input-box">
                 <div class="header6 label-title">회원명</div>
-                <div class="user-info-content subtitle1 gray400"> ${userInfo.usr_nm}</div>
+                <input class="common-input subtitle1 gray400" value="${userInfoEdit.usr_nm}" type="text">
             </div>
-            <div class="user-info-content-box">
+            <div class="common-input-box">
                 <div class="header6 label-title">연락처</div>
-                <div class="user-info-content subtitle1 gray400"> ${userInfo.usr_phone}</div>
+                <input class="common-input subtitle1 gray400" value="${userInfoEdit.usr_phone}" type="text">
             </div>
-            <div class="user-info-content-box">
+            <div class="common-input-box">
                 <div class="header6 label-title">이메일</div>
-                <div class="user-info-content subtitle1 gray400"> ${userInfo.usr_email}</div>
+                <input class="common-input subtitle1 gray400" value="${userInfoEdit.usr_email}" type="text">
             </div>
         </div>
         <div class="user-info-button-box">
-            <input class="button-second" type="button" value="수정하기" id="modifyBtn" onclick="location.href='${homeUrl}userInfoEdit'">
+            <input class="button-second" type="button" value="저장" id="saveBtn">
+            <input class="button-second-gray" type="button" value="취소" id="cancelBtn" onclick="location.href='${homeUrl}userInfo'">
         </div>
     </div>
 </section>
@@ -36,10 +37,8 @@
         $('.banner-title').text('사용자 계정 정보')
         $('.banner-sub-title').text('사용자 정보를 확인 및 수정할 수 있습니다')
         //페이지 타이틀 세팅
-        $('.main-title-text').text('사용자정보');
-        $('.navi-arrow').text(' > 사용자정보')
+        $('.main-title-text').text('사용자정보 수정');
+        $('.navi-arrow').text(' > 사용자정보 조회 > 사용자정보 수정')
     });
-
-
 </script>
 

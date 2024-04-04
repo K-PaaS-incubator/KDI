@@ -82,4 +82,10 @@ public class MemberController extends AbstractController {
 		return layout(DEFAULT_LAYOUT, "userInfo");
 	}
 
+	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
+	@GetMapping("userInfoEdit")
+	public String userInfoEdit(Principal principal, Model model) {
+		model.addAttribute("userInfoEdit", service.getUsrInfo(principal.getName()));
+		return layout(DEFAULT_LAYOUT, "userInfoEdit");
+	}
 }
