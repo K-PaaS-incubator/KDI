@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:url var="cssUrl" value="/css"/>
 <link rel="stylesheet" href="${cssUrl}/ds.css">
+
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
