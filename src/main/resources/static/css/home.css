@@ -69,15 +69,15 @@
     word-break: break-word;
     text-align: center;
 }
-@media (max-width: 1500px) {
-    .bottom-box{
-        padding: 0 130px;
-    }
-    .link-card{
-        width: 220px;
-        height: 200px;
-    }
-    .card-img{
-        height: 88px;
-    }
-}
+/*@media (max-width: 1500px) {*/
+/*    .bottom-box{*/
+/*        padding: 0 130px;*/
+/*    }*/
+/*    .link-card{*/
+/*        width: 220px;*/
+/*        height: 200px;*/
+/*    }*/
+/*    .card-img{*/
+/*        height: 88px;*/
+/*    }*/
+/*}*/

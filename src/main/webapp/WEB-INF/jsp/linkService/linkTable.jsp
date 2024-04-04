@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div>
-                            <%--                        스케줄 문법을 input에 넣는 UI--%>
+                            <!-- 크론탭 문법을 input에 직접 입력하는 UI, UI 확정 후 제거 필요 -->
                             <%--                            <div class="common-input-box">--%>
                             <%--                                <div class="header6 label-title">스케줄 1안--%>
                             <%--                                    <span class="guide-icon">--%>
@@ -211,10 +211,12 @@
             mouseenter: function () {
                 $('.guide-box').css('display', 'block');
                 $('.guide-box').text(
+                    '쿼리가 실행되는 주기를 설정할 수 있습니다.\n' +
+                    '\n' +
                     ' 분 : 1-59,\n' +
                     ' 시간 : 1-23,\n' +
                     ' 날짜 : 1-31,\n' +
-                    ' 연 : 1-12,\n' +
+                    ' 월 : 1-12,\n' +
                     ' 요일 : 0-6\n' +
                     '(일요일 = 0)');
             },

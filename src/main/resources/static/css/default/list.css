@@ -17,6 +17,7 @@
 .data-list .list-head tr th{
     text-align: left;
     vertical-align: middle;
+
 }
 .data-list .list-body tr{
     border: 1px solid #E3E5E8;
@@ -36,8 +37,12 @@
     vertical-align: middle;
 }
 .data-list .list-body tr td{
+    max-width: 600px;
     text-align: left;
     vertical-align: middle;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 .table-spacing{
     height: 10px !important;

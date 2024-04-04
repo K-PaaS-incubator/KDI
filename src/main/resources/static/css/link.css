@@ -9,25 +9,6 @@
 	display: flex;
 	flex-direction: row;
 }
-/* #leftContent {*/
-/*    display:inline-block;*/
-/*	width:30%;*/
-/*	padding:0 1em 1em 1em;*/
-/*}*/
-/* #rightContent {*/
-/*    display:inline-block;*/
-/*	border-left:0.3em solid rgb(3, 4, 94, 0.8);*/
-/*	width:70%;*/
-/*	padding:1em;*/
-/*}*/
-/*#searchBox{*/
-/*	float:right;*/
-/*	margin:0.5em 0 1.5em 0;*/
-/*	padding:0.3em;*/
-/*	width:15em;*/
-/*	border:0.2em solid lightgray;*/
-/*}*/
-
 .subTitle{
 	display:inline-block;
 	font-weight:bold;
@@ -35,53 +16,6 @@
 	padding-bottom:0.5em;
 	border-bottom:0.2em solid black;
 }
-
-/*#lnkTbl, #detailTbl, #lnktableTbl{*/
-/*	width:100%;*/
-/*	border-collapse: separate;*/
-/*	border-spacing:0 0.5em;*/
-/*}*/
-
-/*#lnkTbl > thead > tr > th , #detailTbl > thead > tr > th , #lnktableTbl > thead > tr > th {*/
-/*	background-color: rgb(0, 119, 182, 0.4);*/
-/*	padding: 0.5em;*/
-/*}*/
-
-/*#lnkTbl>tbody>tr>td, .detailTr > td, #lnktableTbl>tbody>tr>td {*/
-/*	padding: 0.2em;*/
-/*	text-align:center;*/
-/*    border-bottom: 1px solid #444444;*/
-/*}*/
-
-/*linkTable.jsp*/
-/*.inputTitle{*/
-/*	margin:0.5em;*/
-/*}*/
-/*.inputTitle > div{*/
-/*	width:15%;*/
-/*	display:inline-block;*/
-/*}*/
-/*#radioBox{*/
-/*	width:30%;*/
-/*}*/
-/*#lnktableTbl{*/
-/*	margin:1em 0 2em 0;*/
-/*}*/
-/*#lnktableTbl>tbody>tr>td{*/
-/*	padding: 0 0 0.5em 0;*/
-/*}*/
-/*#queryBox{*/
-/*	width:95%;*/
-/*	height:10em;*/
-/*	padding:0.5em;*/
-/*	margin:0 auto;*/
-/*	background-color: rgb(0, 119, 182, 0.4);*/
-/*	border:1px solid green;*/
-/*}*/
-/*#infoIcon {*/
-/*	font-size:1.3em;*/
-/*}*/
-
 #infoBox{
 	position:relative;
 }
