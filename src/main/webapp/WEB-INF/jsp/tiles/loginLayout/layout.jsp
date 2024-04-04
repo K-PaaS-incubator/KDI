@@ -5,6 +5,7 @@
 <c:url var="cssUrl" value="/css" />
 <c:url var="jsUrl" value="/js" />
 <!DOCTYPE html>
+<link rel="stylesheet" href="${cssUrl}/default/basic.css">
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
