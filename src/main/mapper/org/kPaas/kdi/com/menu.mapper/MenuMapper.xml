@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kPaas.kdi.main.menu.mapper.MenuMapper">
+
+	<insert id="insertMn" parameterType="org.kPaas.kdi.main.menu.vo.MenuVo">
+		INSERT INTO KDI_MENU
+		VALUES(#{mn_id},#{mn_pid},#{mn_nm},#{mn_path},#{mn_num})
+	</insert>
+
+	<insert id="createTable">
+		CREATE TABLE `KDI_MENU` (
+		`mn_id` varchar2(40) NULL,
+		`mn_pid` varchar2(40) NULL,
+		`mn_nm` varchar2(40) NULL,
+		`mn_path` varchar2(40) NULL,
+		`mn_num` NUMERIC NULL,
+		)
+	</insert>
+
+	<select id="selectMn" resultType="org.kPaas.kdi.main.menu.vo.MenuVo">
+		SELECT * FROM KDI_MENU
+	</select>
+
+	<update id="editMn" parameterType="org.kPaas.kdi.main.menu.vo.MenuVo">
+		UPDATE KDI_MENU
+		<set>
+			mn_id = #{mn_id},
+			mn_pid = #{mn_pid},
+			mn_nm = #{mn_nm},
+			mn_path = #{mn_path},
+			mn_num = #{mn_num},
+		</set>
+		<where>
+			mn_id = #{mn_id},
+		</where>
+	</update>
+
+	<delete id="deleteMn" parameterType="String">
+		DELETE
+		FROM
+			KDI_MENU
+		<where>
+			mn_id = #{mn_id},
+		</where>
+	</delete>
+</mapper>

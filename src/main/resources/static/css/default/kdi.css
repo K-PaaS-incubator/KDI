@@ -53,6 +53,14 @@ a {
 /* header END */
 
 /* section START */
+section {
+}
+header{
+	min-width: 1450px;
+}
+footer{
+	min-width: 1450px;
+}
 section.contents {
 	background-color: white;
 	min-height: 16em;
