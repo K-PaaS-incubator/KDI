@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:url var="cssUrl" value="/css"/>
+<link rel="stylesheet" href="${cssUrl}/link.css">
 
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
+    <%--    <form id="searchForm" name="searchForm" method="get">--%>
     <div class="mainContent">
         <table id="lnkTbl" class="data-list">
             <colgroup>
@@ -21,9 +23,9 @@
                 <tr class="table-spacing"></tr>
             </thead>
             <tbody class="list-body">
-                <c:forEach var="linkList" items="${selectLinkList}">
+                <c:forEach var="linkList" items="${selectLinkListPage}">
                     <tr class="subtitle1 gray500">
-                        <td>${linkList.no}</td>
+                        <td>${linkList.num}</td>
                         <td>${linkList.svc_nm}</td>
                         <td>${linkList.ds_nm}</td>
                     </tr>
@@ -31,18 +33,29 @@
                 </c:forEach>
             </tbody>
         </table>
-        <div>
+        <div class="link-list-button-box">
             <input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}linkService'">
-<%--            <div>--%>
-<%--                <a class="header8 primary" href=""> < </a>--%>
-<%--                <a class="header8 primary" href=""> 1 </a>--%>
-<%--                <a class="header8 primary" href=""> 2 </a>--%>
-<%--                <a class="header8 primary" href=""> 3 </a>--%>
-<%--                <a class="header8 primary" href="">  > </a>--%>
-<%--            </div>--%>
-        </div>
+            <ul class="pagination-ul">
+                <li class="header8 primary pagination-num ${pagination.pageNum == 1 ? "page-num-disabled" : ""}" >
+                    <a href="linkList?pageNum=${pagination.pageNum - 1}&amount=${pagination.amount}">＜</a>
+                </li>
 
+                <c:forEach var="num" begin="${pagination.startPage}" end="${pagination.endPage}">
+                    <li class="${pagination.pageNum eq num ? 'page-num-current' : ''} pagination-num ">
+                        <a href="linkList?pageNum=${num}&amount=${pagination.amount}">${num}</a>
+                    </li>
+                </c:forEach>
+
+                <li class="header8 primary pagination-num ${pagination.pageNum == pagination.endPage ? "page-num-disabled" : ""}">
+                    <a href="linkList?pageNum=${pagination.pageNum + 1}&amount=${pagination.amount}">＞</a>
+                </li>
+            </ul>
+            <div class="body2 gray500">
+                <span>total :</span> <span>${pagination.total}</span>
+            </div>
+        </div>
     </div>
+    <%--    </form>--%>
 </section>
 <script defer>
     $(document).ready(function () {
@@ -57,4 +70,13 @@
             location.href = "${homeUrl}getLinkService?svc_nm=" + $(this).find("td:nth-child(2)").text();
         });
     });
+
+    function fn_sendPageNumber(no) {
+        var frm = document.searchForm;
+        frm.num.value = no;
+        frm.action = "/link/linkList"
+        frm.submit();
+
+        event.preventDefault();
+    }
 </script>

@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractService;
 import org.kPaas.kdi.com.config.KdiRoutingDataSource;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
+import org.kPaas.kdi.com.util.criteria.Criteria;
 import org.kPaas.kdi.main.datasource.mapper.DatasourceMapper;
 import org.kPaas.kdi.main.datasource.service.DatasourceService;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
@@ -138,7 +139,14 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 	public List<DatasourceVo> selectDsList(){
 		return mapper.selectDsList();
 	}
-
+	@Override
+	public List<DatasourceVo> selectDsListPage(Criteria param){
+		return mapper.selectDsListPage(param);
+	}
+	@Override
+	public int selectDsListCount(){
+		return mapper.selectDsListCount();
+	}
 	@Override
 	public DatasourceVo selectDsInfo(String ds_nm) {
 		return mapper.selectDsInfo(ds_nm);

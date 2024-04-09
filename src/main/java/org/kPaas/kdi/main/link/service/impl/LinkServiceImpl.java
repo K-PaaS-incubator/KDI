@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.json.JSONObject;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
+import org.kPaas.kdi.com.util.criteria.Criteria;
 import org.kPaas.kdi.main.link.mapper.LinkMapper;
 import org.kPaas.kdi.main.link.service.LinkService;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
@@ -38,17 +39,19 @@ public class LinkServiceImpl implements LinkService {
 	public List<LinkServiceVo> selectLinkList() {
 		return mapper.selectLinkList();
 	}
-	public List<LinkServiceVo> selectLinkListPage() {
-		return mapper.selectLinkListPage();
+	@Override
+	public List<LinkServiceVo> selectLinkListPage(Criteria param) {
+		return mapper.selectLinkListPage(param);
 	}
-
-	
+	@Override
+	public int selectLinkListCount() {
+		return mapper.selectLinkListCount();
+	}
 	//연계서비스 등록 시작
 	
 	public List<String> selectDsList() {
 		return mapper.selectDsList();
 	}
-	
 
 	@Override
 	public Integer getSameLinkCheck(String svc_nm) {

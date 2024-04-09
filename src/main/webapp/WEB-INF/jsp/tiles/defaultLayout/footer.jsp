@@ -7,7 +7,7 @@
             <img src="/img/logo-kdi-footer.png" alt="">
             <p class="logo-text">K-PaaS Data Integration</p>
         </div>
-        <div class="footer-sub">
+        <div class="footer-sub subtitle1">
             <div class="footer-info">
                 <p>주소 : 서울특별시 광진구</p>
                 <p>대표번호 : 070-1234-5678</p>

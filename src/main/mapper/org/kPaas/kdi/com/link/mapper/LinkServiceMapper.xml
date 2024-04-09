@@ -19,16 +19,20 @@
 	</insert>	
 		
 	<select id="selectLinkList" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
-		SELECT rownum as NO,* FROM KDI_LINK_SERVICE
+		SELECT rownum as NUM,* FROM KDI_LINK_SERVICE
 	</select>
 
-	<select id="selectLinkListPage" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
-		SELECT * FROM(SELECT ROWNUM AS NO, * FROM KDI_LINK_SERVICE)
-		         WHERE NO <![CDATA[>=]]> '1' AND NO <![CDATA[<=]]> '20'
+	<select id="selectLinkListPage" parameterType="org.kPaas.kdi.main.link.vo.LinkServiceVo" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
+		SELECT * FROM(SELECT ROWNUM AS NUM, * FROM KDI_LINK_SERVICE)
+			WHERE NUM <![CDATA[>]]> (#{pageNum}-1) * #{amount}
+			  AND NUM <![CDATA[<=]]> #{pageNum} * #{amount}
+	</select>
+
+	<select id="selectLinkListCount" resultType="Integer">
+		SELECT count(*) as total FROM KDI_LINK_SERVICE;
 	</select>
 	
 	<!-- 연계서비스 등록 시작 -->
-	
 	<select id="selectDsList" resultType="String">
 		SELECT ds_nm FROM KDI_DATASOURCE
 	</select>

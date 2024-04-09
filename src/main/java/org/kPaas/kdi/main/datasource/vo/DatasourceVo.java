@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class DatasourceVo {
-	
-	public int no; //rownum
+
+	Integer num; //rownum
 	public String ds_nm; //데이터소스명
 	public String ds_type; //DB타입
 	public String ds_driver; //드라이브
@@ -21,5 +21,7 @@ public class DatasourceVo {
 	public String reg_dt; //등록일자
 	public String mod_id; //수정사용자ID
 	public String mod_dt; //수정일자
+	int page_num; //페이지 넘버 
+	int amount; // 리스트 총 개수
 	
 }
