@@ -40,12 +40,18 @@
 
 	<select id="selectDsListPage" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
 		SELECT * FROM(SELECT ROWNUM AS NUM, * FROM KDI_DATASOURCE)
-		WHERE NUM <![CDATA[>]]> (#{pageNum}-1) * #{amount}
-		  AND NUM <![CDATA[<=]]> #{pageNum} * #{amount}
+			WHERE NUM <![CDATA[>]]> (#{pageNum}-1) * #{amount}
+			AND NUM <![CDATA[<=]]> #{pageNum} * #{amount}
+			<if test="ds_nm != null">
+			AND DS_NM LIKE '%' || #{ds_nm} || '%';
+			</if>
 	</select>
 
-	<select id="selectDsListCount" resultType="Integer">
-		SELECT count(*) as total FROM KDI_DATASOURCE;
+	<select id="selectDsListCount" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo" resultType="Integer">
+		SELECT count(*) as total FROM(SELECT ROWNUM AS NUM, * FROM KDI_DATASOURCE)
+		<if test="ds_nm != null">
+		WHERE DS_NM LIKE '%' || #{ds_nm} || '%';
+		</if>
 	</select>
 
 	<select id="selectDsInfo" parameterType="String" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">

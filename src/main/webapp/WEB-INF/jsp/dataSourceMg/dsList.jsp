@@ -8,6 +8,15 @@
 <section class="contents">
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
     <div class="mainContent">
+        <form action="/ds/dsList" method="GET" id="searchForm">
+            <div class="search-box">
+                <div>
+                    <input id="searchKeyword" type="text" name="ds_nm" placeholder="검색어 입력" value="">
+                    <img src="/img/icon-search.png" alt="">
+                </div>
+                <button id="searchBtn" type="submit" class="button-second-gray">확인</button>
+            </div>
+        </form>
         <table class="data-list">
             <colgroup>
                 <col width="15%">
@@ -39,13 +48,11 @@
                 <li class="header8 primary pagination-num ${pagination.pageNum == 1 ? "page-num-disabled" : ""}">
                     <a href="dsList?pageNum=${pagination.pageNum - 1}&amount=${pagination.amount}">＜</a>
                 </li>
-
                 <c:forEach var="num" begin="${pagination.startPage}" end="${pagination.endPage}">
                     <li class="${pagination.pageNum eq num ? 'page-num-current' : ''} pagination-num ">
                         <a href="dsList?pageNum=${num}&amount=${pagination.amount}">${num}</a>
                     </li>
                 </c:forEach>
-
                 <li class="header8 primary pagination-num ${pagination.pageNum == pagination.endPage ? "page-num-disabled" : ""}">
                     <a href="dsList?pageNum=${pagination.pageNum + 1}&amount=${pagination.amount}">＞</a>
                 </li>
@@ -67,18 +74,6 @@
             $("#dsTbl tr").click(function () {
                 location.href = "${homeUrl}dsEdit?ds_nm=" + $(this).find("td:nth-child(2)").text();
             });
-
-            //서브 메뉴 버튼, 기획 수정으로 제거 됨. 이후에 사용할 수도 있어서 일단 legacy
-            // const subTitleArray = [
-            //     {subTitle: '데이터소스 조회', url: 'dsList'},
-            //     {subTitle: '데이터소스 등록', url: 'dsCreate'},
-            // ];
-            // subTitleArray.forEach(function (el) {
-            //     let html = '<div class="current-title header6" id="' + el.url + '">' + el.subTitle + '</div>';
-            //     $('.current-title-box').append(html);
-            //     $("#dsList").css('color', '#336AEA');
-            //     $("#dsList").css('border-bottom', '6px solid #336AEA');
-            // })
         });
     </script>
 </section>

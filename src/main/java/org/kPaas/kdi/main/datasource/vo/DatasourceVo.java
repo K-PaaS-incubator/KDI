@@ -21,7 +21,7 @@ public class DatasourceVo {
 	public String reg_dt; //등록일자
 	public String mod_id; //수정사용자ID
 	public String mod_dt; //수정일자
-	int page_num; //페이지 넘버 
-	int amount; // 리스트 총 개수
+	public int pageNum; //페이지 넘버
+	public int amount; // 리스트 총 개수
 	
 }

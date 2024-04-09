@@ -31,7 +31,8 @@ public class DataSourceController extends AbstractController {
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
 	@GetMapping("/dsList")
 	public String dsList(Model model,
-						 @RequestParam(value = "pageNum", required = false)Integer pageNum,
+						 @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
+						 @RequestParam(value = "ds_nm", required = false)String ds_nm,
 						 RedirectAttributes redirectAttributes
 	) {
 		if (pageNum == null) {
@@ -39,11 +40,18 @@ public class DataSourceController extends AbstractController {
 			redirectAttributes.addAttribute("amount", 10);
 			return "redirect:/ds/dsList";
 		}
+
+		DatasourceVo datasourceVo = new DatasourceVo();
+		datasourceVo.setPageNum(pageNum);
+		datasourceVo.setAmount(10);
+		datasourceVo.setDs_nm(ds_nm);
+
 		Criteria criteria = new Criteria();
 		criteria.setPageNum(pageNum);
-		PageVo pageVo = new PageVo(criteria, service.selectDsListCount());
 
-		model.addAttribute("selectDsListPage", service.selectDsListPage(criteria));
+		PageVo pageVo = new PageVo(criteria, service.selectDsListCount(datasourceVo));
+
+		model.addAttribute("selectDsListPage", service.selectDsListPage(datasourceVo));
 		model.addAttribute("pagination", pageVo);
 
 		return layout("dsList");
