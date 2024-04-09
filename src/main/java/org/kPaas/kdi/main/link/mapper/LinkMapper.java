@@ -13,8 +13,8 @@ public interface LinkMapper {
 
 	//연계서비스 조회
 	public List<LinkServiceVo> selectLinkList();
-	public List<LinkServiceVo> selectLinkListPage(Criteria param);
-	public int selectLinkListCount();
+	public List<LinkServiceVo> selectLinkListPage(LinkServiceVo linkService_vo);
+	public int selectLinkListCount(LinkServiceVo linkService_vo);
 	
 	//연계서비스 등록 시작
 	public List<String> selectDsList();

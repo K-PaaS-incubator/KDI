@@ -25,11 +25,17 @@
 	<select id="selectLinkListPage" parameterType="org.kPaas.kdi.main.link.vo.LinkServiceVo" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
 		SELECT * FROM(SELECT ROWNUM AS NUM, * FROM KDI_LINK_SERVICE)
 			WHERE NUM <![CDATA[>]]> (#{pageNum}-1) * #{amount}
-			  AND NUM <![CDATA[<=]]> #{pageNum} * #{amount}
+			AND NUM <![CDATA[<=]]> #{pageNum} * #{amount}
+			<if test="svc_nm != null">
+				AND SVC_NM LIKE '%' || #{svc_nm} || '%';
+			</if>
 	</select>
 
-	<select id="selectLinkListCount" resultType="Integer">
-		SELECT count(*) as total FROM KDI_LINK_SERVICE;
+	<select id="selectLinkListCount" parameterType="org.kPaas.kdi.main.link.vo.LinkServiceVo" resultType="Integer">
+		SELECT count(*) as total FROM(SELECT ROWNUM AS NUM, * FROM KDI_LINK_SERVICE)
+		<if test="svc_nm != null">
+			WHERE SVC_NM LIKE '%' || #{svc_nm} || '%';
+		</if>
 	</select>
 	
 	<!-- 연계서비스 등록 시작 -->

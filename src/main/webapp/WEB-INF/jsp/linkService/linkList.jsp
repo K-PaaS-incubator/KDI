@@ -8,6 +8,15 @@
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
     <%--    <form id="searchForm" name="searchForm" method="get">--%>
     <div class="mainContent">
+        <form action="/link/linkList" method="GET" id="searchForm">
+            <div class="search-box">
+                <div>
+                    <input id="searchKeyword" type="text" name="svc_nm" placeholder="검색어 입력" value="">
+                    <img src="/img/icon-search.png" alt="">
+                </div>
+                <button id="searchBtn" type="submit" class="button-second-gray">확인</button>
+            </div>
+        </form>
         <table id="lnkTbl" class="data-list">
             <colgroup>
                 <col width="15%">
