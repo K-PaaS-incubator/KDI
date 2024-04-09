@@ -40,12 +40,12 @@ public class LinkServiceImpl implements LinkService {
 		return mapper.selectLinkList();
 	}
 	@Override
-	public List<LinkServiceVo> selectLinkListPage(Criteria param) {
-		return mapper.selectLinkListPage(param);
+	public List<LinkServiceVo> selectLinkListPage(LinkServiceVo linkService_vo) {
+		return mapper.selectLinkListPage(linkService_vo);
 	}
 	@Override
-	public int selectLinkListCount() {
-		return mapper.selectLinkListCount();
+	public int selectLinkListCount(LinkServiceVo linkService_vo) {
+		return mapper.selectLinkListCount(linkService_vo);
 	}
 	//연계서비스 등록 시작
 	

@@ -31,8 +31,9 @@ public class LinkServiceController extends AbstractController {
 	//연계서비스 조회 화면
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
 	@GetMapping("/linkList")
-	public String linkList(@ModelAttribute("search")LinkServiceVo search, Model model,
-						   @RequestParam(value = "pageNum", required = false)Integer pageNum,
+	public String linkList(Model model,
+						   @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
+						   @RequestParam(value = "svc_nm", required = false)String svc_nm,
 						   RedirectAttributes redirectAttributes
 						   ) {
 		if (pageNum == null) {
@@ -40,11 +41,18 @@ public class LinkServiceController extends AbstractController {
 			redirectAttributes.addAttribute("amount", 10);
 			return "redirect:/link/linkList";
 		}
+
+		LinkServiceVo linkServiceVo = new LinkServiceVo();
+		linkServiceVo.setPageNum(pageNum);
+		linkServiceVo.setAmount(10);
+		linkServiceVo.setSvc_nm(svc_nm);
+
 		Criteria criteria = new Criteria();
 		criteria.setPageNum(pageNum);
-		PageVo pageVo = new PageVo(criteria, service.selectLinkListCount());
 
-		model.addAttribute("selectLinkListPage", service.selectLinkListPage(criteria));
+		PageVo pageVo = new PageVo(criteria, service.selectLinkListCount(linkServiceVo));
+
+		model.addAttribute("selectLinkListPage", service.selectLinkListPage(linkServiceVo));
 		model.addAttribute("pagination", pageVo);
 
 		return layout("linkList");

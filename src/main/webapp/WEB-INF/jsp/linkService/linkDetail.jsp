@@ -31,6 +31,7 @@
                                 <input type="text" placeholder="검색">
                                 <img src="/img/icon-search.png" alt="">
                             </div>
+                            <button id="searchBtn" class="button-second">확인</button>
                         </div>
                     </div>
                     <table id="detailTbl" class="schema-list">

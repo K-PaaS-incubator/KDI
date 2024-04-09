@@ -13,8 +13,8 @@ public interface DatasourceService {
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) ;
 
 	public List<DatasourceVo> selectDsList();
-	public List<DatasourceVo> selectDsListPage(Criteria param);
-	public int selectDsListCount();
+	public List<DatasourceVo> selectDsListPage(DatasourceVo datasource_vo);
+	public int selectDsListCount(DatasourceVo datasource_vo);
 
 	public DatasourceVo selectDsInfo(String ds_nm);
 

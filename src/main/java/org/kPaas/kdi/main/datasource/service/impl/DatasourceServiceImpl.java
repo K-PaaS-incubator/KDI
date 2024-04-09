@@ -140,12 +140,12 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		return mapper.selectDsList();
 	}
 	@Override
-	public List<DatasourceVo> selectDsListPage(Criteria param){
-		return mapper.selectDsListPage(param);
+	public List<DatasourceVo> selectDsListPage(DatasourceVo datasource_vo){
+		return mapper.selectDsListPage(datasource_vo);
 	}
 	@Override
-	public int selectDsListCount(){
-		return mapper.selectDsListCount();
+	public int selectDsListCount(DatasourceVo datasource_vo){
+		return mapper.selectDsListCount(datasource_vo);
 	}
 	@Override
 	public DatasourceVo selectDsInfo(String ds_nm) {

@@ -93,6 +93,7 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    margin-bottom: 24px;
 }
 .search-box div{
     width: 360px;
@@ -118,6 +119,13 @@
     object-fit: cover;
     position: absolute;
     left: 18px;
+}
+.search-box button{
+    margin-left: 12px;
+    height: 40px;
+    padding: 0 16px;
+    font-size: 16px;
+    font-weight: 500;
 }
 /*인풋 스타일*/
 .common-input-box{
