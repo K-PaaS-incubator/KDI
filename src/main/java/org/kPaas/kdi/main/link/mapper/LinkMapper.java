@@ -2,6 +2,7 @@ package org.kPaas.kdi.main.link.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
+import org.kPaas.kdi.com.util.criteria.Criteria;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 
 @Mapper
@@ -12,7 +13,8 @@ public interface LinkMapper {
 
 	//연계서비스 조회
 	public List<LinkServiceVo> selectLinkList();
-	public List<LinkServiceVo> selectLinkListPage();
+	public List<LinkServiceVo> selectLinkListPage(Criteria param);
+	public int selectLinkListCount();
 	
 	//연계서비스 등록 시작
 	public List<String> selectDsList();

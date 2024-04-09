@@ -2,6 +2,7 @@ package org.kPaas.kdi.main.datasource.service;
 
 import java.util.List;
 
+import org.kPaas.kdi.com.util.criteria.Criteria;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.springframework.http.ResponseEntity;
 
@@ -12,6 +13,8 @@ public interface DatasourceService {
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) ;
 
 	public List<DatasourceVo> selectDsList();
+	public List<DatasourceVo> selectDsListPage(Criteria param);
+	public int selectDsListCount();
 
 	public DatasourceVo selectDsInfo(String ds_nm);
 

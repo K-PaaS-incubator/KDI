@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: flex-start;
     height: 256px;
-    background-color: #2D2D2D;
+    background-color: #757575;
     padding: 0 264px;
     color: white;
 }
@@ -18,21 +18,18 @@
         padding: 0 84px;
     }
 }
-
-
 .footer-main{
     margin-top: 64px;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-
 .footer-sub{
     display: flex;
     flex-direction: column;
     margin-bottom: 56px;
-    font-weight: 500;
-    color: #B8B8B8;
+    align-items: flex-start;
+    color: white;
 }
 .footer-info{
     display: flex;

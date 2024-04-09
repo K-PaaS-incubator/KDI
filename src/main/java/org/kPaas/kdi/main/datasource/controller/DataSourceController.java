@@ -1,6 +1,8 @@
 package org.kPaas.kdi.main.datasource.controller;
 
 import org.kPaas.kdi.com.abs.AbstractController;
+import org.kPaas.kdi.com.util.criteria.Criteria;
+import org.kPaas.kdi.com.util.criteria.PageVo;
 import org.kPaas.kdi.main.datasource.service.DatasourceService;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @PreAuthorize("hasRole('ADMIN')") // 관리자
 @RequestMapping("/ds")
@@ -27,8 +30,22 @@ public class DataSourceController extends AbstractController {
 
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
 	@GetMapping("/dsList")
-	public String dsList(Model model) {
-		model.addAttribute("selectDsList", service.selectDsList());
+	public String dsList(Model model,
+						 @RequestParam(value = "pageNum", required = false)Integer pageNum,
+						 RedirectAttributes redirectAttributes
+	) {
+		if (pageNum == null) {
+			redirectAttributes.addAttribute("pageNum", 1);
+			redirectAttributes.addAttribute("amount", 10);
+			return "redirect:/ds/dsList";
+		}
+		Criteria criteria = new Criteria();
+		criteria.setPageNum(pageNum);
+		PageVo pageVo = new PageVo(criteria, service.selectDsListCount());
+
+		model.addAttribute("selectDsListPage", service.selectDsListPage(criteria));
+		model.addAttribute("pagination", pageVo);
+
 		return layout("dsList");
 	}
 
