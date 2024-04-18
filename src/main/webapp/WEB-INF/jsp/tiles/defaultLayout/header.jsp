@@ -24,9 +24,9 @@
                         <li class="menuBar" onclick="location.href='${homeUrl}'">What's KDI</li>
                     </ul>
                 </nav>
-                <div>
+                <div style="width: 220px;">
                     <sec:authorize access="isAuthenticated()">
-                        <a class="button-primary" href="${homeUrl}member/logout" style="padding: 12px 40px;">로그아웃</a>
+                        <a class="button-primary" href="${homeUrl}member/logout" style="padding: 12px 30px;">로그아웃</a>
                     </sec:authorize>
                 </div>
             </div>
@@ -56,8 +56,8 @@
                             </ul>
                         </nav>
                     </div>
-                    <div style="visibility: hidden">
-                        <div class="button-primary" style="padding: 12px 40px;">로그아웃</div>
+                    <div style="visibility: hidden; width: 220px;">
+                        <div class="button-primary" style="padding: 12px 30px;">로그아웃</div>
                     </div>
                 </div>
             </div>
