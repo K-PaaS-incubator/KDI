@@ -64,6 +64,11 @@
     </div>
     <script defer>
         $(document).ready(function () {
+            // 새로고침 시 데이터 초기화
+            const entries = performance.getEntriesByType("navigation")[0];
+            if (entries.type === "reload") {
+                document.location.href = "/ds/dsList";
+            }
             //배너 타이틀 세팅
             $('.banner-title').text('데이터소스')
             $('.banner-sub-title').text('데이터 정보를 한눈에 볼 수 있습니다')
