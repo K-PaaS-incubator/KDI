@@ -68,6 +68,11 @@
 </section>
 <script defer>
     $(document).ready(function () {
+        // 새로고침 시 데이터 초기화
+        const entries = performance.getEntriesByType("navigation")[0];
+        if (entries.type === "reload") {
+            document.location.href = "/link/linkList";
+        }
         //배너 타이틀 세팅
         $('.banner-title').text('연계서비스')
         $('.banner-sub-title').text('연계서비스를 제공합니다')
