@@ -39,7 +39,7 @@
 .link-button-box{
 	display: flex;
 	flex-direction: row;
-	justify-content: flex-start;
+	justify-content: space-between;
 	margin-top: 28px;
 }
 .link-button-box input:nth-child(2){

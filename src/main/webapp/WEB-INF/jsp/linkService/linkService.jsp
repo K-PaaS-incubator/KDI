@@ -36,8 +36,8 @@
                 </div>
             </div>
             <div class="link-button-box">
-                <input class="button-primary" type="button" value="연계서비스 항목 설정 >" id="regbtn">
                 <input class="button-second-gray" type="button" value="취소" onclick="location.href='${homeUrl}linkList'">
+                <input class="button-primary" type="button" value="연계서비스 항목 설정 >" id="regbtn">
             </div>
         </form>
     </div>
@@ -82,6 +82,7 @@
                 alert('제목이 중복되었습니다.');
                 return;
             }
+
             $.ajax({
                 url: '${homeUrl}LinkInsert',
                 type: 'POST',
