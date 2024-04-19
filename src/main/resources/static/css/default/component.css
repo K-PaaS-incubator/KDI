@@ -1,16 +1,18 @@
 .banner-box{
     width: 100%;
-    height: 280px;
+    height: 160px;
     position: relative;
     z-index: 1;
 }
 .banner-image-box{
     width: 100%;
     overflow: hidden;
+    height: 100%;
 }
+
 .banner-title-box{
     position: absolute;
-    top: 86px;
+    top: 40px;
     left: 45%;
     z-index: 1;
     display: flex;
@@ -25,7 +27,7 @@
     margin-bottom: 22px;
 }
 .navi-text{
-    margin-bottom: 50px;
+    margin-bottom: 20px;
 }
 .navi-arrow{
     margin-right: 4px;

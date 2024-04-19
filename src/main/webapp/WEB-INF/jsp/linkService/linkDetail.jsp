@@ -8,7 +8,7 @@
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
     <div class="mainContent">
         <form>
-            <div class="content-wrapper">
+            <div class="content-wrapper" style="margin-top: 20px">
                 <div class="left-content">
                     <div class="left-content-title header4 gray500">${getLinkService.ds_nm}</div>
                     <div class="left-content-box">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="right-content">
                     <div class="right-content-top">
-                        <div class="header5 gray500" id="schemaTitle"></div>
+                        <div class="header6 gray400" id="schemaTitle"></div>
                         <div class="search-box">
                             <div>
                                 <input type="text" placeholder="검색">
@@ -70,8 +70,8 @@
                 </div>
             </div>
             <div class="link-button-box">
-                <input class="button-second" type="button" value="다음" id="regbtn" onclick="location.href='${homeUrl}linkTable'">
                 <input class="button-second-gray" type="button" value="취소" onclick="history.back()">
+                <input class="button-second" type="button" value="연계테이블 상세 설정 >" id="regbtn" onclick="location.href='${homeUrl}linkTable'">
             </div>
 
         </form>
