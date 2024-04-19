@@ -41,7 +41,7 @@
                     </div>
                     <div class="ds-input-box">
                         <div class="header6 label-title">Port</div> <!-- DB포트 -->
-                        <input class="ds-input subtitle1 gray400" type="number" id="ds_port" name="ds_port" onkeyup="printName()" placeholder="PORT" required>
+                        <input class="ds-input subtitle1 gray400" type="text" id="ds_port" name="ds_port" onkeyup="printName()" placeholder="PORT" required>
                     </div>
                     <div class="ds-input-box">
                         <!-- 주소와 포트 자동완성-키업사용-->
