@@ -44,7 +44,7 @@
             </tbody>
         </table>
         <div class="link-list-button-box">
-            <input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}linkService'">
+            <input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${homeUrl}link/linkService'">
             <ul class="pagination-ul">
                 <li class="header8 primary pagination-num ${pagination.pageNum == 1 ? "page-num-disabled" : ""}" >
                     <a href="linkList?pageNum=${pagination.pageNum - 1}&amount=${pagination.amount}">＜</a>
