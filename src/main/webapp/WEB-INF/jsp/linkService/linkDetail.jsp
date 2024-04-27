@@ -92,7 +92,7 @@
                 dataType: 'JSON',
                 data: {
                 	'pageNum':page,
-                	'pagePerRow':5,
+                	'pagePerRow':10,
                 	'ds_nm': ds_nm,
                     'sch_nm' : sch_nm
               	}, 
