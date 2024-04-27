@@ -18,7 +18,7 @@
                         <div class="header6 label-title">데이터소스 선택</div>
                         <select class="link-input subtitle1 gray400" name="ds_nm" id="ds_nm">
                             <option selected disabled>--선택--</option>
-                            <c:forEach var="dsList" items="${selectDsList}" begin="1">
+                            <c:forEach var="dsList" items="${selectDsList}">
                                 <option value="${dsList}">${dsList}</option>
                             </c:forEach>
                         </select>
@@ -89,7 +89,7 @@
                 async: false,
                 data: $('#linkCreate').serialize(),
                 success: function (result) {
-                    location.href = '${homeUrl}getLinkService?svc_nm=' + $("#svc_nm").val();
+                    location.href = '${homeUrl}detailService?svc_nm=' + $("#svc_nm").val();
                 },
                 error: function (result) {
                     console.log('statusCode:' + result.statusCode);

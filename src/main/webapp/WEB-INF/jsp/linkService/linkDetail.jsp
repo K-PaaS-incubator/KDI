@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:url var="homeUrl" value="/"/>
 <c:url var="cssUrl" value="/css"/>
 <link rel="stylesheet" href="${cssUrl}/link.css">
 
@@ -50,21 +51,14 @@
                             </tr>
                             <tr class="table-spacing"></tr>
                         </thead>
-                        <tbody class="list-body">
-                            <tr class="detailTr">
+                        <tbody id="tableData" class="list-body">
+                            <!-- <tr class="detailTr">
                                 <td>1</td>
                                 <td>PUB_TEST_TABLE</td>
                                 <td>N</td>
                                 <td></td>
                             </tr>
-                            <tr class="table-spacing"></tr>
-                            <tr class="detailTr">
-                                <td>2</td>
-                                <td>PUB_TEST_TABLE2</td>
-                                <td>N</td>
-                                <td></td>
-                            </tr>
-                            <tr class="table-spacing"></tr>
+                            <tr class="table-spacing"></tr> -->
                         </tbody>
                     </table>
                 </div>
@@ -79,15 +73,57 @@
     <table hidden="hidden">
         <tbody id="detailTblFormat">
             <tr class="detailTr">
-                <td>#NO</td>
-                <td>#TABLE_KR</td>
-                <td>#LINK_YN</td>
-                <td>#COMMENT</td>
+                <td>#NO#</td>
+                <td>#TABLE_NAME#</td>
+                <td>#LINK_YN#</td>
+                <td>#COMMENT#</td>
             </tr>
+            <tr class="table-spacing"></tr>
         </tbody>
     </table>
 
     <script>
+    	var tableDataHtml = $("#detailTblFormat").html();
+    	var loadTableData = function(ds_nm, sch_nm, page){
+    		page = page ? page : 1;
+    		$.ajax({
+                url: '${homeUrl}link/detailService/tableList.json',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                	'pageNum':page,
+                	'pagePerRow':5,
+                	'ds_nm': ds_nm,
+                    'sch_nm' : sch_nm
+              	}, 
+		        contentType : "application/json",
+                success: function (result) {
+                   var tmp = "";
+                   var rowHtml = "";
+                   var selData = "";
+                   for(var i=0; i < result.data.length; i++){
+                	   // row 데이터 가져오기
+                	   selData = result.data[i];
+                	   // rowHtml내용은 tableDataHtml포멧에서 가져옴
+                	   rowHtml = tableDataHtml;
+                	   // 컬럼 단위로 값을 변경하는 행위
+                	   rowHtml=rowHtml.replaceAll('#NO#', (i+1));
+                	   rowHtml=rowHtml.replaceAll('#TABLE_NAME#', selData.TB_NM ? selData.TB_NM : '');
+                	   rowHtml=rowHtml.replaceAll('#LINK_YN#', selData.LINK_YN ? selData.LINK_YN : '');
+                	   rowHtml=rowHtml.replaceAll('#COMMENT#', selData.TB_COMMENTS ? selData.TB_COMMENTS:'');
+                	 
+                	   // 완성된 rowHtml을 tmp에 담는 행위
+                	   tmp += rowHtml;
+                   }
+                   $("#tableData").html(tmp);
+                },
+                error: function (result) {
+                    console.log('statusCode:' + result.statusCode);
+                    console.log('responseJSON:' + result.responseJSON.state);
+                    console.log('responseJSON:' + result.responseJSON.errMsg);
+                }
+            });
+    	};
         $(document).ready(function () {
             //배너 타이틀 세팅
             $('.banner-title').text('연계서비스')
@@ -105,8 +141,9 @@
             $(".left-content-list-box li").css('background-color', '#ffffff');
             $('#' + schemaName).css('background-color', 'rgba(51, 106, 234, 0.10)');
 
-            $("#@#####").load("asbvd/asdf34r?schemaName=" + schemaName);
-            location.href = "asbvd/asdf34r?schemaName=" + schemaName;
+            loadTableData('${getLinkService.ds_nm}', schemaName);
+            //$("#@#####").load("asbvd/asdf34r?schemaName=" + schemaName);
+            //location.href = "asbvd/asdf34r?schemaName=" + schemaName;
         });
 
         //var aa = $("#detailTblFormat").html();

@@ -35,5 +35,33 @@
 		ORDER BY
 			USERNAME
 	</select>
-
+	<sql id="getLinkTableListWhere">
+		    DBA_TABLES TB1,
+		    DBA_TAB_COMMENTS TB2
+		<where>
+		    TB1.OWNER = TB2.OWNER
+		    AND TB1.TABLE_NAME = TB2.TABLE_NAME
+		    AND TB1.OWNER = #{value.sch_nm}
+	    </where>
+	</sql>
+	<select id="getLinkTableListCnt" resultType="Integer" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+			COUNT(*)
+		FROM
+		<include refid="getLinkTableListWhere"/>
+	</select>
+	<select id="getLinkTableList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+		    TB1.TABLE_NAME AS TB_NM,
+		    'Y' AS LINK_YN,
+		    TB2.COMMENTS AS TB_COMMENTS
+		FROM
+		<include refid="getLinkTableListWhere"/>
+	    ORDER BY
+	    	TB1.TABLE_NAME
+	    OFFSET
+	    	(#{pageNum} - 1) * #{pagePerRow}
+	    ROWS FETCH NEXT #{pagePerRow}
+	   	ROWS ONLY
+	</select>
 </mapper>

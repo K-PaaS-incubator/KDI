@@ -1,5 +1,9 @@
 package org.kPaas.kdi.com.abs;
 
+import java.util.Map;
+
+import org.kPaas.kdi.com.util.KdiParam;
+
 public abstract class AbstractController extends AbsCom {
 	public final static String DEFAULT_LAYOUT = "defaultLayout";
 
@@ -78,5 +82,23 @@ public abstract class AbstractController extends AbsCom {
 			return "nolayout/" + pageName;
 		}
 		return "nolayout/" + jspDirPath + "/" + pageName;
+	}
+
+	public final KdiParam mapToKdiParam(Map<String, Object> params) {
+		KdiParam kdiParam = new KdiParam();
+		if (params.containsKey("pageNum")) {
+			if (null != params.get("pageNum")) {
+				kdiParam.setPageNum(Long.parseLong(String.valueOf(params.get("pageNum"))));
+			}
+			params.remove("pageNum");
+		}
+		if (params.containsKey("pagePerRow")) {
+			if (null != params.get("pagePerRow")) {
+				kdiParam.setPagePerRow(Integer.parseInt(String.valueOf(params.get("pagePerRow"))));
+			}
+			params.remove("pagePerRow");
+		}
+		kdiParam.setValue(params);
+		return kdiParam;
 	}
 }

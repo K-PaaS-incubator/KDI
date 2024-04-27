@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:url var="homeUrl" value="/"/>
 <c:url var="cssUrl" value="/css"/>
 <link rel="stylesheet" href="${cssUrl}/link.css">
-
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
     <jsp:include page="../component/subTitle.jsp"></jsp:include>
     <%--    <form id="searchForm" name="searchForm" method="get">--%>
     <div class="mainContent">
-        <form action="/link/linkList" method="GET" id="searchForm">
+        <form action="${homeUrl}link/linkList" method="GET" id="searchForm">
             <div class="search-box">
                 <div>
                     <input id="searchKeyword" type="text" name="svc_nm" placeholder="검색어 입력" value="">
-                    <img src="/img/icon-search.png" alt="">
+                    <img src="${homeUrl}img/icon-search.png" alt="">
                 </div>
                 <button id="searchBtn" type="submit" class="button-second-gray">확인</button>
             </div>
@@ -71,7 +72,7 @@
         // 새로고침 시 데이터 초기화
         const entries = performance.getEntriesByType("navigation")[0];
         if (entries.type === "reload") {
-            document.location.href = "/link/linkList";
+            document.location.href = "${homeUrl}link/linkList";
         }
         //배너 타이틀 세팅
         $('.banner-title').text('연계서비스')
@@ -81,14 +82,14 @@
         $('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회')
 
         $("#lnkTbl tr").click(function () {
-            location.href = "${homeUrl}getLinkService?svc_nm=" + $(this).find("td:nth-child(2)").text();
+            location.href = "${homeUrl}link/detailService?svc_nm=" + $(this).find("td:nth-child(2)").text();
         });
     });
 
     function fn_sendPageNumber(no) {
         var frm = document.searchForm;
         frm.num.value = no;
-        frm.action = "/link/linkList"
+        frm.action = "${homeUrl}link/linkList"
         frm.submit();
 
         event.preventDefault();
