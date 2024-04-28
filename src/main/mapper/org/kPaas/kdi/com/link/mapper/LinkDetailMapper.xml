@@ -42,6 +42,18 @@
 		    TB1.OWNER = TB2.OWNER
 		    AND TB1.TABLE_NAME = TB2.TABLE_NAME
 		    AND TB1.OWNER = #{value.sch_nm}
+		    AND (
+			    1=1
+			   	<if test="value.tb_nm != null and value.tb_nm = ''">
+			    	OR TB1.TABLE_NAME LIKE '%'||#{value.tb_nm}||'%'
+			    </if>
+			   	<if test="value.link_yn != null and value.link_yn= ''">
+			    	OR TB1.LINK_YN = UPPER(#{value.link_yn})
+			    </if>
+			   	<if test="value.tb_comments!= null and value.tb_comments = ''">
+			    	OR TB1.LINK_YN = UPPER(#{value.tb_comments})
+			    </if>
+		    )
 	    </where>
 	</sql>
 	<select id="getLinkTableListCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">

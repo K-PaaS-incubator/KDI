@@ -211,6 +211,10 @@
 							paramData['sch_nm'] = schemaName;
 							grid.search(1, paramData);
 						});
+		// 검색할때 paramData에 검색값을 넘김
+		// 따라서 이 화면에서 테이블명을 검색한다고 한다면 아래와 같이사용
+		// paramData['tb_nm'] = '검색어'
+		// 그 외 지원되는 검색조건 link_yn, tb_comments
 	</script>
 
 </section>
