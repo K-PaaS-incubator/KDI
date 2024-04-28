@@ -135,6 +135,7 @@ var KdiListGrid = function(varName, url) {
 			if (0 >= _pagePerRow) {
 				_pagePerRow = 10;
 			}
+			_paramData['pagePerRow'] = _pagePerRow;
 		},
 
 		setGridHtmlFormatId: function(gridHtmlFormatId) {

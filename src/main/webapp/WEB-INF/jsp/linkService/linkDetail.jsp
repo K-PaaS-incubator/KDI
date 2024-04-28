@@ -108,7 +108,8 @@
 
 	<script>
 		// 	선언한 변수명, 주소
-		var grid = KdiListGrid('grid', '${homeUrl}link/detailService/tableList.json');
+		var grid = KdiListGrid('grid',
+				'${homeUrl}link/detailService/tableList.json');
 
 		// 그리드 세부조작시 사용하는 환경설정
 		var gridEnv = grid.env;
@@ -171,7 +172,11 @@
 			console.log('responseJSON:' + xhr.responseJSON.state);
 			console.log('responseJSON:' + xhr.responseJSON.errMsg);
 		}
-		//gridEnv.setErrEvent(errEvent);
+		// 안쓰려면 호출안하면 됨
+		grid.event.setErrEvent(errEvent);
+		
+		// 페이지당 출력건수를 변경하려면 아래 함수 호출
+		//gridEnv.setPagePerRow(10);
 
 		$(document).ready(function() {
 			// 검색 준비가 된 시점으로 최소 documnet 준비된 시점에 호출되어야 한다.
