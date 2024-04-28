@@ -174,7 +174,7 @@
 		}
 		// 안쓰려면 호출안하면 됨
 		grid.event.setErrEvent(errEvent);
-		
+
 		// 페이지당 출력건수를 변경하려면 아래 함수 호출
 		//gridEnv.setPagePerRow(10);
 
@@ -215,6 +215,7 @@
 		// 따라서 이 화면에서 테이블명을 검색한다고 한다면 아래와 같이사용
 		// paramData['tb_nm'] = '검색어'
 		// 그 외 지원되는 검색조건 link_yn, tb_comments
+		// 통합검색인 경우 paramData['all_search'] 조건인 경우 모든 컬럼에서 조회하는 조건임
 	</script>
 
 </section>

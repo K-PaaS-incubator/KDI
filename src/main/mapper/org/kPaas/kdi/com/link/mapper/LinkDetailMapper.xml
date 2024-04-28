@@ -44,15 +44,26 @@
 		    AND TB1.OWNER = #{value.sch_nm}
 		    AND (
 			    1=1
-			   	<if test="value.tb_nm != null and value.tb_nm = ''">
+			    -- 선택검색
+			   	<if test="value.tb_nm != null and value.tb_nm != ''">
 			    	OR TB1.TABLE_NAME LIKE '%'||#{value.tb_nm}||'%'
 			    </if>
-			   	<if test="value.link_yn != null and value.link_yn= ''">
-			    	OR TB1.LINK_YN = UPPER(#{value.link_yn})
+			   	<if test="value.link_yn != null and value.link_yn != ''">
+			   	    -- 미구현
+			    	-- OR LINK_YN = UPPER(#{value.link_yn})
 			    </if>
-			   	<if test="value.tb_comments!= null and value.tb_comments = ''">
-			    	OR TB1.LINK_YN = UPPER(#{value.tb_comments})
+			   	<if test="value.tb_comments!= null and value.tb_comments != ''">
+			    	OR TB2.COMMENTS = UPPER(#{value.tb_comments})
 			    </if>
+			    
+			    -- 통합검색
+		    	<if test="value.all_search != null and value.all_search != ''">
+			    	OR TB1.TABLE_NAME LIKE '%'||#{value.all_search}||'%'
+			   	    -- 미구현
+			    	-- OR LINK_YN = UPPER(#{value.all_search})
+			    	OR TB2.COMMENTS = UPPER(#{value.all_search})
+			    </if>
+			    
 		    )
 	    </where>
 	</sql>
