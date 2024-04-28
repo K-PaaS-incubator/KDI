@@ -18,7 +18,7 @@ public interface LinkDetailMapper {
 	public List<String> getSchema();
 
 	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 건수 출력 */
-	public Integer getLinkTableListCnt(KdiParam kdiParam);
+	public Long getLinkTableListCnt(KdiParam kdiParam);
 
 	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
 	public List<Map<String, String>> getLinkTableList(KdiParam kdiParam);

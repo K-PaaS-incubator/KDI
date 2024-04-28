@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<title>페이지번호영역 디자인</title>
+<meta charset="UTF-8">
+<!-- 
+body영역만 불러와짐으로 head영역은 작업한 내용은 화면이 사용될곳에서 정의하거나 공통 레이아웃에 적용해야한다.
+ -->
+<link rel="stylesheet" href="../../css/default/common.css">
+</head>
+<body>
+	<p>클래스명 '.page-ctl-zone'으로 kdi-grid.js에 불러옴</p>
+	<p>page-ctl-zone, page-ctl-num-zone, page-ctl-num, firstCtl, prevCtl, nextCtl, lastCtl 클래스가 존재해야 제어됨</p>
+	<div class="page-ctl-zone"
+		style="display: inline-block; display: flex;">
+		<a class="header8 pagination-num firstCtl page-num-disabled" href="#">⎹＜</a>
+		<a class="header8 pagination-num prevCtl page-num-disabled" href="#">＜</a>
+
+		<!--'page-ctl-num-zone'안의 내용을 반복하여 출력함 -->
+		<!-- 초기 상태값으로 1은 명시함 -->
+		<div class="page-ctl-num-zone" style="display: flex;">
+			<a class="page-ctl-num pagination-num page-#PAGE_NO#" href="javascript:#VAR_NAME#.search(#PAGE_NO#)">#PAGE_NO#</a>
+		</div>
+
+		<a class="header8 pagination-num nextCtl page-num-disabled" href="#">＞</a>
+		<a class="header8 pagination-num lastCtl page-num-disabled" href="#">＞⎹</a>
+	</div>
+	<p>페이지번호영역 샘플</p>
+	<div class="pagination-num-zone"
+		style="display: inline-block; display: flex;">
+		<div class="header8 pagination-num firstCtl">⎹＜</div>
+		<div class="header8 pagination-num prevCtl">＜</div>
+		<div class="page-ctl-num-zone" style="display: flex;">
+			<div class="pagination-num">1</div>
+			<div class="pagination-num">2</div>
+			<div class="pagination-num page-num-current">3</div>
+			<div class="pagination-num">4</div>
+			<div class="pagination-num">5</div>
+		</div>
+		<div class="header8 pagination-num nextCtl">＞</div>
+		<div class="header8 pagination-num lastCtl">＞⎹</div>
+	</div>
+</body>
+</html>

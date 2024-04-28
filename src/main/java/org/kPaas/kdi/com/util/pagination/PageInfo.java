@@ -11,7 +11,7 @@ public class PageInfo extends PageParam {
 	/**
 	 * 게시물 전체 건수
 	 */
-	private int total = 0;
+	private Long total = 0L;
 
 	/**
 	 * 최대 페이지번호 출력건수<br>
@@ -19,13 +19,13 @@ public class PageInfo extends PageParam {
 	 */
 	private Integer maxPageNumView = 5;
 
-	public int getTotal() {
+	public Long getTotal() {
 		return total;
 	}
 
-	public void setTotal(Integer total) {
+	public void setTotal(Long total) {
 		if (null == total) {
-			total = 0;
+			total = 0L;
 		}
 		this.total = total;
 	}

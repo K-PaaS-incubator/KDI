@@ -44,7 +44,7 @@
 		    AND TB1.OWNER = #{value.sch_nm}
 	    </where>
 	</sql>
-	<select id="getLinkTableListCnt" resultType="Integer" parameterType="org.kPaas.kdi.com.util.KdiParam">
+	<select id="getLinkTableListCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
 		SELECT
 			COUNT(*)
 		FROM

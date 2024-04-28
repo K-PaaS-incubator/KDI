@@ -28,6 +28,7 @@ public class KdiWebMvc implements WebMvcConfigurer {
 		registry.addResourceHandler("/font/**").addResourceLocations("/resources/font/");
 		registry.addResourceHandler("/img/**").addResourceLocations("classpath:static/img/");
 		registry.addResourceHandler("/js/**").addResourceLocations("classpath:static/js/");
+		registry.addResourceHandler("/html/**").addResourceLocations("classpath:static/html/");
 		registry.addResourceHandler("/*.*").addResourceLocations("classpath:static/");
 
 	}
@@ -38,7 +39,8 @@ public class KdiWebMvc implements WebMvcConfigurer {
 				.defaultContentType(MediaType.ALL) // 기본값
 				.mediaType("do", MediaType.TEXT_HTML) // 확장자가 do인 경우
 				.mediaType("xml", MediaType.APPLICATION_ATOM_XML) // 확장자가 xml인 경우
-				.mediaType("json", MediaType.APPLICATION_JSON); // 확장자가 json인 경우
+				.mediaType("json", MediaType.APPLICATION_JSON) // 확장자가 json인 경우
+				.mediaType("html", MediaType.TEXT_HTML); // 확장자가 html인 경우
 
 		WebMvcConfigurer.super.configureContentNegotiation(configurer);
 	}

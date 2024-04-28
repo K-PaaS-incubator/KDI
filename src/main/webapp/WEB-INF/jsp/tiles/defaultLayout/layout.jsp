@@ -15,6 +15,7 @@
 <script src="${jsUrl}/jquery/additional-methods.min.js"></script>
 <script src="${jsUrl}/jquery/jquery.validate.min.js"></script>
 <script src="${jsUrl}/jquery/messages_ko.min.js"></script>
+<script src="${jsUrl}/kdi/kdi-grid.js"></script>
 </head>
 <body>
 	<!-- Page Header -->

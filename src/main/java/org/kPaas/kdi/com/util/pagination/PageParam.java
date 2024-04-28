@@ -11,7 +11,7 @@ public class PageParam implements Serializable {
 	/**
 	 * 페이지번호
 	 */
-	private Long pageNum;
+	private Long pageNum = 1L;
 
 	/**
 	 * 페이지당 출력건수

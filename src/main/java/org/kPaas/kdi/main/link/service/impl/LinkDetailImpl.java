@@ -46,7 +46,6 @@ public class LinkDetailImpl extends AbstractService implements LinkDetailService
 	public ResponseEntity<String> getLinkTableList(KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
 		PageInfo pageInfo = new PageInfo(kdiParam);
-		result.put("page", pageInfo);
 
 		// 이전 DB접속정보 (H2)
 		final String orgContext = getContext();
@@ -70,6 +69,7 @@ public class LinkDetailImpl extends AbstractService implements LinkDetailService
 		} finally {
 			// 다시 이전 DB접속정보로 접속 (H2)
 			setContext(orgContext);
+			result.put("page", new JSONObject(pageInfo));
 		}
 		result.put("stateCode", 0);
 		result.put("state", "조회 성공");
