@@ -78,15 +78,15 @@
 				<input class="button-second-gray" type="button" value="취소"
 					onclick="history.back()"> <input class="button-second"
 					type="button" value="연계테이블 상세 설정 >" id="regbtn"
-					onclick="location.href='${homeUrl}linkTable'">
+					onclick="location.href='${homeUrl}link/linkTable'">
 			</div>
 		</form>
 	</div>
 	<table hidden="hidden">
 		<tbody id="gridHtmlFormatId">
-			<tr class="detailTr">
+			<tr class="detailTr" onclick="selectTb(this);">
 				<td>#NO#</td>
-				<td>#TABLE_NAME#</td>
+				<td class="tb_nm">#TABLE_NAME#</td>
 				<td>#LINK_YN#</td>
 				<td>#COMMENT#</td>
 			</tr>
@@ -216,6 +216,32 @@
 		// paramData['tb_nm'] = '검색어'
 		// 그 외 지원되는 검색조건 link_yn, tb_comments
 		// 통합검색인 경우 paramData['all_search'] 조건인 경우 모든 컬럼에서 조회하는 조건임
+		
+		
+		// 연계대상 테이블 선택시 값추출
+		var selectTb = function(el){
+			$('#gridTableDataBody tr').removeClass('selectEl');
+			$(el).addClass('selectEl');
+			
+			var tbl_nm = $('#gridTableDataBody tr.selectEl td.tb_nm').text();
+			
+            $.ajax({
+                url: '/link/linkTableName',
+                type: 'POST',
+                data: {'tbl_nm':tbl_nm},
+                dataType: 'json', // 응답하는 값의 유형
+                success: function (result) {
+                    console.log('result:' + result);
+                    console.log('result:' + result.abcd);
+                    console.log('result:' + result['abcd']);
+                },
+                error: function (result) {
+                    console.log('실패');
+                }
+            });
+		};
+		
+		
 	</script>
 
 </section>

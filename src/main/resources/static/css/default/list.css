@@ -26,7 +26,7 @@
     border-radius: 3px;
     width: 100%;
 }
-.data-list .list-body tr:hover{
+.data-list .list-body tr:hover, .selectEl{
     color: #336AEA;
     cursor: pointer;
     border: 1px solid rgba(51, 106, 234, 0.40);
