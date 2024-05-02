@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url var="homeUrl" value="/"/>
+
+<c:url var="homeUrl" value="/" />
+<c:url var="linkUrl" value="/link/" />
 <c:url var="cssUrl" value="/css/"/>
 <link rel="stylesheet" href="${cssUrl}link.css">
 
@@ -57,7 +59,7 @@
             var svc_nm = $('#svc_nm').val();
             var checkResult = false;
             $.ajax({
-                url: '/link/linkCntCheck', //컨트롤러에서 요청받을 주소
+                url: '${linkUrl}linkCntCheck', //컨트롤러에서 요청받을 주소
                 type: 'POST',
                 async: false,
                 data: {
@@ -85,12 +87,12 @@
             }
 
             $.ajax({
-                url: '${homeUrl}LinkInsert',
+                url: '${linkUrl}LinkInsert',
                 type: 'POST',
                 async: false,
                 data: $('#linkCreate').serialize(),
                 success: function (result) {
-                    location.href = '${homeUrl}detailService?svc_nm=' + $("#svc_nm").val();
+                    location.href = '${linkUrl}detailService?svc_nm=' + $("#svc_nm").val();
                 },
                 error: function (result) {
                     console.log('statusCode:' + result.statusCode);

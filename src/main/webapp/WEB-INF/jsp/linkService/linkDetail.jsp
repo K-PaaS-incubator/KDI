@@ -1,8 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="homeUrl" value="/" />
-<c:url var="imgUrl" value="/img/" />
+<c:url var="linkUrl" value="/link/" />
 <c:url var="cssUrl" value="/css/" />
+<c:url var="imgUrl" value="/img/" />
 <link rel="stylesheet" href="${cssUrl}link.css">
 
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
@@ -12,13 +14,16 @@
 		<form>
 			<div class="content-wrapper" style="margin-top: 20px">
 				<div class="left-content">
-					<div class="left-content-title header4 gray500" title="${getLinkService.ds_nm}">${getLinkService.ds_nm}</div>
+					<div class="left-content-title header4 gray500"
+						title="${getLinkService.ds_nm}">${getLinkService.ds_nm}</div>
 					<div class="left-content-box">
 						<div class="left-title header5 white100">스키마 선택</div>
 						<ul class="left-content-list-box">
 							<!-- //TODO 스키마명 많을 경우 스크롤로 볼 수 있게 개발 -->
 							<c:forEach var="connectLinkDs" items="${connectLinkDs}">
-								<li class="body2 gray400 selectSch" id="${connectLinkDs}"><input type="hidden" name="schemaName" value="${connectLinkDs}">${connectLinkDs}</li>
+								<li class="body2 gray400 selectSch" id="${connectLinkDs}">
+									<input type="hidden" name="schemaName" value="${connectLinkDs}">${connectLinkDs}
+								</li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -28,7 +33,8 @@
 						<div class="header6 gray400" id="schemaTitle"></div>
 						<div class="search-box">
 							<div>
-								<input type="text" placeholder="검색"> <img src="${imgUrl}icon-search.png" alt="">
+								<input type="text" placeholder="검색"> <img
+									src="${imgUrl}icon-search.png" alt="">
 							</div>
 							<button id="searchBtn" class="button-second">확인</button>
 						</div>
@@ -66,20 +72,23 @@
 				<!-- 이 영역에 구현된 페이지 번호영역은 static/html/kdi/pagination-num.html에 구현함 -->
 				<div class="body2 pagination-ul pageCtlZone"></div>
 				<div class="body2 gray500">
-					<span class="currentPageNum">1</span> / <span class="totalPage">1</span> 페이지
+					<span class="currentPageNum">1</span> / <span class="totalPage">1</span>
+					페이지
 				</div>
 			</div>
 			<div class="link-button-box">
-				<input class="button-second-gray" type="button" value="취소" onclick="history.back()"> <input class="button-second" type="button" value="연계테이블 상세 설정 >" id="regbtn"
-					onclick="location.href='${homeUrl}linkTable'">
+				<input class="button-second-gray" type="button" value="취소"
+					onclick="history.back()"> <input class="button-second"
+					type="button" value="연계테이블 상세 설정 >" id="regbtn"
+					onclick="location.href='${linkUrl}linkTable'">
 			</div>
 		</form>
 	</div>
 	<table hidden="hidden">
 		<tbody id="gridHtmlFormatId">
-			<tr class="detailTr">
+			<tr class="detailTr" onclick="selectTb(this);">
 				<td>#NO#</td>
-				<td>#TABLE_NAME#</td>
+				<td class="tb_nm">#TABLE_NAME#</td>
 				<td>#LINK_YN#</td>
 				<td>#COMMENT#</td>
 			</tr>
@@ -102,7 +111,7 @@
 	<script>
 		// 	선언한 변수명, 주소
 		var grid = KdiListGrid('grid',
-				'${homeUrl}link/detailService/tableList.json');
+				'${linkUrl}detailService/tableList.json');
 
 		// 그리드 세부조작시 사용하는 환경설정
 		var gridEnv = grid.env;
@@ -209,6 +218,32 @@
 		// paramData['tb_nm'] = '검색어'
 		// 그 외 지원되는 검색조건 link_yn, tb_comments
 		// 통합검색인 경우 paramData['all_search'] 조건인 경우 모든 컬럼에서 조회하는 조건임
+		
+		
+		// 연계대상 테이블 선택시 값추출
+		var selectTb = function(el){
+			$('#gridTableDataBody tr').removeClass('selectEl');
+			$(el).addClass('selectEl');
+			
+			var tbl_nm = $('#gridTableDataBody tr.selectEl td.tb_nm').text();
+			
+            $.ajax({
+                url: '${linkUrl}linkTableName',
+                type: 'POST',
+                data: {'tbl_nm':tbl_nm},
+                dataType: 'json', // 응답하는 값의 유형
+                success: function (result) {
+                    console.log('result:' + result);
+                    console.log('result:' + result.abcd);
+                    console.log('result:' + result['abcd']);
+                },
+                error: function (result) {
+                    console.log('실패');
+                }
+            });
+		};
+		
+		
 	</script>
 
 </section>
