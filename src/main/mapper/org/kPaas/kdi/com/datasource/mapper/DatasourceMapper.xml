@@ -4,6 +4,54 @@
 
 <mapper namespace="org.kPaas.kdi.main.datasource.mapper.DatasourceMapper">
 
+	<select id="getDsListAll" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo" fetchSize="50">
+		SELECT
+			ROWNUM AS NUM,
+			TB1.*
+		FROM
+			KDI_DATASOURCE TB1
+	</select>
+	<sql id="getDsListWhere">
+		KDI_DATASOURCE TB1
+		<where>
+			1=1
+			<if test="value.ds_nm != null and value.ds_nm != ''">
+				AND TB1.DS_NM LIKE '%' || #{ds_nm} || '%'
+			</if>
+			<if test="value.ds_type != null and value.ds_type != ''">
+				AND TB1.DS_TYPE LIKE '%' || #{ds_type} || '%'
+			</if>
+			<if test="value.ds_addr != null and value.ds_addr != ''">
+				AND TB1.DS_ADDR LIKE '%' || #{ds_addr} || '%'
+			</if>
+			<if test="value.all_search != null and value.all_search != ''">
+				OR TB1.DS_NM   LIKE '%' || #{ds_nm}   || '%'
+				OR TB1.DS_TYPE LIKE '%' || #{ds_type} || '%'
+				OR TB1.DS_ADDR LIKE '%' || #{ds_addr} || '%'
+			</if>
+		</where>
+	</sql>
+	<select id="getDsListCnt" resultType="Long" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
+		SELECT
+			COUNT(TB1.*)
+		FROM
+		<include refid="getDsListWhere" />
+	</select>
+
+	<select id="getDsList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+			TB1.DS_NM,
+			TB1.DS_URL
+		FROM
+		<include refid="getDsListWhere" />
+		ORDER BY
+	    	TB1.REG_DT, TB1.DS_NM
+	    LIMIT
+	    	#{pagePerRow}
+	    OFFSET
+	    	(#{pageNum} - 1) * #{pagePerRow}
+	</select>
+
 	<insert id="insertDS" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
 		INSERT INTO KDI_DATASOURCE
 		VALUES(#{ds_nm},#{ds_type},#{ds_driver},#{ds_addr},#{ds_port},#{ds_sid},#{ds_url},#{ds_usr_nm},#{ds_usr_pw},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
@@ -22,7 +70,8 @@
 		`ds_usr_nm` varchar2(100) NULL,
 		`ds_usr_pw` varchar2(100) NULL,
 		`reg_id` varchar2(20) NULL,
-		`reg_dt` date NULL,
+		`reg_dt` date
+		NULL,
 		`mod_id` varchar2(20) NULL,
 		`mod_dt` date NULL,
 		PRIMARY KEY (`ds_nm`)
@@ -32,26 +81,6 @@
 	<select id="getSameDsCheck" resultType="Integer">
 		SELECT count(*) FROM KDI_DATASOURCE
 		<where>ds_nm = #{ds_nm}</where>
-	</select>
-
-	<select id="selectDsList" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
-		SELECT rownum as NUM,* FROM KDI_DATASOURCE
-	</select>
-
-	<select id="selectDsListPage" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
-		SELECT * FROM(SELECT ROWNUM AS NUM, * FROM KDI_DATASOURCE)
-			WHERE NUM <![CDATA[>]]> (#{pageNum}-1) * #{amount}
-			AND NUM <![CDATA[<=]]> #{pageNum} * #{amount}
-			<if test="ds_nm != null">
-			AND DS_NM LIKE '%' || #{ds_nm} || '%';
-			</if>
-	</select>
-
-	<select id="selectDsListCount" parameterType="org.kPaas.kdi.main.datasource.vo.DatasourceVo" resultType="Integer">
-		SELECT count(*) as total FROM(SELECT ROWNUM AS NUM, * FROM KDI_DATASOURCE)
-		<if test="ds_nm != null">
-		WHERE DS_NM LIKE '%' || #{ds_nm} || '%';
-		</if>
 	</select>
 
 	<select id="selectDsInfo" parameterType="String" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo">
@@ -79,7 +108,7 @@
 	<delete id="deleteDS" parameterType="String">
 		DELETE
 		FROM
-			KDI_DATASOURCE
+		KDI_DATASOURCE
 		<where>
 			ds_nm = #{ds_nm}
 		</where>
