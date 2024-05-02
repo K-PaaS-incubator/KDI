@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="homeUrl" value="/" />
-<c:url var="cssUrl" value="/css" />
-<link rel="stylesheet" href="${cssUrl}/link.css">
+<c:url var="imgUrl" value="/img/" />
+<c:url var="cssUrl" value="/css/" />
+<link rel="stylesheet" href="${cssUrl}link.css">
 
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
@@ -12,16 +12,13 @@
 		<form>
 			<div class="content-wrapper" style="margin-top: 20px">
 				<div class="left-content">
-					<div class="left-content-title header4 gray500"
-						title="${getLinkService.ds_nm}">${getLinkService.ds_nm}</div>
+					<div class="left-content-title header4 gray500" title="${getLinkService.ds_nm}">${getLinkService.ds_nm}</div>
 					<div class="left-content-box">
 						<div class="left-title header5 white100">스키마 선택</div>
 						<ul class="left-content-list-box">
 							<!-- //TODO 스키마명 많을 경우 스크롤로 볼 수 있게 개발 -->
 							<c:forEach var="connectLinkDs" items="${connectLinkDs}">
-								<li class="body2 gray400 selectSch" id="${connectLinkDs}">
-									<input type="hidden" name="schemaName" value="${connectLinkDs}">${connectLinkDs}
-								</li>
+								<li class="body2 gray400 selectSch" id="${connectLinkDs}"><input type="hidden" name="schemaName" value="${connectLinkDs}">${connectLinkDs}</li>
 							</c:forEach>
 						</ul>
 					</div>
@@ -31,8 +28,7 @@
 						<div class="header6 gray400" id="schemaTitle"></div>
 						<div class="search-box">
 							<div>
-								<input type="text" placeholder="검색"> <img
-									src="/img/icon-search.png" alt="">
+								<input type="text" placeholder="검색"> <img src="${imgUrl}icon-search.png" alt="">
 							</div>
 							<button id="searchBtn" class="button-second">확인</button>
 						</div>
@@ -70,14 +66,11 @@
 				<!-- 이 영역에 구현된 페이지 번호영역은 static/html/kdi/pagination-num.html에 구현함 -->
 				<div class="body2 pagination-ul pageCtlZone"></div>
 				<div class="body2 gray500">
-					<span class="currentPageNum">1</span> / <span class="totalPage">1</span>
-					페이지
+					<span class="currentPageNum">1</span> / <span class="totalPage">1</span> 페이지
 				</div>
 			</div>
 			<div class="link-button-box">
-				<input class="button-second-gray" type="button" value="취소"
-					onclick="history.back()"> <input class="button-second"
-					type="button" value="연계테이블 상세 설정 >" id="regbtn"
+				<input class="button-second-gray" type="button" value="취소" onclick="history.back()"> <input class="button-second" type="button" value="연계테이블 상세 설정 >" id="regbtn"
 					onclick="location.href='${homeUrl}linkTable'">
 			</div>
 		</form>

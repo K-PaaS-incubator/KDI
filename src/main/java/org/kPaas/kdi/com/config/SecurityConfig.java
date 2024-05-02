@@ -80,10 +80,11 @@ public class SecurityConfig {
 					if (session != null) {
 						session.invalidate();
 					}
-				}) // 로그아웃 핸들러 추가
-				.logoutSuccessHandler((request, response, authentication) -> {
-					response.sendRedirect("/member/login");
-				})//
+				})
+		// 로그아웃 핸들러 (미사용중)
+		// .logoutSuccessHandler((request, response, authentication) -> {
+		// response.sendRedirect(dsUrl+"member/login");
+		// })
 		);
 		return http.build();
 	}

@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.kPaas.kdi.com.util.criteria.Criteria;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 
 @Mapper

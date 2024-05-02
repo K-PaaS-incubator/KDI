@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:url var="cssUrl" value="/css"/>
-<link rel="stylesheet" href="${cssUrl}/link.css">
+<c:url var="homeUrl" value="/"/>
+<c:url var="cssUrl" value="/css/"/>
+<link rel="stylesheet" href="${cssUrl}link.css">
 
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">

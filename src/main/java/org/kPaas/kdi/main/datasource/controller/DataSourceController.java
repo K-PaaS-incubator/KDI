@@ -29,7 +29,7 @@ public class DataSourceController extends AbstractController {
 	DatasourceService service;
 
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
-	@GetMapping("/dsList")
+	@GetMapping()
 	public String dsList(Model model,
 						 @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
 						 @RequestParam(value = "ds_nm", required = false)String ds_nm,
@@ -54,7 +54,7 @@ public class DataSourceController extends AbstractController {
 		model.addAttribute("selectDsListPage", service.selectDsListPage(datasourceVo));
 		model.addAttribute("pagination", pageVo);
 
-		return layout("dsList");
+		return layout("index");
 	}
 
 	@GetMapping("/dsCreate")

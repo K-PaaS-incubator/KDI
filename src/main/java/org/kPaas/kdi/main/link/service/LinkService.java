@@ -2,7 +2,6 @@ package org.kPaas.kdi.main.link.service;
 
 import java.util.List;
 
-import org.kPaas.kdi.com.util.criteria.Criteria;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.springframework.http.ResponseEntity;
 
