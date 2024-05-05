@@ -13,6 +13,9 @@
     box-sizing: border-box;
     text-align: start;
     align-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 .label-title{
     margin-bottom: 16px;
