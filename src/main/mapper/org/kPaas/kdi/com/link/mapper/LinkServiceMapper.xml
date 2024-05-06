@@ -53,4 +53,51 @@
 		VALUES(#{ds_nm},#{svc_nm},#{svc_type},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
 	</insert>
 
+	<select id="getLinkListAll" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo" fetchSize="50">
+		SELECT
+		    ROWNUM AS NUM,
+		    TB1.*
+		FROM
+		    KDI_LINK_SERVICE TB1
+	</select>
+	<sql id="getLinkListWhere">
+		KDI_LINK_SERVICE TB1
+		<where>
+			1=1
+			<if test="value.ds_nm != null and value.ds_nm != ''">
+				AND TB1.DS_NM LIKE '%' || #{ds_nm} || '%'
+			</if>
+			<if test="value.svc_nm != null and value.svc_nm != ''">
+				AND TB1.SVC_NM LIKE '%' || #{svc_nm} || '%'
+			</if>
+			<if test="value.svc_type != null and value.svc_type != ''">
+				AND TB1.SVC_TYPE LIKE '%' || #{svc_type} || '%'
+			</if>
+			<if test="value.all_search != null and value.all_search != ''">
+				OR TB1.DS_NM   LIKE '%' || #{ds_nm}   || '%'
+				OR TB1.SVC_NM LIKE '%' || #{svc_nm} || '%'
+				OR TB1.SVC_TYPE LIKE '%' || #{svc_type} || '%'
+			</if>
+		</where>
+	</sql>
+	<select id="getLinkListCnt" resultType="Long" parameterType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
+		SELECT
+			COUNT(TB1.*)
+		FROM
+		<include refid="getLinkListWhere" />
+	</select>
+
+	<select id="getLinkList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+			TB1.DS_NM,
+			TB1.SVC_NM
+		FROM
+		<include refid="getLinkListWhere" />
+		ORDER BY
+			TB1.REG_DT, TB1.DS_NM
+		LIMIT
+			#{pagePerRow}
+		OFFSET
+			(#{pageNum} - 1) * #{pagePerRow}
+	</select>
 </mapper>

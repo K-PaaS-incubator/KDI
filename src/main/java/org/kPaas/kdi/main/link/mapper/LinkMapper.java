@@ -1,13 +1,19 @@
 package org.kPaas.kdi.main.link.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 
 @Mapper
 public interface LinkMapper {
-
+	// 기동단계에서 사용
+	public List<LinkServiceVo> getLinkListAll();
+	public Long getLinkListCnt(KdiParam kdiParam);
+	public List<Map<String, String>> getLinkList(KdiParam kdiParam);
+	
 	// 연계서비스 테이블 생성
 	public void createTable();
 
