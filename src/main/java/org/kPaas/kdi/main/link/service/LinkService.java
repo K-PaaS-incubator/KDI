@@ -2,11 +2,12 @@ package org.kPaas.kdi.main.link.service;
 
 import java.util.List;
 
+import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.springframework.http.ResponseEntity;
 
 public interface LinkService {
-
+	public ResponseEntity<String> getLinkList(KdiParam kdiParam);
 	public List<LinkServiceVo> selectLinkList();
 	public List<LinkServiceVo> selectLinkListPage(LinkServiceVo linkService_vo);
 	public int selectLinkListCount(LinkServiceVo linkService_vo);

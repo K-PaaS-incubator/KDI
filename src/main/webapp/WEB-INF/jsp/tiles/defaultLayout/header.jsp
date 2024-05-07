@@ -37,7 +37,7 @@
 					<div class="flex-col">
 						<nav class="menu-wrapper">
 							<ul class="menu-hover-box body1 gray500">
-								<li class="menu-hover-content" onclick="location.href='${homeUrl}ds/dsList'">데이터소스 조회</li>
+								<li class="menu-hover-content" onclick="location.href='${homeUrl}ds'">데이터소스 조회</li>
 								<li class="menu-hover-content" onclick="location.href='${homeUrl}link/linkList'">연계서비스 조회</li>
 								<li class="menu-hover-content" onclick="location.href='${homeUrl}monitoring'">모니터링 조회</li>
 								<li class="menu-hover-content" onclick="location.href='${homeUrl}member/userInfo'">사용자정보 조회</li>
