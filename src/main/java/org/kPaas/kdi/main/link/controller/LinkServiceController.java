@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Map;
+
 @PreAuthorize("hasRole('ADMIN')") // 관리자
-@RequestMapping("link")
+@RequestMapping("/link")
 @Controller
 public class LinkServiceController extends AbstractController {
 	public LinkServiceController() {
@@ -30,8 +32,17 @@ public class LinkServiceController extends AbstractController {
 
 	//연계서비스 조회 화면
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
+	@GetMapping()
+	public String linkList(){return layout("index");}
+
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("list.json")
+	public ResponseEntity<String> getLinkList(@RequestParam Map<String, Object> params){
+		return service.getLinkList(mapToKdiParam(params));
+	}
+
 	@GetMapping("/linkList")
-	public String linkList(Model model,
+	public String linkLists(Model model,
 						   @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
 						   @RequestParam(value = "svc_nm", required = false)String svc_nm,
 						   RedirectAttributes redirectAttributes

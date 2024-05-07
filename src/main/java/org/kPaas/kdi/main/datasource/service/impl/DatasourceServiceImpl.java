@@ -9,6 +9,8 @@ import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractService;
 import org.kPaas.kdi.com.config.KdiRoutingDataSource;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
+import org.kPaas.kdi.com.util.KdiParam;
+import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.datasource.mapper.DatasourceMapper;
 import org.kPaas.kdi.main.datasource.service.DatasourceService;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
@@ -26,7 +28,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 
 	@Resource
 	private DBCheckService dbCheckService;
-	
+
 	@Autowired
 	private KdiRoutingDataSource kdiRoutingDataSource;
 
@@ -39,13 +41,38 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		if (!dbCheckService.isExists("KDI_DATASOURCE")) {
 			mapper.createTable();
 		}
-		
+
 		/**
 		 * 기입력된 데이터소스목록을 KdiRoutingDataSource에 불러오는 기능
 		 */
-		for (DatasourceVo vo : selectDsList()) {
+		for (DatasourceVo vo : getDsListAll()) {
 			loadDataSource(vo);
 		}
+	}
+	
+	private List<DatasourceVo> getDsListAll() {
+		return mapper.getDsListAll();
+	}
+
+	@Override
+	public ResponseEntity<String> getDsList(KdiParam kdiParam) {
+		JSONObject result = new JSONObject();
+		PageInfo pageInfo = new PageInfo(kdiParam);
+
+		try {
+			pageInfo.setTotal(mapper.getDsListCnt(kdiParam));
+			result.put("data", mapper.getDsList(kdiParam));
+		} catch (MyBatisSystemException e) {
+			result.put("stateCode", 1);
+			result.put("state", "조회 실패");
+			result.put("errMsg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		} finally {
+			result.put("page", new JSONObject(pageInfo));
+		}
+		result.put("stateCode", 0);
+		result.put("state", "조회 성공");
+		return ResponseEntity.ok(result.toString());
 	}
 
 	public ResponseEntity<String> insertDS(DatasourceVo datasource_vo) {
@@ -67,7 +94,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			mapper.insertDS(datasource_vo);
 			// 신규데이터소스를 불러오는 행위
 			loadDataSource(datasource_vo);
-			
+
 			result.put("stateCode", 0);
 			result.put("state", "데이터소스정보 등록 완료");
 			return ResponseEntity.ok(result.toString());
@@ -78,7 +105,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 	}
-	
+
 	@Override
 	public Integer getSameDsCheck(String ds_nm) {
 		return mapper.getSameDsCheck(ds_nm);
@@ -134,18 +161,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			setContext(orgContext);
 		}
 	}
-	
-	public List<DatasourceVo> selectDsList(){
-		return mapper.selectDsList();
-	}
-	@Override
-	public List<DatasourceVo> selectDsListPage(DatasourceVo datasource_vo){
-		return mapper.selectDsListPage(datasource_vo);
-	}
-	@Override
-	public int selectDsListCount(DatasourceVo datasource_vo){
-		return mapper.selectDsListCount(datasource_vo);
-	}
+
 	@Override
 	public DatasourceVo selectDsInfo(String ds_nm) {
 		return mapper.selectDsInfo(ds_nm);
@@ -200,7 +216,6 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 	}
-	
 
 	/**
 	 * KdiRoutingDataSource에 DataSource를 불러오는 기능

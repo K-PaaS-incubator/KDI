@@ -1,8 +1,8 @@
 package org.kPaas.kdi.main.datasource.controller;
 
+import java.util.Map;
+
 import org.kPaas.kdi.com.abs.AbstractController;
-import org.kPaas.kdi.com.util.criteria.Criteria;
-import org.kPaas.kdi.com.util.criteria.PageVo;
 import org.kPaas.kdi.main.datasource.service.DatasourceService;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @PreAuthorize("hasRole('ADMIN')") // 관리자
 @RequestMapping("/ds")
@@ -28,33 +27,16 @@ public class DataSourceController extends AbstractController {
 	@Autowired
 	DatasourceService service;
 
-	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
+	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자가 아닌 일반 사용자)
 	@GetMapping()
-	public String dsList(Model model,
-						 @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
-						 @RequestParam(value = "ds_nm", required = false)String ds_nm,
-						 RedirectAttributes redirectAttributes
-	) {
-		if (pageNum == null) {
-			redirectAttributes.addAttribute("pageNum", 1);
-			redirectAttributes.addAttribute("amount", 10);
-			return "redirect:/ds/dsList";
-		}
-
-		DatasourceVo datasourceVo = new DatasourceVo();
-		datasourceVo.setPageNum(pageNum);
-		datasourceVo.setAmount(10);
-		datasourceVo.setDs_nm(ds_nm);
-
-		Criteria criteria = new Criteria();
-		criteria.setPageNum(pageNum);
-
-		PageVo pageVo = new PageVo(criteria, service.selectDsListCount(datasourceVo));
-
-		model.addAttribute("selectDsListPage", service.selectDsListPage(datasourceVo));
-		model.addAttribute("pagination", pageVo);
-
+	public String dsList() {
 		return layout("index");
+	}
+
+	@PreAuthorize("isAuthenticated()")
+	@GetMapping("list.json")
+	public ResponseEntity<String> getDsList(@RequestParam Map<String, Object> params) {
+		return service.getDsList(mapToKdiParam(params));
 	}
 
 	@GetMapping("/dsCreate")

@@ -22,13 +22,11 @@
     margin-left: 14px;
     letter-spacing: -1.5px;
 }
-/*@media (max-width: 1300px) {*/
-/*    .header-title{*/
-/*        font-size: 24px;*/
-/*        width: 156px;*/
-/*        word-break: break-word;*/
-/*    }*/
-/*}*/
+@media (max-width: 1480px) {
+    .header-title{
+        display: none;
+    }
+}
 .menu-wrapper{
     height: 100%;
 }

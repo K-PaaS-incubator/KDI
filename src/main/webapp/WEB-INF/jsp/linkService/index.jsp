@@ -1,21 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:url var="dsUrl" value="/ds/" />
+<c:url var="linkUrl" value="/link/" />
 <c:url var="imgUrl" value="/img/" />
 <c:url var="cssUrl" value="/css/" />
-
-<link rel="stylesheet" href="${cssUrl}ds.css">
+<link rel="stylesheet" href="${cssUrl}link.css">
 
 <jsp:include page="../component/subBanner.jsp"></jsp:include>
 <section class="contents">
 	<jsp:include page="../component/subTitle.jsp"></jsp:include>
 	<div class="mainContent">
-		<form action="${dsUrl}" method="GET" id="searchForm">
+		<form action="${linkUrl}" method="GET" id="searchForm">
 			<div class="search-box">
 				<div>
-					<input id="searchKeyword" type="text" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
+					<input id="searchKeyword" type="text" name="svc_nm" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
 				</div>
-				<button id="searchBtn" class="button-second-gray">확인</button>
+				<button id="searchBtn" type="submit" class="button-second-gray">확인</button>
 			</div>
 		</form>
 		<table class="data-list">
@@ -27,13 +26,13 @@
 			<thead class="list-head">
 				<tr class="subtitle1 gray500">
 					<th>No</th>
+					<th>연계서비스 제목</th>
 					<th>데이터소스 제목</th>
-					<th>URL</th>
 				</tr>
 				<tr class="table-spacing"></tr>
 			</thead>
 			<tbody id="gridTableDataBody" class="list-body">
-				<c:forEach var="dsList" items="${selectDsListPage}">
+				<c:forEach var="linkList" items="${selectLinkListPage}">
 					<tr class="subtitle1 gray500">
 						<td colspan="3">로딩중</td>
 					</tr>
@@ -41,8 +40,8 @@
 				</c:forEach>
 			</tbody>
 		</table>
-		<div class="ds-list-button-box">
-			<input class="button-second" type="button" id="regbtn" value="등록하기" onclick="location.href='${dsUrl}dsCreate'">
+		<div class="link-list-button-box">
+			<input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${linkUrl}linkService'">
 			<div class="body2 pagination-ul pageCtlZone"></div>
 			<!-- 일단 임시로 이 영역에 구현함 -->
 			<div class="body2 gray500">
@@ -57,10 +56,10 @@
 	</div>
 	<table hidden="hidden">
 		<tbody id="gridHtmlFormatId">
-			<tr class="detailTr" onclick="dsEdit('#DS_NM#');">
+			<tr class="detailTr" onclick="linkEdit('#SVC_NM#')">
 				<td>#NO#</td>
 				<td>#DS_NM#</td>
-				<td>#DS_URL#</td>
+				<td>#SVC_NM#</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
@@ -71,55 +70,59 @@
 			<tr class="table-spacing"></tr>
 		</tbody>
 		<tbody id="gridLoadingHtmlFormatId">
-			<tr class="detailTr">
+			<tr  class="detailTr">
 				<td colspan="3">로딩중...</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
 	</table>
 	<script defer>
-		var grid = KdiListGrid('grid', '${dsUrl}list.json');
+		// 그리드 객체 생성
+		var grid = KdiListGrid('grid', '${linkUrl}list.json');
 		var gridEnv = grid.env;
+
 		gridEnv.setMapping({
 			'#DS_NM#' : 'DS_NM',
-			'#DS_URL#' : 'DS_URL',
-		});
-		// gridEnv.setPagePerRow(10);
+			'#SVC_NM#' : 'SVC_NM',
+		})
+
 		gridEnv.loading.enable();
 		gridEnv.nodata.enable();
 		gridEnv.seq.enable('#NO#');
 		gridEnv.setTotalCntId('.totalCnt');
 		gridEnv.setPageNumInfo('.currentPageNum', '.totalPage');
 		gridEnv.setPageCtlInfo('.pageCtlZone', '${homeUrl}');
-		// 파라미터 JSON포맷
+
 		var paramData = {
 			'ds_nm' : '',
-			'ds_url' : ''
-		};
-		// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제
-		grid.event.setErrEvent(function(xhr) {
-			console.log('statusCode:' + xhr.statusCode);
-			console.log('responseJSON:' + xhr.responseJSON.state);
-			console.log('responseJSON:' + xhr.responseJSON.errMsg);
-		});
+			'svc_nm' : ''
+		}
 
-		var dsEdit = function(ds_nm) {
-			location.href = '${dsUrl}dsEdit?ds_nm=' + ds_nm
+		grid.event.setErrEvent(function (xhr) {
+			console.log('statusCode' + xhr.statusCode);
+			console.log('responseJSON' + xhr.responseJSON.state);
+			console.log('responseJSON' + xhr.responseJSON.errMsg);
+		})
+
+		var linkEdit = function(svc_nm) {
+			location.href = '${linkUrl}detailService?svc_nm=' + svc_nm
 		};
+		// 그리드 작업 실행
+		grid.ready();
+		grid.search();
 
 		$(document).ready(function() {
+			// 새로고침 시 데이터 초기화
+			const entries = performance.getEntriesByType("navigation")[0];
+			if (entries.type === "reload") {
+				document.location.href = "${linkUrl}";
+			}
 			//배너 타이틀 세팅
-			$('.banner-title').text('데이터소스')
-			$('.banner-sub-title').text('데이터 정보를 한눈에 볼 수 있습니다')
+			$('.banner-title').text('연계서비스')
+			$('.banner-sub-title').text('연계서비스를 제공합니다')
 			//페이지 타이틀 세팅
-			$('.main-title-text').text('데이터소스 조회');
-			$('.navi-arrow').text(' > 데이터소스 > 데이터소스 조회')
-
-			grid.ready();
-			grid.search();
+			$('.main-title-text').text('연계서비스 조회');
+			$('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회')
 		});
 	</script>
 </section>
-
-
-

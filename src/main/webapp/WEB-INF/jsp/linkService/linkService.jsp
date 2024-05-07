@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="link-button-box">
-                <input class="button-second-gray" type="button" value="취소" onclick="location.href='${homeUrl}linkList'">
+                <input class="button-second-gray" type="button" value="취소" onclick="location.href='${linkUrl}linkList'">
                 <input class="button-primary" type="button" value="연계서비스 항목 설정 >" id="regbtn">
             </div>
         </form>
