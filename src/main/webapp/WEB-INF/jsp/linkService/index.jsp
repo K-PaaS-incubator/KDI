@@ -58,8 +58,8 @@
 		<tbody id="gridHtmlFormatId">
 			<tr class="detailTr" onclick="linkEdit('#SVC_NM#')">
 				<td>#NO#</td>
-				<td>#DS_NM#</td>
 				<td>#SVC_NM#</td>
+				<td>#DS_NM#</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
@@ -115,7 +115,7 @@
 			// 새로고침 시 데이터 초기화
 			const entries = performance.getEntriesByType("navigation")[0];
 			if (entries.type === "reload") {
-				document.location.href = "${linkUrl}";
+				document.location.href = "/link";
 			}
 			//배너 타이틀 세팅
 			$('.banner-title').text('연계서비스')
