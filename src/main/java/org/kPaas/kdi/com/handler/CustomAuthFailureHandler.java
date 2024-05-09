@@ -33,7 +33,7 @@ public class CustomAuthFailureHandler extends SimpleUrlAuthenticationFailureHand
 		} else {
 			errorMessage = "알 수 없는 이유로 로그인에 실패하였습니다 관리자에게 문의하세요.";
 		}
-		setDefaultFailureUrl("/login?error=true&exception="+URLEncoder.encode(errorMessage, "UTF-8"));
+		setDefaultFailureUrl("/member/login?error=true&exception="+URLEncoder.encode(errorMessage, "UTF-8"));
 		super.onAuthenticationFailure(request, response, exception);
 	}
 }
