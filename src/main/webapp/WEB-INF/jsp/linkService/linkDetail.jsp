@@ -19,7 +19,6 @@
 					<div class="left-content-box">
 						<div class="left-title header5 white100">스키마 선택</div>
 						<ul class="left-content-list-box">
-							<!-- //TODO 스키마명 많을 경우 스크롤로 볼 수 있게 개발 -->
 							<c:forEach var="connectLinkDs" items="${connectLinkDs}">
 								<li class="body2 gray400 selectSch" id="${connectLinkDs}">
 									<input type="hidden" name="schemaName" value="${connectLinkDs}">${connectLinkDs}
@@ -139,7 +138,7 @@
 		// 이 함수를 호출하면 자동으로 gridEnv.loading.enable();가 호출된다.
 		// gridEnv.loading.setGridLoadingHtmlFormatId('#gridLoadingHtmlFormatId');
 
-		// 로딩기능 이용시 호출한다. 다시 비활성화하가 위해서는 gridEnv.loading.enable();을 호출하면 된다.
+		// 로딩기능 이용시 호출한다. 다시 비활성화하기 위해서는 gridEnv.loading.enable();을 호출하면 된다.
 		gridEnv.loading.enable();
 
 		// 데이터가 없는경우 출력할 내용을 설정한다.
@@ -181,7 +180,7 @@
 		//gridEnv.setPagePerRow(10);
 
 		$(document).ready(function() {
-			// 검색 준비가 된 시점으로 최소 documnet 준비된 시점에 호출되어야 한다.
+			// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
 			grid.ready();
 
 			//배너 타이틀 세팅
@@ -203,7 +202,7 @@
 							$('#schemaTitle').text(schemaName);
 							$(".left-content-list-box li").css(
 									'background-color', '#ffffff');
-							// 스키마명에 특수만자가 오는 경우 원화기호 붙여주도록 수정
+							// 스키마명에 특수문자가 오는 경우 원화기호 붙여주도록 수정
 							var schId = '#'
 									+ schemaName.replaceAll(/([^\w\s])/g,
 											'\\\$&');
@@ -227,15 +226,20 @@
 			
 			var tbl_nm = $('#gridTableDataBody tr.selectEl td.tb_nm').text();
 			
+			var schemaName = $(this).children("input[name='schemaName']").val();
+			var sch_nm = '#'+ schemaName.replaceAll(/([^\w\s])/g,'\\\$&');
+			
             $.ajax({
                 url: '${linkUrl}linkTableName',
                 type: 'POST',
-                data: {'tbl_nm':tbl_nm},
+                data: {'tbl_nm':tbl_nm,
+                	   'sch_nm':sch_nm},
                 dataType: 'json', // 응답하는 값의 유형
                 success: function (result) {
+                	location.href = '${linkUrl}linkTable?svc_nm=' + $('#svc_nm').val()+'&sch_nm='+sch_nm;
                     console.log('result:' + result);
-                    console.log('result:' + result.abcd);
-                    console.log('result:' + result['abcd']);
+                    console.log('result:' + result.tbl_nm);
+                    console.log('result:' + result['tbl_nm']);
                 },
                 error: function (result) {
                     console.log('실패');

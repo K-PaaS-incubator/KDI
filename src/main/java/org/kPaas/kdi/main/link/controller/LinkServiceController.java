@@ -4,6 +4,7 @@ import org.kPaas.kdi.com.abs.AbstractController;
 import org.kPaas.kdi.com.util.criteria.Criteria;
 import org.kPaas.kdi.com.util.criteria.PageVo;
 import org.kPaas.kdi.main.link.service.LinkService;
+import org.kPaas.kdi.main.link.vo.LinkDetailVo;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -84,6 +85,7 @@ public class LinkServiceController extends AbstractController {
 	
 	@PostMapping("/LinkInsert")
 	public ResponseEntity<String> linkInsert(LinkServiceVo linkService_vo) {
+		
 		service.insertLink(linkService_vo);
 		return ResponseEntity.ok("연계서비스 등록 완료");
 	}

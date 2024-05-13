@@ -24,13 +24,13 @@ public class LinkTableController extends AbstractController {
 		return layout("linkTable");
 	}
 	
-	
 	@ResponseBody
 	@PostMapping("/linkTableName")
-	public String linkTableName(@RequestParam("tbl_nm") String tbl_nm) {
+	public String linkTableName(@RequestParam("tbl_nm") String tbl_nm,@RequestParam("sch_nm") String sch_nm) {
 		System.out.println(tbl_nm);
+		System.out.println("#######"+sch_nm);
 		JSONObject json = new JSONObject();
-		json.put("abcd", tbl_nm);
+		json.put("tbl_nm", tbl_nm);
 		return json.toString();
 	}
 

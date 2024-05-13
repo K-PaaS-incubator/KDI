@@ -6,7 +6,7 @@
 
 	<insert id="createTable">
 		CREATE TABLE `KDI_LINK_SERVICE` (
-			`svc_id` numeric NOT NULL AUTO_INCREMENT,
+			`svc_id` bigint NOT NULL AUTO_INCREMENT,
 			`ds_nm` varchar2(100) NOT NULL,
 			`svc_nm` varchar2(100) NULL,
 			`svc_type` char(1) NULL,

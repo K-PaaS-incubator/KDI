@@ -40,7 +40,7 @@
             </div>
             <div class="link-button-box">
                 <input class="button-second-gray" type="button" value="취소" onclick="location.href='${linkUrl}linkList'">
-                <input class="button-primary" type="button" value="연계서비스 항목 설정 >" id="regbtn">
+                <input class="button-primary" type="button" value="연계서비스 등록 >" id="regbtn">
             </div>
         </form>
     </div>
@@ -80,19 +80,21 @@
         }
 
         $('#regbtn').click(function LinkServiceSave() {
+
             $('form').validate();
             if (!fn_check_duplicate_link()) {
                 alert('제목이 중복되었습니다.');
                 return;
             }
-
+            
             $.ajax({
                 url: '${linkUrl}LinkInsert',
                 type: 'POST',
                 async: false,
-                data: $('#linkCreate').serialize(),
+                data: $('#linkCreate').serialize(), //연계서비스생성(svc_id)
                 success: function (result) {
-                    location.href = '${linkUrl}detailService?svc_nm=' + $("#svc_nm").val();
+                    location.href = '${linkUrl}detailService?svc_nm=' + $('#svc_nm').val();
+                    
                 },
                 error: function (result) {
                     console.log('statusCode:' + result.statusCode);
