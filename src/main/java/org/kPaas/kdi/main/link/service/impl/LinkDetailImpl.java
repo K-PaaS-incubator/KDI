@@ -2,10 +2,12 @@ package org.kPaas.kdi.main.link.service.impl;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractService;
+import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
@@ -21,6 +23,20 @@ public class LinkDetailImpl extends AbstractService implements LinkDetailService
 
 	@Resource
 	private LinkDetailMapper mapper;
+
+	@Resource
+	private DBCheckService dbCheckService;
+
+	/**
+	 * 최초 기동시에 연계서비스항목 테이블(KDI_LINK_DETAIL)의 유무를 확인하고<br>
+	 * 해당 테이블이 없으면 연계서비스항목 테이블을 생성하는 기능
+	 */
+	@PostConstruct
+	private void init() {
+		if (!dbCheckService.isExists("KDI_LINK_DETAIL")) {
+			mapper.createTable();
+		}
+	}
 
 	@Override
 	public LinkServiceVo getLinkService(String svc_nm) {
@@ -76,4 +92,22 @@ public class LinkDetailImpl extends AbstractService implements LinkDetailService
 		return ResponseEntity.ok(result.toString());
 	}
 
+	@Override
+	public ResponseEntity<String> insertDetail(String tbl_nm, String sch_nm, String svc_nm) {
+		JSONObject result = new JSONObject();
+		
+		try {
+			result.put("stateCode", 0);
+			result.put("state", "연계항목 등록 성공");
+			mapper.insertDetail(tbl_nm, sch_nm, svc_nm);
+
+		} catch (MyBatisSystemException e) {
+			result.put("stateCode", 1);
+			result.put("state", "연계항목 등록 실패");
+			result.put("errMsg", e.getMessage());
+		}
+		
+		return ResponseEntity.ok(result.toString());
+
+	}
 }

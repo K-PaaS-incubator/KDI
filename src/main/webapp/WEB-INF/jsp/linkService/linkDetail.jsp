@@ -14,7 +14,7 @@
 		<form>
 			<div class="content-wrapper" style="margin-top: 20px">
 				<div class="left-content">
-					<div class="left-content-title header4 gray500"
+					<div class="left-content-title header4 gray500" id="svc_nm"
 						title="${getLinkService.ds_nm}">${getLinkService.ds_nm}</div>
 					<div class="left-content-box">
 						<div class="left-title header5 white100">스키마 선택</div>
@@ -223,29 +223,36 @@
 		var selectTb = function(el){
 			$('#gridTableDataBody tr').removeClass('selectEl');
 			$(el).addClass('selectEl');
-			
+						
 			var tbl_nm = $('#gridTableDataBody tr.selectEl td.tb_nm').text();
 			
-			var schemaName = $(this).children("input[name='schemaName']").val();
-			var sch_nm = '#'+ schemaName.replaceAll(/([^\w\s])/g,'\\\$&');
+			var schemaName =  $('#schemaTitle').text();
+			var sch_nm  = schemaName.replaceAll(/([^\w\s])/g,'\\\$&');
+			var svc_nm = $('#svc_nm').text();
 			
             $.ajax({
-                url: '${linkUrl}linkTableName',
+                url: '${linkUrl}detailService/linkTableName',
                 type: 'POST',
                 data: {'tbl_nm':tbl_nm,
-                	   'sch_nm':sch_nm},
+                	   'sch_nm':sch_nm,
+                	   'svc_nm':svc_nm},
                 dataType: 'json', // 응답하는 값의 유형
                 success: function (result) {
-                	location.href = '${linkUrl}linkTable?svc_nm=' + $('#svc_nm').val()+'&sch_nm='+sch_nm;
+                	location.href = '${linkUrl}linkTable?svc_nm='+svc_nm+'&sch_nm='+sch_nm+'&tbl_nm='+tbl_nm;
+                	
+                	console.log('schemaName:' + tbl_nm);
+                	console.log('tableName:' + sch_nm);
+                	console.log('serviceName:' + svc_nm);
+                	
                     console.log('result:' + result);
-                    console.log('result:' + result.tbl_nm);
-                    console.log('result:' + result['tbl_nm']);
                 },
                 error: function (result) {
                     console.log('실패');
+                    console.log(result.errMsg);
                 }
             });
 		};
+		
 		
 		
 	</script>

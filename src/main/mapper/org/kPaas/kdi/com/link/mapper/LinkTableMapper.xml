@@ -4,4 +4,20 @@
 
 <mapper namespace="org.kPaas.kdi.main.link.mapper.LinkTableMapper">
 
+	<insert id="createTable">
+		CREATE TABLE `KDI_LINK_TABLE` (
+			`col_nm` varchar2(100) NOT NULL,
+			`svc_lnk_id` bigint NOT NULL,	
+			`svc_id` bigint NOT NULL,
+			`ds_nm` varchar2(100) NOT NULL,
+			`col_type` varchar2(20) NULL,
+			`col_mp_nm` varchar2(100) NULL,
+			`use_yn` char(1) NULL,
+			`reg_id` varchar2(20) NULL,
+			`reg_dt` date NULL,
+			`mod_id` varchar2(20) NULL,
+			`mod_dt` date NULL
+		)
+	</insert>
+
 </mapper>

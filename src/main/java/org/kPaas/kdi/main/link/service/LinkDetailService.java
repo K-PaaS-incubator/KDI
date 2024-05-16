@@ -19,4 +19,6 @@ public interface LinkDetailService {
 	 * @param page
 	 */
 	public ResponseEntity<String> getLinkTableList(KdiParam kdiParam);
+	
+	ResponseEntity<String> insertDetail(String tbl_nm, String sch_nm, String svc_nm);
 }

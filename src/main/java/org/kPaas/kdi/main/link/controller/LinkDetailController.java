@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -35,6 +36,21 @@ public class LinkDetailController extends AbstractController {
 	@GetMapping("tableList.json")
 	public ResponseEntity<String> getLinkTableList(@RequestParam Map<String, Object> params) {
 		return service.getLinkTableList(mapToKdiParam(params));
+	}
+	
+	
+	@PostMapping("linkTableName")
+	public ResponseEntity<String> linkTableName(@RequestParam("tbl_nm") String tbl_nm,@RequestParam("sch_nm") String sch_nm,@RequestParam("svc_nm") String svc_nm) {
+		/*;
+		JSONObject json = new JSONObject();
+		json.put("tbl_nm", tbl_nm);
+		json.put("sch_nm", sch_nm);*/
+		
+		System.out.println("tbl_nm:" + tbl_nm);
+		System.out.println("sch_nm:"+sch_nm);
+		System.out.println("svc_nm:"+svc_nm);
+		
+		return service.insertDetail(tbl_nm,sch_nm,svc_nm);
 	}
 
 }
