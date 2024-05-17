@@ -25,8 +25,7 @@ public interface LinkDetailMapper {
 
 	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
 	public List<Map<String, String>> getLinkTableList(KdiParam kdiParam);
-	
-	public void insertDetail(String tbl_nm, String sch_nm, String svc_nm);
 
+	public void insertDetail(Map<String, Object> params);
 
 }

@@ -1,6 +1,7 @@
 package org.kPaas.kdi.main.link.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -93,15 +94,16 @@ public class LinkDetailImpl extends AbstractService implements LinkDetailService
 	}
 
 	@Override
-	public ResponseEntity<String> insertDetail(String tbl_nm, String sch_nm, String svc_nm) {
+	public ResponseEntity<String> insertDetail(Map<String, Object> params) {
 		JSONObject result = new JSONObject();
-		
+		System.out.println("000################" + params.size()+"####"+params.get("svc_nm"));
 		try {
+			System.out.println("################1111");
+			mapper.insertDetail(params);
 			result.put("stateCode", 0);
 			result.put("state", "연계항목 등록 성공");
-			mapper.insertDetail(tbl_nm, sch_nm, svc_nm);
-
 		} catch (MyBatisSystemException e) {
+			System.out.println("################222");
 			result.put("stateCode", 1);
 			result.put("state", "연계항목 등록 실패");
 			result.put("errMsg", e.getMessage());
