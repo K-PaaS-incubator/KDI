@@ -3,9 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.kPaas.kdi.main.link.mapper.LinkDetailMapper">
-
 	<insert id="createTable">
-
 		CREATE TABLE `KDI_LINK_DETAIL` (
 			`svc_lnk_id` bigint NOT NULL AUTO_INCREMENT,
 			`svc_id` bigint NOT NULL,
@@ -14,14 +12,13 @@
 			`sch_nm` varchar2(100) NULL,
 			`tbl_nm` varchar2(100) NULL,
 			`lnk_time` varchar2(50) NULL,
-			`flag_type` char(1) CHECK(`flag_type` IN(`1`,`2`,`3`)) NULL,
+			`flag_type` char(1) NULL,
 			`reg_id` varchar2(20) NULL,
 			`reg_dt` date NULL,
 			`mod_id` varchar2(20) NULL,
 			`mod_dt` date NULL,
 			PRIMARY KEY (`svc_lnk_id`)
 		)
-
 	</insert>
 
 	<select id="getLinkService" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo" parameterType="String">
