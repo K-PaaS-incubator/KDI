@@ -28,7 +28,7 @@
 		</div>
 		<div class="user-info-button-box">
 			<input class="button-second" type="button" value="저장" id="saveBtn"> <input class="button-second-gray" type="button" value="취소" id="cancelBtn"
-				onclick="location.href='${homeUrl}userInfo'">
+				onclick="location.href='${homeUrl}member/userInfo'">
 		</div>
 	</div>
 </section>

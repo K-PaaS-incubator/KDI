@@ -27,7 +27,7 @@
 			</div>
 		</div>
 		<div class="user-info-button-box">
-			<input class="button-second" type="button" value="수정하기" id="modifyBtn" onclick="location.href='${homeUrl}userInfoEdit'">
+			<input class="button-second" type="button" value="수정하기" id="modifyBtn" onclick="location.href='${homeUrl}member/userInfoEdit'">
 		</div>
 	</div>
 </section>
