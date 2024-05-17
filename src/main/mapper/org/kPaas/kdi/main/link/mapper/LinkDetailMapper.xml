@@ -112,4 +112,14 @@
 		INSERT INTO KDI_LINK_DETAIL(tbl_nm,svc_id,ds_nm,sch_nm,reg_id,reg_dt,mod_id,mod_dt) 
 		VALUES(#{tbl_nm},(SELECT svc_id FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm}),#{ds_nm},#{sch_nm},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
 	</insert>
+	
+	<select id="selectSvcLinkId" resultType="Map" parameterType="Map" >
+		SELECT
+			SVC_LNK_ID
+		FROM
+			KDI_LINK_DETAIL 
+		<where>
+			svc_id = (SELECT svc_id FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm}) and ds_nm = #{ds_nm}
+		</where>
+	</select>
 </mapper>

@@ -28,4 +28,5 @@ public interface LinkDetailMapper {
 
 	public void insertDetail(Map<String, Object> params);
 
+	public List<String> selectSvcLinkId(Map<String, Object> params);
 }

@@ -38,10 +38,10 @@ public class LinkDetailController extends AbstractController {
 		return service.getLinkTableList(mapToKdiParam(params));
 	}
 	
-	
 	@PostMapping("linkTableName")
 	public ResponseEntity<String> linkTableName(@RequestParam Map<String, Object> params) {
 		return service.insertDetail(params);
 	}
+	
 
 }

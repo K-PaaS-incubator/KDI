@@ -33,12 +33,15 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
 
 		if (savedRequest != null) {
 			uri = savedRequest.getRedirectUrl();
-
 		} else if (prevPage != null && !prevPage.equals("")) {
 			uri = prevPage;
 		}
 
 		// 로그인 성공시 페이지
-		response.sendRedirect(uri);
+		if (null == uri) {
+			response.sendRedirect(uri);
+		} else {
+			response.sendRedirect("/");
+		}
 	}
 }

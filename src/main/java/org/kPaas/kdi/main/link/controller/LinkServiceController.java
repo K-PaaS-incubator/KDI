@@ -70,6 +70,35 @@ public class LinkServiceController extends AbstractController {
 		return layout("linkList");
 	}
 
+	@GetMapping("/linkList/linkInterfaceList")
+	public String linkIFLists(Model model,
+						   @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
+						   @RequestParam(value = "svc_nm", required = false)String svc_nm,
+						   RedirectAttributes redirectAttributes
+						   ) {
+		if (pageNum == null) {
+			redirectAttributes.addAttribute("pageNum", 1);
+			redirectAttributes.addAttribute("amount", 10);
+			return "redirect:/link/linkList";
+		}
+
+		LinkServiceVo linkServiceVo = new LinkServiceVo();
+		linkServiceVo.setPageNum(pageNum);
+		linkServiceVo.setAmount(10);
+		linkServiceVo.setSvc_nm(svc_nm);
+
+		Criteria criteria = new Criteria();
+		criteria.setPageNum(pageNum);
+
+		PageVo pageVo = new PageVo(criteria, service.selectLinkListCount(linkServiceVo));
+
+		model.addAttribute("selectLinkListPage", service.selectLinkListPage(linkServiceVo));
+		model.addAttribute("pagination", pageVo);
+
+		return layout("linkInterfaceList");
+	}
+	
+
 	//연계서비스 등록 시작
 	@GetMapping("/linkService")
 	public String linkService(Model model) {

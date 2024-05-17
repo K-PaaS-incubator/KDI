@@ -79,7 +79,7 @@
 				<input class="button-second-gray" type="button" value="취소"
 					onclick="history.back()"> <input class="button-second"
 					type="button" value="연계테이블 상세 설정 >" id="regbtn"
-					onclick="location.href='${linkUrl}linkTable'">
+					onclick="insertDetail();">
 			</div>
 		</form>
 	</div>
@@ -220,12 +220,15 @@
 		
 		
 		// 연계대상 테이블 선택시 값추출
+		var tbl_nm = null;
 		var selectTb = function(el){
 			$('#gridTableDataBody tr').removeClass('selectEl');
 			$(el).addClass('selectEl');
-						
-			var tbl_nm = $('#gridTableDataBody tr.selectEl td.tb_nm').text();
-			
+			tbl_nm =  $('#gridTableDataBody tr.selectEl td.tb_nm').text();
+		};
+		
+		var insertDetail = function(){
+
 			var schemaName =  $('#schemaTitle').text();
 			var sch_nm  = schemaName.replaceAll(/([^\w\s])/g,'\\\$&');
 			var svc_nm = $('#svc_nm').val();
@@ -240,17 +243,18 @@
                 	   'svc_nm':svc_nm},
                 dataType: 'json', // 응답하는 값의 유형
                 success: function (result) {
-                	location.href = '${linkUrl}linkTable?tbl_nm='+tbl_nm+'&sch_nm='+sch_nm +'&ds_nm='+ds_nm+'&svc_nm='+svc_nm;
-                	
-                	console.log('schemaName:' + tbl_nm);
-                	console.log('tableName:' + sch_nm);
-                	console.log('serviceName:' + svc_nm);
-                	console.log('databaseName:' + ds_nm);
-                	
-                    console.log('result:' + result);
+
+                	//location.href='${linkUrl}linkTable?svc_lnk_id='+result.data[svc_lnk_id];
+                	console.log('연계서비스항목 등록성공1111');
+                	console.log('svc_lnk_id=' + result.data.svc_lnk_id);
+                	//console.log('schemaName:' + tbl_nm);
+                	//console.log('tableName:' + sch_nm);
+                	//console.log('serviceName:' + svc_nm);
+                	//console.log('databaseName:' + ds_nm);
+                	//console.log('result:' + result);
                 },
                 error: function (result) {
-                    console.log('실패');
+                    console.log('연계서비스항목 등록실패');
                     console.log(result.errMsg);
                 }
             });

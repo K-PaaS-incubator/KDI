@@ -69,20 +69,20 @@
 				// 새로고침 시 데이터 초기화
 				const entries = performance.getEntriesByType("navigation")[0];
 				if (entries.type === "reload") {
-					document.location.href = "${linkUrl}linkList";
+					document.location.href = "${linkUrl}linkList/linkInterfaceList";
 				}
 				//배너 타이틀 세팅
 				$('.banner-title').text('연계서비스')
 				$('.banner-sub-title').text('연계서비스를 제공합니다')
 				//페이지 타이틀 세팅
-				$('.main-title-text').text('연계서비스 조회');
-				$('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회')
+				$('.main-title-text').text('연계 인터페이스 조회');
+				$('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회 > 연계 인터페이스 조회')
 
-				$("#lnkTbl tr").click(
-						function() {
-							location.href = "${linkUrl}linkList/linkInterfaceList?svc_nm="
-									+ $(this).find("td:nth-child(2)").text();
-						});
+				//$("#lnkTbl tr").click(
+					//	function() {
+						//	location.href = "${linkUrl}linkList/linkInterfaceList?svc_nm="
+						//			+ $(this).find("td:nth-child(2)").text();
+						//});
 			});
 
 	function fn_sendPageNumber(no) {

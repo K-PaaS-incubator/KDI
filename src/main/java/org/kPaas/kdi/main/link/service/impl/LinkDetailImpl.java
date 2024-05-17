@@ -93,17 +93,17 @@ public class LinkDetailImpl extends AbstractService implements LinkDetailService
 		return ResponseEntity.ok(result.toString());
 	}
 
-	@Override
+	@Override //연계서비스항목 데이터 최초 등록
 	public ResponseEntity<String> insertDetail(Map<String, Object> params) {
 		JSONObject result = new JSONObject();
-		System.out.println("000################" + params.size()+"####"+params.get("svc_nm"));
 		try {
-			System.out.println("################1111");
 			mapper.insertDetail(params);
 			result.put("stateCode", 0);
 			result.put("state", "연계항목 등록 성공");
+			JSONObject data = new JSONObject();
+			data.put("svc_lnk_id", mapper.selectSvcLinkId(params));
+			result.put("data", data);
 		} catch (MyBatisSystemException e) {
-			System.out.println("################222");
 			result.put("stateCode", 1);
 			result.put("state", "연계항목 등록 실패");
 			result.put("errMsg", e.getMessage());
