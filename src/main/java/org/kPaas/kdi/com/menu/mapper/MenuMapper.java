@@ -1,7 +1,7 @@
-package org.kPaas.kdi.main.menu.mapper;
+package org.kPaas.kdi.com.menu.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kPaas.kdi.main.menu.vo.MenuVo;
+import org.kPaas.kdi.com.menu.vo.MenuVo;
 
 import java.util.List;
 

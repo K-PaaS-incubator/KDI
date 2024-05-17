@@ -1,4 +1,4 @@
-package org.kPaas.kdi.main.menu.vo;
+package org.kPaas.kdi.com.menu.vo;
 
 import lombok.Getter;
 import lombok.Setter;

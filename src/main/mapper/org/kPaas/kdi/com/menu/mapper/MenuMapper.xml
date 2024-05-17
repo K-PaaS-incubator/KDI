@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.kPaas.kdi.main.menu.mapper.MenuMapper">
+<mapper namespace="org.kPaas.kdi.com.menu.mapper.MenuMapper">
 
-	<insert id="insertMn" parameterType="org.kPaas.kdi.main.menu.vo.MenuVo">
+	<insert id="insertMn" parameterType="org.kPaas.kdi.com.menu.vo.MenuVo">
 		INSERT INTO KDI_MENU
 		VALUES(#{mn_id},#{mn_pid},#{mn_nm},#{mn_path},#{mn_num})
 	</insert>
@@ -19,11 +19,11 @@
 		)
 	</insert>
 
-	<select id="selectMn" resultType="org.kPaas.kdi.main.menu.vo.MenuVo">
+	<select id="selectMn" resultType="org.kPaas.kdi.com.menu.vo.MenuVo">
 		SELECT * FROM KDI_MENU
 	</select>
 
-	<update id="editMn" parameterType="org.kPaas.kdi.main.menu.vo.MenuVo">
+	<update id="editMn" parameterType="org.kPaas.kdi.com.menu.vo.MenuVo">
 		UPDATE KDI_MENU
 		<set>
 			mn_id = #{mn_id},

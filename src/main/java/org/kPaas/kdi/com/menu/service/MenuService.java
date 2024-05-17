@@ -1,6 +1,6 @@
-package org.kPaas.kdi.main.menu.service;
+package org.kPaas.kdi.com.menu.service;
 
-import org.kPaas.kdi.main.menu.vo.MenuVo;
+import org.kPaas.kdi.com.menu.vo.MenuVo;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

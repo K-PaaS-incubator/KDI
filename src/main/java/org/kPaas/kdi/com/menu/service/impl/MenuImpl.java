@@ -1,9 +1,9 @@
-package org.kPaas.kdi.main.menu.service.impl;
+package org.kPaas.kdi.com.menu.service.impl;
 
 import javax.annotation.Resource;
 
+import org.kPaas.kdi.com.menu.mapper.MenuMapper;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
-import org.kPaas.kdi.main.menu.mapper.MenuMapper;
 import org.springframework.stereotype.Service;
 
 @Service
