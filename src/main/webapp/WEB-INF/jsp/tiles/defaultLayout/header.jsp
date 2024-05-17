@@ -49,7 +49,7 @@
 								<li class="menu-hover-content" onclick="location.href='${homeUrl}ds/dsCreate'">데이터소스 등록</li>
 								<li class="menu-hover-content" onclick="location.href='${homeUrl}link/linkService'">연계서비스 등록</li>
 								<li class="menu-hover-content" onclick="location.href='${homeUrl}monitoring'">로그 조회</li>
-								<li class="menu-hover-content" onclick="location.href='${homeUrl}member/userInfo'">사용자정보 수정</li>
+								<li class="menu-hover-content" onclick="location.href='${homeUrl}member/userInfoEdit'">사용자정보 수정</li>
 								<li class="menu-hover-content"></li>
 							</ul>
 						</nav>
