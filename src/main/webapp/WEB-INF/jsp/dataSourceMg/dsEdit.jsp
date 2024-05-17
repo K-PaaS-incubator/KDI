@@ -126,6 +126,9 @@
 				data : $('form').serialize(),
 				dataType : 'JSON',
 				success : function(result) {
+					$('#test_result').text('');
+					$('#test_result2').text('');
+
 					console.log('result:' + result.state);
 					$('#test_result').text('접속 테스트 성공');
 				},
