@@ -40,17 +40,8 @@ public class LinkDetailController extends AbstractController {
 	
 	
 	@PostMapping("linkTableName")
-	public ResponseEntity<String> linkTableName(@RequestParam("tbl_nm") String tbl_nm,@RequestParam("sch_nm") String sch_nm,@RequestParam("svc_nm") String svc_nm) {
-		/*;
-		JSONObject json = new JSONObject();
-		json.put("tbl_nm", tbl_nm);
-		json.put("sch_nm", sch_nm);*/
-		
-		System.out.println("tbl_nm:" + tbl_nm);
-		System.out.println("sch_nm:"+sch_nm);
-		System.out.println("svc_nm:"+svc_nm);
-		
-		return service.insertDetail(tbl_nm,sch_nm,svc_nm);
+	public ResponseEntity<String> linkTableName(@RequestParam Map<String, Object> params) {
+		return service.insertDetail(params);
 	}
 
 }

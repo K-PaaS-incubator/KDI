@@ -1,6 +1,7 @@
 package org.kPaas.kdi.main.link.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
@@ -20,5 +21,5 @@ public interface LinkDetailService {
 	 */
 	public ResponseEntity<String> getLinkTableList(KdiParam kdiParam);
 	
-	ResponseEntity<String> insertDetail(String tbl_nm, String sch_nm, String svc_nm);
+	public ResponseEntity<String> insertDetail(Map<String, Object> params);
 }

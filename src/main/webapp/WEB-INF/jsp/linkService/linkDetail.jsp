@@ -14,8 +14,8 @@
 		<form>
 			<div class="content-wrapper" style="margin-top: 20px">
 				<div class="left-content">
-					<div class="left-content-title header4 gray500" id="svc_nm"
-						title="${getLinkService.ds_nm}">${getLinkService.ds_nm}</div>
+					<div class="left-content-title header4 gray500" id="ds_nm"
+						title="${getLinkService.ds_nm}">${getLinkService.ds_nm}</div><input type="hidden" id="svc_nm" value="${getLinkService.svc_nm}">
 					<div class="left-content-box">
 						<div class="left-title header5 white100">스키마 선택</div>
 						<ul class="left-content-list-box">
@@ -228,21 +228,24 @@
 			
 			var schemaName =  $('#schemaTitle').text();
 			var sch_nm  = schemaName.replaceAll(/([^\w\s])/g,'\\\$&');
-			var svc_nm = $('#svc_nm').text();
+			var svc_nm = $('#svc_nm').val();
+			var ds_nm = $('#ds_nm').text();
 			
             $.ajax({
                 url: '${linkUrl}detailService/linkTableName',
                 type: 'POST',
                 data: {'tbl_nm':tbl_nm,
                 	   'sch_nm':sch_nm,
+                	   'ds_nm':ds_nm,
                 	   'svc_nm':svc_nm},
                 dataType: 'json', // 응답하는 값의 유형
                 success: function (result) {
-                	location.href = '${linkUrl}linkTable?svc_nm='+svc_nm+'&sch_nm='+sch_nm+'&tbl_nm='+tbl_nm;
+                	location.href = '${linkUrl}linkTable?tbl_nm='+tbl_nm+'&sch_nm='+sch_nm +'&ds_nm='+ds_nm+'&svc_nm='+svc_nm;
                 	
                 	console.log('schemaName:' + tbl_nm);
                 	console.log('tableName:' + sch_nm);
                 	console.log('serviceName:' + svc_nm);
+                	console.log('databaseName:' + ds_nm);
                 	
                     console.log('result:' + result);
                 },
