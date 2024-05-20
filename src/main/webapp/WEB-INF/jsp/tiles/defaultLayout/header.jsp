@@ -13,7 +13,7 @@
 					<img src="${imgUrl}logo-kdi.png" alt="">
 					<h1 class="header-title">K-PaaS Data Integration</h1>
 				</div>
-				<nav class="menu-wrapper">
+				<nav class="menu-wrapper menuListHover">
 					<ul class="menuBox header5">
 						<li class="menuBar" onclick="location.href='${homeUrl}ds'">데이터소스</li>
 						<li class="menuBar" onclick="location.href='${homeUrl}link'">연계서비스</li>
@@ -28,7 +28,8 @@
 					</sec:authorize>
 				</div>
 			</div>
-			<div id="menuListHover" class="dropdown-menu">
+			<div class="dropdown-menu menuListHover">
+				<%-- 마진 맞추기위한 hidden 요소임--%>
 				<div class="menu-list">
 					<div class="logo-box" style="visibility: hidden">
 						<img src="${imgUrl}logo-kdi.png" alt="">
@@ -54,6 +55,7 @@
 							</ul>
 						</nav>
 					</div>
+					<%--마진 맞추기위한 hidden 요소임--%>
 					<div style="visibility: hidden; width: 220px;">
 						<div class="button-primary" style="padding: 12px 30px;">로그아웃</div>
 					</div>
@@ -64,24 +66,15 @@
 	<script defer>
 		var hoveringMenu = false
 
-		$('.menuBar').on({
-			mouseenter : function() {
-				$('#menuListHover').stop().fadeIn(200)
-			},
-			mouseleave : function() {
-				if (!hoveringMenu) {
-					$('#menuListHover').stop().fadeOut(200)
-				}
-			}
-		});
-		$('#menuListHover').on({
-			mouseenter : function() {
-				hoveringMenu = true
-			},
-			mouseleave : function() {
-				hoveringMenu = true
-				$('#menuListHover').stop().fadeOut(200);
-			}
+		$(document).ready(function(){
+			$(".menuListHover").hover(
+					function() {
+						$(".dropdown-menu").stop().slideToggle(300);
+					},
+					function() {
+						$(".dropdown-menu").stop().slideToggle(500);
+					}
+			)
 		})
 	</script>
 </header>
