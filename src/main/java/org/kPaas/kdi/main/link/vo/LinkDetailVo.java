@@ -11,11 +11,13 @@ public class LinkDetailVo {
 	LinkTableVo linkTableVo; //연계테이블상세
 
 	//KDI_LINK_DETAIL 연계서비스 항목
-	int svc_lnk_id;
+	Integer num;
+	String svc_lnk_id;
 	String svc_id;
-	String if_nm;
-	String sch_nm;
+	String ds_nm;
+	String svc_lnk_nm;
 	String tbl_nm;
+	String sch_nm;
 	String lnk_time;
 	char flag_type; //1:status, 2:query, 3:where	
 	String reg_id;

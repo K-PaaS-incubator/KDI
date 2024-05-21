@@ -27,34 +27,41 @@
 			<thead class="list-head">
 				<tr class="subtitle1 gray500">
 					<th>No</th>
-					<th>연계서비스 제목</th>
-					<th>데이터소스 제목</th>
+					<th>연계 인터페이스 ID</th>
+					<th>연계 인터페이스 제목</th>
+					<th>스키마명</th>
+					<th>테이블명</th>
 				</tr>
 				<tr class="table-spacing"></tr>
 			</thead>
 			<tbody class="list-body">
-				<c:forEach var="linkList" items="${selectLinkListPage}">
+				<c:forEach var="interfaceList" items="${getInterfaceList}">
 					<tr class="subtitle1 gray500">
-						<td>${linkList.num}</td>
-						<td>${linkList.svc_nm}</td>
-						<td>${linkList.ds_nm}</td>
+						<td>${interfaceList.num}</td>
+						<td>${interfaceList.svc_lnk_id}</td>
+						<td>${interfaceList.svc_lnk_nm}</td>
+						<td>${interfaceList.sch_nm}</td>
+						<td>${interfaceList.tbl_nm}</td>
 					</tr>
 					<tr class="table-spacing"></tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<div class="link-list-button-box">
-			<input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${linkUrl}linkService'">
+			<input type="hidden" value="${svc_nm}" id="svc_nm">
+			<input type="hidden" value="${getInterfaceList.svc_id}" id="svc_id">
+			<input type="hidden" value="${getInterfaceList.ds_nm}" id="ds_nm">
+			<input class="button-second" type="button" id="regbtn" value="등록" onclick="goLinkDetail();">
 			<ul class="pagination-ul">
 				<li class="header8 primary pagination-num ${pagination.pageNum == 1 ? 'page-num-disabled' : ''}"><a
-					href="linkList?pageNum=${pagination.pageNum - 1}&amount=${pagination.amount}">＜</a></li>
+					href="linkInterfaceList?pageNum=${pagination.pageNum - 1}&amount=${pagination.amount}">＜</a></li>
 
 				<c:forEach var="num" begin="${pagination.startPage}" end="${pagination.endPage}">
-					<li class="${pagination.pageNum eq num ? 'page-num-current' : ''} pagination-num "><a href="linkList?pageNum=${num}&amount=${pagination.amount}">${num}</a></li>
+					<li class="${pagination.pageNum eq num ? 'page-num-current' : ''} pagination-num "><a href="linkInterfaceListt?pageNum=${num}&amount=${pagination.amount}">${num}</a></li>
 				</c:forEach>
 
 				<li class="header8 primary pagination-num ${pagination.pageNum == pagination.endPage ? 'page-num-disabled' : ''}"><a
-					href="linkList?pageNum=${pagination.pageNum + 1}&amount=${pagination.amount}">＞</a></li>
+					href="linkInterfaceList?pageNum=${pagination.pageNum + 1}&amount=${pagination.amount}">＞</a></li>
 			</ul>
 			<div class="body2 gray500">
 				<span>total :</span> <span>${pagination.total}</span>
@@ -69,7 +76,7 @@
 				// 새로고침 시 데이터 초기화
 				const entries = performance.getEntriesByType("navigation")[0];
 				if (entries.type === "reload") {
-					document.location.href = "${linkUrl}linkList/linkInterfaceList";
+					document.location.href = "${linkUrl}linkInterfaceList";
 				}
 				//배너 타이틀 세팅
 				$('.banner-title').text('연계서비스')
@@ -77,20 +84,28 @@
 				//페이지 타이틀 세팅
 				$('.main-title-text').text('연계 인터페이스 조회');
 				$('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회 > 연계 인터페이스 조회')
+				
+				$("#lnkTbl tr").click(
+						function() {
+							location.href = "${linkUrl}detailService?svc_nm="+$('#svc_nm').val();
+									//+ $(this).find("td:nth-child(2)").text();
+							//+'&svc_id='+$('#svc_id') +'&ds_nm='+$('#ds_nm')
+						});
 
-				//$("#lnkTbl tr").click(
-					//	function() {
-						//	location.href = "${linkUrl}linkList/linkInterfaceList?svc_nm="
-						//			+ $(this).find("td:nth-child(2)").text();
-						//});
 			});
 
 	function fn_sendPageNumber(no) {
 		var frm = document.searchForm;
 		frm.num.value = no;
-		frm.action = "${linkUrl}linkList/linkInterfaceList"
+		frm.action = "${linkUrl}linkInterfaceList"
 		frm.submit();
 
 		event.preventDefault();
 	}
+	
+	var goLinkDetail = function() {
+		location.href = "${linkUrl}detailService?svc_nm="+$("#svc_nm").val();
+	}
+	
+	
 </script>

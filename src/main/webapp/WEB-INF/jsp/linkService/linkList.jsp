@@ -80,7 +80,7 @@
 
 				$("#lnkTbl tr").click(
 						function() {
-							location.href = "${linkUrl}linkList/linkInterfaceList?svc_nm="
+							location.href = "${linkUrl}detailService?svc_nm="
 									+ $(this).find("td:nth-child(2)").text();
 						});
 			});
@@ -88,7 +88,7 @@
 	function fn_sendPageNumber(no) {
 		var frm = document.searchForm;
 		frm.num.value = no;
-		frm.action = "${linkUrl}linkList/linkInterfaceList"
+		frm.action = "${linkUrl}linkList"
 		frm.submit();
 
 		event.preventDefault();

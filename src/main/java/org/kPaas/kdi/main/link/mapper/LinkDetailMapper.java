@@ -27,6 +27,6 @@ public interface LinkDetailMapper {
 	public List<Map<String, String>> getLinkTableList(KdiParam kdiParam);
 
 	public void insertDetail(Map<String, Object> params);
-
-	public List<String> selectSvcLinkId(Map<String, Object> params);
+	
+	public Integer getSvnlnkidCnt(Map<String, Object> params);
 }

@@ -95,20 +95,31 @@ public class LinkDetailImpl extends AbstractService implements LinkDetailService
 
 	@Override //연계서비스항목 데이터 최초 등록
 	public ResponseEntity<String> insertDetail(Map<String, Object> params) {
+		
 		JSONObject result = new JSONObject();
+		System.out.println("#############"+params.get("svc_id"));
+		
 		try {
+			int cnt = mapper.getSvnlnkidCnt(params);
+			if(cnt>=1) {
+				result.put("stateCode", 2);
+				result.put("state", "중복된 인터페이스ID");
+				result.put("errMsg", "svc_lnk_id is duplicate");
+				return ResponseEntity.badRequest().body(result.toString());
+			}
+			
 			mapper.insertDetail(params);
-			result.put("stateCode", 0);
-			result.put("state", "연계항목 등록 성공");
-			JSONObject data = new JSONObject();
-			data.put("svc_lnk_id", mapper.selectSvcLinkId(params));
-			result.put("data", data);
+			
 		} catch (MyBatisSystemException e) {
+
 			result.put("stateCode", 1);
 			result.put("state", "연계항목 등록 실패");
 			result.put("errMsg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
 		}
 		
+		result.put("stateCode", 0);
+		result.put("state", "연계항목 등록 성공");
 		return ResponseEntity.ok(result.toString());
 
 	}

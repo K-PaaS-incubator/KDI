@@ -42,6 +42,12 @@ public class LinkServiceController extends AbstractController {
 		return service.getLinkList(mapToKdiParam(params));
 	}
 
+	
+/*
+ * 이 파일 line35~37
+ * index로 대체하므로 필요없는 Controller이나 , 참고용으로 남김
+ * 연결해서 linkList.jsp도 필요없는 파일임.(사용하지 않는 jsp파일)
+ * 
 	@GetMapping("/linkList")
 	public String linkLists(Model model,
 						   @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
@@ -69,34 +75,7 @@ public class LinkServiceController extends AbstractController {
 
 		return layout("linkList");
 	}
-
-	@GetMapping("/linkList/linkInterfaceList")
-	public String linkIFLists(Model model,
-						   @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
-						   @RequestParam(value = "svc_nm", required = false)String svc_nm,
-						   RedirectAttributes redirectAttributes
-						   ) {
-		if (pageNum == null) {
-			redirectAttributes.addAttribute("pageNum", 1);
-			redirectAttributes.addAttribute("amount", 10);
-			return "redirect:/link/linkList";
-		}
-
-		LinkServiceVo linkServiceVo = new LinkServiceVo();
-		linkServiceVo.setPageNum(pageNum);
-		linkServiceVo.setAmount(10);
-		linkServiceVo.setSvc_nm(svc_nm);
-
-		Criteria criteria = new Criteria();
-		criteria.setPageNum(pageNum);
-
-		PageVo pageVo = new PageVo(criteria, service.selectLinkListCount(linkServiceVo));
-
-		model.addAttribute("selectLinkListPage", service.selectLinkListPage(linkServiceVo));
-		model.addAttribute("pagination", pageVo);
-
-		return layout("linkInterfaceList");
-	}
+*/
 	
 
 	//연계서비스 등록 시작
@@ -117,5 +96,37 @@ public class LinkServiceController extends AbstractController {
 		
 		service.insertLink(linkService_vo);
 		return ResponseEntity.ok("연계서비스 등록 완료");
+	}
+	
+	
+	//연계 인터페이스 조회
+	@GetMapping("/linkInterfaceList")
+	public String linkIFLists(Model model,
+						   @RequestParam(value = "pageNum", required = false, defaultValue = "1")Integer pageNum,
+						   @RequestParam(value = "svc_nm", required = false)String svc_nm,
+						   RedirectAttributes redirectAttributes
+						   ) {
+		if (pageNum == null) {
+			redirectAttributes.addAttribute("pageNum", 1);
+			redirectAttributes.addAttribute("amount", 10);
+			return "redirect:/link/linkInterfaceList";
+		}
+
+		LinkServiceVo linkServiceVo = new LinkServiceVo();
+		linkServiceVo.setPageNum(pageNum);
+		linkServiceVo.setAmount(10);
+		linkServiceVo.setSvc_nm(svc_nm);
+		
+		Criteria criteria = new Criteria();
+		criteria.setPageNum(pageNum);
+
+		PageVo pageVo = new PageVo(criteria, service.selectLinkListCount(linkServiceVo));
+
+		model.addAttribute("getInterfaceList", service.getInterfaceList(svc_nm));
+		model.addAttribute("selectLinkListPage", service.selectLinkListPage(linkServiceVo));
+		model.addAttribute("pagination", pageVo);
+		//model.addAttribute("svc_nm",svc_nm);
+
+		return layout("linkInterfaceList");
 	}
 }

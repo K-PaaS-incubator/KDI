@@ -1,7 +1,6 @@
 package org.kPaas.kdi.main.link.controller;
 
 import java.util.Map;
-
 import org.kPaas.kdi.com.abs.AbstractController;
 import org.kPaas.kdi.main.link.service.LinkDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +41,5 @@ public class LinkDetailController extends AbstractController {
 	public ResponseEntity<String> linkTableName(@RequestParam Map<String, Object> params) {
 		return service.insertDetail(params);
 	}
-	
 
 }

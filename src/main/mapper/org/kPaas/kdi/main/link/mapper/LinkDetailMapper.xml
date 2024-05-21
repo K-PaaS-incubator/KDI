@@ -5,19 +5,18 @@
 <mapper namespace="org.kPaas.kdi.main.link.mapper.LinkDetailMapper">
 	<insert id="createTable">
 		CREATE TABLE `KDI_LINK_DETAIL` (
-			`svc_lnk_id` bigint NOT NULL AUTO_INCREMENT,
-			`svc_id` bigint NOT NULL,
+			`svc_lnk_id` varchar2(100) NOT NULL,
+			`svc_id` varchar2(100) NOT NULL,
 			`ds_nm` varchar2(100) NOT NULL,
-			`if_nm` varchar2(100) NULL,
-			`sch_nm` varchar2(100) NULL,
+			`svc_lnk_nm` varchar2(100) NULL,
 			`tbl_nm` varchar2(100) NULL,
+			`sch_nm` varchar2(100) NULL,
 			`lnk_time` varchar2(50) NULL,
 			`flag_type` char(1) NULL,
 			`reg_id` varchar2(20) NULL,
 			`reg_dt` date NULL,
 			`mod_id` varchar2(20) NULL,
-			`mod_dt` date NULL,
-			PRIMARY KEY (`svc_lnk_id`)
+			`mod_dt` date NULL
 		)
 	</insert>
 
@@ -108,18 +107,16 @@
 		ROWS ONLY
 	</select>
 	
-	<insert id="insertDetail" parameterType="Map">
-		INSERT INTO KDI_LINK_DETAIL(tbl_nm,svc_id,ds_nm,sch_nm,reg_id,reg_dt,mod_id,mod_dt) 
-		VALUES(#{tbl_nm},(SELECT svc_id FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm}),#{ds_nm},#{sch_nm},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
-	</insert>
-	
-	<select id="selectSvcLinkId" resultType="Map" parameterType="Map" >
-		SELECT
-			SVC_LNK_ID
-		FROM
-			KDI_LINK_DETAIL 
+	<select id="getSvnlnkidCnt" resultType="Integer" parameterType="Map">
+		SELECT COUNT(*) FROM KDI_LINK_DETAIL 
 		<where>
-			svc_id = (SELECT svc_id FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm}) and ds_nm = #{ds_nm}
+		svc_lnk_id = #{svc_lnk_id} and svc_id=#{svc_id}
 		</where>
 	</select>
+	
+	<insert id="insertDetail" parameterType="Map">
+		INSERT INTO KDI_LINK_DETAIL(svc_lnk_id, svc_lnk_nm, tbl_nm,svc_id,ds_nm,sch_nm,reg_id,reg_dt,mod_id,mod_dt) 
+		VALUES(#{svc_lnk_id},#{svc_lnk_nm},#{tbl_nm},(SELECT svc_id FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm}),#{ds_nm},#{sch_nm},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
+	</insert>
+
 </mapper>

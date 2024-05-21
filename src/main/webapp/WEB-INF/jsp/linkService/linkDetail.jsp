@@ -12,6 +12,7 @@
 	<jsp:include page="../component/subTitle.jsp"></jsp:include>
 	<div class="mainContent">
 		<form>
+		<div><input type="text" id="svc_lnk_id" placeholder="인터페이스 ID 입력"><input type="text" id="svc_lnk_nm" placeholder="인터페이스 제목 입력"></div>
 			<div class="content-wrapper" style="margin-top: 20px">
 				<div class="left-content">
 					<div class="left-content-title header4 gray500" id="ds_nm"
@@ -164,7 +165,8 @@
 		// 파라미터 JSON포맷
 		var paramData = {
 			'ds_nm' : '${getLinkService.ds_nm}',
-			'sch_nm' : ''
+			'sch_nm' : '',
+			'svc_id' : '${getLinkService.svc_id}'
 		};
 
 		// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제
@@ -233,6 +235,9 @@
 			var sch_nm  = schemaName.replaceAll(/([^\w\s])/g,'\\\$&');
 			var svc_nm = $('#svc_nm').val();
 			var ds_nm = $('#ds_nm').text();
+			var svc_lnk_id = $('#svc_lnk_id').val();
+			var svc_lnk_nm = $('#svc_lnk_nm').val();
+			var svc_id = paramData['svc_id'];
 			
             $.ajax({
                 url: '${linkUrl}detailService/linkTableName',
@@ -240,22 +245,27 @@
                 data: {'tbl_nm':tbl_nm,
                 	   'sch_nm':sch_nm,
                 	   'ds_nm':ds_nm,
-                	   'svc_nm':svc_nm},
+                	   'svc_nm':svc_nm,
+                	   'svc_lnk_id':svc_lnk_id,
+                	   'svc_lnk_nm':svc_lnk_nm,
+                	   'svc_id':svc_id},
                 dataType: 'json', // 응답하는 값의 유형
                 success: function (result) {
+                    console.log(result.state);
+                    console.log(result.stateCode);
+                  	location.href='${linkUrl}linkTable?svc_lnk_id='+svc_lnk_id+'&svc_id='+svc_id +'&ds_nm='+ds_nm;
+                	
+                  	//location.href='${linkUrl}linkTable?svc_lnk_id='+svc_lnk_id +'&svc_id='+result.data.svc_id +'&ds_nm='+ds_nm;
+                	//console.log('1svc_id=' +result.data.svc_id[0]);
+                	//console.log('2svc_id=' +result.data);
+                	//console.log('3svc_id=' +result.data.svc_id);
 
-                	//location.href='${linkUrl}linkTable?svc_lnk_id='+result.data[svc_lnk_id];
-                	console.log('연계서비스항목 등록성공1111');
-                	console.log('svc_lnk_id=' + result.data.svc_lnk_id);
-                	//console.log('schemaName:' + tbl_nm);
-                	//console.log('tableName:' + sch_nm);
-                	//console.log('serviceName:' + svc_nm);
-                	//console.log('databaseName:' + ds_nm);
-                	//console.log('result:' + result);
                 },
                 error: function (result) {
-                    console.log('연계서비스항목 등록실패');
-                    console.log(result.errMsg);
+                	console.log('연계서비스항목 등록실패');
+                    console.log(result.responseJSON.state);
+                    console.log(result.responseJSON.stateCode);
+                    alert(result.responseJSON.state);
                 }
             });
 		};

@@ -15,11 +15,11 @@
 						<div class="link-inputs-row">
 							<div class="common-input-box">
 								<div class="header6 label-title">테이블명</div>
-								<input class="common-input subtitle1 gray400" type="text" name="tbl_nm" placeholder="PUB_TEST_TABLE" readonly>
-							</div>
-							<div class="common-input-box">
-								<div class="header6 label-title">인터페이스 제목</div>
-								<input class="common-input subtitle1 gray400" type="text" name="if_nm" placeholder="인터페이스">
+								<input class="common-input subtitle1 gray400" type="text" name="tbl_nm" value="${getDetailVo.tbl_nm}" readonly>
+								<div class="header6 label-title">인터페이스ID</div>
+								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id" value="${getDetailVo.svc_lnk_id}" readonly>
+								<div class="header6 label-title">인터페이스제목</div>
+								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_nm" placeholder="인터페이스 제목">
 							</div>
 						</div>
 						<div>

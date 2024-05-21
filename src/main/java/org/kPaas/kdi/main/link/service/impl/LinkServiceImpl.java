@@ -13,6 +13,7 @@ import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.link.mapper.LinkMapper;
 import org.kPaas.kdi.main.link.service.LinkService;
+import org.kPaas.kdi.main.link.vo.LinkDetailVo;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.ResponseEntity;
@@ -116,5 +117,10 @@ public class LinkServiceImpl implements LinkService {
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
 		}
+	}
+
+	@Override
+	public List<LinkDetailVo> getInterfaceList(String svc_nm) {
+		return mapper.getInterfaceList(svc_nm);
 	}
 }

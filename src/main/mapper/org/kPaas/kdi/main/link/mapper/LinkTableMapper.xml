@@ -19,5 +19,19 @@
 			`mod_dt` date NULL
 		)
 	</insert>
+	
+	<select id="getDetailVo" resultType="org.kPaas.kdi.main.link.vo.LinkDetailVo" parameterType="String">
+		 SELECT * FROM KDI_LINK_DETAIL
+		 <where>
+		 svc_lnk_id = #{svc_lnk_id} and ds_nm = #{ds_nm} and svc_id = #{svc_id}
+		 </where>
+	</select>
+	
+	<select id="getDetailList" resultType="map" parameterType="String">
+		 SELECT * FROM KDI_LINK_DETAIL
+		 <where>
+		 svc_id = #{svc_id}
+		 </where>
+	</select>
 
 </mapper>

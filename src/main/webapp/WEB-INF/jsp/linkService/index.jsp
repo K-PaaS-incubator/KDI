@@ -105,7 +105,7 @@
 		})
 
 		var linkEdit = function(svc_nm) {
-			location.href = '${linkUrl}detailService?svc_nm=' + svc_nm
+			location.href = '${linkUrl}linkInterfaceList?svc_nm=' + svc_nm
 		};
 		// 그리드 작업 실행
 		grid.ready();

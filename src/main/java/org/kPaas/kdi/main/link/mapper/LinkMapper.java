@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.kPaas.kdi.com.util.KdiParam;
+import org.kPaas.kdi.main.link.vo.LinkDetailVo;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 
 @Mapper
@@ -21,10 +22,12 @@ public interface LinkMapper {
 	public List<LinkServiceVo> selectLinkList();
 	public List<LinkServiceVo> selectLinkListPage(LinkServiceVo linkService_vo);
 	public int selectLinkListCount(LinkServiceVo linkService_vo);
+	public List<LinkDetailVo> getInterfaceList(String svc_nm);
 	
 	//연계서비스 등록 시작
 	public List<String> selectDsList();
 	public Integer getSameLinkCheck(String svc_nm);
 	public void insertLink(LinkServiceVo linkService_vo);
+
 	
 }
