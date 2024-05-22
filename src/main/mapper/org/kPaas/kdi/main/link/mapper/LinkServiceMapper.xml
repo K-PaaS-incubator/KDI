@@ -102,7 +102,7 @@
 	</select>
 	
 	<select id="getInterfaceList" resultType="org.kPaas.kdi.main.link.vo.LinkDetailVo" parameterType="String">
-		SELECT ROWNUM AS NUM, SVC_LNK_ID, SVC_LNK_NM, SCH_NM, TBL_NM, DS_NM, SVC_ID FROM KDI_LINK_DETAIL 
-		<where> SVC_ID = (SELECT SVC_ID FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm} ) </where>
+		SELECT ROWNUM AS NUM, SVC_LNK_ID, SVC_LNK_NM, SCH_NM, TBL_NM, DS_NM, SVC_ID, #{svc_nm} AS SVC_NM FROM KDI_LINK_DETAIL 
+		<where> svc_id = (SELECT SVC_ID FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm} ) </where>
 	</select>
 </mapper>

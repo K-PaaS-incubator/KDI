@@ -24,7 +24,7 @@ public class LinkTableController extends AbstractController {
 
 	@GetMapping("/linkTable")
 	public String linkTable(Model model, @RequestParam("svc_lnk_id") String svc_lnk_id, @RequestParam("svc_id") String svc_id, @RequestParam("ds_nm") String ds_nm) {
-		model.addAttribute("getDetailVo", service.getDetailVo(svc_lnk_id,svc_id,ds_nm));
+		model.addAttribute("getDetailVo", service.getDetailVo(svc_lnk_id,ds_nm,svc_id));
 		return layout("linkTable");
 	}
 	

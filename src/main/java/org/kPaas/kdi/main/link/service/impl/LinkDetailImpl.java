@@ -97,11 +97,11 @@ public class LinkDetailImpl extends AbstractService implements LinkDetailService
 	public ResponseEntity<String> insertDetail(Map<String, Object> params) {
 		
 		JSONObject result = new JSONObject();
-		System.out.println("#############"+params.get("svc_id"));
+		//System.out.println("#############"+params.get("svc_id"));
 		
 		try {
 			int cnt = mapper.getSvnlnkidCnt(params);
-			if(cnt>=1) {
+			if(cnt >= 1) {
 				result.put("stateCode", 2);
 				result.put("state", "중복된 인터페이스ID");
 				result.put("errMsg", "svc_lnk_id is duplicate");

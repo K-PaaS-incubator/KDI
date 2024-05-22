@@ -41,23 +41,20 @@
 						<td>${interfaceList.svc_lnk_id}</td>
 						<td>${interfaceList.svc_lnk_nm}</td>
 						<td>${interfaceList.sch_nm}</td>
-						<td>${interfaceList.tbl_nm}</td>
+						<td>${interfaceList.tbl_nm}<input type="hidden" id="IFsvc_nm" value="${interfaceList.svc_nm}"></td>
 					</tr>
 					<tr class="table-spacing"></tr>
 				</c:forEach>
 			</tbody>
 		</table>
 		<div class="link-list-button-box">
-			<input type="hidden" value="${svc_nm}" id="svc_nm">
-			<input type="hidden" value="${getInterfaceList.svc_id}" id="svc_id">
-			<input type="hidden" value="${getInterfaceList.ds_nm}" id="ds_nm">
 			<input class="button-second" type="button" id="regbtn" value="등록" onclick="goLinkDetail();">
 			<ul class="pagination-ul">
 				<li class="header8 primary pagination-num ${pagination.pageNum == 1 ? 'page-num-disabled' : ''}"><a
 					href="linkInterfaceList?pageNum=${pagination.pageNum - 1}&amount=${pagination.amount}">＜</a></li>
 
 				<c:forEach var="num" begin="${pagination.startPage}" end="${pagination.endPage}">
-					<li class="${pagination.pageNum eq num ? 'page-num-current' : ''} pagination-num "><a href="linkInterfaceListt?pageNum=${num}&amount=${pagination.amount}">${num}</a></li>
+					<li class="${pagination.pageNum eq num ? 'page-num-current' : ''} pagination-num "><a href="linkInterfaceList?pageNum=${num}&amount=${pagination.amount}">${num}</a></li>
 				</c:forEach>
 
 				<li class="header8 primary pagination-num ${pagination.pageNum == pagination.endPage ? 'page-num-disabled' : ''}"><a
@@ -73,7 +70,6 @@
 <script defer>
 	$(document).ready(
 			function() {
-				// 새로고침 시 데이터 초기화
 				const entries = performance.getEntriesByType("navigation")[0];
 				if (entries.type === "reload") {
 					document.location.href = "${linkUrl}linkInterfaceList";
@@ -87,9 +83,12 @@
 				
 				$("#lnkTbl tr").click(
 						function() {
-							location.href = "${linkUrl}detailService?svc_nm="+$('#svc_nm').val();
+							//console.log("$$$$$$$$$$$$$"+$('#IFsvc_nm').val());
+							location.href = "${linkUrl}detailService?svc_nm="+$('#IFsvc_nm').val();
 									//+ $(this).find("td:nth-child(2)").text();
 							//+'&svc_id='+$('#svc_id') +'&ds_nm='+$('#ds_nm')
+							
+							
 						});
 
 			});

@@ -7,8 +7,8 @@
 	<insert id="createTable">
 		CREATE TABLE `KDI_LINK_TABLE` (
 			`col_nm` varchar2(100) NOT NULL,
-			`svc_lnk_id` bigint NOT NULL,	
-			`svc_id` bigint NOT NULL,
+			`svc_lnk_id` varchar2(100) NOT NULL,	
+			`svc_id` varchar2(100) NOT NULL,
 			`ds_nm` varchar2(100) NOT NULL,
 			`col_type` varchar2(20) NULL,
 			`col_mp_nm` varchar2(100) NULL,
@@ -20,17 +20,17 @@
 		)
 	</insert>
 	
-	<select id="getDetailVo" resultType="org.kPaas.kdi.main.link.vo.LinkDetailVo" parameterType="String">
+	<select id="getDetailVo" resultType="org.kPaas.kdi.main.link.vo.LinkDetailVo" parameterType="string">
 		 SELECT * FROM KDI_LINK_DETAIL
 		 <where>
-		 svc_lnk_id = #{svc_lnk_id} and ds_nm = #{ds_nm} and svc_id = #{svc_id}
+		 svc_lnk_id = #{svc_lnk_id} and ds_nm =#{ds_nm} and svc_id = #{svc_id}
 		 </where>
 	</select>
 	
 	<select id="getDetailList" resultType="map" parameterType="String">
 		 SELECT * FROM KDI_LINK_DETAIL
 		 <where>
-		 svc_id = #{svc_id}
+		 svc_id = #{svc_id} <!--  #{svc_id, JDBCType=INTEGER} (parameterType이 각 변수마다 다를경우 직접 선언) -->
 		 </where>
 	</select>
 

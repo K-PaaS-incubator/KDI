@@ -12,7 +12,7 @@
 	<jsp:include page="../component/subTitle.jsp"></jsp:include>
 	<div class="mainContent">
 		<form>
-		<div><input type="text" id="svc_lnk_id" placeholder="인터페이스 ID 입력"><input type="text" id="svc_lnk_nm" placeholder="인터페이스 제목 입력"></div>
+		<div><div class="header6 label-title">인터페이스 ID 입력</div><input class="common-input-box subtitle1 gray400" type="text" id="svc_lnk_id" placeholder="인터페이스 ID"></div>
 			<div class="content-wrapper" style="margin-top: 20px">
 				<div class="left-content">
 					<div class="left-content-title header4 gray500" id="ds_nm"
@@ -247,7 +247,6 @@
                 	   'ds_nm':ds_nm,
                 	   'svc_nm':svc_nm,
                 	   'svc_lnk_id':svc_lnk_id,
-                	   'svc_lnk_nm':svc_lnk_nm,
                 	   'svc_id':svc_id},
                 dataType: 'json', // 응답하는 값의 유형
                 success: function (result) {

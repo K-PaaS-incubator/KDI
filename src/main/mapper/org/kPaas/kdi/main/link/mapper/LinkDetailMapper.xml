@@ -115,8 +115,8 @@
 	</select>
 	
 	<insert id="insertDetail" parameterType="Map">
-		INSERT INTO KDI_LINK_DETAIL(svc_lnk_id, svc_lnk_nm, tbl_nm,svc_id,ds_nm,sch_nm,reg_id,reg_dt,mod_id,mod_dt) 
-		VALUES(#{svc_lnk_id},#{svc_lnk_nm},#{tbl_nm},(SELECT svc_id FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm}),#{ds_nm},#{sch_nm},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
+		INSERT INTO KDI_LINK_DETAIL(svc_lnk_id,tbl_nm,svc_id,ds_nm,sch_nm,reg_id,reg_dt,mod_id,mod_dt) 
+		VALUES(#{svc_lnk_id},#{tbl_nm},(SELECT svc_id FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm}),#{ds_nm},#{sch_nm},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
 	</insert>
 
 </mapper>

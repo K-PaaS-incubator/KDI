@@ -25,4 +25,5 @@ public class LinkDetailVo {
 	String mod_id;
 	String mod_dt;
 	
+	String svc_nm;
 }

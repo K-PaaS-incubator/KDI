@@ -32,8 +32,8 @@ public class LinkTableImpl implements LinkTableService {
 
 	// svc_id가 같은 인터페이스목록 보기
 	@Override
-	public List<LinkDetailVo> getDetailList(String svc_id) {
-		return mapper.getDetailList(svc_id);
+	public List<LinkDetailVo> getDetailList(String svc_lnk_id) {
+		return mapper.getDetailList(svc_lnk_id);
 	}
 	
 	//테이블상세설정화면에서 인터페이스내용 보여주기 위한 VO
