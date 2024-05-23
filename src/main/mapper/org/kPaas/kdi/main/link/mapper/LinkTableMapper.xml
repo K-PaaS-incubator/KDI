@@ -16,7 +16,8 @@
 			`reg_id` varchar2(20) NULL,
 			`reg_dt` date NULL,
 			`mod_id` varchar2(20) NULL,
-			`mod_dt` date NULL
+			`mod_dt` date NULL,
+			PRIMARY KEY (`col_nm`)
 		)
 	</insert>
 	

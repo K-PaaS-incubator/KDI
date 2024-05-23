@@ -11,6 +11,9 @@
 	<%--    <form id="searchForm" name="searchForm" method="get">--%>
 	<div class="mainContent">
 		<form action="${linkUrl}linkList" method="GET" id="searchForm">
+		
+			<div class="header5 label-title">서비스 제목</div><div id="IFsvc_nm" class="header6 label-title">${InterfaceSvc_nm}</div>
+		
 			<div class="search-box">
 				<div>
 					<input id="searchKeyword" type="text" name="svc_nm" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
@@ -20,9 +23,11 @@
 		</form>
 		<table id="lnkTbl" class="data-list">
 			<colgroup>
-				<col width="15%">
-				<col width="40%">
-				<col width="45%">
+				<col width="16%">
+				<col width="21%">
+				<col width="21%">
+				<col width="21%">
+				<col width="21%">
 			</colgroup>
 			<thead class="list-head">
 				<tr class="subtitle1 gray500">
@@ -41,7 +46,7 @@
 						<td>${interfaceList.svc_lnk_id}</td>
 						<td>${interfaceList.svc_lnk_nm}</td>
 						<td>${interfaceList.sch_nm}</td>
-						<td>${interfaceList.tbl_nm}<input type="hidden" id="IFsvc_nm" value="${interfaceList.svc_nm}"></td>
+						<td>${interfaceList.tbl_nm}</td>
 					</tr>
 					<tr class="table-spacing"></tr>
 				</c:forEach>
@@ -72,7 +77,7 @@
 			function() {
 				const entries = performance.getEntriesByType("navigation")[0];
 				if (entries.type === "reload") {
-					document.location.href = "${linkUrl}linkInterfaceList";
+					document.location.href = "${linkUrl}linkInterfaceList?svc_nm="+$('#IFsvc_nm').text();
 				}
 				//배너 타이틀 세팅
 				$('.banner-title').text('연계서비스')
@@ -83,27 +88,22 @@
 				
 				$("#lnkTbl tr").click(
 						function() {
-							//console.log("$$$$$$$$$$$$$"+$('#IFsvc_nm').val());
-							location.href = "${linkUrl}detailService?svc_nm="+$('#IFsvc_nm').val();
-									//+ $(this).find("td:nth-child(2)").text();
-							//+'&svc_id='+$('#svc_id') +'&ds_nm='+$('#ds_nm')
-							
-							
+							console.log("$$$$$$$$$$$$$"+$('#IFsvc_nm').text());
+							location.href = "${linkUrl}detailService?svc_nm="+$('#IFsvc_nm').text();			
 						});
-
 			});
 
 	function fn_sendPageNumber(no) {
 		var frm = document.searchForm;
 		frm.num.value = no;
-		frm.action = "${linkUrl}linkInterfaceList"
+		frm.action = "${linkUrl}linkInterfaceList?svc_nm="+$('#IFsvc_nm').text();
 		frm.submit();
 
 		event.preventDefault();
 	}
 	
 	var goLinkDetail = function() {
-		location.href = "${linkUrl}detailService?svc_nm="+$("#svc_nm").val();
+		location.href = "${linkUrl}detailService?svc_nm="+$('#IFsvc_nm').text();
 	}
 	
 	

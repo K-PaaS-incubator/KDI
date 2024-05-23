@@ -41,5 +41,10 @@ public class LinkDetailController extends AbstractController {
 	public ResponseEntity<String> linkTableName(@RequestParam Map<String, Object> params) {
 		return service.insertDetail(params);
 	}
+	
+//	@PostMapping("linkDetailEdit")
+//	public ResponseEntity<String> linkDetailEdit(@RequestParam Map<String, Object> params) {
+//		return service.insertDetail(params);
+//	}
 
 }

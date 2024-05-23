@@ -125,7 +125,7 @@ public class LinkServiceController extends AbstractController {
 		model.addAttribute("getInterfaceList", service.getInterfaceList(svc_nm));
 		model.addAttribute("selectLinkListPage", service.selectLinkListPage(linkServiceVo));
 		model.addAttribute("pagination", pageVo);
-		//model.addAttribute("svc_nm",svc_nm);
+		model.addAttribute("InterfaceSvc_nm",svc_nm);
 
 		return layout("linkInterfaceList");
 	}
