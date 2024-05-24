@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kPaas.kdi.main.pop.mapper.PopTableMapper">
+	
+	<select id="getSchemas" resultType="String">
+		SELECT
+			USERNAME
+		FROM
+			DBA_USERS
+		<where>
+			USERNAME NOT IN ('APEX_040200', 'DVF', 'MDDATA', 'LBACSYS','SYS', 'SYSTEM', 'SYSDG', 'SYSBACKUP', 'SYSKM', 'SYSRAC', 'DBSNMP', 'OUTLN', 'AUDSYS', 'GSMADMIN_INTERNAL',
+			'GSMCATUSER', 'GSMUSER', 'DIP', 'REMOTE_SCHEDULER_AGENT', 'XS$NULL', 'ORACLE_OCM', 'WMSYS', 'APPQOSSYS', 'OJVMSYS', 'ORDDATA', 'ORDPLUGINS', 'ORDSYS', 'SI_INFORMTN_SCHEMA',
+			'MDSYS', 'CTXSYS', 'ANONYMOUS', 'XDB', 'APEX_040000', 'APEX_050000', 'APEX_060000', 'FLOWS_FILES', 'APEX_PUBLIC_USER', 'SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR',
+			'OLAPSYS', 'EXFSYS', 'BI', 'GSMROOTUSER', 'DVSYS', 'DBSFWUSER', 'ORACLE_SCRIPT', 'APEX_LISTENER', 'APEX_REST_PUBLIC_USER', 'APEX_INSTANCE_ADMIN_USER')
+		</where>
+		ORDER BY
+			USERNAME
+	</select>
+	<sql id="getTablesWhere">
+		DBA_TABLES TB1,
+		DBA_TAB_COMMENTS TB2
+		<where>
+			TB1.OWNER = TB2.OWNER
+			AND TB1.TABLE_NAME = TB2.TABLE_NAME
+			AND TB1.OWNER = #{value.sch_nm}
+			AND (
+			1=1
+			-- 선택검색
+			<if test="value.tb_nm != null and value.tb_nm != ''">
+				OR TB1.TABLE_NAME LIKE '%'||#{value.tb_nm}||'%'
+			</if>
+			<if test="value.link_yn != null and value.link_yn != ''">
+				-- 미구현
+				-- OR LINK_YN = UPPER(#{value.link_yn})
+			</if>
+			<if test="value.tb_comments!= null and value.tb_comments != ''">
+				OR TB2.COMMENTS = UPPER(#{value.tb_comments})
+			</if>
+
+			-- 통합검색
+			<if test="value.all_search != null and value.all_search != ''">
+				OR TB1.TABLE_NAME LIKE '%'||#{value.all_search}||'%'
+				-- 미구현
+				-- OR LINK_YN = UPPER(#{value.all_search})
+				OR TB2.COMMENTS = UPPER(#{value.all_search})
+			</if>
+
+			)
+		</where>
+	</sql>
+	<select id="getTablesCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+		COUNT(*)
+		FROM
+		<include refid="getTablesWhere" />
+	</select>
+	<select id="getTables" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+		TB1.TABLE_NAME AS TB_NM,
+		'Y' AS LINK_YN,
+		TB2.COMMENTS AS TB_COMMENTS
+		FROM
+		<include refid="getTablesWhere" />
+		ORDER BY
+		TB1.TABLE_NAME
+		OFFSET
+		(#{pageNum} - 1) * #{pagePerRow}
+		ROWS FETCH NEXT #{pagePerRow}
+		ROWS ONLY
+	</select>
+</mapper>
