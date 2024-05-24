@@ -12,8 +12,8 @@
 <link rel="stylesheet" href="${defaultCssUrl}basic.css">
 <link rel="stylesheet" href="${defaultCssUrl}common.css">
 <script src="${jqueryUrl}jquery-3.7.1.min.js"></script>
-<script src="${jqueryUrl}additional-methods.min.js"></script>
 <script src="${jqueryUrl}jquery.validate.min.js"></script>
+<script src="${jqueryUrl}additional-methods.min.js"></script>
 <script src="${jqueryUrl}messages_ko.min.js"></script>
 <script src="${jsUrl}kdi/kdi-grid.js"></script>
 </head>
