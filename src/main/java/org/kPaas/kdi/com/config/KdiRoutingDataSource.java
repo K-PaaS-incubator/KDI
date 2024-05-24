@@ -91,4 +91,8 @@ public class KdiRoutingDataSource extends AbstractRoutingDataSource {
 		}
 
 	}
+
+	public boolean contains(final String dataSourceName) {
+		return kdiDataSourceMap.containsKey(dataSourceName);
+	}
 }
