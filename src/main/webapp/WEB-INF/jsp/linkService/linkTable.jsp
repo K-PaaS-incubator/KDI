@@ -8,14 +8,14 @@
 <section class="contents">
 	<jsp:include page="../component/subTitle.jsp"></jsp:include>
 	<div class="mainContent">
-		<form>
+		<form id="LinkDetail">
 			<div class="link-table-wrapper">
 				<div class="link-table-box-top">
 					<div class="link-table-box-top-left">
 						<div class="link-inputs-row">
 							<div class="common-input-box">
 								<div class="header6 label-title">테이블명</div>
-								<input class="common-input subtitle1 gray400" type="text" name="tbl_nm" value="${getDetailVo.tbl_nm}" readonly>
+								<input class="common-input subtitle1 gray400" type="text" name="tableName" value="${getDetailVo.tbl_nm}" readonly>
 								<div class="header6 label-title">인터페이스ID</div>
 								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id" value="${getDetailVo.svc_lnk_id}" readonly>
 								<div class="header6 label-title">인터페이스제목</div>
@@ -146,6 +146,10 @@
 
 					$('#flagTypeBoxQuery').css('display', 'none');
 					$('#flagTypeBoxWhere').css('display', 'none');
+					$('#LinkDetail input[name="tableName"]').click(function (){
+						ds_nm = new URL(location.href).searchParams.get('ds_nm');
+						window.open('${homeUrl}pop/table?ds_nm='+ds_nm+'&parent_id='+encodeURIComponent('#LinkDetail'),'_blank', 'toolbar=no,menubar=no,location=no,status=no,scrollbars=yes,resizeable=yes,width=900,height=800');
+					});
 				});
 
 		function colUseCheck() {
