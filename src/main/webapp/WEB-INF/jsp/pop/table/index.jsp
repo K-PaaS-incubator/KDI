@@ -30,7 +30,7 @@
 </style>
 </head>
 <body>
-	<%-- window.open('http://localhost:8080/pop/table?ds_nm=pps@0.151','_blank', 'toolbar=no,menubar=no,location=no,status=no,scrollbars=yes,resizeable=yes,width=900,height=800'); --%>
+	<%-- window.open('http://localhost:8080/pop/table?ds_nm=데이터소스명&parent_id=부모창명','_blank', 'toolbar=no,menubar=no,location=no,status=no,scrollbars=yes,resizeable=yes,width=900,height=800'); --%>
 	<div class="mainContent" style="margin: 15px;">
 		<form>
 			<div class="content-wrapper">
