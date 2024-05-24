@@ -16,18 +16,18 @@
 		<where>
 			1=1
 			<if test="value.ds_nm != null and value.ds_nm != ''">
-				AND TB1.DS_NM LIKE '%' || #{ds_nm} || '%'
+				AND TB1.DS_NM LIKE '%' || #{value.ds_nm} || '%'
 			</if>
 			<if test="value.ds_type != null and value.ds_type != ''">
-				AND TB1.DS_TYPE LIKE '%' || #{ds_type} || '%'
+				AND TB1.DS_TYPE LIKE '%' || #{value.ds_type} || '%'
 			</if>
 			<if test="value.ds_addr != null and value.ds_addr != ''">
-				AND TB1.DS_ADDR LIKE '%' || #{ds_addr} || '%'
+				AND TB1.DS_ADDR LIKE '%' || #{value.ds_addr} || '%'
 			</if>
 			<if test="value.all_search != null and value.all_search != ''">
-				OR TB1.DS_NM   LIKE '%' || #{ds_nm}   || '%'
-				OR TB1.DS_TYPE LIKE '%' || #{ds_type} || '%'
-				OR TB1.DS_ADDR LIKE '%' || #{ds_addr} || '%'
+				OR TB1.DS_NM   LIKE '%' || #{value.ds_nm}   || '%'
+				OR TB1.DS_TYPE LIKE '%' || #{value.ds_type} || '%'
+				OR TB1.DS_ADDR LIKE '%' || #{value.ds_addr} || '%'
 			</if>
 		</where>
 	</sql>

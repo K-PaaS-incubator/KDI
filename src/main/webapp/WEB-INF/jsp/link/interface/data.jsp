@@ -4,9 +4,9 @@
 <c:url var="cssUrl" value="/css/" />
 <link rel="stylesheet" href="${cssUrl}link.css">
 
-<jsp:include page="../component/subBanner.jsp"></jsp:include>
+<jsp:include page="../../component/subBanner.jsp"></jsp:include>
 <section class="contents">
-	<jsp:include page="../component/subTitle.jsp"></jsp:include>
+	<jsp:include page="../../component/subTitle.jsp"></jsp:include>
 	<div class="mainContent">
 		<form id="LinkDetail">
 			<div class="link-table-wrapper">
@@ -17,7 +17,7 @@
 								<div class="header6 label-title">테이블명</div>
 								<input class="common-input subtitle1 gray400" type="text" name="tableName" value="${getDetailVo.tbl_nm}" readonly>
 								<div class="header6 label-title">인터페이스ID</div>
-								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id" value="${getDetailVo.svc_lnk_id}" readonly>
+								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id" value="${svc_lnk_id}" <c:if test="${pageType eq 'view'}">readonly</c:if>>
 								<div class="header6 label-title">인터페이스제목</div>
 								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_nm" placeholder="인터페이스 제목">
 							</div>

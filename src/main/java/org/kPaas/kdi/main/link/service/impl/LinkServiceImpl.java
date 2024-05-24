@@ -1,19 +1,16 @@
 package org.kPaas.kdi.main.link.service.impl;
 
-
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.json.JSONObject;
-import org.kPaas.kdi.com.abs.AbstractService;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.link.mapper.LinkMapper;
 import org.kPaas.kdi.main.link.service.LinkService;
-import org.kPaas.kdi.main.link.vo.LinkDetailVo;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.ResponseEntity;
@@ -40,19 +37,16 @@ public class LinkServiceImpl implements LinkService {
 		}
 	}
 
-	private List<LinkServiceVo> getLinkListAll() {
-		return mapper.getLinkListAll();
-	}
 
 	@Override
-	public ResponseEntity<String> getLinkList(KdiParam kdiParam){
+	public ResponseEntity<String> getLinkList(KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
 		PageInfo pageInfo = new PageInfo(kdiParam);
 
 		try {
 			pageInfo.setTotal(mapper.getLinkListCnt(kdiParam));
 			result.put("data", mapper.getLinkList(kdiParam));
-		} catch (MyBatisSystemException e){
+		} catch (MyBatisSystemException e) {
 			result.put("stateCode", 1);
 			result.put("state", "조회 실패");
 			result.put("errMsg", e.getMessage());
@@ -66,27 +60,26 @@ public class LinkServiceImpl implements LinkService {
 		return ResponseEntity.ok(result.toString());
 	}
 
-	//연계서비스 조회
+	// 연계서비스 조회
 	public List<LinkServiceVo> selectLinkList() {
 		return mapper.selectLinkList();
 	}
-	@Override
-	public List<LinkServiceVo> selectLinkListPage(LinkServiceVo linkService_vo) {
-		return mapper.selectLinkListPage(linkService_vo);
-	}
-	@Override
-	public int selectLinkListCount(LinkServiceVo linkService_vo) {
-		return mapper.selectLinkListCount(linkService_vo);
-	}
-	//연계서비스 등록 시작
-	
+
+	// 연계서비스 등록 시작
+
 	public List<String> selectDsList() {
 		return mapper.selectDsList();
 	}
 
 	@Override
-	public Integer getSameLinkCheck(String svc_nm) {
-		return mapper.getSameLinkCheck(svc_nm);
+	public ResponseEntity<String> duplicateCheck(String svc_nm) {
+		JSONObject result = new JSONObject();
+		result.put("stateCode", 0);
+		result.put("state", "조회 성공");
+		JSONObject data = new JSONObject();
+		data.put("cnt", mapper.getSameLinkCheck(svc_nm));
+		result.put("data", data);
+		return ResponseEntity.ok(result.toString());
 	}
 
 	@Override
@@ -119,8 +112,21 @@ public class LinkServiceImpl implements LinkService {
 		}
 	}
 
-	@Override
-	public List<LinkDetailVo> getInterfaceList(String svc_nm) {
-		return mapper.getInterfaceList(svc_nm);
-	}
+//	private List<LinkServiceVo> getLinkListAll() {
+//		return mapper.getLinkListAll();
+//	}
+//	@Override
+//	public List<LinkDetailVo> getInterfaceList(String svc_nm) {
+//		return mapper.getInterfaceList(svc_nm);
+//	}
+//
+//	@Override
+//	public List<LinkServiceVo> selectLinkListPage(LinkServiceVo linkService_vo) {
+//		return mapper.selectLinkListPage(linkService_vo);
+//	}
+//
+//	@Override
+//	public int selectLinkListCount(LinkServiceVo linkService_vo) {
+//		return mapper.selectLinkListCount(linkService_vo);
+//	}
 }

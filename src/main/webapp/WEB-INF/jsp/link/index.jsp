@@ -41,7 +41,7 @@
 			</tbody>
 		</table>
 		<div class="link-list-button-box">
-			<input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${linkUrl}linkService'">
+			<input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${linkUrl}reg'">
 			<div class="body2 pagination-ul pageCtlZone"></div>
 			<!-- 일단 임시로 이 영역에 구현함 -->
 			<div class="body2 gray500">
@@ -56,7 +56,7 @@
 	</div>
 	<table hidden="hidden">
 		<tbody id="gridHtmlFormatId">
-			<tr class="detailTr" onclick="linkEdit('#SVC_NM#')">
+			<tr class="detailTr" onclick="viewInterface('#SVC_NM#','#DS_NM#')">
 				<td>#NO#</td>
 				<td>#SVC_NM#</td>
 				<td>#DS_NM#</td>
@@ -70,7 +70,7 @@
 			<tr class="table-spacing"></tr>
 		</tbody>
 		<tbody id="gridLoadingHtmlFormatId">
-			<tr  class="detailTr">
+			<tr class="detailTr">
 				<td colspan="3">로딩중...</td>
 			</tr>
 			<tr class="table-spacing"></tr>
@@ -98,19 +98,19 @@
 			'svc_nm' : ''
 		}
 
-		grid.event.setErrEvent(function (xhr) {
+		grid.event.setErrEvent(function(xhr) {
 			console.log('statusCode' + xhr.statusCode);
 			console.log('responseJSON' + xhr.responseJSON.state);
 			console.log('responseJSON' + xhr.responseJSON.errMsg);
 		})
 
-		var linkEdit = function(svc_nm) {
-			location.href = '${linkUrl}linkInterfaceList?svc_nm=' + svc_nm
+		var viewInterface = function(svc_nm, ds_nm) {
+			let interfaceUri = '${linkUrl}interface?svc_nm=';
+			interfaceUri += encodeURIComponent(svc_nm);
+			interfaceUri += '&ds_nm=';
+			interfaceUri += encodeURIComponent(ds_nm);
+			location.href = interfaceUri;
 		};
-		// 그리드 작업 실행
-		grid.ready();
-		grid.search();
-
 		$(document).ready(function() {
 			// 새로고침 시 데이터 초기화
 			const entries = performance.getEntriesByType("navigation")[0];
@@ -118,11 +118,15 @@
 				document.location.href = "/link";
 			}
 			//배너 타이틀 세팅
-			$('.banner-title').text('연계서비스')
-			$('.banner-sub-title').text('연계서비스를 제공합니다')
+			$('.banner-title').text('연계서비스');
+			$('.banner-sub-title').text('연계서비스를 제공합니다');
 			//페이지 타이틀 세팅
 			$('.main-title-text').text('연계서비스 조회');
-			$('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회')
+			$('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회');
+
+			// 그리드 작업 실행
+			grid.ready();
+			grid.search();
 		});
 	</script>
 </section>

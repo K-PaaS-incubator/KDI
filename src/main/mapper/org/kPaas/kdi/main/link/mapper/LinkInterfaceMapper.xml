@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.kPaas.kdi.main.link.mapper.LinkDetailMapper">
+<mapper namespace="org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper">
 	<insert id="createTable">
 		CREATE TABLE `KDI_LINK_DETAIL` (
 			`svc_lnk_id` varchar2(100) NOT NULL,
@@ -20,6 +20,40 @@
 			PRIMARY KEY (`svc_lnk_id`)
 		)
 	</insert>
+	
+	<sql id="getInterfaceListWhere">
+			KDI_LINK_DETAIL TB1
+		JOIN
+			KDI_LINK_SERVICE TB2
+		ON
+			TB1.SVC_ID = TB2.SVC_ID
+		<where>
+			TB2.SVC_NM = #{value.svc_nm}
+		</where>
+	</sql>
+	<select id="getInterfaceListCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+			COUNT(TB1.SVC_LNK_ID)
+		FROM
+		<include refid="getInterfaceListWhere" />
+	</select>
+	
+	<select id="getInterfaceList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+			TB1.SVC_LNK_ID,
+			TB1.SVC_LNK_NM,
+			TB1.SCH_NM,
+			TB1.TBL_NM,
+			TB1.DS_NM,
+			TB1.SVC_ID,
+			TB2.SVC_NM
+		FROM
+		<include refid="getInterfaceListWhere" />
+	    LIMIT
+	    	#{pagePerRow}
+	    OFFSET
+	    	(#{pageNum} - 1) * #{pagePerRow}
+	</select>
 
 	<select id="getLinkService" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo" parameterType="String">
 		SELECT * FROM KDI_LINK_SERVICE
@@ -106,13 +140,6 @@
 		(#{pageNum} - 1) * #{pagePerRow}
 		ROWS FETCH NEXT #{pagePerRow}
 		ROWS ONLY
-	</select>
-	
-	<select id="getSvnlnkidCnt" resultType="Integer" parameterType="Map">
-		SELECT COUNT(*) FROM KDI_LINK_DETAIL 
-		<where>
-		svc_lnk_id = #{svc_lnk_id} and svc_id=#{svc_id}
-		</where>
 	</select>
 	
 	<insert id="insertDetail" parameterType="Map">

@@ -9,10 +9,16 @@ import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 
 @Mapper
-public interface LinkDetailMapper {
+public interface LinkInterfaceMapper {
 
 	// 연계서비스항목 테이블 생성
 	public void createTable();
+
+	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 건수 출력 */
+	public Long getInterfaceListCnt(KdiParam kdiParam);
+
+	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
+	public List<Map<String, String>> getInterfaceList(KdiParam kdiParam);
 
 	public LinkServiceVo getLinkService(String svc_nm);
 
@@ -20,13 +26,7 @@ public interface LinkDetailMapper {
 
 	public List<String> getSchema();
 
-	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 건수 출력 */
-	public Long getLinkTableListCnt(KdiParam kdiParam);
-
-	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
-	public List<Map<String, String>> getLinkTableList(KdiParam kdiParam);
-
 	public void insertDetail(Map<String, Object> params);
-	
+
 	public Integer getSvnlnkidCnt(Map<String, Object> params);
 }
