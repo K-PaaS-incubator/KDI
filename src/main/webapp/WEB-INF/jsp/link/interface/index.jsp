@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="homeUrl" value="/" />
 <c:url var="linkUrl" value="/link/" />
@@ -18,7 +19,9 @@
 
 			<div class="search-box">
 				<div>
-					<input id="searchKeyword" type="text" name="svc_lnk_id" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
+					<input id="searchKeyword" type="text" name="svc_lnk_id"
+						placeholder="검색어 입력" value=""> <img
+						src="${imgUrl}icon-search.png" alt="">
 				</div>
 				<button id="searchBtn" type="submit" class="button-second-gray">확인</button>
 			</div>
@@ -49,7 +52,8 @@
 			</tbody>
 		</table>
 		<div class="link-list-button-box">
-			<input class="button-second" type="button" id="regbtn" value="등록" onclick="fn_reg();">
+			<input class="button-second" type="button" id="regbtn" value="등록"
+				onclick="fn_reg();">
 			<div class="body2 pagination-ul pageCtlZone"></div>
 			<!-- 일단 임시로 이 영역에 구현함 -->
 			<div class="body2 gray500">
@@ -57,7 +61,8 @@
 					<span>전체 :</span> <span class="totalCnt">1</span>건
 				</div>
 				<div class="body2 gray500">
-					<span class="currentPageNum">1</span> / <span class="totalPage">1</span> 페이지
+					<span class="currentPageNum">1</span> / <span class="totalPage">1</span>
+					페이지
 				</div>
 			</div>
 		</div>
@@ -117,25 +122,15 @@
 		console.log('responseJSON' + xhr.responseJSON.state);
 		console.log('responseJSON' + xhr.responseJSON.errMsg);
 	});
-	
-	var fn_default_param = function() {
-		let param = 'svc_nm=';
-		param += encodeURIComponent('${svc_nm}');
-		param += '&ds_nm=';
-		param += encodeURIComponent('${ds_nm}');
-		return param;
-	}
 
 	var fn_reg = function() {
 		let interfaceUri = '${linkUrl}interface/data/reg?';
-		location.href = '${linkUrl}interface/data/reg?' + fn_default_param();
+		location.href = '${linkUrl}interface/data/reg' + new URL(location.href).search;
 	};
 	
 	var fn_view = function(svc_lnk_id) {
-		let interfaceUri = '${linkUrl}interface/data/view?';
-		interfaceUri += fn_default_param();
-		interfaceUri += '&svc_lnk_id=';
-		interfaceUri += encodeURIComponent(svc_lnk_id);
+		let interfaceUri = '${linkUrl}interface/data/view';
+		interfaceUri += new URL(location.href).search;
 		location.href = interfaceUri;
 	};
 	

@@ -29,6 +29,7 @@ var KdiListGrid = function(varName, url) {
 
 	// event
 	var _event = {
+		_postEvent: null,
 		_errEvent: null
 	};
 
@@ -217,6 +218,11 @@ var KdiListGrid = function(varName, url) {
 	};
 
 	var event = {
+		/** 데이터 불러온 다음 호출할 이벤트 */
+		setPostEvent: function(eventFn) {
+			_event._postEvent = eventFn;
+		},
+		/** 데이터 불러온 결과 에러발생시 호출할 이벤트 */
 		setErrEvent: function(eventFn) {
 			_event._errEvent = eventFn;
 		}
@@ -312,6 +318,9 @@ var KdiListGrid = function(varName, url) {
 					}
 					// PageCtlInfo
 					_pageCtlInfo._ctlFn._load(_pageInfo.maxPageNumView);
+				}
+				if (_event._postEvent) {
+					_event._postEvent();
 				}
 			},
 			error: _event._errEvent

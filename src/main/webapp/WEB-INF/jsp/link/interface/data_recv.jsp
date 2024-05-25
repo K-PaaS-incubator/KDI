@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="homeUrl" value="/" />
 <c:url var="cssUrl" value="/css/" />
@@ -15,11 +16,15 @@
 						<div class="link-inputs-row">
 							<div class="common-input-box">
 								<div class="header6 label-title">테이블명</div>
-								<input class="common-input subtitle1 gray400" type="text" name="tableName" value="${getDetailVo.tbl_nm}" readonly>
+								<input class="common-input subtitle1 gray400" type="text"
+									name="tableName" value="${getDetailVo.tbl_nm}" readonly>
 								<div class="header6 label-title">인터페이스ID</div>
-								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id" value="${svc_lnk_id}" <c:if test="${pageType eq 'view'}">readonly</c:if>>
+								<input class="common-input subtitle1 gray400" type="text"
+									name="svc_lnk_id" value="${svc_lnk_id}"
+									<c:if test="${pageType eq 'view'}">readonly</c:if>>
 								<div class="header6 label-title">인터페이스제목</div>
-								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_nm" placeholder="인터페이스 제목">
+								<input class="common-input subtitle1 gray400" type="text"
+									name="svc_lnk_nm" placeholder="인터페이스 제목">
 							</div>
 						</div>
 						<div>
@@ -35,32 +40,48 @@
 							<%--                            </div>--%>
 							<div class="schedule-input-box">
 								<div class="header6 label-title">
-									스케줄 <span class="guide-icon"> <img src="/img/icon-guide-mark.png" alt=""> ️<span id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>
+									스케줄 <span class="guide-icon"> <img
+										src="/img/icon-guide-mark.png" alt=""> ️<span
+										id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>
 									</span>
 								</div>
 								<div class="schedule-inputs">
-									<input class="schedule-input subtitle1 gray400" type="number" max="59" min="0" maxlength="2" name="lnk_time" placeholder="분" value="0"> <span
-										class="subtitle1 gray500">분</span> <input class="schedule-input subtitle1 gray400" type="number" max="23" min="0" maxlength="2" name="lnk_time" placeholder="시간" value="0">
-									<span class="subtitle1 gray500">시간</span> <input class="schedule-input subtitle1 gray400" type="number" max="31" min="0" maxlength="2" name="lnk_time" placeholder="일"
-										value="0"> <span class="subtitle1 gray500">일</span> <input class="schedule-input subtitle1 gray400" type="number" max="12" min="0" maxlength="2" name="lnk_time"
-										placeholder="월" value="0"> <span class="subtitle1 gray500">월</span> <input class="schedule-input subtitle1 gray400" type="number" max="6" min="0" maxlength="1"
-										name="lnk_time" placeholder="요일" value="0"> <span class="subtitle1 gray500">요일</span>
+									<input class="schedule-input subtitle1 gray400" type="number"
+										max="59" min="0" maxlength="2" name="lnk_time" placeholder="분"
+										value="0"> <span class="subtitle1 gray500">분</span> <input
+										class="schedule-input subtitle1 gray400" type="number"
+										max="23" min="0" maxlength="2" name="lnk_time"
+										placeholder="시간" value="0"> <span
+										class="subtitle1 gray500">시간</span> <input
+										class="schedule-input subtitle1 gray400" type="number"
+										max="31" min="0" maxlength="2" name="lnk_time" placeholder="일"
+										value="0"> <span class="subtitle1 gray500">일</span> <input
+										class="schedule-input subtitle1 gray400" type="number"
+										max="12" min="0" maxlength="2" name="lnk_time" placeholder="월"
+										value="0"> <span class="subtitle1 gray500">월</span> <input
+										class="schedule-input subtitle1 gray400" type="number" max="6"
+										min="0" maxlength="1" name="lnk_time" placeholder="요일"
+										value="0"> <span class="subtitle1 gray500">요일</span>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="link-table-box-top-right">
 						<div class="flag-box">
-							<div class="flag-title body1 gray500 bg-gray200 border-gray300">연계플래그 타입</div>
+							<div class="flag-title body1 gray500 bg-gray200 border-gray300">연계플래그
+								타입</div>
 							<div class="flag-radio-box subtitle1 gray400">
 								<div>
-									<label><input type="radio" name="flag_type" value="STATUS" checked="checked">STATUS</label>
+									<label><input type="radio" name="flag_type"
+										value="STATUS" checked="checked">STATUS</label>
 								</div>
 								<div>
-									<label><input type="radio" name="flag_type" value="QUERY">QUERY</label>
+									<label><input type="radio" name="flag_type"
+										value="QUERY">QUERY</label>
 								</div>
 								<div>
-									<label><input type="radio" name="flag_type" value="WHERE">WHERE</label>
+									<label><input type="radio" name="flag_type"
+										value="WHERE">WHERE</label>
 								</div>
 							</div>
 						</div>
@@ -68,11 +89,15 @@
 				</div>
 				<div class="common-input-box" id="flagTypeBoxWhere">
 					<div class="header6 label-title">WHERE</div>
-					<input class="common-input subtitle1 gray400" id="flagTypeInputWhere" type="text" name="" placeholder="조건문을 입력하세요">
+					<input class="common-input subtitle1 gray400"
+						id="flagTypeInputWhere" type="text" name=""
+						placeholder="조건문을 입력하세요">
 				</div>
 				<div class="common-input-box" id="flagTypeBoxQuery">
 					<div class="header6 label-title">조회쿼리</div>
-					<input class="common-input subtitle1 gray400" id="flagTypeInputQuery" type="text" name="" placeholder="쿼리를 입력하세요">
+					<input class="common-input subtitle1 gray400"
+						id="flagTypeInputQuery" type="text" name=""
+						placeholder="쿼리를 입력하세요">
 				</div>
 				<div class="link-table-box-bottom">
 					<table class="link-table-list">
@@ -98,7 +123,9 @@
 								<td id="column_1">COLUMN1</td>
 								<td>VARCHAR2(100)</td>
 								<td>timestamp();</td>
-								<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_1" onclick="colUseCheck()"></td>
+								<td><input class="tdIsConnect" type="checkbox"
+									name="connect_use_yn" id="use_yn_column_1"
+									onclick="colUseCheck()"></td>
 								<td><select class="tdLinkSelect">
 										<option value="1">STATUS</option>
 										<option value="2">QUERY</option>
@@ -110,7 +137,9 @@
 								<td class="column_2">COLUMN2</td>
 								<td>VARCHAR2(100)</td>
 								<td>timestamp();</td>
-								<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_2" onclick="colUseCheck()"></td>
+								<td><input class="tdIsConnect" type="checkbox"
+									name="connect_use_yn" id="use_yn_column_2"
+									onclick="colUseCheck()"></td>
 								<td><select class="tdLinkSelect">
 										<option value="1">STATUS</option>
 										<option value="2">QUERY</option>
@@ -124,33 +153,46 @@
 			</div>
 			<div class="query-box">
 				<h4 class="query-title body1 gray500">조회쿼리</h4>
-				<div id="queryResult" class="query-text subtitle1 gray400 bg-gray200 border-gray300"></div>
+				<div id="queryResult"
+					class="query-text subtitle1 gray400 bg-gray200 border-gray300"></div>
 			</div>
 			<div class="link-button-box">
-				<input class="button-second" type="button" value="이전" onclick="history.back()"> <input class="button-primary" type="button" value="저장" id="regbtn"
-					onclick="location.href='${homeUrl}linkList'">
+				<input class="button-second" type="button" value="이전"
+					onclick="fn_back();"> <input class="button-primary"
+					type="button" value="저장" id="regbtn">
 			</div>
 		</form>
 	</div>
 
 	<script>
-		$(document).ready(
-				function() {
-					//배너 타이틀 세팅
-					$('.banner-title').text('연계서비스')
-					$('.banner-sub-title').text('연계서비스를 제공합니다')
-					//페이지 타이틀 세팅
-					$('.main-title-text').text('연계서비스 테이블 상세');
-					$('.navi-arrow').text(
-							' > 연계서비스 > 연계서비스 등록 > 연계서비스 항목 설정 > 연계 테이블 상세');
+		const naviText = ' > 연계서비스 > 연계서비스 조회 > 연계 인터페이스 조회 > 연계서비스 테이블 상세';
+		var fn_tb_nm_click = function() {
+			const ds_nm = new URL(location.href).searchParams.get('ds_nm');
+			const parent_id = encodeURIComponent('#LinkDetail');
+			const param = 'ds_nm=' + ds_nm + '&parent_id=' + parent_id;
+			const tablePopUri = '${homeUrl}pop/table?' + param;
 
-					$('#flagTypeBoxQuery').css('display', 'none');
-					$('#flagTypeBoxWhere').css('display', 'none');
-					$('#LinkDetail input[name="tableName"]').click(function (){
-						ds_nm = new URL(location.href).searchParams.get('ds_nm');
-						window.open('${homeUrl}pop/table?ds_nm='+ds_nm+'&parent_id='+encodeURIComponent('#LinkDetail'),'_blank', 'toolbar=no,menubar=no,location=no,status=no,scrollbars=yes,resizeable=yes,width=900,height=800');
-					});
-				});
+			let popOption = 'toolbar=no,menubar=no,location=no,status=no';
+			popOption += ',scrollbars=yes,resizeable=yes';
+			popOption += ',width=900,height=800';
+			window.open(tablePopUri, '_blank', popOption);
+		}
+		var fn_back = function() {
+			const backParam = new URL(location.href).search;
+			location.href = '${homeUrl}link/interface' + backParam;
+		};
+		$(document).ready(function() {
+			//배너 타이틀 세팅
+			$('.banner-title').text('연계서비스')
+			$('.banner-sub-title').text('연계서비스를 제공합니다')
+			//페이지 타이틀 세팅
+			$('.main-title-text').text('연계서비스 테이블 상세');
+			$('.navi-arrow').text(naviText);
+
+			$('#flagTypeBoxQuery').css('display', 'none');
+			$('#flagTypeBoxWhere').css('display', 'none');
+			$('#LinkDetail input[name="tableName"]').click(fn_tb_nm_click);
+		});
 
 		function colUseCheck() {
 			const use_yn = $("#use_yn").val;

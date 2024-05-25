@@ -90,7 +90,9 @@
 	<select id="getLinkList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
 		SELECT
 			TB1.DS_NM,
-			TB1.SVC_NM
+			TB1.SVC_NM,
+			TB1.SVC_TYPE,
+			DECODE(TB1.SVC_TYPE,'P','송신','수신') AS SVC_TYPE_NAME
 		FROM
 		<include refid="getLinkListWhere" />
 		ORDER BY

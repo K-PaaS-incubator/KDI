@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <c:url var="homeUrl" value="/" />
@@ -15,11 +16,13 @@
 				<div class="link-box-left">
 					<div class="common-input-box">
 						<div class="header6 label-title">연계서비스 제목</div>
-						<input class="common-input subtitle1 gray400" type="text" id="svc_nm" name="svc_nm" required>
+						<input class="common-input subtitle1 gray400" type="text"
+							id="svc_nm" name="svc_nm" required>
 					</div>
 					<div class="link-input-box">
 						<div class="header6 label-title">데이터소스 선택</div>
-						<select class="link-input subtitle1 gray400" name="ds_nm" id="ds_nm">
+						<select class="link-input subtitle1 gray400" name="ds_nm"
+							id="ds_nm">
 							<option selected disabled>--선택--</option>
 							<c:forEach var="dsList" items="${selectDsList}">
 								<option value="${dsList}">${dsList}</option>
@@ -31,16 +34,19 @@
 					<div class="link-input-box">
 						<div class="header6 label-title">연계서비스 구분</div>
 						<div class="link-radio-box">
-							<label class="subtitle1 gray400"><input type="radio" name="svc_type" value="P" checked="checked">송신</label> <label class="subtitle1 gray400"><input
-								type="radio" name="svc_type" value="S">수신</label>
+							<label class="subtitle1 gray400"><input type="radio"
+								name="svc_type" value="P" checked="checked">송신</label> <label
+								class="subtitle1 gray400"><input type="radio"
+								name="svc_type" value="S">수신</label>
 						</div>
 					</div>
 					<div class="link-input-box"></div>
 				</div>
 			</div>
 			<div class="link-button-box">
-				<input class="button-second-gray" type="button" value="취소" onclick="location.href='${linkUrl}'"> <input class="button-primary" type="button" value="연계서비스 등록 >"
-					id="regbtn">
+				<input class="button-second-gray" type="button" value="취소"
+					onclick="location.href='${linkUrl}'"> <input
+					class="button-primary" type="button" value="연계서비스 등록 >" id="regbtn">
 			</div>
 		</form>
 	</div>
@@ -65,6 +71,7 @@
 				data : {
 					'svc_nm' : svc_nm,
 				},
+				dataType : 'json',
 				success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
 					if (result.data.cnt == 0) {
 						checkResult = true;
@@ -83,7 +90,7 @@
 				function LinkServiceSave() {
 					$('form').validate();
 					if (!fn_check_duplicate_link()) {
-						alert('제목이 중복되었습니다.');
+						alert('중복된 연계서비스명 입니다.');
 						return;
 					}
 
@@ -93,9 +100,8 @@
 						async : false,
 						data : $('#linkCreate').serialize(), //연계서비스생성(svc_id)
 						success : function(result) {
-							location.href = '${linkUrl}detailService?svc_nm='
-									+ $('#svc_nm').val();
-
+							location.href = '${linkUrl}interface/data/reg?'
+									+ $('#linkCreate').serialize();
 						},
 						error : function(result) {
 							console.log('statusCode:' + result.statusCode);

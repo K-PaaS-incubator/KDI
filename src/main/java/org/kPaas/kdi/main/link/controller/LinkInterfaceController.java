@@ -28,9 +28,11 @@ public class LinkInterfaceController extends AbstractController {
 
 	// 연계 인터페이스 조회
 	@GetMapping
-	public String getIndex(Model model, @RequestParam("svc_nm") String svc_nm, @RequestParam("ds_nm") String ds_nm) {
+	public String getIndex(Model model, @RequestParam("svc_nm") String svc_nm, @RequestParam("ds_nm") String ds_nm,
+			@RequestParam("svc_type") String svc_type) {
 		model.addAttribute("svc_nm", svc_nm);
 		model.addAttribute("ds_nm", ds_nm);
+		model.addAttribute("svc_type", svc_type);
 		return layout("index");
 	}
 
@@ -43,12 +45,17 @@ public class LinkInterfaceController extends AbstractController {
 	@GetMapping("data/{pageType}")
 	public String getLinkService(Model model, @PathVariable("pageType") String pageType,
 			@RequestParam("svc_nm") String svc_nm, @RequestParam("ds_nm") String ds_nm,
+			@RequestParam("svc_type") String svc_type,
 			@RequestParam(name = "svc_lnk_id", defaultValue = "", required = false) String svc_lnk_id) {
 		model.addAttribute("pageType", pageType);// view or reg
 		model.addAttribute("svc_nm", svc_nm);
 		model.addAttribute("ds_nm", ds_nm);
 		model.addAttribute("svc_lnk_id", svc_lnk_id);
-		return layout("data");
+		if("P".equalsIgnoreCase(svc_type)) {
+			return layout("data_send");
+		} else {
+			return layout("data_recv");
+		}
 	}
 
 	@PostMapping("linkTableName")
