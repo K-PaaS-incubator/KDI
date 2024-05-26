@@ -51,21 +51,16 @@ public class LinkInterfaceController extends AbstractController {
 		model.addAttribute("svc_nm", svc_nm);
 		model.addAttribute("ds_nm", ds_nm);
 		model.addAttribute("svc_lnk_id", svc_lnk_id);
-		if("P".equalsIgnoreCase(svc_type)) {
+		if ("P".equalsIgnoreCase(svc_type)) {
 			return layout("data_send");
 		} else {
 			return layout("data_recv");
 		}
 	}
 
-	@PostMapping("linkTableName")
-	public ResponseEntity<String> linkTableName(@RequestParam Map<String, Object> params) {
-		return service.insertDetail(params);
+	// 연계 인터페이스 정보
+	@PostMapping("data/{pageType}.json")
+	public ResponseEntity<String> save(@RequestParam Map<String, Object> params) {
+		return service.insert(params);
 	}
-
-//	@PostMapping("linkDetailEdit")
-//	public ResponseEntity<String> linkDetailEdit(@RequestParam Map<String, Object> params) {
-//		return service.insertDetail(params);
-//	}
-
 }

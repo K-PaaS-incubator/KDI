@@ -55,96 +55,31 @@
 	    	(#{pageNum} - 1) * #{pagePerRow}
 	</select>
 
-	<select id="getLinkService" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo" parameterType="String">
-		SELECT * FROM KDI_LINK_SERVICE
-		<where>svc_nm = #{svc_nm}</where>
-	</select>
-
-	<select id="connectLinkDs" resultType="org.kPaas.kdi.main.datasource.vo.DatasourceVo" parameterType="String">
-		SELECT * FROM KDI_DATASOURCE
-		<where>
-			ds_nm = (
-			SELECT
-			ds_nm
-			FROM
+	<insert id="insert" parameterType="Map">
+		INSERT INTO KDI_LINK_DETAIL (
+			SVC_LNK_ID,
+			SVC_ID,
+			DS_NM,
+			SVC_LNK_NM,
+			TBL_NM,
+			SCH_NM,
+			REG_ID,
+			REG_DT
+		)
+		SELECT
+			#{svc_lnk_id} AS SVC_LNK_ID,
+			SVC_ID,
+			#{ds_nm} AS DS_NM,
+			#{svc_lnk_nm} AS SVC_LNK_NM,
+			#{tableName} AS TBL_NM,
+			#{sch_nm} AS SCH_NM,
+			#{reg_id} AS REG_ID,
+			current_timestamp() AS REG_DT
+		FROM
 			KDI_LINK_SERVICE
-			<where>
-				svc_nm = #{svc_nm}
-			</where>
-			)
-		</where>
-	</select>
-
-	<select id="getSchema" resultType="String">
-		SELECT
-		USERNAME
-		FROM
-		DBA_USERS
 		<where>
-			USERNAME NOT IN ('APEX_040200', 'DVF', 'MDDATA', 'LBACSYS','SYS', 'SYSTEM', 'SYSDG', 'SYSBACKUP', 'SYSKM', 'SYSRAC', 'DBSNMP', 'OUTLN', 'AUDSYS', 'GSMADMIN_INTERNAL',
-			'GSMCATUSER', 'GSMUSER', 'DIP', 'REMOTE_SCHEDULER_AGENT', 'XS$NULL', 'ORACLE_OCM', 'WMSYS', 'APPQOSSYS', 'OJVMSYS', 'ORDDATA', 'ORDPLUGINS', 'ORDSYS', 'SI_INFORMTN_SCHEMA',
-			'MDSYS', 'CTXSYS', 'ANONYMOUS', 'XDB', 'APEX_040000', 'APEX_050000', 'APEX_060000', 'FLOWS_FILES', 'APEX_PUBLIC_USER', 'SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR',
-			'OLAPSYS', 'EXFSYS', 'BI', 'GSMROOTUSER', 'DVSYS', 'DBSFWUSER', 'ORACLE_SCRIPT', 'APEX_LISTENER', 'APEX_REST_PUBLIC_USER', 'APEX_INSTANCE_ADMIN_USER')
+			SVC_NM = #{svc_nm}
 		</where>
-		ORDER BY
-		USERNAME
-	</select>
-	<sql id="getLinkTableListWhere">
-		DBA_TABLES TB1,
-		DBA_TAB_COMMENTS TB2
-		<where>
-			TB1.OWNER = TB2.OWNER
-			AND TB1.TABLE_NAME = TB2.TABLE_NAME
-			AND TB1.OWNER = #{value.sch_nm}
-			AND (
-			1=1
-			-- 선택검색
-			<if test="value.tb_nm != null and value.tb_nm != ''">
-				OR TB1.TABLE_NAME LIKE '%'||#{value.tb_nm}||'%'
-			</if>
-			<if test="value.link_yn != null and value.link_yn != ''">
-				-- 미구현
-				-- OR LINK_YN = UPPER(#{value.link_yn})
-			</if>
-			<if test="value.tb_comments!= null and value.tb_comments != ''">
-				OR TB2.COMMENTS = UPPER(#{value.tb_comments})
-			</if>
-
-			-- 통합검색
-			<if test="value.all_search != null and value.all_search != ''">
-				OR TB1.TABLE_NAME LIKE '%'||#{value.all_search}||'%'
-				-- 미구현
-				-- OR LINK_YN = UPPER(#{value.all_search})
-				OR TB2.COMMENTS = UPPER(#{value.all_search})
-			</if>
-
-			)
-		</where>
-	</sql>
-	<select id="getLinkTableListCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
-		SELECT
-		COUNT(*)
-		FROM
-		<include refid="getLinkTableListWhere" />
-	</select>
-	<select id="getLinkTableList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
-		SELECT
-		TB1.TABLE_NAME AS TB_NM,
-		'Y' AS LINK_YN,
-		TB2.COMMENTS AS TB_COMMENTS
-		FROM
-		<include refid="getLinkTableListWhere" />
-		ORDER BY
-		TB1.TABLE_NAME
-		OFFSET
-		(#{pageNum} - 1) * #{pagePerRow}
-		ROWS FETCH NEXT #{pagePerRow}
-		ROWS ONLY
-	</select>
-	
-	<insert id="insertDetail" parameterType="Map">
-		INSERT INTO KDI_LINK_DETAIL(svc_lnk_id,tbl_nm,svc_id,ds_nm,sch_nm,reg_id,reg_dt,mod_id,mod_dt) 
-		VALUES(#{svc_lnk_id},#{tbl_nm},(SELECT svc_id FROM KDI_LINK_SERVICE WHERE SVC_NM = #{svc_nm}),#{ds_nm},#{sch_nm},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
 	</insert>
 
 </mapper>

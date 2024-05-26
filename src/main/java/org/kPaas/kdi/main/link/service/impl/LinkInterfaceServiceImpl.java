@@ -1,6 +1,5 @@
 package org.kPaas.kdi.main.link.service.impl;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -11,12 +10,11 @@ import org.kPaas.kdi.com.abs.AbstractService;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
-import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
 import org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper;
 import org.kPaas.kdi.main.link.service.LinkInterfaceService;
-import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -69,52 +67,20 @@ public class LinkInterfaceServiceImpl extends AbstractService implements LinkInt
 	}
 
 	@Override
-	public LinkServiceVo getLinkService(String svc_nm) {
-		return mapper.getLinkService(svc_nm);
-	}
-
-	public List<String> connectLinkDs(String svc_nm) {
-		DatasourceVo datasource_vo = mapper.connectLinkDs(svc_nm);
-		final String orgContext = getContext();
-		try {
-			setContext(datasource_vo.getDs_nm());
-			return mapper.getSchema();
-		} catch (MyBatisSystemException e) {
-			log.error("연결실패", e.getMessage());
-			return null;
-		} finally {
-			setContext(orgContext);
-		}
-	}
-
-	@Override // 연계서비스항목 데이터 최초 등록
-	public ResponseEntity<String> insertDetail(Map<String, Object> params) {
-
+	public ResponseEntity<String> insert(Map<String, Object> params) {
 		JSONObject result = new JSONObject();
-		// System.out.println("#############"+params.get("svc_id"));
-
 		try {
-			int cnt = mapper.getSvnlnkidCnt(params);
-			if (cnt >= 1) {
-				result.put("stateCode", 2);
-				result.put("state", "중복된 인터페이스ID");
-				result.put("errMsg", "svc_lnk_id is duplicate");
-				return ResponseEntity.badRequest().body(result.toString());
-			}
-
-			mapper.insertDetail(params);
-
+			params.put("reg_id", getLoginUserId());
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@"+params.get("SVC_NM")+"##############");
+			mapper.insert(params);
 		} catch (MyBatisSystemException e) {
-
 			result.put("stateCode", 1);
-			result.put("state", "연계항목 등록 실패");
+			result.put("state", "저장 실패");
 			result.put("errMsg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-
 		result.put("stateCode", 0);
-		result.put("state", "연계항목 등록 성공");
+		result.put("state", "저장 성공");
 		return ResponseEntity.ok(result.toString());
-
 	}
 }

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.kPaas.kdi.com.util.KdiParam;
-import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
-import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 
 @Mapper
 public interface LinkInterfaceMapper {
@@ -20,13 +18,5 @@ public interface LinkInterfaceMapper {
 	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
 	public List<Map<String, String>> getInterfaceList(KdiParam kdiParam);
 
-	public LinkServiceVo getLinkService(String svc_nm);
-
-	public DatasourceVo connectLinkDs(String svc_nm);
-
-	public List<String> getSchema();
-
-	public void insertDetail(Map<String, Object> params);
-
-	public Integer getSvnlnkidCnt(Map<String, Object> params);
+	public void insert(Map<String, Object> params);
 }
