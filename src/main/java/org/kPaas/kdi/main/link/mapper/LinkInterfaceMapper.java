@@ -18,5 +18,9 @@ public interface LinkInterfaceMapper {
 	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
 	public List<Map<String, String>> getInterfaceList(KdiParam kdiParam);
 
-	public void insert(Map<String, Object> params);
+	public void insertPubInterface(Map<String, Object> params);
+
+	public void updatePubInterface(Map<String, Object> params);
+
+	public Map<String, String> selectPubInterface(Map<String, Object> params);
 }

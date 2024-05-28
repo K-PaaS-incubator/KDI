@@ -28,7 +28,7 @@
 		ON
 			TB1.SVC_ID = TB2.SVC_ID
 		<where>
-			TB2.SVC_NM = #{value.svc_nm}
+			TB2.SVC_ID = #{value.svc_id}
 		</where>
 	</sql>
 	<select id="getInterfaceListCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
@@ -55,7 +55,7 @@
 	    	(#{pageNum} - 1) * #{pagePerRow}
 	</select>
 
-	<insert id="insert" parameterType="Map">
+	<insert id="insertPubInterface" parameterType="Map">
 		INSERT INTO KDI_LINK_DETAIL (
 			SVC_LNK_ID,
 			SVC_ID,
@@ -63,6 +63,10 @@
 			SVC_LNK_NM,
 			TBL_NM,
 			SCH_NM,
+			
+			LNK_TIME,
+			FLAG_TYPE,
+			
 			REG_ID,
 			REG_DT
 		)
@@ -72,7 +76,11 @@
 			#{ds_nm} AS DS_NM,
 			#{svc_lnk_nm} AS SVC_LNK_NM,
 			#{tableName} AS TBL_NM,
-			#{sch_nm} AS SCH_NM,
+			#{schemaName} AS SCH_NM,
+			
+			#{lnk_time} AS LNK_TIME,
+			#{flag_type} AS FLAG_TYPE,
+			
 			#{reg_id} AS REG_ID,
 			current_timestamp() AS REG_DT
 		FROM
@@ -81,5 +89,35 @@
 			SVC_NM = #{svc_nm}
 		</where>
 	</insert>
-
+	<update id="updatePubInterface" parameterType="Map">
+		UPDATE KDI_LINK_DETAIL
+		<set>
+			SVC_LNK_ID = #{svc_lnk_id},
+			
+			DS_NM = #{ds_nm},
+			SVC_LNK_NM = #{svc_lnk_nm},
+			TBL_NM = #{tableName},
+			SCH_NM = #{schemaName},
+			
+			LNK_TIME = #{lnk_time},
+			FLAG_TYPE = #{flag_type},
+			
+			MOD_ID = #{mod_id},
+			MOD_DT = current_timestamp()
+		</set>
+		<where>
+				SVC_LNK_ID = #{org_svc_lnk_id}
+			AND SVC_ID = #{svc_id}
+		</where>
+	</update>
+	<select id="selectPubInterface" resultType="Map" parameterType="Map">
+		SELECT
+			*
+		FROM
+			KDI_LINK_DETAIL
+		<where>
+				SVC_LNK_ID = #{org_svc_lnk_id}
+			AND SVC_ID = #{svc_id}
+		</where>
+	</select>
 </mapper>

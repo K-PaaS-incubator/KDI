@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="homeUrl" value="/" />
 <c:url var="linkUrl" value="/link/" />
@@ -19,9 +18,7 @@
 
 			<div class="search-box">
 				<div>
-					<input id="searchKeyword" type="text" name="svc_lnk_id"
-						placeholder="검색어 입력" value=""> <img
-						src="${imgUrl}icon-search.png" alt="">
+					<input id="searchKeyword" type="text" name="svc_lnk_id" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
 				</div>
 				<button id="searchBtn" type="submit" class="button-second-gray">확인</button>
 			</div>
@@ -52,8 +49,7 @@
 			</tbody>
 		</table>
 		<div class="link-list-button-box">
-			<input class="button-second" type="button" id="regbtn" value="등록"
-				onclick="fn_reg();">
+			<input class="button-second" type="button" id="regbtn" value="등록" onclick="fn_reg();">
 			<div class="body2 pagination-ul pageCtlZone"></div>
 			<!-- 일단 임시로 이 영역에 구현함 -->
 			<div class="body2 gray500">
@@ -61,8 +57,7 @@
 					<span>전체 :</span> <span class="totalCnt">1</span>건
 				</div>
 				<div class="body2 gray500">
-					<span class="currentPageNum">1</span> / <span class="totalPage">1</span>
-					페이지
+					<span class="currentPageNum">1</span> / <span class="totalPage">1</span> 페이지
 				</div>
 			</div>
 		</div>
@@ -71,7 +66,7 @@
 
 <table hidden="hidden">
 	<tbody id="gridHtmlFormatId">
-		<tr class="detailTr" onclick="fn_view('#SVC_LNK_ID#')">
+		<tr class="detailTr" onclick="fn_modify('#SVC_LNK_ID#')">
 			<td>#NO#</td>
 			<td>#SVC_LNK_ID#</td>
 			<td>#SVC_LNK_NM#</td>
@@ -113,6 +108,7 @@
 	gridEnv.setPageCtlInfo('.pageCtlZone', '${homeUrl}');
 
 	var paramData = {
+		'svc_id' : '${svc_id}',
 		'svc_nm' : '${svc_nm}',
 		'ds_nm' : '${ds_nm}'
 	};
@@ -125,15 +121,19 @@
 
 	var fn_reg = function() {
 		let interfaceUri = '${linkUrl}interface/data/reg?';
-		location.href = '${linkUrl}interface/data/reg' + new URL(location.href).search;
+		location.href = '${linkUrl}interface/data/reg'
+				+ new URL(location.href).search;
 	};
-	
-	var fn_view = function(svc_lnk_id) {
-		let interfaceUri = '${linkUrl}interface/data/view';
-		interfaceUri += new URL(location.href).search;
+
+	var fn_modify = function(svc_lnk_id) {
+		let tmpUrl = new URL(location.href);
+		tmpUrl.searchParams.set('svc_lnk_id',svc_lnk_id);
+
+		let interfaceUri = '${linkUrl}interface/data/modify';
+		interfaceUri += tmpUrl.search;
 		location.href = interfaceUri;
 	};
-	
+
 	$().ready(function() {
 		//배너 타이틀 세팅
 		$('.banner-title').text('연계서비스');

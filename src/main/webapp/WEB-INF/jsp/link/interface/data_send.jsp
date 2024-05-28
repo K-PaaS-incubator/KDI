@@ -10,15 +10,25 @@
 	<jsp:include page="../../component/subTitle.jsp"></jsp:include>
 	<div class="mainContent">
 		<form id="LinkDetail">
+			<%-- 서비스타입 (송신=P, 수신=S) --%>
+			<input type="hidden" name="svc_type" value="${svc_type}">
+			<%-- 서비스ID(고유) --%>
+			<input type="hidden" name="svc_id" value="${svc_id}">
+			<%-- 서비스명 --%>
+			<input type="hidden" name="svc_nm" value="${svc_nm}">
+			<%-- 데이터 소스명 --%>
+			<input type="hidden" name="ds_nm" value="${ds_nm}">
+			<%-- 현재 인터페이스ID(수정 페이지에서 기존값보관용) --%>
+			<input type="hidden" name="org_svc_lnk_id" value="${svc_lnk_id}">
 			<div class="link-table-wrapper">
 				<div class="link-table-box-top">
 					<div class="link-table-box-top-left">
 						<div class="link-inputs-row">
 							<div class="common-input-box">
-								<input type="hidden" name="svc_nm" value="${svc_nm}">
-								<input type="hidden" name="ds_nm" value="${ds_nm}">
+								<div class="header6 label-title">스키마명</div>
+								<input class="common-input subtitle1 gray400 tableSearch" type="text" name="schemaName" readonly="readonly">
 								<div class="header6 label-title">테이블명</div>
-								<input class="common-input subtitle1 gray400" type="text" name="tableName" value="${getDetailVo.tbl_nm}" readonly="readonly">
+								<input class="common-input subtitle1 gray400 tableSearch" type="text" name="tableName" readonly="readonly">
 								<div class="header6 label-title">인터페이스ID</div>
 								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id" value="${svc_lnk_id}">
 								<div class="header6 label-title">인터페이스제목</div>
@@ -57,13 +67,13 @@
 							<div class="flag-title body1 gray500 bg-gray200 border-gray300">연계플래그 타입</div>
 							<div class="flag-radio-box subtitle1 gray400">
 								<div>
-									<label><input type="radio" name="flag_type" value="STATUS" checked="checked">STATUS</label>
+									<label><input type="radio" name="flag_type" value="S" checked="checked">STATUS</label>
 								</div>
 								<div>
-									<label><input type="radio" name="flag_type" value="QUERY">QUERY</label>
+									<label><input type="radio" name="flag_type" value="Q">QUERY</label>
 								</div>
 								<div>
-									<label><input type="radio" name="flag_type" value="WHERE">WHERE</label>
+									<label><input type="radio" name="flag_type" value="W">WHERE</label>
 								</div>
 							</div>
 						</div>
@@ -137,6 +147,30 @@
 
 	<script>
 		const naviText = ' > 연계서비스 > 연계서비스 조회 > 연계 인터페이스 조회 > 연계서비스 테이블 상세';
+		var fn_data_load = function() {
+			$.ajax({
+				url : '${interfaceUrl}data.json',
+				type : 'GET',
+				data : $('#LinkDetail').serialize(),
+				dataType : 'JSON',
+				success : function(result) {
+					console.log('로딩화면 구현했으면 여기쯤에서 로딩 종료하는 위치');
+					$('input[name="schemaName"]').val(result.data.SCH_NM);
+					$('input[name="tableName"]').val(result.data.TBL_NM);
+					$('input[name="svc_lnk_nm"]').val(result.data.SVC_LNK_NM);
+					let flagTypeId = 'input[name="flag_type"][value="';
+					flagTypeId += result.data.FLAG_TYPE;
+					flagTypeId += '"]';
+					$(flagTypeId).prop('checked', 'true');
+				},
+				error : function(result) {
+					console.log('statusCode:' + result.statusCode);
+					console.log('responseJSON:' + result.responseJSON.state);
+					console.log('responseJSON:' + result.responseJSON.msg);
+					alert('연계서비스 조회 실패');
+				}
+			});
+		}
 		var fn_tb_nm_click = function() {
 			const ds_nm = encodeURIComponent('${ds_nm}');
 			const parent_id = encodeURIComponent('#LinkDetail');
@@ -181,10 +215,11 @@
 			$('#flagTypeBoxQuery').css('display', 'none');
 			$('#flagTypeBoxWhere').css('display', 'none');
 
-			if ('view' == '${pageType}') {
-				$('input[name="svc_lnk_id"]').attr('readonly', 'readonly');
+			if ('' != '${svc_lnk_id}') {
+				fn_data_load();
 			}
-			$('#LinkDetail input[name="tableName"]').click(fn_tb_nm_click);
+
+			$('input.tableSearch').click(fn_tb_nm_click);
 			$('#backBtn').click(fn_back);
 			$('#saveBtn').click(fn_save);
 		});

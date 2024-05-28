@@ -89,6 +89,7 @@
 
 	<select id="getLinkList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
 		SELECT
+			TB1.SVC_ID,
 			TB1.DS_NM,
 			TB1.SVC_NM,
 			TB1.SVC_TYPE,

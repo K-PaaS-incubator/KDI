@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="linkUrl" value="/link/" />
 <c:url var="imgUrl" value="/img/" />
@@ -13,9 +12,7 @@
 		<form action="${linkUrl}" method="GET" id="searchForm">
 			<div class="search-box">
 				<div>
-					<input id="searchKeyword" type="text" name="svc_nm"
-						placeholder="검색어 입력" value=""> <img
-						src="${imgUrl}icon-search.png" alt="">
+					<input id="searchKeyword" type="text" name="svc_nm" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
 				</div>
 				<button id="searchBtn" type="submit" class="button-second-gray">확인</button>
 			</div>
@@ -44,8 +41,7 @@
 			</tbody>
 		</table>
 		<div class="link-list-button-box">
-			<input class="button-second" type="button" id="regbtn" value="등록"
-				onclick="location.href='${linkUrl}reg'">
+			<input class="button-second" type="button" id="regbtn" value="등록" onclick="location.href='${linkUrl}reg'">
 			<div class="body2 pagination-ul pageCtlZone"></div>
 			<!-- 일단 임시로 이 영역에 구현함 -->
 			<div class="body2 gray500">
@@ -53,8 +49,7 @@
 					<span>전체 :</span> <span class="totalCnt">1</span>건
 				</div>
 				<div class="body2 gray500">
-					<span class="currentPageNum">1</span> / <span class="totalPage">1</span>
-					페이지
+					<span class="currentPageNum">1</span> / <span class="totalPage">1</span> 페이지
 				</div>
 			</div>
 		</div>
@@ -63,10 +58,10 @@
 		<tbody id="gridHtmlFormatId">
 			<tr class="detailTr dataTr">
 				<td>#NO#</td>
-				<td><input type="hidden" name="svc_type"
-					value="#SVC_TYPE#">#SVC_TYPE_NAME#</td>
+				<td><input type="hidden" name="svc_type" value="#SVC_TYPE#">#SVC_TYPE_NAME#</td>
 				<td><input type="hidden" name="svc_nm" value="#SVC_NM#">#SVC_NM#</td>
 				<td><input type="hidden" name="ds_nm" value="#DS_NM#">#DS_NM#</td>
+				<td hidden="hidden"><input type="hidden" name="svc_id" value="#SVC_ID#"></td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
@@ -89,6 +84,7 @@
 		var gridEnv = grid.env;
 
 		gridEnv.setMapping({
+			'#SVC_ID#' : 'SVC_ID',
 			'#DS_NM#' : 'DS_NM',
 			'#SVC_NM#' : 'SVC_NM',
 			'#SVC_TYPE#' : 'SVC_TYPE',

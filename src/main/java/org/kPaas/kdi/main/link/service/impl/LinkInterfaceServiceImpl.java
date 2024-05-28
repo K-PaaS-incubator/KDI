@@ -14,7 +14,6 @@ import org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper;
 import org.kPaas.kdi.main.link.service.LinkInterfaceService;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -67,12 +66,11 @@ public class LinkInterfaceServiceImpl extends AbstractService implements LinkInt
 	}
 
 	@Override
-	public ResponseEntity<String> insert(Map<String, Object> params) {
+	public ResponseEntity<String> insertPubInterface(Map<String, Object> params) {
 		JSONObject result = new JSONObject();
 		try {
 			params.put("reg_id", getLoginUserId());
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@"+params.get("SVC_NM")+"##############");
-			mapper.insert(params);
+			mapper.insertPubInterface(params);
 		} catch (MyBatisSystemException e) {
 			result.put("stateCode", 1);
 			result.put("state", "저장 실패");
@@ -82,5 +80,55 @@ public class LinkInterfaceServiceImpl extends AbstractService implements LinkInt
 		result.put("stateCode", 0);
 		result.put("state", "저장 성공");
 		return ResponseEntity.ok(result.toString());
+	}
+
+	@Override
+	public ResponseEntity<String> updatePubInterface(Map<String, Object> params) {
+		JSONObject result = new JSONObject();
+		try {
+			params.put("mod_id", getLoginUserId());
+			mapper.updatePubInterface(params);
+		} catch (MyBatisSystemException e) {
+			result.put("stateCode", 1);
+			result.put("state", "저장 실패");
+			result.put("errMsg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		}
+		result.put("stateCode", 0);
+		result.put("state", "저장 성공");
+		return ResponseEntity.ok(result.toString());
+	}
+
+	@Override
+	public ResponseEntity<String> selectPubInterface(Map<String, Object> params) {
+		JSONObject result = new JSONObject();
+		try {
+			result.put("data", mapper.selectPubInterface(params));
+		} catch (MyBatisSystemException e) {
+			result.put("stateCode", 1);
+			result.put("state", "조회 실패");
+			result.put("errMsg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		}
+		result.put("stateCode", 0);
+		result.put("state", "조회 성공");
+		return ResponseEntity.ok(result.toString());
+	}
+	
+	@Override
+	public ResponseEntity<String> insertSubInterface(Map<String, Object> params) {
+		return null;
+
+	}
+
+	@Override
+	public ResponseEntity<String> updateSubInterface(Map<String, Object> params) {
+		return null;
+	}
+
+
+	@Override
+	public ResponseEntity<String> selectSubInterface(Map<String, Object> params) {
+		return null;
 	}
 }
