@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="homeUrl" value="/" />
+<c:url var="interfaceUrl" value="/link/interface/" />
 <c:url var="cssUrl" value="/css/" />
 <link rel="stylesheet" href="${cssUrl}link.css">
 
@@ -15,54 +16,14 @@
 					<div class="link-table-box-top-left">
 						<div class="link-inputs-row">
 							<div class="common-input-box">
+								<input type="hidden" name="svc_nm" value="${svc_nm}">
+								<input type="hidden" name="ds_nm" value="${ds_nm}">
 								<div class="header6 label-title">테이블명</div>
-								<input class="common-input subtitle1 gray400" type="text"
-									name="tableName" value="${getDetailVo.tbl_nm}" readonly>
+								<input class="common-input subtitle1 gray400" type="text" name="tableName" value="${getDetailVo.tbl_nm}" readonly="readonly">
 								<div class="header6 label-title">인터페이스ID</div>
-								<input class="common-input subtitle1 gray400" type="text"
-									name="svc_lnk_id" value="${svc_lnk_id}"
-									<c:if test="${pageType eq 'view'}">readonly</c:if>>
+								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id" value="${svc_lnk_id}">
 								<div class="header6 label-title">인터페이스제목</div>
-								<input class="common-input subtitle1 gray400" type="text"
-									name="svc_lnk_nm" placeholder="인터페이스 제목">
-							</div>
-						</div>
-						<div>
-							<!-- 크론탭 문법을 input에 직접 입력하는 UI, UI 확정 후 제거 필요 -->
-							<%--                            <div class="common-input-box">--%>
-							<%--                                <div class="header6 label-title">스케줄 1안--%>
-							<%--                                    <span class="guide-icon">--%>
-							<%--                                        <img src="/img/icon-guide-mark.png" alt="">--%>
-							<%--                                        ️<span id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>--%>
-							<%--                                    </span>--%>
-							<%--                                </div>--%>
-							<%--                                <input class="common-input subtitle1 gray400" type="text" name="lnk_time" placeholder="스케줄">--%>
-							<%--                            </div>--%>
-							<div class="schedule-input-box">
-								<div class="header6 label-title">
-									스케줄 <span class="guide-icon"> <img
-										src="/img/icon-guide-mark.png" alt=""> ️<span
-										id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>
-									</span>
-								</div>
-								<div class="schedule-inputs">
-									<input class="schedule-input subtitle1 gray400" type="number"
-										max="59" min="0" maxlength="2" name="lnk_time" placeholder="분"
-										value="0"> <span class="subtitle1 gray500">분</span> <input
-										class="schedule-input subtitle1 gray400" type="number"
-										max="23" min="0" maxlength="2" name="lnk_time"
-										placeholder="시간" value="0"> <span
-										class="subtitle1 gray500">시간</span> <input
-										class="schedule-input subtitle1 gray400" type="number"
-										max="31" min="0" maxlength="2" name="lnk_time" placeholder="일"
-										value="0"> <span class="subtitle1 gray500">일</span> <input
-										class="schedule-input subtitle1 gray400" type="number"
-										max="12" min="0" maxlength="2" name="lnk_time" placeholder="월"
-										value="0"> <span class="subtitle1 gray500">월</span> <input
-										class="schedule-input subtitle1 gray400" type="number" max="6"
-										min="0" maxlength="1" name="lnk_time" placeholder="요일"
-										value="0"> <span class="subtitle1 gray500">요일</span>
-								</div>
+								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_nm" placeholder="인터페이스 제목">
 							</div>
 						</div>
 					</div>
@@ -157,9 +118,7 @@
 					class="query-text subtitle1 gray400 bg-gray200 border-gray300"></div>
 			</div>
 			<div class="link-button-box">
-				<input class="button-second" type="button" value="이전"
-					onclick="fn_back();"> <input class="button-primary"
-					type="button" value="저장" id="regbtn">
+				<input id="backBtn" class="button-second" type="button" value="이전"> <input id="saveBtn" class="button-primary" type="button" value="저장" >
 			</div>
 		</form>
 	</div>
@@ -181,6 +140,25 @@
 			const backParam = new URL(location.href).search;
 			location.href = '${homeUrl}link/interface' + backParam;
 		};
+		var fn_save = function() {
+			$.ajax({
+				url : '${interfaceUrl}data/${pageType}.json',
+				type : 'POST',
+				data : $('#LinkDetail').serialize(),
+				dataType : 'JSON',
+				beforeSend : function() {
+					console.log('저장관련 로딩 여기에 구현');
+					
+				},
+				success : fn_back,
+				error : function(result) {
+					console.log('statusCode:' + result.statusCode);
+					console.log('responseJSON:' + result.responseJSON.state);
+					console.log('responseJSON:' + result.responseJSON.msg);
+					alert('연계서비스 수정 실패');
+				}
+			});
+		};
 		$(document).ready(function() {
 			//배너 타이틀 세팅
 			$('.banner-title').text('연계서비스')
@@ -191,7 +169,13 @@
 
 			$('#flagTypeBoxQuery').css('display', 'none');
 			$('#flagTypeBoxWhere').css('display', 'none');
+			
+			if ('view' == '${pageType}') {
+				$('input[name="svc_lnk_id"]').attr('readonly', 'readonly');
+			}
 			$('#LinkDetail input[name="tableName"]').click(fn_tb_nm_click);
+			$('#backBtn').click(fn_back);
+			$('#saveBtn').click(fn_save);
 		});
 
 		function colUseCheck() {

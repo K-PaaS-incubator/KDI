@@ -26,7 +26,7 @@ public class LinkInterfaceController extends AbstractController {
 	@Autowired
 	private LinkInterfaceService service;
 
-	// 연계 인터페이스 조회
+	// 연계서비스 조회
 	@GetMapping
 	public String getIndex(Model model, @RequestParam("svc_nm") String svc_nm, @RequestParam("ds_nm") String ds_nm,
 			@RequestParam("svc_type") String svc_type) {
@@ -36,12 +36,17 @@ public class LinkInterfaceController extends AbstractController {
 		return layout("index");
 	}
 
+	/*	
+	 *  index.jsp 파일 참고
+	 * // 그리드 객체 생성
+	 * var grid = KdiListGrid('grid', '${linkUrl}list.json');
+	*/
 	@GetMapping("list.json")
 	public ResponseEntity<String> getList(@RequestParam Map<String, Object> params) {
 		return service.getList(mapToKdiParam(params));
 	}
 
-	// 연계 인터페이스 정보
+	// 연계서비스타입(송신,수신)에 따른 인터페이스 페이지호출
 	@GetMapping("data/{pageType}")
 	public String getLinkService(Model model, @PathVariable("pageType") String pageType,
 			@RequestParam("svc_nm") String svc_nm, @RequestParam("ds_nm") String ds_nm,
@@ -58,7 +63,7 @@ public class LinkInterfaceController extends AbstractController {
 		}
 	}
 
-	// 연계 인터페이스 정보
+	// 연계서비스 > 인터페이스 입력
 	@PostMapping("data/{pageType}.json")
 	public ResponseEntity<String> save(@RequestParam Map<String, Object> params) {
 		return service.insert(params);

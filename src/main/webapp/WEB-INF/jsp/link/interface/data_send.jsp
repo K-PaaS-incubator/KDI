@@ -166,7 +166,7 @@
 					console.log('statusCode:' + result.statusCode);
 					console.log('responseJSON:' + result.responseJSON.state);
 					console.log('responseJSON:' + result.responseJSON.msg);
-					alert('데이터소스 수정 실패');
+					alert('연계서비스 수정 실패');
 				}
 			});
 		};
