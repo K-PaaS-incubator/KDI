@@ -14,7 +14,7 @@
 			`reg_dt` date NULL,
 			`mod_id` varchar2(20) NULL,
 			`mod_dt` date NULL,
-			PRIMARY KEY (`svc_id`)
+			PRIMARY KEY (`svc_id`,`ds_nm`)
 		)
 	</insert>	
 		

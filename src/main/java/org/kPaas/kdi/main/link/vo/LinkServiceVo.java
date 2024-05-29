@@ -12,7 +12,7 @@ public class LinkServiceVo {
 
 	//KDI_LINK_SERVICE 연계서비스
 	Integer num;
-	int svc_id;
+	String svc_id;
 	String ds_nm;
 	String svc_nm;
 	char svc_type;	

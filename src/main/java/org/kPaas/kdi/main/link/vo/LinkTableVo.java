@@ -12,7 +12,10 @@ public class LinkTableVo {
 
 	//KDI_LINK_TABLE 연계테이블상세
 	String col_nm;
-	int svc_lnk_id;
+	String svc_lnk_id;
+	String svc_id;
+	String ds_nm;
+	
 	String col_type;
 	String col_mp_nm;
 	char use_yn;	// 연계여부 Y,N

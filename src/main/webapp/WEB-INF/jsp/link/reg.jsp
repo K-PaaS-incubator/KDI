@@ -100,8 +100,7 @@
 						async : false,
 						data : $('#linkCreate').serialize(), //연계서비스생성(svc_id)
 						success : function(result) {
-							location.href = '${linkUrl}interface/data/reg?'
-									+ $('#linkCreate').serialize();
+							location.href = '${homeUrl}link';
 						},
 						error : function(result) {
 							console.log('statusCode:' + result.statusCode);

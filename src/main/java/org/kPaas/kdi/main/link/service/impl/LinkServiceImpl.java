@@ -37,7 +37,6 @@ public class LinkServiceImpl implements LinkService {
 		}
 	}
 
-
 	@Override
 	public ResponseEntity<String> getLinkList(KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
