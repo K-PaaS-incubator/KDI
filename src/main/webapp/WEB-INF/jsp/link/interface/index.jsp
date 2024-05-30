@@ -25,8 +25,24 @@
 				<div class="link-interface-box-top">
 					<div class="link-inputs-row">
 					<div class="common-input-box">
+						<!--
 						<div class="header6 label-title">데이터소스 제목</div>
 						<input type="text" id="IFds_nm" class="interface-input subtitle1 gray400 tableSearch" value="${ds_nm}" readonly="readonly">
+						 -->
+											
+						<div class="header6 label-title">데이터소스 제목</div>
+						<select class="interface-input subtitle1 gray400" name="ds_nm" id="IFds_nm">
+							<option selected>${ds_nm}</option>
+							<option>dstest</option>
+							<option>pubDatasource</option>
+							<option>comeondatasource</option>
+							<!--
+							<c:forEach var="dsList" items="${selectDsList}">
+								<option value="${dsList}">${dsList}</option>
+							</c:forEach>
+							-->
+						</select>
+						
 					</div>
 					</div>
 				</div>
