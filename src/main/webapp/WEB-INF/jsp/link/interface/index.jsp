@@ -13,9 +13,25 @@
 	<div class="mainContent">
 		<form action="${linkUrl}linkList" method="GET" id="searchForm">
 
-			<div class="header5 label-title">서비스 제목</div>
-			<div id="IFsvc_nm" class="header6 label-title">${svc_nm}</div>
-
+			<div class="link-table-box-top">
+				<div class="link-interface-box-top">
+					<div class="link-inputs-row">
+						<div class="common-input-box">
+							<div class="header6 label-title">서비스 제목</div>
+							<input type="text" id="IFsvc_nm" class="interface-input subtitle1 gray400 tableSearch" value="${svc_nm}" readonly="readonly">
+						</div>
+					</div>
+				</div>
+				<div class="link-interface-box-top">
+					<div class="link-inputs-row">
+					<div class="common-input-box">
+						<div class="header6 label-title">데이터소스 제목</div>
+						<input type="text" id="IFds_nm" class="interface-input subtitle1 gray400 tableSearch" value="${ds_nm}" readonly="readonly">
+					</div>
+					</div>
+				</div>
+			</div>
+			
 			<div class="search-box">
 				<div>
 					<input id="searchKeyword" type="text" name="svc_lnk_id" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">

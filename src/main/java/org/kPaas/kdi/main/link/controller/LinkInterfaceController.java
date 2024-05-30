@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @PreAuthorize("hasRole('ADMIN')") // 관리자
 @RequestMapping("link/interface")
@@ -92,5 +93,11 @@ public class LinkInterfaceController extends AbstractController {
 		} else {
 			return service.selectSubInterface(params);
 		}
+	}
+	
+	// 연계서비스 > 연계 인터페이스 삭제 (pk:svc_lnk_id,svc_id,ds_nm)
+	@PostMapping("/IfDelProc")
+	public ResponseEntity<String> ifDelProc(@RequestParam Map<String, Object> params) {
+		return service.delInterface(params);
 	}
 }

@@ -131,4 +131,20 @@ public class LinkInterfaceServiceImpl extends AbstractService implements LinkInt
 	public ResponseEntity<String> selectSubInterface(Map<String, Object> params) {
 		return null;
 	}
+
+	@Override
+	public ResponseEntity<String> delInterface(Map<String, Object> params) {
+		JSONObject result = new JSONObject();
+		try {
+			mapper.deleteInterface(params);
+		} catch (MyBatisSystemException e) {
+			result.put("stateCode", 1);
+			result.put("state", "연계인터페이스 삭제 실패");
+			result.put("errMsg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		}
+		result.put("stateCode", 0);
+		result.put("state", "연계인터페이스 삭제 성공");
+		return ResponseEntity.ok(result.toString());
+	}
 }

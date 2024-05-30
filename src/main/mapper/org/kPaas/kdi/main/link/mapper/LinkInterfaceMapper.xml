@@ -89,6 +89,7 @@
 			SVC_NM = #{svc_nm}
 		</where>
 	</insert>
+	
 	<update id="updatePubInterface" parameterType="Map">
 		UPDATE KDI_LINK_DETAIL
 		<set>
@@ -110,6 +111,7 @@
 			AND SVC_ID = #{svc_id}
 		</where>
 	</update>
+	
 	<select id="selectPubInterface" resultType="Map" parameterType="Map">
 		SELECT
 			*
@@ -120,4 +122,15 @@
 			AND SVC_ID = #{svc_id}
 		</where>
 	</select>
+	
+	<delete id="deleteInterface" parameterType="Map">
+		DELETE
+		FROM
+			KDI_LINK_DETAIL
+		<where>
+				SVC_LNK_ID = #{org_svc_lnk_id}
+			AND SVC_ID = #{svc_id}
+			AND DS_NM = #{ds_nm}
+		</where>
+	</delete>
 </mapper>

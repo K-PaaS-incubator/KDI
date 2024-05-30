@@ -140,7 +140,7 @@
 				<div id="queryResult" class="query-text subtitle1 gray400 bg-gray200 border-gray300"></div>
 			</div>
 			<div class="link-button-box">
-				<input id="backBtn" class="button-second" type="button" value="이전"> <input id="saveBtn" class="button-primary" type="button" value="저장">
+				<input id="backBtn" class="button-second" type="button" value="이전"><input class="button-second-gray" type="button" value="삭제" id="deleteBtn"> <input id="saveBtn" class="button-primary" type="button" value="저장">
 			</div>
 		</form>
 	</div>
@@ -198,12 +198,32 @@
 				success : fn_back,
 				error : function(result) {
 					console.log('statusCode:' + result.statusCode);
-					console.log('responseJSON:' + result.responseJSON.state);
-					console.log('responseJSON:' + result.responseJSON.msg);
+					console.log('responseJSON.state:' + result.responseJSON.state);
+					console.log('responseJSON.msg:' + result.responseJSON.msg);
 					alert('연계서비스 수정 실패');
 				}
 			});
 		};
+		var fn_del = function() {
+			if (confirm('연계 인터페이스를 삭제하시겠습니까?')) {
+				$.ajax({
+					url : '${interfaceUrl}IfDelProc',
+					type : 'POST',
+					data : $('#LinkDetail').serialize(),
+					dataType : 'JSON',
+					success : fn_back,
+					error : function(result) {
+						console.log('statusCode:' + result.responseJSON.statusCode);
+						console.log('responseJSON.state:' + result.responseJSON.state);
+						console.log('responseJSON.errMsg:' + result.responseJSON.errMsg);
+						alert('연계 인터페이스 삭제 실패');
+					}
+				});
+			} else {
+				alert('삭제 취소');
+			}
+		};
+		
 		$(document).ready(function() {
 			//배너 타이틀 세팅
 			$('.banner-title').text('연계서비스')
@@ -222,6 +242,7 @@
 			$('input.tableSearch').click(fn_tb_nm_click);
 			$('#backBtn').click(fn_back);
 			$('#saveBtn').click(fn_save);
+			$('#deleteBtn').click(fn_del);
 		});
 
 		function colUseCheck() {

@@ -23,4 +23,6 @@ public interface LinkInterfaceMapper {
 	public void updatePubInterface(Map<String, Object> params);
 
 	public Map<String, String> selectPubInterface(Map<String, Object> params);
+
+	public void deleteInterface(Map<String, Object> params);
 }

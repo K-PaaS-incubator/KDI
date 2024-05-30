@@ -23,4 +23,6 @@ public interface LinkInterfaceService {
 	public ResponseEntity<String> selectPubInterface(Map<String, Object> params);
 	
 	public ResponseEntity<String> selectSubInterface(Map<String, Object> params);
+
+	public ResponseEntity<String> delInterface(Map<String, Object> params);
 }
