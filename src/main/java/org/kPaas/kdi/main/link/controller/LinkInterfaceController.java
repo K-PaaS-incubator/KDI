@@ -3,6 +3,7 @@ package org.kPaas.kdi.main.link.controller;
 import java.util.Map;
 
 import org.kPaas.kdi.com.abs.AbstractController;
+import org.kPaas.kdi.main.datasource.service.DatasourceService;
 import org.kPaas.kdi.main.link.service.LinkInterfaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class LinkInterfaceController extends AbstractController {
 	 * '${linkUrl}list.json');
 	 */
 	@GetMapping("list.json")
-	public ResponseEntity<String> getList(@RequestParam Map<String, Object> params) {
+	public ResponseEntity<String> getList(@RequestParam Map<String, Object> params, Model model) {
 		return service.getList(mapToKdiParam(params));
 	}
 

@@ -12,42 +12,9 @@
 	<%--    <form id="searchForm" name="searchForm" method="get">--%>
 	<div class="mainContent">
 		<form action="${linkUrl}linkList" method="GET" id="searchForm">
-
 			<div class="link-table-box-top">
-				<div class="link-interface-box-top">
-					<div class="link-inputs-row">
-						<div class="common-input-box">
-							<div class="header6 label-title">서비스 제목</div>
-							<input type="text" id="IFsvc_nm" class="interface-input subtitle1 gray400 tableSearch" value="${svc_nm}" readonly="readonly">
-						</div>
-					</div>
-				</div>
-				<div class="link-interface-box-top">
-					<div class="link-inputs-row">
-					<div class="common-input-box">
-						<!--
-						<div class="header6 label-title">데이터소스 제목</div>
-						<input type="text" id="IFds_nm" class="interface-input subtitle1 gray400 tableSearch" value="${ds_nm}" readonly="readonly">
-						 -->
-											
-						<div class="header6 label-title">데이터소스 제목</div>
-						<select class="interface-input subtitle1 gray400" name="ds_nm" id="IFds_nm">
-							<option selected>${ds_nm}</option>
-							<option>dstest</option>
-							<option>pubDatasource</option>
-							<option>comeondatasource</option>
-							<!--
-							<c:forEach var="dsList" items="${selectDsList}">
-								<option value="${dsList}">${dsList}</option>
-							</c:forEach>
-							-->
-						</select>
-						
-					</div>
-					</div>
-				</div>
+				<div class="search-box button-second-gray" id="optionPop">⚙️ 서비스제목 및 데이터소스 변경</div>
 			</div>
-			
 			<div class="search-box">
 				<div>
 					<input id="searchKeyword" type="text" name="svc_lnk_id" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
@@ -165,6 +132,22 @@
 		interfaceUri += tmpUrl.search;
 		location.href = interfaceUri;
 	};
+	
+	var fn_iF_option_click = function() {
+		const ds_nm = new URL(location.href).searchParams.get('ds_nm');
+		const svc_nm = new URL(location.href).searchParams.get('svc_nm');
+		const parent_id = encodeURIComponent('#searchForm');
+		const param = 'ds_nm=' + ds_nm + '&svc_nm=' + svc_nm
+		const interfacePopUri = '${homeUrl}pop/table/interfacePop?' + param;
+		const testUri = 'http://localhost:8080/pop/table/interfacePop'
+
+		let popOption = 'toolbar=no,menubar=no,location=no,status=no';
+		popOption += ',scrollbars=yes,resizeable=yes';
+		popOption += ',width=510,height=400';
+		popOption += ',top=300,left=700';
+		
+		window.open(interfacePopUri, '_blank', popOption);
+	} 
 
 	$().ready(function() {
 		//배너 타이틀 세팅
@@ -177,5 +160,7 @@
 		// 그리드 작업 실행
 		grid.ready();
 		grid.search(1, paramData);
+		
+		$('#optionPop').click(fn_iF_option_click);
 	});
 </script>

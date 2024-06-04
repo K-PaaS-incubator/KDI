@@ -10,6 +10,7 @@ import org.kPaas.kdi.com.abs.AbstractService;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
+import org.kPaas.kdi.main.datasource.mapper.DatasourceMapper;
 import org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper;
 import org.kPaas.kdi.main.link.service.LinkInterfaceService;
 import org.mybatis.spring.MyBatisSystemException;
@@ -21,6 +22,7 @@ public class LinkInterfaceServiceImpl extends AbstractService implements LinkInt
 
 	@Resource
 	private LinkInterfaceMapper mapper;
+	private DatasourceMapper dsMapper;
 
 	@Resource
 	private DBCheckService dbCheckService;

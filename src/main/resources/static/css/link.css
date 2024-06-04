@@ -140,6 +140,7 @@
 }
 .link-inputs-row div{
 	width: 48%;
+	margin-bottom:15px;
 }
 .interface-input{
     width: 100%;
@@ -149,12 +150,13 @@
     border-radius: 3px;
     box-sizing: border-box;
     background-color: var(--bg-blue);
+    margin-bottom: 28px;
 }
 .link-interface-box-top{
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	width: 50%;
+	width: 100%;
 }
 .link-interface-box-top div{
 	width:90%;
