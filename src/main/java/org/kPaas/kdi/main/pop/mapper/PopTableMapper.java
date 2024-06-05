@@ -13,4 +13,6 @@ public interface PopTableMapper {
 
 	List<Map<String, String>> getTables(KdiParam kdiParam);
 
+	public void editIF_SvcDs(Map<String, Object> params);
+
 }

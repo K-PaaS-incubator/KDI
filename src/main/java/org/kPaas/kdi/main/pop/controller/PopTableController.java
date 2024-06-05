@@ -56,9 +56,9 @@ public class PopTableController extends AbstractController {
 	}
 	
 	@PostMapping("editIF.json")
-	public ResponseEntity<String> editIF_SvcDs(@RequestParam("ds_nm") String ds_nm, @RequestParam("svc_nm") String svc_nm) {
-		JSONObject result = new JSONObject();
-		return ResponseEntity.ok(result.toString());
+	public ResponseEntity<String> editIF_SvcDs(@RequestParam Map<String, Object> params) {
+		
+		return service.editIF_SvcDs(params);
 	}
 	
 }

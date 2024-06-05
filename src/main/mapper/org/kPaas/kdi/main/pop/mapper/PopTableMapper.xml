@@ -18,6 +18,7 @@
 		ORDER BY
 			USERNAME
 	</select>
+	
 	<sql id="getTablesWhere">
 		DBA_TABLES TB1,
 		DBA_TAB_COMMENTS TB2
@@ -50,12 +51,14 @@
 			)
 		</where>
 	</sql>
+	
 	<select id="getTablesCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
 		SELECT
 		COUNT(*)
 		FROM
 		<include refid="getTablesWhere" />
 	</select>
+	
 	<select id="getTables" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
 		SELECT
 		TB1.TABLE_NAME AS TB_NM,
@@ -70,4 +73,13 @@
 		ROWS FETCH NEXT #{pagePerRow}
 		ROWS ONLY
 	</select>
+	
+	<update id="editIF_SvcDs" parameterType="Map">
+		UPDATE KDI_LINK_DETAIL
+		<set>
+		DS_NM = #{ds_nm},
+		</set>
+	</update>
+	
+	
 </mapper>

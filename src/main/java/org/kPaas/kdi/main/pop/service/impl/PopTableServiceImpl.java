@@ -1,5 +1,7 @@
 package org.kPaas.kdi.main.pop.service.impl;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.json.JSONObject;
@@ -87,6 +89,21 @@ public class PopTableServiceImpl extends AbstractService implements PopTableServ
 		}
 		result.put("stateCode", 0);
 		result.put("state", "조회 성공");
+		return ResponseEntity.ok(result.toString());
+	}
+	@Override
+	public ResponseEntity<String> editIF_SvcDs(Map<String, Object> params) {
+		JSONObject result = new JSONObject();
+		try {
+			mapper.editIF_SvcDs(params);
+		} catch (MyBatisSystemException e) {
+			result.put("stateCode", 1);
+			result.put("state", "수정 실패");
+			result.put("errMsg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		} 
+		result.put("stateCode", 0);
+		result.put("state", "수정 성공");
 		return ResponseEntity.ok(result.toString());
 	}
 }
