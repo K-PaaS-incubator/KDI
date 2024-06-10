@@ -45,19 +45,20 @@ public class PopTableController extends AbstractController {
 	}
 	
 	@GetMapping("interfacePop")
-	public String getInterfacePop(Model model, @RequestParam("svc_nm") String svc_nm,
-			@RequestParam("ds_nm") String ds_nm) {
+	public String getInterfacePop(Model model,@RequestParam("svc_type") String svc_type, 
+			@RequestParam("ds_nm") String ds_nm, @RequestParam("svc_nm") String svc_nm, @RequestParam("svc_id") String svc_id) {
 
 		model.addAttribute("selectDsList", lnkService.selectDsList());
+		model.addAttribute("svc_type",svc_type);
 		model.addAttribute("ds_nm",ds_nm);
 		model.addAttribute("svc_nm",svc_nm);
+		model.addAttribute("svc_id",svc_id);
 		
 		return nolayout("interfacePop");
 	}
 	
 	@PostMapping("editIF.json")
 	public ResponseEntity<String> editIF_SvcDs(@RequestParam Map<String, Object> params) {
-		
 		return service.editIF_SvcDs(params);
 	}
 	

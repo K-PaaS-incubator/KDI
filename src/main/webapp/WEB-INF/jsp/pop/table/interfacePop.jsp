@@ -44,13 +44,13 @@
 					<div class="link-inputs-row">
 						<div class="common-input-box">
 							<div class="header6 label-title">서비스 제목</div>
-								<input type="text" class="interface-input subtitle1 gray400 tableSearch" value="${svc_nm}" id="IFsvc_nm">
-								<input type="text" value="${svc_lnk_id}" placeholder="${svc_lnk_id}">
+								<input type="text" class="interface-input subtitle1 gray400 tableSearch" value="${svc_nm}" name="svc_nm">
+								<input type="hidden" value="${svc_id}" name="svc_id">
+								<input type="hidden" value="${svc_type}" name="svc_type">
 							<div class="header6 label-title">데이터소스 제목</div>
-							<select class="interface-input subtitle1 gray400" id="IFds_nm">
-						    	<option selected disabled>${ds_nm}</option>
-								<c:forEach var="dsList" items="${selectDsList}">
-									<option value="${dsList}">${dsList}</option>
+							<select class="interface-input subtitle1 gray400" name="ds_nm">
+						    	<c:forEach var="ds" items="${selectDsList}">
+									<option value="${ds}" <c:if test="${ds eq ds_nm}">selected</c:if>>${ds}</option>
 								</c:forEach>
 							</select>
 						</div>
@@ -64,19 +64,19 @@
 	</div>
 	<script type="text/javascript">
 	
-		var fn_popClose = function() {
-			alert('수정이 완료되었습니다.');
-			window.close();
-		};
-		
 		var fn_editIF_SvcDs = function(){
-			alet('서비스제목 및 데이터소스 변경 성공');
+			var data = $('#editIF').serialize();
 			$.ajax({
 				url : '${popUrl}table/editIF.json',
 				type : 'POST',
-				data : $('#editIF').serialize(),
+				data : data ,
 				dataType : 'JSON',
-				success : fn_popClose,
+				success : function(result) {
+					alert('수정이 완료되었습니다.');
+					//svc_nm=$('#editIF [name="svc_nm"]').val();
+					window.opener.parent.location.href='${homeUrl}link/interface?'+data;
+					window.close();
+				},
 				error : function(result) {
 					console.log('statusCode:' + result.statusCode);
 					console.log('responseJSON:' + result.responseJSON.state);
@@ -89,6 +89,7 @@
 		$().ready(function() {
 			$('#popIFbtn').click(fn_editIF_SvcDs);
 		});
+		
 	</script>
 </body>
 </head>

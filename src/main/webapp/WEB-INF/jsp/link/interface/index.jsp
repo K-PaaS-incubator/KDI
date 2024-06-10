@@ -136,9 +136,10 @@
 	var fn_iF_option_click = function() {
 		const ds_nm = new URL(location.href).searchParams.get('ds_nm');
 		const svc_nm = new URL(location.href).searchParams.get('svc_nm');
-		const svc_lnk_id = new URL(location.href).searchParams.get('svc_lnk_id');
+		const svc_id = new URL(location.href).searchParams.get('svc_id');
+		const svc_type = new URL(location.href).searchParams.get('svc_type');
 		const parent_id = encodeURIComponent('#searchForm');
-		const param = 'ds_nm=' + ds_nm + '&svc_nm=' + svc_nm + '&svc_lnk_id=' + svc_lnk_id 
+		const param = 'svc_type=' + svc_type + '&ds_nm=' + ds_nm + '&svc_nm=' + svc_nm + '&svc_id=' + svc_id;
 		const interfacePopUri = '${homeUrl}pop/table/interfacePop?' + param;
 		const testUri = 'http://localhost:8080/pop/table/interfacePop'
 

@@ -75,10 +75,13 @@
 	</select>
 	
 	<update id="editIF_SvcDs" parameterType="Map">
-		UPDATE KDI_LINK_DETAIL
+		UPDATE KDI_LINK_SERVICE
 		<set>
-		DS_NM = #{ds_nm},
+		DS_NM = #{ds_nm}, SVC_NM = #{svc_nm}
 		</set>
+		<where>
+		SVC_ID = #{svc_id}
+		</where>
 	</update>
 	
 	
