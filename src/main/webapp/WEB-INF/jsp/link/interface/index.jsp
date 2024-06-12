@@ -48,7 +48,7 @@
 			</tbody>
 		</table>
 		<div class="link-list-button-box">
-			<input class="button-second" type="button" id="regbtn" value="등록" onclick="fn_reg();">
+			<input class="button-second" type="button" id="regbtn" value="인터페이스등록" onclick="fn_reg();">
 			<div class="body2 pagination-ul pageCtlZone"></div>
 			<!-- 일단 임시로 이 영역에 구현함 -->
 			<div class="body2 gray500">

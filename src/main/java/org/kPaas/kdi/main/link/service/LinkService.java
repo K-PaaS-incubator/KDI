@@ -1,6 +1,7 @@
 package org.kPaas.kdi.main.link.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
@@ -14,6 +15,8 @@ public interface LinkService {
 	public ResponseEntity<String> duplicateCheck(String svc_nm);
 
 	public ResponseEntity<String> insertLink(LinkServiceVo linkService_vo);
+
+	public ResponseEntity<String> lnkDel(Map<String, Object> params);
 
 	/**
 	 * public List<LinkServiceVo> selectLinkList();

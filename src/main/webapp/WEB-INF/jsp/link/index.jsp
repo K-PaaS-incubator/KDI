@@ -21,8 +21,9 @@
 			<colgroup>
 				<col width="15%">
 				<col width="15%">
-				<col width="35%">
-				<col width="35%">
+				<col width="32%">
+				<col width="32%">
+				<col width="6%">
 			</colgroup>
 			<thead class="list-head">
 				<tr class="subtitle1 gray500">
@@ -30,6 +31,7 @@
 					<th>유형</th>
 					<th>연계서비스 제목</th>
 					<th>데이터소스 제목</th>
+					<th>🚮</th>
 				</tr>
 				<tr class="table-spacing"></tr>
 			</thead>
@@ -62,6 +64,7 @@
 				<td><input type="hidden" name="svc_nm" value="#SVC_NM#">#SVC_NM#</td>
 				<td><input type="hidden" name="ds_nm" value="#DS_NM#">#DS_NM#</td>
 				<td hidden="hidden"><input type="hidden" name="svc_id" value="#SVC_ID#"></td>
+				<td id="lnkDelBtn" onclick="lnkDel('#SVC_ID#','#DS_NM#');">🗑️</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
@@ -115,6 +118,32 @@
 				location.href = '${linkUrl}interface?' + uriParam;
 			});
 		});
+		
+		var lnkDel = function(svc_id,ds_nm){
+			if (confirm('연계서비스를 삭제하시겠슴까?') == true) {
+				$.ajax({
+					url : '${linkUrl}lnkDel',
+					type : 'POST',
+					data : {svc_id: svc_id,
+							ds_nm: ds_nm					
+					},
+					dataType : 'JSON',
+					success : function(result) {
+						alert('연계서비스를 삭제 하였습니다.');
+						location.reload();
+					},
+					error : function(result) {
+						console.log('statusCode:'+ result.statusCode);
+						console.log('responseJSON:'+ result.responseJSON.state);
+						console.log('responseJSON:'+ result.responseJSON.msg);
+						alert('연계서비스 삭제 실패');
+					}
+				});
+			} else {
+				return;
+			}
+		}
+
 		$(document).ready(function() {
 			// 새로고침 시 데이터 초기화
 			const entries = performance.getEntriesByType("navigation")[0];
@@ -131,6 +160,7 @@
 			// 그리드 작업 실행
 			grid.ready();
 			grid.search();
+
 		});
 	</script>
 </section>

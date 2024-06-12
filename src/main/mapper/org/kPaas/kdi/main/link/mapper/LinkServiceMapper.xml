@@ -103,4 +103,14 @@
 		OFFSET
 			(#{pageNum} - 1) * #{pagePerRow}
 	</select>
+	
+	<delete id="lnkDel" parameterType="Map">
+		DELETE
+		FROM
+			KDI_LINK_SERVICE
+		<where>
+				SVC_ID = #{svc_id}
+			AND DS_NM = #{ds_nm}
+		</where>
+	</delete>
 </mapper>

@@ -1,6 +1,7 @@
 package org.kPaas.kdi.main.link.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -102,6 +103,23 @@ public class LinkServiceImpl implements LinkService {
 			mapper.insertLink(linkService_vo);
 			result.put("stateCode", 0);
 			result.put("state", "연계서비스 등록 성공");
+			return ResponseEntity.ok(result.toString());
+		} catch (Exception e) {
+			result.put("stateCode", 3);
+			result.put("state", "연계서비스 등록 실패");
+			result.put("msg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		}
+	}
+
+	//연계서비스 삭제  (pk:svc_id,ds_nm)
+	@Override
+	public ResponseEntity<String> lnkDel(Map<String, Object> params) {
+		JSONObject result = new JSONObject();
+		try {
+			mapper.lnkDel(params);
+			result.put("stateCode", 0);
+			result.put("state", "연계서비스 삭제 성공");
 			return ResponseEntity.ok(result.toString());
 		} catch (Exception e) {
 			result.put("stateCode", 3);

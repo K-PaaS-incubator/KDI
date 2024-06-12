@@ -26,6 +26,8 @@ public interface LinkMapper {
 
 	public void insertLink(LinkServiceVo linkService_vo);
 
+	public void lnkDel(Map<String, Object> params);
+
 	// public List<LinkServiceVo> getLinkListAll();
 	// public List<LinkDetailVo> getInterfaceList(String svc_nm);
 	// public List<LinkServiceVo> selectLinkListPage(LinkServiceVo linkService_vo);

@@ -73,7 +73,9 @@
 				dataType : 'JSON',
 				success : function(result) {
 					alert('수정이 완료되었습니다.');
-					//svc_nm=$('#editIF [name="svc_nm"]').val();
+					//serialize()에서 value값 가져오는 방법
+					//svc_nm=$('#editIF [name="svc_nm"]').val(); 
+					
 					window.opener.parent.location.href='${homeUrl}link/interface?'+data;
 					window.close();
 				},

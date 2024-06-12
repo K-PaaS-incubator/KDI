@@ -54,4 +54,11 @@ public class LinkServiceController extends AbstractController {
 	public ResponseEntity<String> linkInsert(LinkServiceVo linkService_vo) {
 		return service.insertLink(linkService_vo);
 	}
+	
+	// 연계서비스 삭제 (pk:svc_id,ds_nm)
+	@PostMapping("/lnkDel")
+	public ResponseEntity<String> lnkDel(@RequestParam Map<String, Object> params) {
+		return service.lnkDel(params);
+	}
+	
 }
