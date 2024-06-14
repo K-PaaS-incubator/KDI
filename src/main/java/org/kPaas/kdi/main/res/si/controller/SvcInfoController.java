@@ -1,23 +1,23 @@
-package org.kPaas.kdi.main.res.in.controller;
+package org.kPaas.kdi.main.res.si.controller;
 
 import org.kPaas.kdi.com.base.KdiGridController;
 import org.kPaas.kdi.com.base.KdiGridService;
-import org.kPaas.kdi.main.res.in.service.InterfaceNameService;
+import org.kPaas.kdi.main.res.si.service.SvcInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @PreAuthorize("hasRole('ADMIN')") // 관리자
-@RequestMapping("/res/in")
+@RequestMapping("/res/si")
 @Controller
-public class InterfaceNameController extends KdiGridController {
+public class SvcInfoController extends KdiGridController {
 
 	@Autowired
-	private InterfaceNameService service;
+	private SvcInfoService service;
 
-	InterfaceNameController() {
-		super("res/in");
+	SvcInfoController() {
+		super("res/si");
 	}
 
 	@Override

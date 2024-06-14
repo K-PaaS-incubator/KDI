@@ -5,16 +5,17 @@
 /**
  * 인터페이스명 출력
  */
-const fn_get_if_nm = function(if_id) {
+const fn_get_if_nm = function(ifId) {
 	let resultData = null;
 	$.ajax({
 		url: contextPath + 'res/in/get.json',
-		data: 'if_id=' + encodeURIComponent(if_id),
+		data: 'ifId=' + encodeURIComponent(ifId),
 		type: 'GET',
 		async: false,
 		dataType: 'json',
 		success: function(result) {
-			resultData = result.data;
+			console.log(result);
+			resultData = result.data.IF_NM;
 		},
 		error: function(result) {
 			console.log('statusCode:' + result.statusCode);

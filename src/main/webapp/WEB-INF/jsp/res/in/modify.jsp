@@ -6,17 +6,16 @@
 
 <div class="mainContent">
 	<form id="modify" onsubmit="return false;">
-		<input type="hidden" name="org_if_id">
+		<input type="hidden" name="orgIfId">
 		<div class="ds-wrapper">
 			<div class="ds-box-left">
 				<div class="ds-input-box">
 					<div class="header6 label-title">인터페이스ID</div>
-					<input class="ds-input subtitle1 gray400" type="text" name="if_id">
+					<input class="ds-input subtitle1 gray400" type="text" name="ifId">
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">인터페이스명</div>
-					<!-- IP주소 -->
-					<input class="ds-input subtitle1 gray400" type="text" name="if_nm">
+					<input class="ds-input subtitle1 gray400" type="text" name="ifNm">
 				</div>
 			</div>
 		</div>
@@ -38,11 +37,11 @@
 		$('.banner-sub-title').text('인터페이스명을 수정합니다.');
 		//페이지 타이틀 세팅
 		$('.main-title-text').text('인터페이스명 수정');
-		$('.navi-arrow').text(' > 자원 > 인테페이스명 수정');
-		const org_if_id = new URL(location.href).searchParams.get('if_id');
-		$('input[name="org_if_id"]').val(org_if_id);
-		$('input[name="if_id"]').val(org_if_id);
-		$('input[name="if_nm"]').val(fn_get_if_nm(org_if_id));
+		$('.navi-arrow').text(' > 자원관리 > 인테페이스명');
+		const orgIfId = new URL(location.href).searchParams.get('ifId');
+		$('input[name="orgIfId"]').val(orgIfId);
+		$('input[name="ifId"]').val(orgIfId);
+		$('input[name="ifNm"]').val(fn_get_if_nm(orgIfId));
 	});
 
 	$('#modifyBtn').click(function() {
@@ -51,7 +50,7 @@
 			url : '${pageUrl}modify.json',
 			type : 'POST',
 			data : $('#modify').serialize(),
-			dataType : 'JSON',
+			dataType : 'json',
 			success : function(result) {
 				location.href = '${pageUrl}';
 			},
@@ -70,7 +69,7 @@
 				url : '${pageUrl}delete.json',
 				type : 'POST',
 				data : $('#modify').serialize(),
-				dataType : 'JSON',
+				dataType : 'json',
 				success : function(result) {
 					location.href = '${pageUrl}';
 					alert('정상적으로 삭제되었습니다.');
