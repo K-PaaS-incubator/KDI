@@ -50,7 +50,7 @@
 			</nav>
 		</div>
 		<ul class="menu-hover-box-html">
-			<li class="menu-hover-content" onclick="#URI#">#TITLE#</li>
+			<li class="menu-hover-content" onclick="location.href='#URI#'">#TITLE#</li>
 		</ul>
 		<ul class="menu-hover-box-blank-html">
 			<li class="menu-hover-content blank-content"></li>
