@@ -133,16 +133,16 @@
 
 		const menuWrite = function() {
 			// title
-			const menuBox = $('.menuBox');
+			const menuBox = $('.header-container .menuBox');
 			menuBox.html(''); // 초기화
-			const menuBoxListHtml = $('.menu-box-list-format').html();
+			const menuBoxListHtml = $('.header-container .menu-box-list-format').html();
 
 			// submenu
-			const flexCol = $('.flex-col');
+			const flexCol = $('.header-container .flex-col');
 			flexCol.html(''); // 초기화
-			const flexColFormat = $('.flex-col-format').html();
-			const menuHoverBoxHtml = $('.menu-hover-box-html').html();
-			const menuHoverBoxBlankHtml = $('.menu-hover-box-blank-html')
+			const flexColFormat = $('.header-container .flex-col-format').html();
+			const menuHoverBoxHtml = $('.header-container .menu-hover-box-html').html();
+			const menuHoverBoxBlankHtml = $('.header-container .menu-hover-box-blank-html')
 					.html();
 			let subMenuMaxSize = 0;
 
@@ -174,7 +174,7 @@
 				}
 			});
 			
-			$('.dropdown-menu').css('height',(subMenuMaxSize * 45)+'px');
+			$('.header-container .dropdown-menu').css('height',(subMenuMaxSize * 45)+'px');
 		}
 
 		$(document).ready(function() {
