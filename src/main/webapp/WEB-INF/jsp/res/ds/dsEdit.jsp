@@ -6,36 +6,36 @@
 
 <div class="mainContent">
 	<form id="dsEdit" onsubmit="return false;">
-		<input type="hidden" id="ds_url" name="ds_url" value="${selectDsInfo.ds_url}">
+		<input type="hidden" id="ds_url" name="dsUrl" value="${selectDsInfo.dsUrl}">
 		<div class="ds-wrapper">
 			<div class="ds-box-left">
 				<div class="ds-input-box">
 					<div class="header6 label-title">데이터소스명</div>
-					<input class="ds-input subtitle1 gray400" id="ds_nm" name="ds_nm" value="${selectDsInfo.ds_nm}" readonly>
+					<input class="ds-input subtitle1 gray400" id="ds_nm" name="dsNm" value="${selectDsInfo.dsNm}" readonly>
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">Server Host</div>
 					<!-- IP주소 -->
-					<input class="ds-input subtitle1 gray400" type="text" id="ds_addr" name="ds_addr" value="${selectDsInfo.ds_addr}" onkeyup="printName()">
+					<input class="ds-input subtitle1 gray400" type="text" name="dsAddr" value="${selectDsInfo.dsAddr}" onkeyup="printName()">
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">Database</div>
-					<input class="ds-input subtitle1 gray400" type="text" id="ds_sid" name="ds_sid" value="${selectDsInfo.ds_sid}" onkeyup="printName()" required>
+					<input class="ds-input subtitle1 gray400" type="text" name="dsSid" value="${selectDsInfo.dsSid}" onkeyup="printName()" required>
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">UserName</div>
-					<input class="ds-input subtitle1 gray400" type="text" id="ds_usr_nm" name="ds_usr_nm" value="${selectDsInfo.ds_usr_nm}" onkeyup="printName()" required>
+					<input class="ds-input subtitle1 gray400" type="text" name="dsUsrNm" value="${selectDsInfo.dsUsrNm}" onkeyup="printName()" required>
 				</div>
 			</div>
 			<div class="ds-box-right">
 				<div class="ds-input-box">
 					<div class="header6 label-title">DB Type</div>
-					<input class="ds-input subtitle1 gray400" type="text" name="ds_type" value="${selectDsInfo.ds_type}" readonly>
+					<input class="ds-input subtitle1 gray400" type="text" name="dsType" value="${selectDsInfo.dsType}" readonly>
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">Port</div>
 					<!-- DB포트 -->
-					<input class="ds-input subtitle1 gray400" type="text" id="ds_port" name="ds_port" value="${selectDsInfo.ds_port}" onkeyup="printName()">
+					<input class="ds-input subtitle1 gray400" type="text" name="dsPort" value="${selectDsInfo.dsPort}" onkeyup="printName()">
 				</div>
 				<div class="ds-input-box">
 					<!-- 주소와 포트 자동완성-키업사용-->
@@ -44,7 +44,7 @@
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">Password</div>
-					<input class="ds-input subtitle1 gray400" type="password" id="ds_usr_pw" name="ds_usr_pw" value="${selectDsInfo.ds_usr_pw}" required>
+					<input class="ds-input subtitle1 gray400" type="password" name="dsUsrPw" value="${selectDsInfo.dsUsrPw}" required>
 					<div id="test_result"></div>
 					<div id="test_result2"></div>
 				</div>
@@ -61,7 +61,7 @@
 	</form>
 </div>
 <script>
-	const ds_url = '${selectDsInfo.ds_url}';
+	const ds_url = '${selectDsInfo.dsUrl}';
 	const urlMap = {
 		oracle : 'jdbc:oracle:thin:@',
 		mysql : 'jdbc:mysql://'
@@ -79,9 +79,9 @@
 	});
 
 	function printName() {
-		var ds_addr = $('#ds_addr').val();
-		var ds_port = $('#ds_port').val();
-		var ds_sid = $('#ds_sid').val();
+		var ds_addr = $('input[name="dsAddr"]').val();
+		var ds_port = $('input[name="dsPort"]').val();
+		var ds_sid = $('input[name="dsSid"]').val();
 		var urlDriver = null;
 		if (ds_url.includes('oracle')) {
 			urlDriver = urlMap['oracle'];
@@ -90,7 +90,7 @@
 		}
 		$('#ds_url_label').text(
 				urlDriver + ds_addr + ':' + ds_port + ':' + ds_sid);
-		$('#ds_url').val(urlDriver + ds_addr + ':' + ds_port + ':' + ds_sid);
+		$('input[name="dsUrl"]').val(urlDriver + ds_addr + ':' + ds_port + ':' + ds_sid);
 	}
 
 	$('#modifyBtn').click(function databaseSave() {
@@ -123,8 +123,6 @@
 			success : function(result) {
 				$('#test_result').text('');
 				$('#test_result2').text('');
-
-				console.log('result:' + result.state);
 				$('#test_result').text('접속 테스트 성공');
 			},
 			error : function(result) {

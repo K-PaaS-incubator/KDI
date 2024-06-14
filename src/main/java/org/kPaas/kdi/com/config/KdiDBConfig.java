@@ -6,8 +6,6 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +14,9 @@ import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@MapperScan(value = "org.kPaas.kdi.**.mapper", sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan("org.kPaas.kdi.**.mapper")
 @EnableTransactionManagement(proxyTargetClass = true, mode = AdviceMode.PROXY) // <tx:annotation-driven>
 public class KdiDBConfig {
-	@Autowired
-	private ApplicationContext context;
 
 	@Bean
 	DataSource dataSource(KdiRoutingDataSource kdiRoutingDataSource) {
@@ -31,15 +27,12 @@ public class KdiDBConfig {
 	SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
-		sqlSessionFactoryBean.setConfigLocation(context.getResource("classpath:mybatis-config.xml"));
-		// MapperScan에서 명시했음으로 불필요
-		sqlSessionFactoryBean.setMapperLocations(context.getResources("classpath:org/kPaas/kdi/**/mapper/*.xml"));
-
 		return sqlSessionFactoryBean.getObject();
 	}
 
 	@Bean
 	SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory) {
+		sqlSessionFactory.getConfiguration().setMapUnderscoreToCamelCase(true);
 		return new SqlSessionTemplate(sqlSessionFactory);
 	}
 

@@ -7,31 +7,31 @@
 	<select id="getUser_Info"
 		resultType="org.kPaas.kdi.com.member.vo.MemberVo">
 		SELECT * FROM KDI_USER
-		<where>usr_id = #{usr_id}</where>
+		<where>usr_id = #{usrId}</where>
 	</select>
 
 	<select id="getSameIdCheck" resultType="Integer">
 		SELECT count(*) FROM KDI_USER
-		<where>usr_id = #{usr_id}</where>
+		<where>usr_id = #{usrId}</where>
 	</select>
 
 	<insert id="signupUser"
 		parameterType="org.kPaas.kdi.com.member.vo.MemberVo">
 		INSERT INTO KDI_USER
-		VALUES(#{usr_id},#{usr_pw},#{usr_nm},#{usr_phone},#{usr_email},'1',current_timestamp(),current_timestamp())
+		VALUES(#{usrId},#{usrPw},#{usrNm},#{usrPhone},#{usrEmail},'1',current_timestamp(),current_timestamp())
 	</insert>
 
 	<insert id="createTable">
 		CREATE TABLE `KDI_USER` (
-		`usr_id` varchar2(20) NOT NULL,
-		`usr_pw` varchar2(100) NULL,
-		`usr_nm` varchar2(20) NULL,
-		`usr_phone` varchar2(13) NULL,
-		`usr_email` varchar2(100) NULL,
-		`usr_grade` char(1) NULL,
-		`reg_dt` date NULL,
-		`mod_dt` date NULL,
-		PRIMARY KEY	(`usr_id`)
+		`USR_ID` VARCHAR2(20) NOT NULL,
+		`USR_PW` VARCHAR2(100) NULL,
+		`USR_NM` VARCHAR2(20) NULL,
+		`USR_PHONE` VARCHAR2(13) NULL,
+		`USR_EMAIL` VARCHAR2(100) NULL,
+		`USR_GRADE` CHAR(1) NULL,
+		`REG_DT` DATE NULL,
+		`MOD_DT` DATE NULL,
+		PRIMARY KEY	(`USR_ID`)
 		)
 	</insert>
 </mapper>

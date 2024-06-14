@@ -63,8 +63,8 @@ public class SecurityConfig {
 
 		http.formLogin(login -> login.loginPage("/member/login") //
 				.loginProcessingUrl("/member/loginProc") //
-				.usernameParameter("usr_id") //
-				.passwordParameter("usr_pw") //
+				.usernameParameter("usrId") //
+				.passwordParameter("usrPw") //
 				.successHandler(customSuccessHandler) //
 				.failureHandler(customFailureHandler) //
 

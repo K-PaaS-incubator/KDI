@@ -46,7 +46,7 @@ public class DataSourceController extends AbstractController {
 
 	@PostMapping("/dsCheck")
 	public ResponseEntity<String> dsCheck(DatasourceVo datasource_vo) {
-		return service.duplicateCheck(datasource_vo.getDs_nm());
+		return service.duplicateCheck(datasource_vo.getDsNm());
 	}
 
 	@PostMapping("/dsInsert")
@@ -55,7 +55,7 @@ public class DataSourceController extends AbstractController {
 	}
 
 	@GetMapping("/dsEdit")
-	public String dsEdit(Model model, @RequestParam("ds_nm") String ds_nm) {
+	public String dsEdit(Model model, @RequestParam("dsNm") String ds_nm) {
 		model.addAttribute("selectDsInfo", service.get(ds_nm));
 		return layout("dsEdit");
 	}

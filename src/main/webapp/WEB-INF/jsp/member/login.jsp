@@ -24,13 +24,13 @@
 					<div>
 						<img src="${imgUrl}icon-login-id.png" alt="">
 					</div>
-					<input class="login-input subtitle1" type="text" name="usr_id" id="email" placeholder="아이디">
+					<input class="login-input subtitle1" type="text" name="usrId" id="email" placeholder="아이디">
 				</div>
 				<div class="login-input-box">
 					<div>
 						<img src="${imgUrl}icon-login-pw.png" alt="">
 					</div>
-					<input class="login-input subtitle1" type="password" name="usr_pw" id="password" placeholder="비밀번호">
+					<input class="login-input subtitle1" type="password" name="usrPw" id="password" placeholder="비밀번호">
 				</div>
 				<div class="login-signup-box">
 					<div class="forgot_pw body1 gray500">

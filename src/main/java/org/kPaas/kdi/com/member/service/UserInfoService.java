@@ -14,4 +14,5 @@ public interface UserInfoService {
 	public boolean isDuplicateUserId(String usr_id);
 
 	public ResponseEntity<String> signupUser(MemberVo usr_vo);
+
 }

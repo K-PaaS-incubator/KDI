@@ -78,8 +78,8 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			result.put("msg", "입력정보 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		datasource_vo.setReg_id(getLoginUserId());
-		if (null == datasource_vo.getReg_id() || "".equals(datasource_vo.getReg_id())) {
+		datasource_vo.setRegId(getLoginUserId());
+		if (null == datasource_vo.getRegId() || "".equals(datasource_vo.getRegId())) {
 			result.put("stateCode", 2);
 			result.put("state", "데이터소스정보 등록 실패");
 			result.put("msg", "등록자 ID 확인 실패");
@@ -118,7 +118,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			result.put("msg", "입력정보 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		String ds_url = datasource_vo.getDs_url();
+		String ds_url = datasource_vo.getDsUrl();
 		if (null == ds_url) {
 			result.put("stateCode", 2);
 			result.put("state", "테스트 실패");
@@ -130,12 +130,12 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		// 임시로 사용할 DataSourceName 정의
 		String testDataSourceName = System.currentTimeMillis() + "-" + Thread.currentThread().getId();
 		try {
-			datasource_vo.setDs_nm(testDataSourceName);
+			datasource_vo.setDsNm(testDataSourceName);
 			kdiRoutingDataSource.put(datasource_vo);
 			// 현재 쓰레드의 데이터소스를 변경하는 행위
 			setContext(testDataSourceName);
 			// 디비접속이 되면 쿼리가 수행됨
-			String validationResult = mapper.validationQuery(datasource_vo.getDs_type());
+			String validationResult = mapper.validationQuery(datasource_vo.getDsType());
 			if (null == validationResult) {
 				result.put("stateCode", 4);
 				result.put("state", "테스트 실패");
@@ -175,8 +175,8 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			result.put("msg", "입력정보 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		datasource_vo.setMod_id(getLoginUserId());
-		if (null == datasource_vo.getMod_id() || "".equals(datasource_vo.getMod_id())) {
+		datasource_vo.setModId(getLoginUserId());
+		if (null == datasource_vo.getModId() || "".equals(datasource_vo.getModId())) {
 			result.put("stateCode", 2);
 			result.put("state", "데이터소스정보 수정 실패");
 			result.put("msg", "수정자 ID 확인 실패");
@@ -220,7 +220,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 	 */
 	private void loadDataSource(DatasourceVo vo) {
 		kdiRoutingDataSource.put(vo);
-		log.info("Load DataSource - '" + vo.getDs_nm() + "'");
+		log.info("Load DataSource - '" + vo.getDsNm() + "'");
 	}
 
 }
