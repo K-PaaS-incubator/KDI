@@ -36,18 +36,18 @@
 		<form id="editIF">
 			<div class="link-table-box-top">
 			<div class="link-interface-box-top">
-			<div class="header4 label-title" >서비스제목 및 데이터소스 변경</div>
+			<div class="header4 label-title" >서비스명 및 데이터소스 변경</div>
 			</div>
 			</div>
 			<div class="link-table-box-top">
 				<div class="link-interface-box-top">
 					<div class="link-inputs-row">
 						<div class="common-input-box">
-							<div class="header6 label-title">서비스 제목</div>
+							<div class="header6 label-title">서비스명</div>
 								<input type="text" class="interface-input subtitle1 gray400 tableSearch" value="${svc_nm}" name="svc_nm">
 								<input type="hidden" value="${svc_id}" name="svc_id">
 								<input type="hidden" value="${svc_type}" name="svc_type">
-							<div class="header6 label-title">데이터소스 제목</div>
+							<div class="header6 label-title">데이터소스명</div>
 							<select class="interface-input subtitle1 gray400" name="ds_nm">
 						    	<c:forEach var="ds" items="${selectDsList}">
 									<option value="${ds}" <c:if test="${ds eq ds_nm}">selected</c:if>>${ds}</option>

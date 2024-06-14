@@ -10,7 +10,7 @@
 		<div class="ds-wrapper">
 			<div class="ds-box-left">
 				<div class="ds-input-box">
-					<div class="header6 label-title">데이터소스 제목</div>
+					<div class="header6 label-title">데이터소스명</div>
 					<input class="ds-input subtitle1 gray400" id="ds_nm" name="ds_nm" value="${selectDsInfo.ds_nm}" readonly>
 				</div>
 				<div class="ds-input-box">

@@ -15,7 +15,7 @@
 			<div class="link-wrapper">
 				<div class="link-box-left">
 					<div class="common-input-box">
-						<div class="header6 label-title">연계서비스 제목</div>
+						<div class="header6 label-title">연계서비스명</div>
 						<input class="common-input subtitle1 gray400" type="text"
 							id="svc_nm" name="svc_nm" required>
 					</div>

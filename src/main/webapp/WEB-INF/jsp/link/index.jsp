@@ -29,8 +29,8 @@
 				<tr class="subtitle1 gray500">
 					<th>No</th>
 					<th>유형</th>
-					<th>연계서비스 제목</th>
-					<th>데이터소스 제목</th>
+					<th>연계서비스명</th>
+					<th>데이터소스명</th>
 					<th>🚮</th>
 				</tr>
 				<tr class="table-spacing"></tr>

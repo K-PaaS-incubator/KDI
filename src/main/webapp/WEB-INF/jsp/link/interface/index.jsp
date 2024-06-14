@@ -13,7 +13,7 @@
 	<div class="mainContent">
 		<form action="${linkUrl}linkList" method="GET" id="searchForm">
 			<div class="link-table-box-top">
-				<div class="search-box button-second-gray" id="optionPop">⚙️ 서비스제목 및 데이터소스 변경</div>
+				<div class="search-box button-second-gray" id="optionPop">⚙️ 서비스명 및 데이터소스 변경</div>
 			</div>
 			<div class="search-box">
 				<div>

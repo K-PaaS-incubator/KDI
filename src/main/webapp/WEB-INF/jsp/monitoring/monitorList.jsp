@@ -11,7 +11,7 @@
 		<thead class="list-head">
 			<tr class="subtitle1 gray500">
 				<th>No</th>
-				<th>데이터소스 제목</th>
+				<th>데이터소스명</th>
 				<th>URL</th>
 			</tr>
 			<tr class="table-spacing"></tr>
