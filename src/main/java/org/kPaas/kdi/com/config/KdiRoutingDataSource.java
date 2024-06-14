@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.sql.DataSource;
 
-import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
+import org.kPaas.kdi.main.res.ds.vo.DatasourceVo;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;

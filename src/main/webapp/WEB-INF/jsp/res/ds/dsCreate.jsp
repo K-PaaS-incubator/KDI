@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:url var="dsUrl" value="/ds/" />
+<c:url var="dsUrl" value="/res/ds/" />
 <c:url var="cssUrl" value="/css/" />
 <link rel="stylesheet" href="${cssUrl}ds.css">
-<jsp:include page="../component/subBanner.jsp"></jsp:include>
-<section class="contents">
-	<jsp:include page="../component/subTitle.jsp"></jsp:include>
 	<div class="mainContent">
 		<form <%-- action="${dsUrl}dsCheck" method="POST"  --%>id="dsCreate">
 			<input type="hidden" id="ds_url" name="ds_url">
@@ -13,7 +10,7 @@
 			<div class="ds-wrapper">
 				<div class="ds-box-left">
 					<div class="ds-input-box">
-						<div class="header6 label-title">데이터소스 제목</div>
+						<div class="header6 label-title">데이터소스명</div>
 						<input class="ds-input subtitle1 gray400" type="text" id="ds_nm" name="ds_nm" required>
 					</div>
 					<div class="ds-input-box">
@@ -115,7 +112,7 @@
 
 			$('form').validate();
 			if (!fn_check_duplicate_ds()) {
-				alert('제목이 중복되었습니다.');
+				alert('데이터소스명이 중복되었습니다.');
 				return;
 			}
 			$.ajax({
@@ -184,9 +181,3 @@
 			});
 		});
 	</script>
-
-</section>
-
-
-
-

@@ -1,4 +1,4 @@
-package org.kPaas.kdi.main.datasource.service.impl;
+package org.kPaas.kdi.main.res.ds.service.impl;
 
 import java.util.List;
 
@@ -8,16 +8,14 @@ import javax.annotation.Resource;
 import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractService;
 import org.kPaas.kdi.com.config.KdiRoutingDataSource;
-import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
-import org.kPaas.kdi.main.datasource.mapper.DatasourceMapper;
-import org.kPaas.kdi.main.datasource.service.DatasourceService;
-import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
+import org.kPaas.kdi.main.res.ds.mapper.DatasourceMapper;
+import org.kPaas.kdi.main.res.ds.service.DatasourceService;
+import org.kPaas.kdi.main.res.ds.vo.DatasourceVo;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,9 +23,6 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 
 	@Resource
 	private DatasourceMapper mapper;
-
-	@Resource
-	private DBCheckService dbCheckService;
 
 	@Autowired
 	private KdiRoutingDataSource kdiRoutingDataSource;
@@ -38,7 +33,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 	 */
 	@PostConstruct
 	private void init() {
-		if (!dbCheckService.isExists("KDI_DATASOURCE")) {
+		if (!isTableExists("KDI_DATASOURCE")) {
 			mapper.createTable();
 		}
 
@@ -49,13 +44,13 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			loadDataSource(vo);
 		}
 	}
-	
+
 	private List<DatasourceVo> getDsListAll() {
 		return mapper.getDsListAll();
 	}
 
 	@Override
-	public ResponseEntity<String> getDsList(KdiParam kdiParam) {
+	public ResponseEntity<String> getList(KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
 		PageInfo pageInfo = new PageInfo(kdiParam);
 
@@ -75,7 +70,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		return ResponseEntity.ok(result.toString());
 	}
 
-	public ResponseEntity<String> insertDS(DatasourceVo datasource_vo) {
+	public ResponseEntity<String> insert(DatasourceVo datasource_vo) {
 		JSONObject result = new JSONObject();
 		if (null == datasource_vo) {
 			result.put("stateCode", 1);
@@ -83,7 +78,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			result.put("msg", "입력정보 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		datasource_vo.setReg_id(SecurityContextHolder.getContext().getAuthentication().getName());
+		datasource_vo.setReg_id(getLoginUserId());
 		if (null == datasource_vo.getReg_id() || "".equals(datasource_vo.getReg_id())) {
 			result.put("stateCode", 2);
 			result.put("state", "데이터소스정보 등록 실패");
@@ -107,8 +102,12 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 	}
 
 	@Override
-	public Integer getSameDsCheck(String ds_nm) {
-		return mapper.getSameDsCheck(ds_nm);
+	public ResponseEntity<String> duplicateCheck(String ds_nm) {
+		JSONObject result = new JSONObject();
+		result.put("stateCode", 0);
+		result.put("state", "중복검사 요청 성공");
+		result.put("data", mapper.getSameDsCheck(ds_nm));
+		return ResponseEntity.ok(result.toString());
 	}
 
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) {
@@ -163,21 +162,20 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 	}
 
 	@Override
-	public DatasourceVo selectDsInfo(String ds_nm) {
+	public DatasourceVo get(String ds_nm) {
 		return mapper.selectDsInfo(ds_nm);
 	}
 
 	@Override
-	public ResponseEntity<String> editDS(DatasourceVo datasource_vo) {
+	public ResponseEntity<String> modify(DatasourceVo datasource_vo) {
 		JSONObject result = new JSONObject();
-		selectDsInfo(null);
 		if (null == datasource_vo) {
 			result.put("stateCode", 1);
 			result.put("state", "데이터소스정보 수정 실패");
 			result.put("msg", "입력정보 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		datasource_vo.setMod_id(SecurityContextHolder.getContext().getAuthentication().getName());
+		datasource_vo.setMod_id(getLoginUserId());
 		if (null == datasource_vo.getMod_id() || "".equals(datasource_vo.getMod_id())) {
 			result.put("stateCode", 2);
 			result.put("state", "데이터소스정보 수정 실패");
@@ -199,7 +197,7 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 	}
 
 	@Override
-	public ResponseEntity<String> delDS(String ds_nm) {
+	public ResponseEntity<String> delete(String ds_nm) {
 		JSONObject result = new JSONObject();
 		try {
 			mapper.deleteDS(ds_nm);

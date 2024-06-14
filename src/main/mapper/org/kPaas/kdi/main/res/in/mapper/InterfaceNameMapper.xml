@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kPaas.kdi.main.res.in.mapper.InterfaceNameMapper">
+
+	<insert id="createTable">
+		CREATE TABLE `KDI_INTERFACE_NM` (
+		`IF_ID` VARCHAR2(100) NOT NULL,
+		`IF_NM` VARCHAR2(100) NOT NULL,
+		`REG_ID` VARCHAR2(20) NULL,
+		`REG_DT` DATE NULL,
+		`MOD_ID`
+		VARCHAR2(20) NULL,
+		`MOD_DT` DATE NULL,
+		PRIMARY KEY (`IF_ID`)
+		)
+	</insert>
+
+	<sql id="getIfNmListWhere">
+		KDI_INTERFACE_NM TB1
+		<where>
+			1=1
+			<if test="value.if_id != null and value.if_id != ''">
+				AND TB1.IF_ID LIKE '%' || #{value.if_id} || '%'
+			</if>
+			<if test="value.if_nm != null and value.if_nm != ''">
+				AND TB1.IF_NM LIKE '%' || #{value.if_nm} || '%'
+			</if>
+			<if test="value.all_search != null and value.all_search != ''">
+				OR TB1.IF_ID LIKE '%' || #{value.if_id} || '%'
+				OR TB1.IF_NM LIKE '%' || #{value.if_nm} || '%'
+			</if>
+		</where>
+	</sql>
+	<select id="getListCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+		COUNT(TB1.*)
+		FROM
+		<include refid="getIfNmListWhere" />
+	</select>
+
+	<select id="getList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+		TB1.IF_ID,
+		TB1.IF_NM
+		FROM
+		<include refid="getIfNmListWhere" />
+		ORDER BY
+		TB1.IF_ID, TB1.IF_NM
+		LIMIT
+		#{pagePerRow}
+		OFFSET
+		(#{pageNum} - 1) * #{pagePerRow}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO KDI_INTERFACE_NM (IF_ID, IF_NM, REG_ID, REG_DT)
+		VALUES(#{if_id},#{if_nm},#{reg_id},current_timestamp())
+	</insert>
+
+	<select id="duplicateCheck" resultType="Integer">
+		SELECT count(*) FROM KDI_INTERFACE_NM
+		<where>IF_ID = #{if_id}</where>
+	</select>
+
+	<select id="get" parameterType="String" resultType="String">
+		SELECT IF_NM FROM KDI_INTERFACE_NM
+		<where>
+			IF_ID = #{if_id}
+		</where>
+	</select>
+
+	<update id="modify">
+		UPDATE KDI_INTERFACE_NM
+		<set>
+			IF_ID = #{if_id},
+			IF_NM = #{if_nm},
+			REG_ID = #{modify_id},
+			REG_DT = current_timestamp()
+		</set>
+		<where>
+			IF_ID = #{org_if_id}
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE
+		FROM
+		KDI_INTERFACE_NM
+		<where>
+			IF_ID = #{if_id}
+		</where>
+	</delete>
+</mapper>

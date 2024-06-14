@@ -80,7 +80,7 @@
 				uri : 'res/ds'
 			}, {
 				title : '인터페이스명',
-				uri : 'res/if'
+				uri : 'res/in'
 			}, {
 				title : '서비스 정보',
 				uri : 'res/svc_info'

@@ -1,46 +1,41 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<jsp:include page="../component/subBanner.jsp"></jsp:include>
-<section class="contents">
-	<jsp:include page="../component/subTitle.jsp"></jsp:include>
-	<div class="mainContent">
-		<table class="data-list">
-			<colgroup>
-				<col width="15%">
-				<col width="40%">
-				<col width="45%">
-			</colgroup>
-			<thead class="list-head">
-				<tr class="subtitle1 gray500">
-					<th>No</th>
-					<th>데이터소스 제목</th>
-					<th>URL</th>
-				</tr>
-				<tr class="table-spacing"></tr>
-			</thead>
-			<tbody class="list-body">
-				<c:choose>
-					<c:when test="${false}">
-						<tr class="subtitle1 gray500">
-							<td>1</td>
-							<td>test</td>
-							<td>test:test</td>
-						</tr>
-						<tr class="table-spacing"></tr>
-					</c:when>
-					<c:otherwise>
-						<tr class="subtitle1 gray500">
-							<td colspan="3">- 표시할 데이터가 없습니다 -</td>
-						</tr>
-						<tr class="table-spacing"></tr>
-					</c:otherwise>
-				</c:choose>
-			</tbody>
-		</table>
-	</div>
-
-</section>
+<div class="mainContent">
+	<table class="data-list">
+		<colgroup>
+			<col width="15%">
+			<col width="40%">
+			<col width="45%">
+		</colgroup>
+		<thead class="list-head">
+			<tr class="subtitle1 gray500">
+				<th>No</th>
+				<th>데이터소스 제목</th>
+				<th>URL</th>
+			</tr>
+			<tr class="table-spacing"></tr>
+		</thead>
+		<tbody class="list-body">
+			<c:choose>
+				<c:when test="${false}">
+					<tr class="subtitle1 gray500">
+						<td>1</td>
+						<td>test</td>
+						<td>test:test</td>
+					</tr>
+					<tr class="table-spacing"></tr>
+				</c:when>
+				<c:otherwise>
+					<tr class="subtitle1 gray500">
+						<td colspan="3">- 표시할 데이터가 없습니다 -</td>
+					</tr>
+					<tr class="table-spacing"></tr>
+				</c:otherwise>
+			</c:choose>
+		</tbody>
+	</table>
+</div>
 <script defer>
 	$(document).ready(
 			function() {

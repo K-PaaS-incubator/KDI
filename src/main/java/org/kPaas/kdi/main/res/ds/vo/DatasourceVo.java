@@ -1,4 +1,4 @@
-package org.kPaas.kdi.main.datasource.vo;
+package org.kPaas.kdi.main.res.ds.vo;
 
 import lombok.Getter;
 import lombok.Setter;

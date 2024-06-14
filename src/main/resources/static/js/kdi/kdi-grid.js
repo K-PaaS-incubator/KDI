@@ -203,9 +203,9 @@ var KdiListGrid = function(varName, url) {
 			_totalPageId = totalPageId;
 		},
 
-		setPageCtlInfo: function(pageCtlZoneId, homeUrl) {
+		setPageCtlInfo: function(pageCtlZoneId) {
 			_pageCtlZoneId = pageCtlZoneId || '',
-				$(pageCtlZoneId).load(homeUrl + 'html/kdi/pagination-num.html .page-ctl-zone', function() {
+				$(pageCtlZoneId).load(contextPath + 'html/kdi/pagination-num.html .page-ctl-zone', function() {
 					_paginationNumFormat = $(pageCtlZoneId + ' .page-ctl-num-zone').html();
 					_paginationNumFormat = _paginationNumFormat.replaceAll('#VAR_NAME#', varName);
 					var pageZoneFormat = $(pageCtlZoneId).html();

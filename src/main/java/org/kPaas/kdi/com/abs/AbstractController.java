@@ -6,6 +6,7 @@ import org.kPaas.kdi.com.util.KdiParam;
 
 public abstract class AbstractController extends AbsCom {
 	public final static String DEFAULT_LAYOUT = "defaultLayout";
+	public final static String SUB_BANNER_LAYOUT = "subBannerLayout";
 
 	public final String layoutName;
 	public final String jspDirPath;

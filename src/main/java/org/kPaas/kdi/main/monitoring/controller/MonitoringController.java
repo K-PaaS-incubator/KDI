@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class MonitoringController extends AbstractController {
 	public MonitoringController() {
-		super("monitoring");
+		super(SUB_BANNER_LAYOUT, "monitoring");
 	}
 
 	@GetMapping()

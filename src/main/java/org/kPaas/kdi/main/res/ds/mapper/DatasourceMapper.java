@@ -1,4 +1,4 @@
-package org.kPaas.kdi.main.datasource.mapper;
+package org.kPaas.kdi.main.res.ds.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.kPaas.kdi.com.util.KdiParam;
-import org.kPaas.kdi.main.datasource.vo.DatasourceVo;
+import org.kPaas.kdi.main.res.ds.vo.DatasourceVo;
 
 @Mapper
 public interface DatasourceMapper {
