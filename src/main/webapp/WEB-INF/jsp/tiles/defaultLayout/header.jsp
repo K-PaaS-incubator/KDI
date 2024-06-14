@@ -165,7 +165,6 @@
 					const menuHoverBox = flexCol.find(':nth-child(' + (subIdx + 1) + ') .menu-hover-box');
 					const flexColTitle = subMenuData.title;
 					const flexColUri = contextPath + subMenuData.uri;
-					console.log(idx+'####'+flexColTitle+'###'+flexColUri);
 					menuHoverBox.append(menuHoverBoxHtml.replaceAll('#TITLE#', flexColTitle).replaceAll('#URI#', flexColUri));
 				});
 				// 칸 맞추기위한 공백 추가
