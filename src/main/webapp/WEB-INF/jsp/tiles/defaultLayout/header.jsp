@@ -82,8 +82,11 @@
 				title : '인터페이스명',
 				uri : 'res/in'
 			}, {
+				title : '전송경로 정보',
+				uri : 'res/tpi' //trans_path_info
+			}, {
 				title : '서비스 정보',
-				uri : 'res/svc_info'
+				uri : 'res/si' //svc_info
 			}, {
 				title : '송신 인터페이스',
 				uri : 'res/if/send'

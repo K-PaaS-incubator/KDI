@@ -24,4 +24,6 @@ public class DatasourceVo {
 	public int pageNum; //페이지 넘버
 	public int amount; // 리스트 총 개수
 	
+	public int ds_miniIdle; //유휴 connection 수 (minimumIdle)
+	public int ds_maxpool; //maximumPoolSize connection 최대 풀사이즈 (maximumPoolSize)
 }
