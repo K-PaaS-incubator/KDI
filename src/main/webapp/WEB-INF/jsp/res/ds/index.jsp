@@ -61,7 +61,7 @@
 	</tbody>
 	<tbody id="gridNoDataHtmlFormatId">
 		<tr class="detailTr">
-			<td colspan="3">데이터소스가 존재하지 않습니다.</td>
+			<td colspan="3">등록된 데이터소스가 없습니다.</td>
 		</tr>
 		<tr class="table-spacing"></tr>
 	</tbody>
@@ -105,7 +105,7 @@
 	$(document).ready(function() {
 		//배너 타이틀 세팅
 		$('.banner-title').text('데이터소스')
-		$('.banner-sub-title').text('데이터 정보를 한눈에 볼 수 있습니다')
+		$('.banner-sub-title').text('데이터소스 정보를 제공합니다.')
 		//페이지 타이틀 세팅
 		$('.main-title-text').text('데이터소스 조회');
 		$('.navi-arrow').text(' > 자원관리 > 데이터소스')
