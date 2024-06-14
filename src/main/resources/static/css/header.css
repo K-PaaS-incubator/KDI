@@ -101,6 +101,10 @@
     margin-right: 72px;
     margin-top: 24px;
 }
+.menu-hover-content.blank-content {
+    cursor: auto;
+}
+
 .menu-hover-content:hover{
     color: #336AEA;
 }

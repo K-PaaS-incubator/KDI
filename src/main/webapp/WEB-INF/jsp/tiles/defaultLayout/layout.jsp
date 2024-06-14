@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:url var="homeUrl" value="/" />
 <c:url var="defaultCssUrl" value="/css/default/" />
 <c:url var="jsUrl" value="/js/" />
 <c:url var="jqueryUrl" value="/js/jquery/" />
@@ -16,6 +17,9 @@
 <script src="${jqueryUrl}additional-methods.min.js"></script>
 <script src="${jqueryUrl}messages_ko.min.js"></script>
 <script src="${jsUrl}kdi/kdi-grid.js"></script>
+<script type="text/javascript">
+	const contextPath = '${homeUrl}';
+</script>
 </head>
 <body>
 	<!-- Page Header -->
