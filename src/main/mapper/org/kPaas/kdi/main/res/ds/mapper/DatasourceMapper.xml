@@ -4,7 +4,7 @@
 
 <mapper namespace="org.kPaas.kdi.main.res.ds.mapper.DatasourceMapper">
 
-	<select id="getDsListAll" resultType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo" fetchSize="50">
+	<select id="getDsListAll" fetchSize="50" resultType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
 		SELECT
 			ROWNUM AS NUM,
 			TB1.*
@@ -15,19 +15,19 @@
 		KDI_DATASOURCE TB1
 		<where>
 			1=1
-			<if test="value.ds_nm != null and value.ds_nm != ''">
-				AND TB1.DS_NM LIKE '%' || #{value.ds_nm} || '%'
+			<if test="value.dsNm != null and value.dsNm != ''">
+				AND TB1.DS_NM LIKE '%' || #{value.dsNm} || '%'
 			</if>
-			<if test="value.ds_type != null and value.ds_type != ''">
-				AND TB1.DS_TYPE LIKE '%' || #{value.ds_type} || '%'
+			<if test="value.dsType != null and value.dsType != ''">
+				AND TB1.DS_TYPE LIKE '%' || #{value.dsType} || '%'
 			</if>
-			<if test="value.ds_addr != null and value.ds_addr != ''">
-				AND TB1.DS_ADDR LIKE '%' || #{value.ds_addr} || '%'
+			<if test="value.dsAddr != null and value.dsAddr != ''">
+				AND TB1.DS_ADDR LIKE '%' || #{value.dsAddr} || '%'
 			</if>
 			<if test="value.all_search != null and value.all_search != ''">
-				OR TB1.DS_NM   LIKE '%' || #{value.ds_nm}   || '%'
-				OR TB1.DS_TYPE LIKE '%' || #{value.ds_type} || '%'
-				OR TB1.DS_ADDR LIKE '%' || #{value.ds_addr} || '%'
+				OR TB1.DS_NM   LIKE '%' || #{value.dsNm}   || '%'
+				OR TB1.DS_TYPE LIKE '%' || #{value.dsType} || '%'
+				OR TB1.DS_ADDR LIKE '%' || #{value.dsAddr} || '%'
 			</if>
 		</where>
 	</sql>
@@ -54,54 +54,52 @@
 
 	<insert id="insertDS" parameterType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
 		INSERT INTO KDI_DATASOURCE
-		VALUES(#{ds_nm},#{ds_type},#{ds_driver},#{ds_addr},#{ds_port},#{ds_sid},#{ds_url},#{ds_usr_nm},#{ds_usr_pw},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
+		VALUES(#{dsNm},#{dsType},#{dsDriver},#{dsAddr},#{dsPort},#{dsSid},#{dsUrl},#{dsUsrNm},#{dsUsrPw},#{regId},current_timestamp(),#{modId},current_timestamp())
 	</insert>
 
 	<insert id="createTable">
 		CREATE TABLE `KDI_DATASOURCE` (
-		`ds_nm` varchar2(100) NOT NULL,
-		`ds_type` varchar2(100) NULL,
-		`ds_driver` varchar2(100) NULL,
-		`ds_addr` varchar2(100) NULL,
-		`ds_port`
-		varchar2(100) NULL,
-		`ds_sid` varchar2(100) NULL,
-		`ds_url` varchar2(100) NULL,
-		`ds_usr_nm` varchar2(100) NULL,
-		`ds_usr_pw` varchar2(100) NULL,
-		`reg_id` varchar2(20) NULL,
-		`reg_dt` date
-		NULL,
-		`mod_id` varchar2(20) NULL,
-		`mod_dt` date NULL,
-		PRIMARY KEY (`ds_nm`)
+		`DS_NM` VARCHAR2(100) NOT NULL,
+		`DS_TYPE` VARCHAR2(100) NULL,
+		`DS_DRIVER` VARCHAR2(100) NULL,
+		`DS_ADDR` VARCHAR2(100) NULL,
+		`DS_PORT` VARCHAR2(100) NULL,
+		`DS_SID` VARCHAR2(100) NULL,
+		`DS_URL` VARCHAR2(100) NULL,
+		`DS_USR_NM` VARCHAR2(100) NULL,
+		`DS_USR_PW` VARCHAR2(100) NULL,
+		`REG_ID` VARCHAR2(20) NULL,
+		`REG_DT` DATE NULL,
+		`MOD_ID` VARCHAR2(20) NULL,
+		`MOD_DT` DATE NULL,
+		PRIMARY KEY (`DS_NM`)
 		)
 	</insert>
 
 	<select id="getSameDsCheck" resultType="Integer">
 		SELECT count(*) FROM KDI_DATASOURCE
-		<where>ds_nm = #{ds_nm}</where>
+		<where>ds_nm = #{dsNm}</where>
 	</select>
 
 	<select id="selectDsInfo" parameterType="String" resultType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
 		SELECT * FROM KDI_DATASOURCE
 		<where>
-			ds_nm = #{ds_nm}
+			ds_nm = #{dsNm}
 		</where>
 	</select>
 
 	<update id="editDS" parameterType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
 		UPDATE KDI_DATASOURCE
 		<set>
-			ds_url = #{ds_url},
-			ds_addr = #{ds_addr},
-			ds_port = #{ds_port},
-			ds_sid = #{ds_sid},
-			ds_usr_nm = #{ds_usr_nm},
-			ds_usr_pw = #{ds_usr_pw}
+			ds_url = #{dsUrl},
+			ds_addr = #{dsAddr},
+			ds_port = #{dsPort},
+			ds_sid = #{dsSid},
+			ds_usr_nm = #{dsUsrNm},
+			ds_usr_pw = #{dsUsrPw}
 		</set>
 		<where>
-			ds_nm = #{ds_nm}
+			ds_nm = #{dsNm}
 		</where>
 	</update>
 
@@ -110,18 +108,18 @@
 		FROM
 		KDI_DATASOURCE
 		<where>
-			ds_nm = #{ds_nm}
+			ds_nm = #{dsNm}
 		</where>
 	</delete>
 	<select id="validationQuery" resultType="String">
 		<choose>
-			<when test="ds_type == 'h2'">select 1</when>
-			<when test="ds_type == 'mysql'">select 1</when>
-			<when test="ds_type == 'mariadb'">select 1</when>
-			<when test="ds_type == 'postgresql'">select 1</when>
-			<when test="ds_type == 'sybase'">select 1</when>
-			<when test="ds_type == 'mssql'">select GETDATE()</when>
-			<when test="ds_type == 'as400'">SELECT current date FROM sysibm.sysdummy1</when>
+			<when test="dsType == 'h2'">select 1</when>
+			<when test="dsType == 'mysql'">select 1</when>
+			<when test="dsType == 'mariadb'">select 1</when>
+			<when test="dsType == 'postgresql'">select 1</when>
+			<when test="dsType == 'sybase'">select 1</when>
+			<when test="dsType == 'mssql'">select GETDATE()</when>
+			<when test="dsType == 'as400'">SELECT current date FROM sysibm.sysdummy1</when>
 			<otherwise>select 1 from dual</otherwise>
 		</choose>
 	</select>

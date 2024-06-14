@@ -39,14 +39,14 @@ public class KdiRoutingDataSource extends AbstractRoutingDataSource {
 	 */
 	public synchronized void put(DatasourceVo vo) {
 		DataSourceProperties prop = new DataSourceProperties();
-		prop.setUrl(vo.getDs_url());
+		prop.setUrl(vo.getDsUrl());
 		// 현재 KDI코드에서 Ds_driver값이 확인안됨
 		// prop.setDriverClassName(vo.getDs_driver());
-		prop.setUsername(vo.getDs_usr_nm());
-		prop.setPassword(vo.getDs_usr_pw());
+		prop.setUsername(vo.getDsUsrNm());
+		prop.setPassword(vo.getDsUsrPw());
 
 		// 데이터소스 호출시 사용될 Key값
-		String dataSourceName = vo.getDs_nm();
+		String dataSourceName = vo.getDsNm();
 		// 데이터소스 반여작업
 		try {
 			if (!kdiDataSourceMap.containsKey(dataSourceName)) {

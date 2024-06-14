@@ -31,6 +31,6 @@ public interface DatasourceMapper {
 
 	public void deleteDS(String ds_nm);
 
-	public String validationQuery(@Param("ds_type") String ds_type);
+	public String validationQuery(@Param("dsType") String ds_type);
 
 }

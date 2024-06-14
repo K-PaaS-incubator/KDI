@@ -6,21 +6,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LinkServiceVo {
-	
-	LinkDetailVo linkDetailVo; //연계서비스항목
-	LinkTableVo linkTableVo; //연계테이블상세
 
 	//KDI_LINK_SERVICE 연계서비스
-	Integer num;
-	String svc_id;
-	String ds_nm;
-	String svc_nm;
-	char svc_type;	
-	String reg_id;
-	String reg_dt;	
-	String mod_id;
-	String mod_dt;
-	int pageNum;
-	int amount;
+	private Integer num;
+	private String svc_id;
+	private String ds_nm;
+	private String svc_nm;
+	private char svc_type;	
+	private String reg_id;
+	private String reg_dt;	
+	private String mod_id;
+	private String mod_dt;
+	private int pageNum;
+	private int amount;
 	
 }

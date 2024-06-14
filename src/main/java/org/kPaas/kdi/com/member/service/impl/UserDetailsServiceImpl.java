@@ -29,7 +29,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	}
 
 	private UserDetails toUserDetails(MemberVo userVo) {
-		return User.builder().username(userVo.getUsr_id()).password(userVo.getUsr_pw())
+		return User.builder().username(userVo.getUsrId()).password(userVo.getUsrPw())
 				.authorities(new SimpleGrantedAuthority("ROLE_ADMIN")).build();
 	}
 }

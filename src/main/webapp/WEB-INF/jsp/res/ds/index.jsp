@@ -88,8 +88,8 @@
 	gridEnv.setPageCtlInfo('.pageCtlZone', '${homeUrl}');
 	// 파라미터 JSON포맷
 	var paramData = {
-		'ds_nm' : '',
-		'ds_url' : ''
+		'dsNm' : '',
+		'dsUrl' : ''
 	};
 	// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제
 	grid.event.setErrEvent(function(xhr) {
@@ -99,7 +99,7 @@
 	});
 
 	var dsEdit = function(ds_nm) {
-		location.href = '${dsUrl}dsEdit?ds_nm=' + ds_nm
+		location.href = '${dsUrl}dsEdit?dsNm=' + ds_nm
 	};
 
 	$(document).ready(function() {

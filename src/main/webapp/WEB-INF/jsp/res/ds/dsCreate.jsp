@@ -5,33 +5,33 @@
 <link rel="stylesheet" href="${cssUrl}ds.css">
 	<div class="mainContent">
 		<form <%-- action="${dsUrl}dsCheck" method="POST"  --%>id="dsCreate">
-			<input type="hidden" id="ds_url" name="ds_url">
+			<input type="hidden" id="ds_url" name="dsUrl">
 			<!-- 데이터소스명 -->
 			<div class="ds-wrapper">
 				<div class="ds-box-left">
 					<div class="ds-input-box">
 						<div class="header6 label-title">데이터소스명</div>
-						<input class="ds-input subtitle1 gray400" type="text" id="ds_nm" name="ds_nm" required>
+						<input class="ds-input subtitle1 gray400" type="text" id="ds_nm" name="dsNm" required>
 					</div>
 					<div class="ds-input-box">
 						<div class="header6 label-title">Server Host</div>
 						<!-- IP주소 -->
-						<input class="ds-input subtitle1 gray400" type="text" id="ds_addr" name="ds_addr" onkeyup="printName()" placeholder="localhost" required>
+						<input class="ds-input subtitle1 gray400" type="text" id="ds_addr" name="dsAddr" onkeyup="printName()" placeholder="localhost" required>
 
 					</div>
 					<div class="ds-input-box">
 						<div class="header6 label-title">Database</div>
-						<input class="ds-input subtitle1 gray400" type="text" id="ds_sid" name="ds_sid" onkeyup="printName()" required>
+						<input class="ds-input subtitle1 gray400" type="text" id="ds_sid" name="dsSid" onkeyup="printName()" required>
 					</div>
 					<div class="ds-input-box">
 						<div class="header6 label-title">UserName</div>
-						<input class="ds-input subtitle1 gray400" type="text" id="ds_usr_nm" name="ds_usr_nm" onkeyup="printName()" required>
+						<input class="ds-input subtitle1 gray400" type="text" id="ds_usr_nm" name="dsUsrNm" onkeyup="printName()" required>
 					</div>
 				</div>
 				<div class="ds-box-right">
 					<div class="ds-input-box">
 						<div class="header6 label-title">DB Type</div>
-						<select class="ds-input subtitle1 gray400" name="ds_type" onchange="printName()">
+						<select class="ds-input subtitle1 gray400" name="dsType" onchange="printName()">
 							<option value="oracle" selected="selected">Oracle</option>
 							<option value="mysql">Mysql</option>
 						</select>
@@ -39,16 +39,16 @@
 					<div class="ds-input-box">
 						<div class="header6 label-title">Port</div>
 						<!-- DB포트 -->
-						<input class="ds-input subtitle1 gray400" type="text" id="ds_port" name="ds_port" onkeyup="printName()" placeholder="PORT" required>
+						<input class="ds-input subtitle1 gray400" type="text" id="ds_port" name="dsPort" onkeyup="printName()" placeholder="PORT" required>
 					</div>
 					<div class="ds-input-box">
 						<!-- 주소와 포트 자동완성-키업사용-->
 						<div class="header6 label-title">URL</div>
-						<input class="ds-input subtitle1 gray400" id="ds_url_label" readonly />
+						<input class="ds-input subtitle1 gray400" id="dsUrlLabel" readonly />
 					</div>
 					<div class="ds-input-box">
 						<div class="header6 label-title">Password</div>
-						<input class="ds-input subtitle1 gray400" type="password" id="ds_usr_pw" name="ds_usr_pw" required>
+						<input class="ds-input subtitle1 gray400" type="password" id="ds_usr_pw" name="dsUsrPw" required>
 						<div id="test_result"></div>
 						<div id="test_result2"></div>
 					</div>
@@ -92,7 +92,7 @@
 			var ds_addr = $('#ds_addr').val();
 			var ds_port = $('#ds_port').val();
 			var ds_sid = $('#ds_sid').val();
-			var ds_type = $("select[name='ds_type']").val();
+			var ds_type = $("select[name='dsType']").val();
 
 			if (ds_addr == '') {
 				ds_addr = 'localhost';
@@ -133,7 +133,7 @@
 		});
 
 		function fn_check_duplicate_ds() {
-			var ds_nm = $('input[name=ds_nm]').val();
+			var ds_nm = $('input[name=dsNm]').val();
 			var checkResult = false;
 			$.ajax({
 				url : '${dsUrl}dsCheck', //컨트롤러에서 요청받을 주소

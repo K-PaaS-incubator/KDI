@@ -40,12 +40,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 			result.put("msg", "입력정보 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		if (null == usrVo.getUsr_id()) {
+		if (null == usrVo.getUsrId()) {
 			result.put("state", "회원가입 실패");
 			result.put("msg", "사용자ID 확인불가");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		if (isDuplicateUserId(usrVo.getUsr_id())) {
+		if (isDuplicateUserId(usrVo.getUsrId())) {
 			result.put("state", "회원가입 실패");
 			result.put("msg", "중복 사용자ID");
 			return ResponseEntity.badRequest().body(result.toString());

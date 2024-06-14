@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -49,7 +50,7 @@ public class MemberController extends AbstractController {
 	@PostMapping("signUp")
 	public ResponseEntity<String> signupUser(MemberVo user_vo) {
 		// 사용자ID 암호화
-		user_vo.setUsr_pw(passwordEncoder.encode(user_vo.getUsr_pw()));
+		user_vo.setUsrPw(passwordEncoder.encode(user_vo.getUsrPw()));
 		return service.signupUser(user_vo);
 	}
 
@@ -59,7 +60,7 @@ public class MemberController extends AbstractController {
 	 * @param usr_id
 	 */
 	@PostMapping("idCheck")
-	public ResponseEntity<String> idCheck(@RequestParam(name = "usr_id") String usr_id) {
+	public ResponseEntity<String> idCheck(@RequestParam(name = "usrId") String usr_id) {
 		if (service.isDuplicateUserId(usr_id)) {
 			return ResponseEntity.ok()
 					.body(new JSONObject().put("state", false).put("msg", "사용할 수 없는 사용자ID").toString());

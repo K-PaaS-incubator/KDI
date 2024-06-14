@@ -19,23 +19,23 @@
 			<!-- onsubmit="return false;"옵션은 해당 form태그안에 input type='text'가 1개일 경우 엔터키 입력시 자동으로 form태그의 action에 명시된 url을 통해서 submit이 호출되는것을 막아줌 -->
 			<div class="signup-input-box">
 				<p class="subtitle1 gray400">사용하실 아이디를 입력해 주세요.</p>
-				<input class="signup-input subtitle1" type="text" name="usr_id" placeholder="ID" required>
+				<input class="signup-input subtitle1" type="text" name="usrId" placeholder="ID" required>
 			</div>
 			<div class="signup-input-box">
 				<p class="subtitle1 gray400">사용하실 비밀번호를 입력해 주세요.</p>
-				<input class="signup-input subtitle1" type="password" name="usr_pw" placeholder="PASSWORD" required>
+				<input class="signup-input subtitle1" type="password" name="usrPw" placeholder="PASSWORD" required>
 			</div>
 			<div class="signup-input-box">
 				<p class="subtitle1 gray400">회원명 입력해 주세요.</p>
-				<input class="signup-input subtitle1" type="text" name="usr_nm" placeholder="NAME" required>
+				<input class="signup-input subtitle1" type="text" name="usrNm" placeholder="NAME" required>
 			</div>
 			<div class="signup-input-box">
 				<p class="subtitle1 gray400">연락처를 입력해 주세요.</p>
-				<input class="signup-input subtitle1" type="tel" name="usr_phone" placeholder="ex) 010-1234-5678" required>
+				<input class="signup-input subtitle1" type="tel" name="usrPhone" placeholder="ex) 010-1234-5678" required>
 			</div>
 			<div class="signup-input-box">
 				<p class="subtitle1 gray400">이메일을 입력해 주세요.</p>
-				<input class="signup-input subtitle1" type="email" name="usr_email" placeholder="ex) you@example.com" required>
+				<input class="signup-input subtitle1" type="email" name="usrEmail" placeholder="ex) you@example.com" required>
 			</div>
 			<div class="signUpEx">
 				<p class="subtitle1 primary">※ 가입완료 후 관리자에게 권한을 요청하세요.</p>
@@ -51,10 +51,10 @@
 			//이메일 유효성검사        
 			var e_RegExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 			var n_RegExp = /^[가-힣]{2,15}$/; *///이름 유효성검사 정규식
-			var usr_id = $("[name='usr_id']").val();
-			var usr_pw = $("[name='usr_pw']").val();
-			var usr_phone = $("[name='usr_phone']").val();
-			var usr_email = $("[name='usr_email']").val();
+			var usr_id = $("[name='usrId']").val();
+			var usr_pw = $("[name='usrPw']").val();
+			var usr_phone = $("[name='usrPhone']").val();
+			var usr_email = $("[name='usrEmail']").val();
 		}
 
 		$('#signupBtn').click(function() {
@@ -89,7 +89,7 @@
 				url : '${memberUrl}idCheck',
 				type : 'POST',
 				async : false,
-				data : $('input[name=usr_id]').serialize(),
+				data : $('input[name=usrId]').serialize(),
 				dataType : 'json',
 				success : function(result) {
 					console.log(result)
