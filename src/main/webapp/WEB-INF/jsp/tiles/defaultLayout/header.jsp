@@ -99,8 +99,8 @@
 			{
 				title : '후처리 업무 관리',
 				uri : 'res/work/post'
-			}
-			 */
+			} */
+			
 			// submenu END
 			]
 		}, {
@@ -173,6 +173,8 @@
 					menuHoverBox.append(menuHoverBoxBlankHtml);
 				}
 			});
+			
+			$('.dropdown-menu').css('height',(subMenuMaxSize * 45)+'px');
 		}
 
 		$(document).ready(function() {
@@ -183,7 +185,7 @@
 			}, function() {
 				$(".dropdown-menu").stop().slideToggle(500);
 			});
-		})
+		});
 	</script>
 </header>
 
