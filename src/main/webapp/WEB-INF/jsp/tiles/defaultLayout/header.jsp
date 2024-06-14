@@ -135,14 +135,14 @@
 			// title
 			const menuBox = $('.header-container .menuBox');
 			menuBox.html(''); // 초기화
-			const menuBoxListHtml = $('.header-container .menu-box-list-format').html();
+			const menuBoxListHtml = $('.menu-box-list-format').html();
 
 			// submenu
 			const flexCol = $('.header-container .flex-col');
 			flexCol.html(''); // 초기화
-			const flexColFormat = $('.header-container .flex-col-format').html();
-			const menuHoverBoxHtml = $('.header-container .menu-hover-box-html').html();
-			const menuHoverBoxBlankHtml = $('.header-container .menu-hover-box-blank-html')
+			const flexColFormat = $('.flex-col-format').html();
+			const menuHoverBoxHtml = $('.menu-hover-box-html').html();
+			const menuHoverBoxBlankHtml = $('.menu-hover-box-blank-html')
 					.html();
 			let subMenuMaxSize = 0;
 
