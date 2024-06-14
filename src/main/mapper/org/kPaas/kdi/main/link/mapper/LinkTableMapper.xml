@@ -34,5 +34,14 @@
 		 svc_id = #{svc_id} <!--  #{svc_id, JDBCType=INTEGER} (parameterType이 각 변수마다 다를경우 직접 선언) -->
 		 </where>
 	</select>
+	
+	<select id="getlnkColList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
+		SELECT
+			*
+		FROM KDI_LINK_TABLE
+		<where>
+		</where>
+		
+	</select>	
 
 </mapper>
