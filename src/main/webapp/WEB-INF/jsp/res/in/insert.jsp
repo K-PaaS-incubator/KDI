@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="${cssUrl}ds.css">
 <div class="mainContent">
 	<form id="insert">
-		<!-- 데이터소스명 -->
 		<div class="ds-wrapper">
 			<div class="ds-box-left">
 				<div class="ds-input-box">
