@@ -313,7 +313,11 @@ var KdiListGrid = function(varName, url) {
 						if ('number' != typeof _pageInfo.pagePerRow) {
 							_pageInfo.pagePerRow = parseInt(_pageInfo.pagePerRow);
 						}
-						_totalPage = Math.ceil(_pageInfo.total / _pageInfo.pagePerRow);
+						if(0 < _pageInfo.total) {
+							_totalPage = Math.ceil(_pageInfo.total / _pageInfo.pagePerRow);
+						} else {
+							_totalPage = 1;
+						}
 						$(_totalPageId).html(_totalPage);
 					}
 					// PageCtlInfo
