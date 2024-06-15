@@ -1,6 +1,7 @@
 package org.kPaas.kdi.com.base;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -46,13 +47,19 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 		}
 	}
 
+	protected Map<String, Object> selectDataProc(Map<String, Object> data) {
+		return data;
+	}
+
 	@Override
 	public ResponseEntity<String> get(KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
 		try {
 			result.put("state", getBizName() + " 데이터 조회 성공");
 			result.put("stateCode", 0);
-			result.put("data", getMapper().get(kdiParam));
+			Map<String, Object> data = getMapper().get(kdiParam);
+			selectDataProc(data);
+			result.put("data", data);
 			return ResponseEntity.ok(result.toString());
 		} catch (MyBatisSystemException e) {
 			result.put("state", getBizName() + " 데이터 조회 실패");
@@ -69,7 +76,12 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 
 		try {
 			pageInfo.setTotal(getMapper().getListCnt(kdiParam));
-			result.put("data", getMapper().getList(kdiParam));
+
+			List<Map<String, Object>> datas = getMapper().getList(kdiParam);
+			for (Map<String, Object> data : datas) {
+				selectDataProc(data);
+			}
+			result.put("data", datas);
 			result.put("stateCode", 0);
 			result.put("state", getBizName() + " 리스트 조회 성공");
 		} catch (MyBatisSystemException e) {
@@ -179,5 +191,4 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 	}
-
 }

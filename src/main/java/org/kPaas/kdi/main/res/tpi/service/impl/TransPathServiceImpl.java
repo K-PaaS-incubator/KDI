@@ -1,5 +1,7 @@
 package org.kPaas.kdi.main.res.tpi.service.impl;
 
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.kPaas.kdi.com.base.KdiGridMapper;
@@ -35,5 +37,19 @@ public class TransPathServiceImpl extends KdiGridServiceImpl implements TransPat
 	protected String getBizName() {
 		return "전송경로정보";
 	}
-
+	
+	@Override
+	protected Map<String, Object> selectDataProc(Map<String, Object> data) {
+		if (null == data.get("TRNS_PATH_TYPE")) {
+			data.put("TRNS_PATH_TYPE_NM", "미정");
+			return data;
+		}
+		data.put("TRNS_PATH_TYPE_NM", switch (data.get("TRNS_PATH_TYPE").toString()) {
+		case "1" -> "파일";
+		case "2" -> "JMS";
+		case "3" -> "MQTT";
+		default -> "미정";
+		});
+		return data;
+	}
 }

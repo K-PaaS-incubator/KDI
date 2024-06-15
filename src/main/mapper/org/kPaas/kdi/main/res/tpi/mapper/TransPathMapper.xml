@@ -30,7 +30,7 @@
 				AND TB1.TRNS_PATH_NM LIKE '%' || #{param.value.trnsPathNm} || '%'
 			</if>
 			<if test="param.value.trnsPathType != null and param.value.trnsPathType != ''">
-				AND TB1.TRNS_PATH_TYPE LIKE '%' || #{param.value.trnsPathType} || '%'
+				AND TB1.TRNS_PATH_TYPE = #{param.value.trnsPathType}
 			</if>
 			<if test="param.value.trnsPath != null and param.value.trnsPath != ''">
 				AND TB1.TRNS_PATH LIKE '%' || #{param.value.trnsPath} || '%'
@@ -39,8 +39,7 @@
 			<if test="param.value.allSearch != null and param.value.allSearch != ''">
 				OR TB1.TRNS_PATH_ID LIKE '%' || #{param.value.trnsPathId} || '%'
 				OR TB1.TRNS_PATH_NM LIKE '%' || #{param.value.trnsPathNm} || '%'
-				OR TB1.TRNS_PATH_TYPE LIKE '%' ||
-				#{param.value.trnsPathType} || '%'
+				OR TB1.TRNS_PATH_TYPE = #{param.value.trnsPathType}
 				OR TB1.TRNS_PATH LIKE '%' || #{param.value.trnsPath} || '%'
 
 			</if>
