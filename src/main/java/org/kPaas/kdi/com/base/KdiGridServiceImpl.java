@@ -11,6 +11,7 @@ import org.kPaas.kdi.com.abs.AbstractService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.mybatis.spring.MyBatisSystemException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 
 public abstract class KdiGridServiceImpl extends AbstractService implements KdiGridService {
@@ -20,20 +21,37 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 
 	protected abstract String getBizName();
 
-	protected Map<String, String> emptyValueCheck = new HashMap<String, String>();
-	private Map<String, Integer> stringByteLengthCheckMap = new HashMap<String, Integer>();
+	protected Map<String, Map<String, String>> emptyValueCheck = new HashMap<String, Map<String, String>>();
+	private Map<String, Map<String, Integer>> stringByteLengthCheck = new HashMap<String, Map<String, Integer>>();
 
-	private String getEmptyValueCheckName(String target) {
-		return emptyValueCheck.get(target);
+	private String getEmptyValueCheckName(String workNm, String target) {
+		if (!emptyValueCheck.containsKey(workNm)) {
+			return null;
+		}
+		return emptyValueCheck.get(workNm).get(target);
 	}
 
 	public void putEmptyValueCheck(String target, String targetNm) {
-		emptyValueCheck.put(target, targetNm);
+		putEmptyValueCheck("default", target, targetNm);
+	}
+
+	public void putEmptyValueCheck(String workNm, String target, String targetNm) {
+		if (!emptyValueCheck.containsKey(workNm)) {
+			emptyValueCheck.put(workNm, new HashMap<String, String>());
+		}
+		emptyValueCheck.get(workNm).put(target, targetNm);
 	}
 
 	public void putStringByteLengthCheck(String target, String targetNm, int byteLength) {
-		putEmptyValueCheck(target, targetNm);
-		stringByteLengthCheckMap.put(target, byteLength);
+		putStringByteLengthCheck("default", target, targetNm, byteLength);
+	}
+
+	public void putStringByteLengthCheck(String workNm, String target, String targetNm, int byteLength) {
+		putEmptyValueCheck(workNm, target, targetNm);
+		if (!stringByteLengthCheck.containsKey(workNm)) {
+			stringByteLengthCheck.put(workNm, new HashMap<String, Integer>());
+		}
+		stringByteLengthCheck.get(workNm).put(target, byteLength);
 	}
 
 	/**
@@ -41,7 +59,7 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 	 * 해당 테이블이 없으면 생성하는 기능
 	 */
 	@PostConstruct
-	private void init() {
+	protected void init() {
 		if (!isTableExists(getTableName())) {
 			getMapper().createTable();
 		}
@@ -95,31 +113,47 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 		return ResponseEntity.ok(result.toString());
 	}
 
+	@Override
 	public ResponseEntity<String> insert(KdiParam kdiParam) {
+		return insert("default", getBizName(), getMapper(), kdiParam);
+	}
+
+	public ResponseEntity<String> insert(String workNm, String bizName, KdiGridMapper mapper, KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
-		for (String target : emptyValueCheck.keySet()) {
-			if (isEmptyString(kdiParam, target)) {
-				result.put("stateCode", 2);
-				result.put("state", "'" + getEmptyValueCheckName(target) + "'가(이) 누락되었습니다.");
-				return ResponseEntity.badRequest().body(result.toString());
+		if (emptyValueCheck.containsKey(workNm)) {
+			Map<String, String> emptyValueCheckMap = emptyValueCheck.get(workNm);
+			for (String target : emptyValueCheckMap.keySet()) {
+				if (isEmptyString(kdiParam, target)) {
+					result.put("stateCode", 2);
+					result.put("state", "'" + getEmptyValueCheckName("default", target) + "'가(이) 누락되었습니다.");
+					return ResponseEntity.badRequest().body(result.toString());
+				}
 			}
 		}
-		for (String target : stringByteLengthCheckMap.keySet()) {
-			if (stringByteLengthCheckMap.get(target) < kdiParam.getValue(target, String.class).getBytes().length) {
-				result.put("stateCode", 3);
-				result.put("state", "'" + emptyValueCheck.get(target) + "'는(은) " + stringByteLengthCheckMap.get(target)
-						+ "Byte를 초과할 수 없습니다.");
-				return ResponseEntity.badRequest().body(result.toString());
+		if (stringByteLengthCheck.containsKey(workNm)) {
+			Map<String, Integer> stringByteLengthCheckMap = stringByteLengthCheck.get(workNm);
+			for (String target : stringByteLengthCheckMap.keySet()) {
+				if (stringByteLengthCheckMap.get(target) < kdiParam.getValue(target, String.class).getBytes().length) {
+					result.put("stateCode", 3);
+					result.put("state", "'" + getEmptyValueCheckName(workNm, target) + "'는(은) "
+							+ stringByteLengthCheckMap.get(target) + "Byte를 초과할 수 없습니다.");
+					return ResponseEntity.badRequest().body(result.toString());
+				}
 			}
 		}
 		try {
 			kdiParam.putValue("regId", getLoginUserId());
-			getMapper().insert(kdiParam);
+			mapper.insert(kdiParam);
 			result.put("stateCode", 0);
-			result.put("state", "인터페이스명 입력 완료");
+			result.put("state", bizName + " 입력 완료");
 			return ResponseEntity.ok(result.toString());
+		} catch (DuplicateKeyException e) {
+			result.put("state", bizName + " 입력 실패");
+			result.put("stateCode", 1);
+			result.put("msg", "중복된 값이 존재합니다.");
+			return ResponseEntity.badRequest().body(result.toString());
 		} catch (MyBatisSystemException e) {
-			result.put("state", "인터페이스명 입력 실패");
+			result.put("state", bizName + " 입력 실패");
 			result.put("stateCode", 1);
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
@@ -144,30 +178,40 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 
 	@Override
 	public ResponseEntity<String> modify(KdiParam kdiParam) {
+		return modify("default", getBizName(), getMapper(), kdiParam);
+	}
+
+	public ResponseEntity<String> modify(String workNm, String bizName, KdiGridMapper mapper, KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
-		for (String target : emptyValueCheck.keySet()) {
-			if (isEmptyString(kdiParam, target)) {
-				result.put("stateCode", 2);
-				result.put("state", "'" + getEmptyValueCheckName(target) + "'가(이) 누락되었습니다.");
-				return ResponseEntity.badRequest().body(result.toString());
+		if (emptyValueCheck.containsKey(workNm)) {
+			Map<String, String> emptyValueCheckMap = emptyValueCheck.get(workNm);
+			for (String target : emptyValueCheckMap.keySet()) {
+				if (isEmptyString(kdiParam, target)) {
+					result.put("stateCode", 2);
+					result.put("state", "'" + getEmptyValueCheckName("default", target) + "'가(이) 누락되었습니다.");
+					return ResponseEntity.badRequest().body(result.toString());
+				}
 			}
 		}
-		for (String target : stringByteLengthCheckMap.keySet()) {
-			if (stringByteLengthCheckMap.get(target) < kdiParam.getValue(target, String.class).getBytes().length) {
-				result.put("stateCode", 3);
-				result.put("state", "'" + emptyValueCheck.get(target) + "'는(은) " + stringByteLengthCheckMap.get(target)
-						+ "Byte를 초과할 수 없습니다.");
-				return ResponseEntity.badRequest().body(result.toString());
+		if (stringByteLengthCheck.containsKey(workNm)) {
+			Map<String, Integer> stringByteLengthCheckMap = stringByteLengthCheck.get(workNm);
+			for (String target : stringByteLengthCheckMap.keySet()) {
+				if (stringByteLengthCheckMap.get(target) < kdiParam.getValue(target, String.class).getBytes().length) {
+					result.put("stateCode", 3);
+					result.put("state", "'" + getEmptyValueCheckName(workNm, target) + "'는(은) "
+							+ stringByteLengthCheckMap.get(target) + "Byte를 초과할 수 없습니다.");
+					return ResponseEntity.badRequest().body(result.toString());
+				}
 			}
 		}
 		try {
 			kdiParam.putValue("modifyId", getLoginUserId());
-			getMapper().modify(kdiParam);
+			mapper.modify(kdiParam);
 			result.put("stateCode", 0);
-			result.put("state", "인터페이스명 수정 완료");
+			result.put("state", bizName + " 수정 완료");
 			return ResponseEntity.ok(result.toString());
 		} catch (MyBatisSystemException e) {
-			result.put("state", "인터페이스명 수정 실패");
+			result.put("state", bizName + " 수정 실패");
 			result.put("stateCode", 1);
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
@@ -176,17 +220,21 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 
 	@Override
 	public ResponseEntity<String> delete(KdiParam kdiParam) {
+		return delete("default", getBizName(), getMapper(), kdiParam);
+	}
+
+	public ResponseEntity<String> delete(String workNm, String bizName, KdiGridMapper mapper, KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
 		try {
 			getMapper().delete(kdiParam);
-			log.info("인터페이스 정보 삭제 - 인터페이스ID='" + kdiParam.getValue("ifId") + "'");
+			log.info(bizName + " 삭제 완료 - " + new JSONObject(kdiParam).toString());
 			result.put("stateCode", 0);
-			result.put("state", "인터페이스명 삭제 완료!!");
+			result.put("state", bizName + " 삭제 완료");
 			return ResponseEntity.ok(result.toString());
 		} catch (MyBatisSystemException e) {
 			e.printStackTrace();
 			result.put("stateCode", 1);
-			result.put("state", "인터페이스명 삭제 실패!!");
+			result.put("state", bizName + " 삭제 실패");
 			result.put("msg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
 		}

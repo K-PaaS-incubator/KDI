@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kPaas.kdi.main.res.tpi.mapper.TransPathJmsMapper">
+	<insert id="createTable">
+		CREATE TABLE `KDI_TRNS_PATH_JMS` (
+		`TRNS_PATH_ID` VARCHAR2(100) NOT NULL,
+		`TRNS_PATH_JMS_CF` VARCHAR2(1000),
+		`TRNS_PATH_JMS_PER` BOOLEAN,
+		`TRNS_PATH_JMS_DEST` NUMBER,
+		`TRNS_PATH_JMS_DEST_NM` VARCHAR2(100),
+		`REG_ID` VARCHAR2(20) NULL,
+		`REG_DT` DATE NULL,
+		`MOD_ID` VARCHAR2(20) NULL,
+		`MOD_DT` DATE NULL,
+		PRIMARY KEY (`TRNS_PATH_ID`)
+		)
+	</insert>
+
+	<insert id="insert">
+		INSERT INTO KDI_TRNS_PATH_JMS (
+		TRNS_PATH_ID,
+		TRNS_PATH_JMS_CF,
+		TRNS_PATH_JMS_PER,
+		TRNS_PATH_JMS_DEST,
+		TRNS_PATH_JMS_DEST_NM,
+		REG_ID,
+		REG_DT
+		) VALUES (
+		#{param.value.trnsPathId},
+		#{param.value.trnsPathJmsCf},
+		#{param.value.trnsPathJmsPer},
+		#{param.value.trnsPathJmsDest},
+		#{param.value.trnsPathJmsDestNm},
+		#{param.value.regId},
+		current_timestamp()
+		)
+	</insert>
+
+	<insert id="modify">
+		MERGE INTO KDI_TRNS_PATH_JMS T1
+		USING (
+		SELECT
+		CAST(#{param.value.orgTrnsPathId} AS CHARACTER VARYING) TRNS_PATH_ID_ORG,
+		CAST(#{param.value.trnsPathId} AS CHARACTER VARYING) TRNS_PATH_ID,
+		CAST(#{param.value.trnsPathJmsCf} AS CHARACTER VARYING) TRNS_PATH_JMS_CF,
+		CAST(#{param.value.trnsPathJmsPer} AS BOOLEAN) TRNS_PATH_JMS_PER,
+		CAST(#{param.value.trnsPathJmsDest} AS NUMBER) TRNS_PATH_JMS_DEST,
+		CAST(#{param.value.trnsPathJmsDestNm} AS CHARACTER VARYING) TRNS_PATH_JMS_DEST_NM,
+		CAST(#{param.value.modifyId} AS CHARACTER VARYING) MOD_ID
+		FROM DUAL
+		) T2
+		ON (T1.TRNS_PATH_ID = T2.TRNS_PATH_ID_ORG)
+		WHEN MATCHED THEN UPDATE
+		<set>
+			TRNS_PATH_ID = T2.TRNS_PATH_ID,
+			TRNS_PATH_JMS_CF = T2.TRNS_PATH_JMS_CF,
+			TRNS_PATH_JMS_PER = T2.TRNS_PATH_JMS_PER,
+			TRNS_PATH_JMS_DEST = T2.TRNS_PATH_JMS_DEST,
+			TRNS_PATH_JMS_DEST_NM =
+			T2.TRNS_PATH_JMS_DEST_NM,
+			MOD_ID = T2.MOD_ID,
+			MOD_DT = current_timestamp()
+		</set>
+		WHEN NOT MATCHED THEN INSERT (
+		TRNS_PATH_ID,
+		TRNS_PATH_JMS_CF,
+		TRNS_PATH_JMS_PER,
+		TRNS_PATH_JMS_DEST,
+		TRNS_PATH_JMS_DEST_NM,
+		REG_ID,
+		REG_DT,
+		MOD_ID,
+		MOD_DT
+		) VALUES (
+		T2.TRNS_PATH_ID,
+		T2.TRNS_PATH_JMS_CF,
+		T2.TRNS_PATH_JMS_PER,
+		T2.TRNS_PATH_JMS_DEST,
+		T2.TRNS_PATH_JMS_DEST_NM,
+		T2.MOD_ID,
+		current_timestamp(),
+		T2.MOD_ID,
+		current_timestamp()
+		)
+	</insert>
+
+	<delete id="delete" parameterType="String">
+		DELETE
+		FROM
+		KDI_TRNS_PATH_JMS
+		<where>
+			TRNS_PATH_ID = #{param.value.trnsPathId}
+		</where>
+	</delete>
+
+</mapper>

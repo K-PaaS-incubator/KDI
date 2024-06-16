@@ -18,7 +18,6 @@
 		)
 	</insert>
 
-
 	<sql id="getTpiNmListWhere">
 		KDI_TRNS_PATH TB1
 		<where>
@@ -40,7 +39,8 @@
 				OR TB1.TRNS_PATH_ID LIKE '%' || #{param.value.trnsPathId} || '%'
 				OR TB1.TRNS_PATH_NM LIKE '%' || #{param.value.trnsPathNm} || '%'
 				OR TB1.TRNS_PATH_TYPE = #{param.value.trnsPathType}
-				OR TB1.TRNS_PATH LIKE '%' || #{param.value.trnsPath} || '%'
+				OR
+				TB1.TRNS_PATH LIKE '%' || #{param.value.trnsPath} || '%'
 
 			</if>
 		</where>
@@ -90,9 +90,20 @@
 	</select>
 
 	<select id="get" resultType="Map">
-		SELECT * FROM KDI_TRNS_PATH
+		SELECT
+		TB1.*,
+		TB2.TRNS_PATH_JMS_CF,
+		TB2.TRNS_PATH_JMS_PER,
+		TB2.TRNS_PATH_JMS_DEST,
+		TB2.TRNS_PATH_JMS_DEST_NM
+		FROM
+		KDI_TRNS_PATH TB1
+		LEFT JOIN
+		KDI_TRNS_PATH_JMS TB2
+		ON
+		TB1.TRNS_PATH_ID = TB2.TRNS_PATH_ID
 		<where>
-			TRNS_PATH_ID = #{param.value.trnsPathId}
+			TB1.TRNS_PATH_ID = #{param.value.trnsPathId}
 		</where>
 	</select>
 
@@ -103,9 +114,9 @@
 			TRNS_PATH_NM = #{param.value.trnsPathNm},
 			TRNS_PATH_TYPE = #{param.value.trnsPathType},
 			TRNS_PATH = #{param.value.trnsPath},
-			REG_ID =
+			MOD_ID =
 			#{param.value.modifyId},
-			REG_DT = current_timestamp()
+			MOD_DT = current_timestamp()
 		</set>
 		<where>
 			TRNS_PATH_ID = #{param.value.orgTrnsPathId}

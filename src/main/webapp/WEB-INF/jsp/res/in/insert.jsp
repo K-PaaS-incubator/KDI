@@ -9,8 +9,8 @@
 		<div class="ds-wrapper">
 			<div class="ds-box-left">
 				<div class="ds-input-box">
-					<div class="header6 label-title pkTitle">인터페이스ID</div>
-					<input class="ds-input subtitle1 gray400 pk" type="text"
+					<div class="header6 label-title pk-title">인터페이스ID</div>
+					<input class="ds-input subtitle1 gray400 pk eng-num-only" type="text"
 						name="ifId" maxlength="33" required>
 				</div>
 				<div class="ds-input-box">
