@@ -26,7 +26,7 @@
 					<div class="header6 label-title">전송경로 유형</div>
 					<select class="ds-input subtitle1 gray400" id="TRNS_PATH_TYPE"
 						name="trnsPathType">
-						<option value="1" selected="selected">파일</option>
+						<option value="1">파일</option>
 						<option value="2">JMS</option>
 						<option value="3">MQTT</option>
 					</select>

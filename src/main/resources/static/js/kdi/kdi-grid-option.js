@@ -1,16 +1,77 @@
-/**
- * 2024.04.27 양시열 KDI 데이터 수정 기능
- */
+const fn_title_init = function(menuNm, pageNm, pageType) {
+	//배너 타이틀 세팅
+	$('.banner-title').text(pageNm + ' ' + pageType);
+	$('.banner-sub-title').text(pageNm + '를 ' + pageType + ' 합니다.');
+	//페이지 타이틀 세팅
+	$('.main-title-text').text(pageNm + ' ' + pageType);
+	$('.navi-arrow').text(' > ' + menuNm + ' > ' + pageNm + ' > ' + pageType);
+}
+const fn_duplicate_check = function(pageUri, pkNm) {
+	let data = {};
+	data[pkNm] = encodeURIComponent($('input[name="' + pkNm + '"]'));
+	let checkResult = false;
+	$.ajax({
+		url: pageUri + 'duplicateCheck.json', //컨트롤러에서 요청받을 주소
+		type: 'GET',
+		async: false,
+		dataType: 'json',
+		data: data,
+		success: function(result) {
+			checkResult = result.data;
+		},
+		error: function(result) {
+			console.log('statusCode:' + result.statusCode);
+		}
+	});
+	return checkResult;
+}
+
+const fn_previous_button_click = function(_page_url) {
+	$('#previousBtn').click(function() {
+		location.href = _page_url
+	});
+}
+
+const fn_insert_page_load = function(menuNm, pageNm) {
+	const _page_url = new URL(location.href).pathname + '/../';
+	const _pkNm = $('input.pk')[0].name;
+	const _pkTitle = $('.pkTitle').text();
+	const _init = function() {
+		fn_title_init(menuNm, pageNm, '등록');
+	};
+	const _event_join = function() {
+		$('#regbtn').click(function databaseSave() {
+			$('form').validate();
+			const duplicate = fn_duplicate_check(_page_url, _pkNm);
+			if (!duplicate) {
+				alert(_pkTitle + '가 중복되었습니다.');
+				return;
+			}
+			$.ajax({
+				url: _page_url + 'insert.json', //컨트롤러에서 요청받을 주소
+				type: 'POST',
+				async: false,
+				data: $('#insert').serialize(),
+				dataType: 'json',
+				success: function() {
+					alert('등록 완료');
+					location.href = _page_url;
+				},
+				error: function(result) {
+					alert(result.responseJSON.msg);
+				}
+			});
+		});
+		fn_previous_button_click(_page_url);
+	};
+	_init();
+	_event_join();
+}
 
 const fn_modify_page_load = function(menuNm, pageNm) {
 	const _page_url = new URL(location.href).pathname + '/../';
 	const _init = function() {
-		//배너 타이틀 세팅
-		$('.banner-title').text(pageNm + ' 수정');
-		$('.banner-sub-title').text(pageNm + '를 수정합니다.');
-		//페이지 타이틀 세팅
-		$('.main-title-text').text(pageNm + ' 수정');
-		$('.navi-arrow').text(' > ' + menuNm + ' > ' + pageNm + ' > 수정');
+		fn_title_init(menuNm, pageNm, '수정');
 
 		const orgPkData = new URL(location.href).searchParams.get($('input.pk')[0].name);
 		$('input#pk').val(orgPkData);
@@ -90,9 +151,7 @@ const fn_modify_page_load = function(menuNm, pageNm) {
 			}
 		});
 
-		$('#previousBtn').click(function() {
-			location.href = _page_url
-		});
+		fn_previous_button_click(_page_url);
 	};
 	_init();
 	_get_data();
