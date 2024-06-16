@@ -64,14 +64,16 @@
 					<table class="link-table-list">
 						<colgroup>
 							<col width="45%">
-							<col width="20%">
 							<col width="15%">
+							<col width="10%">
+							<col width="10%">
 							<col width="20%">
 						</colgroup>
 						<thead class="list-head">
 							<tr class="subtitle1 gray500">
 								<th>컬럼명</th>
 								<th>컬럼타입</th>
+								<th>DEFUALT</th>
 								<th>연계여부</th>
 								<th>연계 플래그 매핑</th>
 							</tr>
@@ -81,6 +83,7 @@
 							<tr class="subtitle1 gray500">
 								<td id="column_1">COLUMN1</td>
 								<td>VARCHAR2(100)</td>
+								<td>timestamp();</td>
 								<td><input class="tdIsConnect" type="checkbox"
 									name="connect_use_yn" id="use_yn_column_1"
 									onclick="colUseCheck()"></td>
@@ -94,6 +97,7 @@
 							<tr class="subtitle1 gray500">
 								<td class="column_2">COLUMN2</td>
 								<td>VARCHAR2(100)</td>
+								<td>timestamp();</td>
 								<td><input class="tdIsConnect" type="checkbox"
 									name="connect_use_yn" id="use_yn_column_2"
 									onclick="colUseCheck()"></td>

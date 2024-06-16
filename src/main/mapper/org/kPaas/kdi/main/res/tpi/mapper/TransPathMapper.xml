@@ -3,7 +3,6 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.kPaas.kdi.main.res.tpi.mapper.TransPathMapper">
-<<<<<<< HEAD
 	<!-- TRNS_PATH_TYPE = 1:FILE, 2:JMS, 3:MQTT 등 -->
 	<insert id="createTable">
 		CREATE TABLE `KDI_TRNS_PATH` (
@@ -130,114 +129,6 @@
 		KDI_TRNS_PATH
 		<where>
 			TRNS_PATH_ID = #{param.value.trnsPathId}
-=======
-
-	<insert id="createTable">
-		CREATE TABLE `KDI_TRNS_PATH` (
-		`TRNS_PATH_ID` VARCHAR2(100) NOT NULL,
-		`TRNS_PATH_NM` VARCHAR2(100),
-		`TRNS_PATH_TYPE` NUMBER, <!-- 1:FILE, 2:JMS, 3:MQTT 등-->
-		`TRNS_PATH` VARCHAR2(2000),
-		`REG_ID` VARCHAR2(20) NULL,
-		`REG_DT` DATE NULL,
-		`MOD_ID` VARCHAR2(20) NULL,
-		`MOD_DT` DATE NULL,
-		PRIMARY KEY (`TRNS_PATH_ID`)
-		)
-	</insert>
-	
-	
-	<sql id="getTpiNmListWhere">
-		KDI_TRNS_PATH TB1
-		<where>
-			1=1
-			<if test="value.trns_path_id != null and value.trns_path_id != ''">
-				AND TB1.TRNS_PATH_ID LIKE '%' || #{value.trns_path_id} || '%'
-			</if>
-			<if test="value.trns_path_nm != null and value.trns_path_nm != ''">
-				AND TB1.TRNS_PATH_NM LIKE '%' || #{value.trns_path_nm} || '%'
-			</if>
-			
-			<if test="value.trns_path_type != null and value.trns_path_type != ''">
-				AND TB1.TRNS_PATH_TYPE LIKE '%' || #{value.trns_path_type} || '%'
-			</if>
-			<if test="value.trns_path != null and value.trns_path != ''">
-				AND TB1.TRNS_PATH LIKE '%' || #{value.trns_path} || '%'
-			</if>
-			
-			<if test="value.all_search != null and value.all_search != ''">
-				OR TB1.TRNS_PATH_ID LIKE '%' || #{value.trns_path_id} || '%'
-				OR TB1.TRNS_PATH_NM LIKE '%' || #{value.trns_path_nm} || '%'
-				
-				
-				OR TB1.TRNS_PATH_TYPE LIKE '%' || #{value.trns_path_type} || '%'
-				OR TB1.TRNS_PATH LIKE '%' || #{value.trns_path} || '%'
-				
-			</if>
-		</where>
-	</sql>
-	<select id="getListCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
-		SELECT
-		COUNT(TB1.*)
-		FROM
-		<include refid="getTpiNmListWhere" />
-	</select>
-
-	<select id="getList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
-		SELECT
-		TB1.TRNS_PATH_ID,
-		TB1.TRNS_PATH_NM,
-		TB1.TRNS_PATH_TYPE,
-		TB1.TRNS_PATH
-		FROM
-		<include refid="getTpiNmListWhere" />
-		ORDER BY
-		TB1.TRNS_PATH_ID, TB1.TRNS_PATH_NM, TB1.TRNS_PATH_TYPE, TB1.TRNS_PATH
-		LIMIT
-		#{pagePerRow}
-		OFFSET
-		(#{pageNum} - 1) * #{pagePerRow}
-	</select>
-
-	<insert id="insert">
-		INSERT INTO KDI_TRNS_PATH (TRNS_PATH_ID, TRNS_PATH_NM, TRNS_PATH_TYPE, TRNS_PATH, REG_ID, REG_DT)
-		VALUES(#{trns_path_id},#{trns_path_nm},#{trns_path_type},#{trns_path},#{reg_id},current_timestamp())
-	</insert>
-
-	<select id="duplicateCheck" resultType="Integer">
-		SELECT count(*) FROM KDI_TRNS_PATH
-		<where>TRNS_PATH_ID = #{trns_path_id}</where>
-	</select>
-
-	<select id="get" parameterType="String" resultType="String">
-		SELECT TRNS_PATH_NM FROM KDI_TRNS_PATH
-		<where>
-			TRNS_PATH_ID = #{trns_path_id}
-		</where>
-	</select>
-
-	<update id="modify">
-		UPDATE KDI_TRNS_PATH
-		<set>
-			TRNS_PATH_ID = #{trns_path_id},
-			TRNS_PATH_NM = #{trns_path_nm},
-			TRNS_PATH_TYPE = #{trns_path_type},
-			TRNS_PATH = #{trns_path},
-			REG_ID = #{modify_id},
-			REG_DT = current_timestamp()
-		</set>
-		<where>
-			TRNS_PATH_ID = #{org_trns_path_id}
-		</where>
-	</update>
-
-	<delete id="delete" parameterType="String">
-		DELETE
-		FROM
-		KDI_TRNS_PATH
-		<where>
-			TRNS_PATH_ID = #{trns_path_id}
->>>>>>> branch '전수정' of http://git.biz.ppsystem.co.kr/cloud/kdi.git
 		</where>
 	</delete>
 
