@@ -10,7 +10,11 @@
 		<div class="ds-wrapper">
 			<div class="ds-box-left">
 				<div class="ds-input-box">
+<<<<<<< HEAD
 					<div class="header6 label-title">데이터소스명</div>
+=======
+					<div class="header6 label-title">데이터소스 제목</div>
+>>>>>>> branch '전수정' of http://git.biz.ppsystem.co.kr/cloud/kdi.git
 					<input class="ds-input subtitle1 gray400" id="ds_nm" name="dsNm" value="${selectDsInfo.dsNm}" readonly>
 				</div>
 				<div class="ds-input-box">
