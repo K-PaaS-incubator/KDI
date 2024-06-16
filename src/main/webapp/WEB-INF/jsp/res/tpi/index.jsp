@@ -60,7 +60,7 @@
 </div>
 <table hidden="hidden">
 	<tbody id="gridHtmlFormatId">
-		<tr class="detailTr" onclick="fn_modify('#IF_ID#');">
+		<tr class="detailTr" onclick="fn_modify('#TRNS_PATH_ID#');">
 			<td>#NO#</td>
 			<td>#TRNS_PATH_ID#</td>
 			<td>#TRNS_PATH_NM#</td>

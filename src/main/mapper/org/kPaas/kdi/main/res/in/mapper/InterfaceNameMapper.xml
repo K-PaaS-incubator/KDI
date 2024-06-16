@@ -83,7 +83,7 @@
 	<update id="modify">
 		UPDATE KDI_INTERFACE_NM
 		<set>
-			IF_ID = #{param.value.ifId}
+			IF_ID = #{param.value.ifId},
 			IF_NM = #{param.value.ifNm},
 			REG_ID = #{param.value.modifyId},
 			REG_DT = current_timestamp()
