@@ -6,111 +6,11 @@
 
 	<select id="getDsListAll" fetchSize="50" resultType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
 		SELECT
-			ROWNUM AS NUM,
-			TB1.*
+		ROWNUM AS NUM,
+		TB1.*
 		FROM
-			KDI_DATASOURCE TB1
-	</select>
-	<sql id="getDsListWhere">
 		KDI_DATASOURCE TB1
-		<where>
-			1=1
-			<if test="value.dsNm != null and value.dsNm != ''">
-				AND TB1.DS_NM LIKE '%' || #{value.dsNm} || '%'
-			</if>
-			<if test="value.dsType != null and value.dsType != ''">
-				AND TB1.DS_TYPE LIKE '%' || #{value.dsType} || '%'
-			</if>
-			<if test="value.dsAddr != null and value.dsAddr != ''">
-				AND TB1.DS_ADDR LIKE '%' || #{value.dsAddr} || '%'
-			</if>
-			<if test="value.all_search != null and value.all_search != ''">
-				OR TB1.DS_NM   LIKE '%' || #{value.dsNm}   || '%'
-				OR TB1.DS_TYPE LIKE '%' || #{value.dsType} || '%'
-				OR TB1.DS_ADDR LIKE '%' || #{value.dsAddr} || '%'
-			</if>
-		</where>
-	</sql>
-	<select id="getDsListCnt" resultType="Long" parameterType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
-		SELECT
-			COUNT(TB1.*)
-		FROM
-		<include refid="getDsListWhere" />
 	</select>
-
-	<select id="getDsList" resultType="Map" parameterType="org.kPaas.kdi.com.util.KdiParam">
-		SELECT
-			TB1.DS_NM,
-			TB1.DS_URL
-		FROM
-		<include refid="getDsListWhere" />
-		ORDER BY
-	    	TB1.REG_DT, TB1.DS_NM
-	    LIMIT
-	    	#{pagePerRow}
-	    OFFSET
-	    	(#{pageNum} - 1) * #{pagePerRow}
-	</select>
-
-	<insert id="insertDS" parameterType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
-		INSERT INTO KDI_DATASOURCE
-		VALUES(#{dsNm},#{dsType},#{dsDriver},#{dsAddr},#{dsPort},#{dsSid},#{dsUrl},#{dsUsrNm},#{dsUsrPw},#{regId},current_timestamp(),#{modId},current_timestamp())
-	</insert>
-
-	<insert id="createTable">
-		CREATE TABLE `KDI_DATASOURCE` (
-		`DS_NM` VARCHAR2(100) NOT NULL,
-		`DS_TYPE` VARCHAR2(100) NULL,
-		`DS_DRIVER` VARCHAR2(100) NULL,
-		`DS_ADDR` VARCHAR2(100) NULL,
-		`DS_PORT` VARCHAR2(100) NULL,
-		`DS_SID` VARCHAR2(100) NULL,
-		`DS_URL` VARCHAR2(100) NULL,
-		`DS_USR_NM` VARCHAR2(100) NULL,
-		`DS_USR_PW` VARCHAR2(100) NULL,
-		`REG_ID` VARCHAR2(20) NULL,
-		`REG_DT` DATE NULL,
-		`MOD_ID` VARCHAR2(20) NULL,
-		`MOD_DT` DATE NULL,
-		PRIMARY KEY (`DS_NM`)
-		)
-	</insert>
-
-	<select id="getSameDsCheck" resultType="Integer">
-		SELECT count(*) FROM KDI_DATASOURCE
-		<where>ds_nm = #{dsNm}</where>
-	</select>
-
-	<select id="selectDsInfo" parameterType="String" resultType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
-		SELECT * FROM KDI_DATASOURCE
-		<where>
-			ds_nm = #{dsNm}
-		</where>
-	</select>
-
-	<update id="editDS" parameterType="org.kPaas.kdi.main.res.ds.vo.DatasourceVo">
-		UPDATE KDI_DATASOURCE
-		<set>
-			ds_url = #{dsUrl},
-			ds_addr = #{dsAddr},
-			ds_port = #{dsPort},
-			ds_sid = #{dsSid},
-			ds_usr_nm = #{dsUsrNm},
-			ds_usr_pw = #{dsUsrPw}
-		</set>
-		<where>
-			ds_nm = #{dsNm}
-		</where>
-	</update>
-
-	<delete id="deleteDS" parameterType="String">
-		DELETE
-		FROM
-		KDI_DATASOURCE
-		<where>
-			ds_nm = #{dsNm}
-		</where>
-	</delete>
 	<select id="validationQuery" resultType="String">
 		<choose>
 			<when test="dsType == 'h2'">select 1</when>
@@ -123,4 +23,122 @@
 			<otherwise>select 1 from dual</otherwise>
 		</choose>
 	</select>
+	<sql id="getDsListWhere">
+		KDI_DATASOURCE TB1
+		<where>
+			1=1
+			<if test="param.value.dsNm != null and param.value.dsNm != ''">
+				AND TB1.DS_NM LIKE '%' || #{param.value.dsNm} || '%'
+			</if>
+			<if test="param.value.dsType != null and param.value.dsType != ''">
+				AND TB1.DS_TYPE LIKE '%' || #{param.value.dsType} || '%'
+			</if>
+			<if test="param.value.dsAddr != null and param.value.dsAddr != ''">
+				AND TB1.DS_ADDR LIKE '%' || #{param.value.dsAddr} || '%'
+			</if>
+			<if test="param.value.all_search != null and param.value.all_search != ''">
+				OR TB1.DS_NM LIKE '%' || #{param.value.dsNm} || '%'
+				OR TB1.DS_TYPE LIKE '%' || #{param.value.dsType} || '%'
+				OR TB1.DS_ADDR LIKE '%' || #{param.value.dsAddr} || '%'
+			</if>
+		</where>
+	</sql>
+
+	<insert id="createTable">
+		CREATE TABLE `KDI_DATASOURCE` (
+		`DS_NM` VARCHAR2(100) NOT NULL,
+		`DS_TYPE` VARCHAR2(100) NULL,
+		`DS_DRIVER` VARCHAR2(100) NULL,
+		`DS_ADDR` VARCHAR2(100) NULL,
+		`DS_PORT`
+		VARCHAR2(100) NULL,
+		`DS_SID` VARCHAR2(100) NULL,
+		`DS_URL` VARCHAR2(100) NULL,
+		`DS_USR_NM` VARCHAR2(100) NULL,
+		`DS_USR_PW` VARCHAR2(100) NULL,
+		`REG_ID` VARCHAR2(20) NULL,
+		`REG_DT` DATE
+		NULL,
+		`MOD_ID` VARCHAR2(20) NULL,
+		`MOD_DT` DATE NULL,
+		PRIMARY KEY (`DS_NM`)
+		)
+	</insert>
+	
+	<select id="getListCnt" resultType="Long">
+		SELECT
+		COUNT(TB1.*)
+		FROM
+		<include refid="getDsListWhere" />
+	</select>
+
+	<select id="getList" resultType="Map">
+		SELECT
+		TB1.DS_NM,
+		TB1.DS_URL
+		FROM
+		<include refid="getDsListWhere" />
+		ORDER BY
+		TB1.REG_DT, TB1.DS_NM
+		LIMIT
+		#{param.pagePerRow}
+		OFFSET
+		(#{param.pageNum} - 1) * #{param.pagePerRow}
+	</select>
+
+	<insert id="insert">
+		INSERT INTO KDI_DATASOURCE
+		VALUES(
+		#{param.value.dsNm},
+		#{param.value.dsType},
+		#{param.value.dsDriver},
+		#{param.value.dsAddr},
+		#{param.value.dsPort},
+		#{param.value.dsSid},
+		#{param.value.dsUrl},
+		#{param.value.dsUsrNm},
+		#{param.value.dsUsrPw},
+		#{param.value.regId},
+		current_timestamp(),
+		#{param.value.modId},
+		current_timestamp()
+		)
+	</insert>
+
+
+	<select id="duplicateCheck" resultType="Integer">
+		SELECT count(*) FROM KDI_DATASOURCE
+		<where>ds_nm = #{param.value.dsNm}</where>
+	</select>
+
+	<select id="get" resultType="Map">
+		SELECT * FROM KDI_DATASOURCE
+		<where>
+			ds_nm = #{param.value.dsNm}
+		</where>
+	</select>
+
+	<update id="modify">
+		UPDATE KDI_DATASOURCE
+		<set>
+			ds_url = #{param.value.dsUrl},
+			ds_addr = #{param.value.dsAddr},
+			ds_port = #{param.value.dsPort},
+			ds_sid = #{param.value.dsSid},
+			ds_usr_nm = #{param.value.dsUsrNm},
+			ds_usr_pw = #{param.value.dsUsrPw}
+		</set>
+		<where>
+			ds_nm = #{param.value.dsNm}
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE
+		FROM
+		KDI_DATASOURCE
+		<where>
+			ds_nm = #{param.value.dsNm}
+		</where>
+	</delete>
 </mapper>

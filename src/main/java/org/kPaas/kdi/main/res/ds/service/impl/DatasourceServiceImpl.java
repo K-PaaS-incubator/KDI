@@ -7,6 +7,8 @@ import javax.annotation.Resource;
 
 import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractService;
+import org.kPaas.kdi.com.base.KdiGridMapper;
+import org.kPaas.kdi.com.base.KdiGridServiceImpl;
 import org.kPaas.kdi.com.config.KdiRoutingDataSource;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
@@ -19,20 +21,38 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class DatasourceServiceImpl extends AbstractService implements DatasourceService {
+public class DatasourceServiceImpl extends KdiGridServiceImpl implements DatasourceService {
 
 	@Resource
 	private DatasourceMapper mapper;
 
 	@Autowired
 	private KdiRoutingDataSource kdiRoutingDataSource;
+	
+
+	@Override
+	protected KdiGridMapper getMapper() {
+		return mapper;
+	}
+
+	@Override
+	protected String getTableName() {
+		return "KDI_DATASOURCE";
+	}
+
+	@Override
+	protected String getBizName() {
+		return "데이터소스";
+	}
 
 	/**
 	 * 최초 기동시에 데이터소스테이블(KDI_DATASOURCE)의 유무를 확인하고<br>
 	 * 해당 테이블이 없으면 데이터소스테이블을 생성하는 기능
 	 */
+	@Override
 	@PostConstruct
-	private void init() {
+	protected void init() {
+		super.init();
 		if (!isTableExists("KDI_DATASOURCE")) {
 			mapper.createTable();
 		}
@@ -45,70 +65,134 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 		}
 	}
 
+//	@Override
+//	public ResponseEntity<String> getList(KdiParam kdiParam) {
+//		JSONObject result = new JSONObject();
+//		PageInfo pageInfo = new PageInfo(kdiParam);
+//
+//		try {
+//			pageInfo.setTotal(mapper.getDsListCnt(kdiParam));
+//			result.put("data", mapper.getDsList(kdiParam));
+//		} catch (MyBatisSystemException e) {
+//			result.put("stateCode", 1);
+//			result.put("state", "조회 실패");
+//			result.put("errMsg", e.getMessage());
+//			return ResponseEntity.badRequest().body(result.toString());
+//		} finally {
+//			result.put("page", new JSONObject(pageInfo));
+//		}
+//		result.put("stateCode", 0);
+//		result.put("state", "조회 성공");
+//		return ResponseEntity.ok(result.toString());
+//	}
+
+//	public ResponseEntity<String> insert(DatasourceVo datasource_vo) {
+//		JSONObject result = new JSONObject();
+//		if (null == datasource_vo) {
+//			result.put("stateCode", 1);
+//			result.put("state", "데이터소스정보 등록 실패");
+//			result.put("msg", "입력정보 확인불가");
+//			return ResponseEntity.badRequest().body(result.toString());
+//		}
+//		datasource_vo.setRegId(getLoginUserId());
+//		if (null == datasource_vo.getRegId() || "".equals(datasource_vo.getRegId())) {
+//			result.put("stateCode", 2);
+//			result.put("state", "데이터소스정보 등록 실패");
+//			result.put("msg", "등록자 ID 확인 실패");
+//			return ResponseEntity.badRequest().body(result.toString());
+//		}
+//		try {
+//			mapper.insertDS(datasource_vo);
+//			// 신규데이터소스를 불러오는 행위
+//			loadDataSource(datasource_vo);
+//
+//			result.put("stateCode", 0);
+//			result.put("state", "데이터소스정보 등록 완료");
+//			return ResponseEntity.ok(result.toString());
+//		} catch (Exception e) {
+//			result.put("stateCode", 3);
+//			result.put("state", "데이터소스정보 등록 실패");
+//			result.put("msg", e.getMessage());
+//			return ResponseEntity.badRequest().body(result.toString());
+//		}
+//	}
+
+//	@Override
+//	public ResponseEntity<String> duplicateCheck(String ds_nm) {
+//		JSONObject result = new JSONObject();
+//		result.put("stateCode", 0);
+//		result.put("state", "중복검사 요청 성공");
+//		result.put("data", mapper.getSameDsCheck(ds_nm));
+//		return ResponseEntity.ok(result.toString());
+//	}
+
+//	@Override
+//	public DatasourceVo get(String ds_nm) {
+//		return mapper.selectDsInfo(ds_nm);
+//	}
+//
+//	@Override
+//	public ResponseEntity<String> modify(DatasourceVo datasource_vo) {
+//		JSONObject result = new JSONObject();
+//		if (null == datasource_vo) {
+//			result.put("stateCode", 1);
+//			result.put("state", "데이터소스정보 수정 실패");
+//			result.put("msg", "입력정보 확인불가");
+//			return ResponseEntity.badRequest().body(result.toString());
+//		}
+//		datasource_vo.setModId(getLoginUserId());
+//		if (null == datasource_vo.getModId() || "".equals(datasource_vo.getModId())) {
+//			result.put("stateCode", 2);
+//			result.put("state", "데이터소스정보 수정 실패");
+//			result.put("msg", "수정자 ID 확인 실패");
+//			return ResponseEntity.badRequest().body(result.toString());
+//		}
+//		try {
+//			mapper.editDS(datasource_vo);
+//			result.put("stateCode", 0);
+//			result.put("state", "데이터소스정보 수정 완료");
+//			loadDataSource(datasource_vo);
+//			return ResponseEntity.ok(result.toString());
+//		} catch (Exception e) {
+//			result.put("state", "데이터소스정보 수정 실패");
+//			result.put("stateCode", 3);
+//			result.put("msg", e.getMessage());
+//			return ResponseEntity.badRequest().body(result.toString());
+//		}
+//	}
+//
+//	@Override
+//	public ResponseEntity<String> delete(String ds_nm) {
+//		JSONObject result = new JSONObject();
+//		try {
+//			mapper.deleteDS(ds_nm);
+//			log.info("Remove DataSource - '" + ds_nm + "'");
+//			kdiRoutingDataSource.remove(ds_nm);
+//			result.put("stateCode", 0);
+//			result.put("state", "데이터소스정보 삭제 완료!!");
+//			return ResponseEntity.ok(result.toString());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			result.put("stateCode", 3);
+//			result.put("state", "데이터소스정보 삭제 실패!!");
+//			result.put("msg", e.getMessage());
+//			return ResponseEntity.badRequest().body(result.toString());
+//		}
+//	}
+
+
 	private List<DatasourceVo> getDsListAll() {
 		return mapper.getDsListAll();
 	}
-
-	@Override
-	public ResponseEntity<String> getList(KdiParam kdiParam) {
-		JSONObject result = new JSONObject();
-		PageInfo pageInfo = new PageInfo(kdiParam);
-
-		try {
-			pageInfo.setTotal(mapper.getDsListCnt(kdiParam));
-			result.put("data", mapper.getDsList(kdiParam));
-		} catch (MyBatisSystemException e) {
-			result.put("stateCode", 1);
-			result.put("state", "조회 실패");
-			result.put("errMsg", e.getMessage());
-			return ResponseEntity.badRequest().body(result.toString());
-		} finally {
-			result.put("page", new JSONObject(pageInfo));
-		}
-		result.put("stateCode", 0);
-		result.put("state", "조회 성공");
-		return ResponseEntity.ok(result.toString());
+	
+	/**
+	 * KdiRoutingDataSource에 DataSource를 불러오는 기능
+	 */
+	private void loadDataSource(DatasourceVo vo) {
+		kdiRoutingDataSource.put(vo);
+		log.info("Load DataSource - '" + vo.getDsNm() + "'");
 	}
-
-	public ResponseEntity<String> insert(DatasourceVo datasource_vo) {
-		JSONObject result = new JSONObject();
-		if (null == datasource_vo) {
-			result.put("stateCode", 1);
-			result.put("state", "데이터소스정보 등록 실패");
-			result.put("msg", "입력정보 확인불가");
-			return ResponseEntity.badRequest().body(result.toString());
-		}
-		datasource_vo.setRegId(getLoginUserId());
-		if (null == datasource_vo.getRegId() || "".equals(datasource_vo.getRegId())) {
-			result.put("stateCode", 2);
-			result.put("state", "데이터소스정보 등록 실패");
-			result.put("msg", "등록자 ID 확인 실패");
-			return ResponseEntity.badRequest().body(result.toString());
-		}
-		try {
-			mapper.insertDS(datasource_vo);
-			// 신규데이터소스를 불러오는 행위
-			loadDataSource(datasource_vo);
-
-			result.put("stateCode", 0);
-			result.put("state", "데이터소스정보 등록 완료");
-			return ResponseEntity.ok(result.toString());
-		} catch (Exception e) {
-			result.put("stateCode", 3);
-			result.put("state", "데이터소스정보 등록 실패");
-			result.put("msg", e.getMessage());
-			return ResponseEntity.badRequest().body(result.toString());
-		}
-	}
-
-	@Override
-	public ResponseEntity<String> duplicateCheck(String ds_nm) {
-		JSONObject result = new JSONObject();
-		result.put("stateCode", 0);
-		result.put("state", "중복검사 요청 성공");
-		result.put("data", mapper.getSameDsCheck(ds_nm));
-		return ResponseEntity.ok(result.toString());
-	}
+	
 
 	public ResponseEntity<String> testConnection(DatasourceVo datasource_vo) {
 		JSONObject result = new JSONObject();
@@ -159,68 +243,6 @@ public class DatasourceServiceImpl extends AbstractService implements Datasource
 			// 현재 쓰레드의 데이터소스를 원복하는 행위
 			setContext(orgContext);
 		}
-	}
-
-	@Override
-	public DatasourceVo get(String ds_nm) {
-		return mapper.selectDsInfo(ds_nm);
-	}
-
-	@Override
-	public ResponseEntity<String> modify(DatasourceVo datasource_vo) {
-		JSONObject result = new JSONObject();
-		if (null == datasource_vo) {
-			result.put("stateCode", 1);
-			result.put("state", "데이터소스정보 수정 실패");
-			result.put("msg", "입력정보 확인불가");
-			return ResponseEntity.badRequest().body(result.toString());
-		}
-		datasource_vo.setModId(getLoginUserId());
-		if (null == datasource_vo.getModId() || "".equals(datasource_vo.getModId())) {
-			result.put("stateCode", 2);
-			result.put("state", "데이터소스정보 수정 실패");
-			result.put("msg", "수정자 ID 확인 실패");
-			return ResponseEntity.badRequest().body(result.toString());
-		}
-		try {
-			mapper.editDS(datasource_vo);
-			result.put("stateCode", 0);
-			result.put("state", "데이터소스정보 수정 완료");
-			loadDataSource(datasource_vo);
-			return ResponseEntity.ok(result.toString());
-		} catch (Exception e) {
-			result.put("state", "데이터소스정보 수정 실패");
-			result.put("stateCode", 3);
-			result.put("msg", e.getMessage());
-			return ResponseEntity.badRequest().body(result.toString());
-		}
-	}
-
-	@Override
-	public ResponseEntity<String> delete(String ds_nm) {
-		JSONObject result = new JSONObject();
-		try {
-			mapper.deleteDS(ds_nm);
-			log.info("Remove DataSource - '" + ds_nm + "'");
-			kdiRoutingDataSource.remove(ds_nm);
-			result.put("stateCode", 0);
-			result.put("state", "데이터소스정보 삭제 완료!!");
-			return ResponseEntity.ok(result.toString());
-		} catch (Exception e) {
-			e.printStackTrace();
-			result.put("stateCode", 3);
-			result.put("state", "데이터소스정보 삭제 실패!!");
-			result.put("msg", e.getMessage());
-			return ResponseEntity.badRequest().body(result.toString());
-		}
-	}
-
-	/**
-	 * KdiRoutingDataSource에 DataSource를 불러오는 기능
-	 */
-	private void loadDataSource(DatasourceVo vo) {
-		kdiRoutingDataSource.put(vo);
-		log.info("Load DataSource - '" + vo.getDsNm() + "'");
 	}
 
 }

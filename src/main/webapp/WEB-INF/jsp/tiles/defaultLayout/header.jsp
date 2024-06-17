@@ -58,7 +58,24 @@
 	</div>
 	<script defer>
 		var hoveringMenu = false;
-		var menuDatas = [ {
+		var menuDatas = [
+			{
+				title: '데이소스',
+				uri : 'res/ds',
+				submenu : [ // submenu START
+					{
+						title : '데이터소스 조회',
+						uri : 'res/ds'
+					},
+					{
+						title : '데이터소스 등록',
+						uri : 'res/ds/insert'
+					}
+				]
+			},
+			
+			/** 향후 목표
+			{
 			title : '모니터링',
 			uri : 'monitoring',
 			submenu : [ // submenu START 향후 목표 대시보드, 서비스 상태, 연계 현황, 서비스 로그
@@ -71,14 +88,16 @@
 			}
 			// submenu END
 			]
-		}, {
+			}, {
 			title : '자원관리',
 			uri : 'res/ds',
 			submenu : [ // submenu START
 			{
 				title : '데이터소스',
 				uri : 'res/ds'
-			}, {
+			},
+			
+			{
 				title : '인터페이스명',
 				uri : 'res/in'
 			}, {
@@ -94,7 +113,7 @@
 				title : '수신 인터페이스',
 				uri : 'res/if/recv'
 			}
-			/** 향후 목표
+			
 			,{
 				title : '전처리 업무 관리',
 				uri : 'res/work/pre'
@@ -102,7 +121,7 @@
 			{
 				title : '후처리 업무 관리',
 				uri : 'res/work/post'
-			} */
+			} 
 			
 			// submenu END
 			]
@@ -116,7 +135,7 @@
 				title : '서비스 제어',
 				uri : 'svc/ctl'
 			} ]
-		}, {
+		},*/ {
 			title : '사용자정보',
 			uri : 'member/userInfo',
 			submenu : [ {
