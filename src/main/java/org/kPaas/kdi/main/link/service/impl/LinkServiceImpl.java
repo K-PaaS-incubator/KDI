@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
-import org.kPaas.kdi.main.link.mapper.LinkMapper;
+import org.kPaas.kdi.main.link.mapper.LinkServiceMapper;
 import org.kPaas.kdi.main.link.service.LinkService;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.mybatis.spring.MyBatisSystemException;
@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 public class LinkServiceImpl implements LinkService {
 
 	@Resource
-	private LinkMapper mapper;
+	private LinkServiceMapper mapper;
 
 	@Resource
 	private DBCheckService dbCheckService;

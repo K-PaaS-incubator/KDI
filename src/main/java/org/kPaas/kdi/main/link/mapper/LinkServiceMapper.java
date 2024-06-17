@@ -8,7 +8,7 @@ import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 
 @Mapper
-public interface LinkMapper {
+public interface LinkServiceMapper {
 	// 연계서비스 테이블 생성
 	public void createTable();
 
