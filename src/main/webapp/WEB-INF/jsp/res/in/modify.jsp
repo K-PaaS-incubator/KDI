@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="cssUrl" value="/css/" />
 <c:url var="jsUrl" value="/js/" />
@@ -12,13 +11,11 @@
 			<div class="ds-box-left">
 				<div class="ds-input-box">
 					<div class="header6 label-title">인터페이스ID</div>
-					<input class="ds-input subtitle1 gray400 pk" type="text" id="IF_ID"
-						name="ifId">
+					<input class="ds-input subtitle1 gray400 pk id-pattern" type="text" id="IF_ID" name="ifId">
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">인터페이스명</div>
-					<input class="ds-input subtitle1 gray400" type="text" id="IF_NM"
-						name="ifNm">
+					<input class="ds-input subtitle1 gray400" type="text" id="IF_NM" name="ifNm">
 				</div>
 			</div>
 		</div>
@@ -27,9 +24,7 @@
 				<input class="button-second" type="button" value="수정" id="modifyBtn">
 			</div>
 			<div>
-				<input class="button-second-gray" type="button" value="삭제"
-					id="deleteBtn"> <input class="button-second-gray"
-					type="button" value="이전" id="previousBtn">
+				<input class="button-second-gray" type="button" value="삭제" id="deleteBtn"> <input class="button-second-gray" type="button" value="이전" id="previousBtn">
 			</div>
 		</div>
 	</form>

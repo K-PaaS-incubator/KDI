@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:url var="dsUrl" value="/res/ds/" />
+<c:url var="pageUrl" value="/res/ds/" />
 <c:url var="imgUrl" value="/img/" />
 <c:url var="cssUrl" value="/css/" />
 
 <link rel="stylesheet" href="${cssUrl}ds.css">
 
 <div class="mainContent">
-	<form action="${dsUrl}" method="GET" id="searchForm">
+	<form action="${pageUrl}" method="GET" id="searchForm">
 		<div class="search-box">
 			<div>
 				<input id="searchKeyword" type="text" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
@@ -37,7 +37,7 @@
 		</tbody>
 	</table>
 	<div class="ds-list-button-box">
-		<input class="button-second" type="button" id="regbtn" value="등록하기" onclick="location.href='${dsUrl}dsCreate'">
+		<input class="button-second" type="button" id="regbtn" value="등록하기" onclick="location.href='${pageUrl}insert'">
 		<div class="body2 pagination-ul pageCtlZone"></div>
 		<!-- 일단 임시로 이 영역에 구현함 -->
 		<div class="body2 gray500">
@@ -52,7 +52,7 @@
 </div>
 <table hidden="hidden">
 	<tbody id="gridHtmlFormatId">
-		<tr class="detailTr" onclick="dsEdit('#DS_NM#');">
+		<tr class="detailTr" onclick="fn_modify('#DS_NM#');">
 			<td>#NO#</td>
 			<td>#DS_NM#</td>
 			<td>#DS_URL#</td>
@@ -73,7 +73,7 @@
 	</tbody>
 </table>
 <script defer>
-	var grid = KdiListGrid('grid', '${dsUrl}list.json');
+	var grid = KdiListGrid('grid', '${pageUrl}list.json');
 	var gridEnv = grid.env;
 	gridEnv.setMapping({
 		'#DS_NM#' : 'DS_NM',
@@ -85,7 +85,7 @@
 	gridEnv.seq.enable('#NO#');
 	gridEnv.setTotalCntId('.totalCnt');
 	gridEnv.setPageNumInfo('.currentPageNum', '.totalPage');
-	gridEnv.setPageCtlInfo('.pageCtlZone', '${homeUrl}');
+	gridEnv.setPageCtlInfo('.pageCtlZone');
 	// 파라미터 JSON포맷
 	var paramData = {
 		'dsNm' : '',
@@ -98,8 +98,8 @@
 		console.log('responseJSON:' + xhr.responseJSON.errMsg);
 	});
 
-	var dsEdit = function(ds_nm) {
-		location.href = '${dsUrl}dsEdit?dsNm=' + ds_nm
+	var fn_modify = function(ds_nm) {
+		location.href = '${pageUrl}modify?dsNm=' + encodeURIComponent(ds_nm);
 	};
 
 	$(document).ready(function() {

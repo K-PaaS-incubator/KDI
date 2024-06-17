@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/res/ds")
 @Controller
 public class DataSourceController extends KdiGridController {
-//	public DataSourceController() {
-//		super(SUB_BANNER_LAYOUT, "res/ds");
-//	}
 	public DataSourceController() {
 		super("res/ds");
 	}
@@ -30,50 +27,6 @@ public class DataSourceController extends KdiGridController {
 	protected KdiGridService getService() {
 		return service;
 	}
-//	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자가 아닌 일반 사용자)
-//	@GetMapping()
-//	public String dsList() {
-//		return layout("index");
-//	}
-//
-//	@PreAuthorize("isAuthenticated()")
-//	@GetMapping("list.json")
-//	public ResponseEntity<String> getDsList(@RequestParam Map<String, Object> params) {
-//		return service.getList(mapToKdiParam(params));
-//	}
-//
-//	@GetMapping("/dsCreate")
-//	public String dsCreate() {
-//		return layout("dsCreate");
-//	}
-//
-//	@PostMapping("/dsCheck")
-//	public ResponseEntity<String> dsCheck(DatasourceVo datasource_vo) {
-//		return service.duplicateCheck(datasource_vo.getDsNm());
-//	}
-//
-//	@PostMapping("/dsInsert")
-//	public ResponseEntity<String> dsWrite(DatasourceVo datasource_vo) {
-//		return service.insert(datasource_vo);
-//	}
-//
-//	@GetMapping("/dsEdit")
-//	public String dsEdit(Model model, @RequestParam("dsNm") String ds_nm) {
-//		model.addAttribute("selectDsInfo", service.get(ds_nm));
-//		return layout("dsEdit");
-//	}
-//
-//	@ResponseBody
-//	@PostMapping("/dsEditProc")
-//	public ResponseEntity<String> dsEditProc(DatasourceVo datasource_vo) {
-//		return service.modify(datasource_vo);
-//	}
-//
-//	@ResponseBody
-//	@PostMapping("/dsDelProc")
-//	public ResponseEntity<String> dsDelProc(String ds_nm) {
-//		return service.delete(ds_nm);
-//	}
 
 	@ResponseBody
 	@PostMapping("/testConnection")

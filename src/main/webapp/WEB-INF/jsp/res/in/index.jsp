@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:url var="pageUrl" value="/res/in/" />
 <c:url var="imgUrl" value="/img/" />
@@ -11,8 +10,7 @@
 	<form action="${pageUrl}" method="GET" id="searchForm">
 		<div class="search-box">
 			<div>
-				<input id="searchKeyword" type="text" placeholder="검색어 입력" value="">
-				<img src="${imgUrl}icon-search.png" alt="">
+				<input id="searchKeyword" type="text" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
 			</div>
 			<button id="searchBtn" class="button-second-gray">확인</button>
 		</div>
@@ -39,8 +37,7 @@
 		</tbody>
 	</table>
 	<div class="ds-list-button-box">
-		<input class="button-second" type="button" id="regbtn" value="등록하기"
-			onclick="location.href='${pageUrl}insert'">
+		<input class="button-second" type="button" id="regbtn" value="등록하기" onclick="location.href='${pageUrl}insert'">
 		<div class="body2 pagination-ul pageCtlZone"></div>
 		<!-- 일단 임시로 이 영역에 구현함 -->
 		<div class="body2 gray500">
@@ -48,8 +45,7 @@
 				<span>전체 :</span> <span class="totalCnt">1</span>건
 			</div>
 			<div class="body2 gray500">
-				<span class="currentPageNum">1</span> / <span class="totalPage">1</span>
-				페이지
+				<span class="currentPageNum">1</span> / <span class="totalPage">1</span> 페이지
 			</div>
 		</div>
 	</div>
@@ -89,7 +85,7 @@
 	gridEnv.seq.enable('#NO#');
 	gridEnv.setTotalCntId('.totalCnt');
 	gridEnv.setPageNumInfo('.currentPageNum', '.totalPage');
-	gridEnv.setPageCtlInfo('.pageCtlZone', '${homeUrl}');
+	gridEnv.setPageCtlInfo('.pageCtlZone');
 	// 파라미터 JSON포맷
 	var paramData = {
 		'ifId' : '',

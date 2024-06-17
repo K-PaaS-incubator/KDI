@@ -69,8 +69,8 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 		$('#regbtn').click(function databaseSave() {
 			$('form').validate();
 			const duplicate = fn_duplicate_check(_page_url, _pkNm);
-			if (duplicate) {
-				alert(_pkTitle + '가(이) 중복되었습니다.');
+			if (!duplicate) {
+				alert('"' + _pkTitle + '"가(이) 중복되었습니다.');
 				return;
 			}
 			$.ajax({
@@ -163,8 +163,8 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 			if (_org_pk_data != $('input.pk').val()) {
 				duplicate = fn_duplicate_check(_page_url, _pkNm);
 			}
-			if (duplicate) {
-				alert(_pkTitle + '가(이) 중복되었습니다.');
+			if (!duplicate) {
+				alert('"' + _pkTitle + '"가(이) 중복되었습니다.');
 				return;
 			}
 

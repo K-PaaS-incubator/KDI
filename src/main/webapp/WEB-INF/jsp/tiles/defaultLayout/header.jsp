@@ -58,84 +58,92 @@
 	</div>
 	<script defer>
 		var hoveringMenu = false;
-		var menuDatas = [
-			{
-				title: '데이소스',
-				uri : 'res/ds',
-				submenu : [ // submenu START
-					{
-						title : '데이터소스 조회',
-						uri : 'res/ds'
-					},
-					{
-						title : '데이터소스 등록',
-						uri : 'res/ds/insert'
-					}
-				]
-			},
-			
-			/** 향후 목표
-			{
-			title : '모니터링',
-			uri : 'monitoring',
-			submenu : [ // submenu START 향후 목표 대시보드, 서비스 상태, 연계 현황, 서비스 로그
-			{
-				title : '연계 모니터링',
-				uri : 'monitoring'
-			}, {
-				title : '로그 조회',
-				uri : 'monitoring'
-			}
-			// submenu END
-			]
-			}, {
-			title : '자원관리',
+		var menuDatas = [ {
+			title : '데이소스',
 			uri : 'res/ds',
 			submenu : [ // submenu START
 			{
-				title : '데이터소스',
+				title : '데이터소스 조회',
 				uri : 'res/ds'
-			},
-			
-			{
-				title : '인터페이스명',
-				uri : 'res/in'
 			}, {
-				title : '전송경로 정보',
-				uri : 'res/tpi' //trans_path_info
-			}, {
-				title : '서비스 정보',
-				uri : 'res/si' //svc_info
-			}, {
-				title : '송신 인터페이스',
-				uri : 'res/if/send'
-			}, {
-				title : '수신 인터페이스',
-				uri : 'res/if/recv'
-			}
-			
-			,{
-				title : '전처리 업무 관리',
-				uri : 'res/work/pre'
-			},
-			{
-				title : '후처리 업무 관리',
-				uri : 'res/work/post'
-			} 
-			
-			// submenu END
-			]
-		}, {
-			title : '서비스',
-			uri : 'svc/status',
-			submenu : [ {
-				title : '서비스 상태',
-				uri : 'svc/status'
-			}, {
-				title : '서비스 제어',
-				uri : 'svc/ctl'
+				title : '데이터소스 등록',
+				uri : 'res/ds/insert'
 			} ]
-		},*/ {
+		}, {
+			title : '연계서비스',
+			uri : 'link',
+			submenu : [ {
+				title : '연계서비스 조회',
+				uri : 'link'
+			}, {
+				title : '연계서비스 등록',
+				uri : 'link/reg'
+			} ]
+		},
+
+		/** 향후 목표
+		{
+		title : '모니터링',
+		uri : 'monitoring',
+		submenu : [ // submenu START 향후 목표 대시보드, 서비스 상태, 연계 현황, 서비스 로그
+		{
+			title : '연계 모니터링',
+			uri : 'monitoring'
+		}, {
+			title : '로그 조회',
+			uri : 'monitoring'
+		}
+		// submenu END
+		]
+		}, {
+		title : '자원관리',
+		uri : 'res/ds',
+		submenu : [ // submenu START
+		{
+			title : '데이터소스',
+			uri : 'res/ds'
+		},
+		
+		{
+			title : '인터페이스명',
+			uri : 'res/in'
+		}, {
+			title : '전송경로 정보',
+			uri : 'res/tpi' //trans_path_info
+		}, {
+			title : '서비스 정보',
+			uri : 'res/si' //svc_info
+		}, {
+			title : '송신 인터페이스',
+			uri : 'res/if/send'
+		}, {
+			title : '수신 인터페이스',
+			uri : 'res/if/recv'
+		}
+		
+		,{
+			title : '전처리 업무 관리',
+			uri : 'res/work/pre'
+		},
+		{
+			title : '후처리 업무 관리',
+			uri : 'res/work/post'
+		} 
+		
+		// submenu END
+		]
+		}, {
+		title : '서비스',
+		uri : 'svc/status',
+		submenu : [ {
+			title : '서비스 상태',
+			uri : 'svc/status'
+		}, {
+			title : '서비스 제어',
+			uri : 'svc/ctl'
+		} ]
+		},*/
+		{
 			title : '사용자정보',
 			uri : 'member/userInfo',
 			submenu : [ {
@@ -172,31 +180,47 @@
 			$.each(menuDatas, function(idx, menuData) {
 				const menuBoxTitle = menuData.title;
 				const menuBoxUri = contextPath + menuData.uri;
-				menuBox.append(menuBoxListHtml.replaceAll('#TITLE#', menuBoxTitle).replaceAll('#URI#', menuBoxUri));
+				menuBox.append(menuBoxListHtml.replaceAll('#TITLE#',
+						menuBoxTitle).replaceAll('#URI#', menuBoxUri));
 				if (subMenuMaxSize < menuData.submenu.length) {
 					subMenuMaxSize = menuData.submenu.length;
 				}
 			});
 			// submenu write
-			for(var i = 0; i < subMenuMaxSize; i++){
+			for (var i = 0; i < subMenuMaxSize; i++) {
 				// submenu init
 				flexCol.append(flexColFormat);
 			}
-			$.each(menuDatas, function(idx, menuData) {
-				$.each(menuData.submenu, function(subIdx, subMenuData) {
-					const menuHoverBox = flexCol.find(':nth-child(' + (subIdx + 1) + ') .menu-hover-box');
-					const flexColTitle = subMenuData.title;
-					const flexColUri = contextPath + subMenuData.uri;
-					menuHoverBox.append(menuHoverBoxHtml.replaceAll('#TITLE#', flexColTitle).replaceAll('#URI#', flexColUri));
-				});
-				// 칸 맞추기위한 공백 추가
-				for (var i = menuData.submenu.length + 1; i <= subMenuMaxSize; i++) {
-					const menuHoverBox = flexCol.find(':nth-child(' + i + ') .menu-hover-box');
-					menuHoverBox.append(menuHoverBoxBlankHtml);
-				}
-			});
-			
-			$('.header-container .dropdown-menu').css('height',(subMenuMaxSize * 45)+'px');
+			$
+					.each(
+							menuDatas,
+							function(idx, menuData) {
+								$.each(menuData.submenu, function(subIdx,
+										subMenuData) {
+									const menuHoverBox = flexCol
+											.find(':nth-child(' + (subIdx + 1)
+													+ ') .menu-hover-box');
+									const flexColTitle = subMenuData.title;
+									const flexColUri = contextPath
+											+ subMenuData.uri;
+									menuHoverBox
+											.append(menuHoverBoxHtml
+													.replaceAll('#TITLE#',
+															flexColTitle)
+													.replaceAll('#URI#',
+															flexColUri));
+								});
+								// 칸 맞추기위한 공백 추가
+								for (var i = menuData.submenu.length + 1; i <= subMenuMaxSize; i++) {
+									const menuHoverBox = flexCol
+											.find(':nth-child(' + i
+													+ ') .menu-hover-box');
+									menuHoverBox.append(menuHoverBoxBlankHtml);
+								}
+							});
+
+			$('.header-container .dropdown-menu').css('height',
+					((subMenuMaxSize + 1) * 35 + 5) + 'px');
 		}
 
 		$(document).ready(function() {
