@@ -14,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -80,13 +79,13 @@ public class MemberController extends AbstractController {
 	@GetMapping("userInfo")
 	public String userInfo(Principal principal, Model model) {
 		model.addAttribute("userInfo", service.getUsrInfo(principal.getName()));
-		return layout(DEFAULT_LAYOUT, "userInfo");
+		return layout(SUB_BANNER_LAYOUT, "userInfo");
 	}
 
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자X)
 	@GetMapping("userInfoEdit")
 	public String userInfoEdit(Principal principal, Model model) {
 		model.addAttribute("userInfoEdit", service.getUsrInfo(principal.getName()));
-		return layout(DEFAULT_LAYOUT, "userInfoEdit");
+		return layout(SUB_BANNER_LAYOUT, "userInfoEdit");
 	}
 }

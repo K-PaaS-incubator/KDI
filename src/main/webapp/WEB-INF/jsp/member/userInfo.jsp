@@ -4,33 +4,29 @@
 <c:url var="cssUrl" value="/css/" />
 <link rel="stylesheet" href="${cssUrl}userInfo.css">
 
-<jsp:include page="../component/subBanner.jsp"></jsp:include>
-<section class="contents">
-	<jsp:include page="../component/subTitle.jsp"></jsp:include>
-	<div class="mainContent">
-		<div class="user-info-box">
-			<div class="user-info-content-box">
-				<div class="header6 label-title">아이디</div>
-				<div class="user-info-content subtitle1 gray400">${userInfo.usr_id}</div>
-			</div>
-			<div class="user-info-content-box">
-				<div class="header6 label-title">회원명</div>
-				<div class="user-info-content subtitle1 gray400">${userInfo.usr_nm}</div>
-			</div>
-			<div class="user-info-content-box">
-				<div class="header6 label-title">연락처</div>
-				<div class="user-info-content subtitle1 gray400">${userInfo.usr_phone}</div>
-			</div>
-			<div class="user-info-content-box">
-				<div class="header6 label-title">이메일</div>
-				<div class="user-info-content subtitle1 gray400">${userInfo.usr_email}</div>
-			</div>
+<div class="mainContent">
+	<div class="user-info-box">
+		<div class="user-info-content-box">
+			<div class="header6 label-title">아이디</div>
+			<div class="user-info-content subtitle1 gray400">${userInfo.usrId}</div>
 		</div>
-		<div class="user-info-button-box">
-			<input class="button-second" type="button" value="수정하기" id="modifyBtn" onclick="location.href='${homeUrl}member/userInfoEdit'">
+		<div class="user-info-content-box">
+			<div class="header6 label-title">회원명</div>
+			<div class="user-info-content subtitle1 gray400">${userInfo.usrNm}</div>
+		</div>
+		<div class="user-info-content-box">
+			<div class="header6 label-title">연락처</div>
+			<div class="user-info-content subtitle1 gray400">${userInfo.usrPhone}</div>
+		</div>
+		<div class="user-info-content-box">
+			<div class="header6 label-title">이메일</div>
+			<div class="user-info-content subtitle1 gray400">${userInfo.usrEmail}</div>
 		</div>
 	</div>
-</section>
+	<div class="user-info-button-box">
+		<input class="button-second" type="button" value="수정하기" id="modifyBtn" onclick="location.href='${homeUrl}member/userInfoEdit'">
+	</div>
+</div>
 <script defer>
 	$(document).ready(function() {
 		$('.banner-title').text('사용자 계정 정보')
