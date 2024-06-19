@@ -17,6 +17,9 @@
 <link rel="stylesheet" href="${defaultCssUrl}basic.css">
 <link rel="stylesheet" href="${defaultCssUrl}common.css">
 <link rel="stylesheet" href="${cssUrl}link.css">
+<script type="text/javascript">
+	const contextPath = '${homeUrl}';
+</script>
 <script src="${jqueryUrl}jquery-3.7.1.min.js"></script>
 <script src="${jqueryUrl}jquery.validate.min.js"></script>
 <script src="${jqueryUrl}additional-methods.min.js"></script>
