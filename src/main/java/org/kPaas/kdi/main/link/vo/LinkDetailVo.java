@@ -15,8 +15,9 @@ public class LinkDetailVo {
 	private String svc_lnk_nm;
 	private String tbl_nm;
 	private String sch_nm;
+	private char flag_type; //1:status, 2:query, 3:where
+	private String flag_query; //2:query, 3:where 인 경우
 	private String lnk_time;
-	private char flag_type; //1:status, 2:query, 3:where	
 	private String reg_id;
 	private String reg_dt;	
 	private String mod_id;

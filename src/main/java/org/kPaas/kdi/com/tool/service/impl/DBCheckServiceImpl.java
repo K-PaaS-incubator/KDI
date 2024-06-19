@@ -17,5 +17,19 @@ public class DBCheckServiceImpl implements DBCheckService {
 	public boolean isExists(final String tableName) {
 		return 0 < mapper.isExists(tableName);
 	}
+	
+	/**
+	 * DatasourceServiceImpl.java 실행 시 한번에 검증 후 한번에 생성 (각 테이블의 FK관계떄문)
+	 */
 
+	public void createTableKDI_LINK_SERVICE() {
+		mapper.createTableKDI_LINK_SERVICE();
+	}
+	public void createTableKDI_LINK_DETAIL() {
+		mapper.createTableKDI_LINK_DETAIL();
+	}
+	public void createTableKDI_LINK_TABLE() {
+		mapper.createTableKDI_LINK_TABLE();
+	}
+	
 }

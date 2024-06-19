@@ -4,20 +4,6 @@
 
 <mapper namespace="org.kPaas.kdi.main.link.mapper.LinkServiceMapper">
 
-	<insert id="createTable">
-		CREATE TABLE `KDI_LINK_SERVICE` (
-			`svc_id` bigint NOT NULL AUTO_INCREMENT,
-			`ds_nm` varchar2(100) NOT NULL,
-			`svc_nm` varchar2(100) NULL,
-			`svc_type` char(1) NULL,
-			`reg_id` varchar2(20) NULL,
-			`reg_dt` date NULL,
-			`mod_id` varchar2(20) NULL,
-			`mod_dt` date NULL,
-			PRIMARY KEY (`svc_id`,`ds_nm`)
-		)
-	</insert>	
-		
 	<select id="selectLinkList" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
 		SELECT rownum as NUM,* FROM KDI_LINK_SERVICE
 	</select>
@@ -45,12 +31,12 @@
 	
 	<select id="getSameLinkCheck" resultType="Integer">
 		SELECT count(*) FROM KDI_LINK_SERVICE
-		<where>svc_nm = #{svc_nm}</where>
+		<where>SVC_ID = #{svc_id}</where>
 	</select>
 	
 	<insert id="insertLink" parameterType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
-		INSERT INTO KDI_LINK_SERVICE(ds_nm,svc_nm,svc_type,reg_id,reg_dt,mod_id,mod_dt)
-		VALUES(#{ds_nm},#{svc_nm},#{svc_type},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
+		INSERT INTO KDI_LINK_SERVICE(svc_id,ds_nm,svc_nm,tp_nm,svc_type,reg_id,reg_dt,mod_id,mod_dt)
+		VALUES(#{svc_id},#{ds_nm},#{svc_nm},#{tp_nm},#{svc_type},#{reg_id},current_timestamp(),#{mod_id},current_timestamp())
 	</insert>
 
 	<select id="getLinkListAll" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo" fetchSize="50">
@@ -64,18 +50,26 @@
 		KDI_LINK_SERVICE TB1
 		<where>
 			1=1
+			<if test="value.svc_id != null and value.svc_id != ''">
+				AND TB1.SVC_ID LIKE '%' || #{svc_id} || '%'
+			</if>
 			<if test="value.ds_nm != null and value.ds_nm != ''">
 				AND TB1.DS_NM LIKE '%' || #{ds_nm} || '%'
 			</if>
 			<if test="value.svc_nm != null and value.svc_nm != ''">
 				AND TB1.SVC_NM LIKE '%' || #{svc_nm} || '%'
 			</if>
+			<if test="value.tp_nm != null and value.tp_nm != ''">
+				AND TB1.TP_NM LIKE '%' || #{tp_nm} || '%'
+			</if>
 			<if test="value.svc_type != null and value.svc_type != ''">
 				AND TB1.SVC_TYPE LIKE '%' || #{svc_type} || '%'
 			</if>
 			<if test="value.all_search != null and value.all_search != ''">
+				OR TB1.SVC_ID LIKE '%' || #{svc_id} || '%'
 				OR TB1.DS_NM   LIKE '%' || #{ds_nm}   || '%'
 				OR TB1.SVC_NM LIKE '%' || #{svc_nm} || '%'
+				OR TB1.tp_NM LIKE '%' || #{tp_nm} || '%'
 				OR TB1.SVC_TYPE LIKE '%' || #{svc_type} || '%'
 			</if>
 		</where>
@@ -113,4 +107,5 @@
 			AND DS_NM = #{ds_nm}
 		</where>
 	</delete>
+	
 </mapper>

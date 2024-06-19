@@ -4,7 +4,7 @@ import org.kPaas.kdi.com.member.vo.MemberVo;
 import org.springframework.http.ResponseEntity;
 
 public interface UserInfoService {
-
+	
 	public MemberVo getUsrInfo(String usr_id);
 
 	/**

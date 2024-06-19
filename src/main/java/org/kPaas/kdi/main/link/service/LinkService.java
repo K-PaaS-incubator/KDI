@@ -12,7 +12,7 @@ public interface LinkService {
 
 	public List<String> selectDsList();
 
-	public ResponseEntity<String> duplicateCheck(String svc_nm);
+	public ResponseEntity<String> duplicateCheck(String svc_id);
 
 	public ResponseEntity<String> insertLink(LinkServiceVo linkService_vo);
 

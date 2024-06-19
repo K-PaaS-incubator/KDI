@@ -2,17 +2,14 @@ package org.kPaas.kdi.main.link.service.impl;
 
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractService;
-import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper;
 import org.kPaas.kdi.main.link.service.LinkInterfaceService;
-import org.kPaas.kdi.main.res.ds.mapper.DatasourceMapper;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -22,21 +19,6 @@ public class LinkInterfaceServiceImpl extends AbstractService implements LinkInt
 
 	@Resource
 	private LinkInterfaceMapper mapper;
-	private DatasourceMapper dsMapper;
-
-	@Resource
-	private DBCheckService dbCheckService;
-
-	/**
-	 * 최초 기동시에 연계서비스항목 테이블(KDI_LINK_DETAIL)의 유무를 확인하고<br>
-	 * 해당 테이블이 없으면 연계서비스항목 테이블을 생성하는 기능
-	 */
-	@PostConstruct
-	private void init() {
-		if (!dbCheckService.isExists("KDI_LINK_DETAIL")) {
-			mapper.createTable();
-		}
-	}
 
 	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
 	@Override

@@ -3,24 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper">
-	<insert id="createTable">
-		CREATE TABLE `KDI_LINK_DETAIL` (
-			`svc_lnk_id` varchar2(100) NOT NULL,
-			`svc_id` varchar2(100) NOT NULL,
-			`ds_nm` varchar2(100) NOT NULL,
-			`svc_lnk_nm` varchar2(100) NULL,
-			`tbl_nm` varchar2(100) NULL,
-			`sch_nm` varchar2(100) NULL,
-			`lnk_time` varchar2(50) NULL,
-			`flag_type` char(1) NULL,
-			`reg_id` varchar2(20) NULL,
-			`reg_dt` date NULL,
-			`mod_id` varchar2(20) NULL,
-			`mod_dt` date NULL,
-			PRIMARY KEY (`svc_lnk_id`,`svc_id`,`ds_nm`)
-		)
-	</insert>
-	
+
 	<sql id="getInterfaceListWhere">
 			KDI_LINK_DETAIL TB1
 		JOIN
@@ -31,6 +14,7 @@
 			TB2.SVC_ID = #{value.svc_id}
 		</where>
 	</sql>
+	
 	<select id="getInterfaceListCnt" resultType="Long" parameterType="org.kPaas.kdi.com.util.KdiParam">
 		SELECT
 			COUNT(TB1.SVC_LNK_ID)

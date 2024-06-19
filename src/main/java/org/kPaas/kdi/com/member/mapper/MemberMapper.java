@@ -6,6 +6,8 @@ import org.kPaas.kdi.com.member.vo.MemberVo;
 
 @Mapper
 public interface MemberMapper {
+	
+	public void createTable();
 
 	// 로그인 사용자 조회
 	public MemberVo getUser_Info(@Param("usrId") String usrId);
@@ -16,5 +18,4 @@ public interface MemberMapper {
 	// 회원가입
 	public void signupUser(MemberVo usr_vo);
 
-	public void createTable();
 }

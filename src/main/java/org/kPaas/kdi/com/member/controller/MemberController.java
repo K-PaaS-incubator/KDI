@@ -2,10 +2,14 @@ package org.kPaas.kdi.com.member.controller;
 
 import java.security.Principal;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractController;
 import org.kPaas.kdi.com.member.service.UserInfoService;
 import org.kPaas.kdi.com.member.vo.MemberVo;
+import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,6 +35,9 @@ public class MemberController extends AbstractController {
 
 	@Autowired
 	private UserInfoService service;
+
+	@Resource
+	private DBCheckService dbCheckService;
 
 	@GetMapping("login")
 	public String login(@RequestParam(value = "error", required = false) String error,
@@ -88,4 +95,5 @@ public class MemberController extends AbstractController {
 		model.addAttribute("userInfoEdit", service.getUsrInfo(principal.getName()));
 		return layout(SUB_BANNER_LAYOUT, "userInfoEdit");
 	}
+	
 }

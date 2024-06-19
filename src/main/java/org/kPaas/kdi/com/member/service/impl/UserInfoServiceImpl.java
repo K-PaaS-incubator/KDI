@@ -2,7 +2,6 @@ package org.kPaas.kdi.com.member.service.impl;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import org.json.JSONObject;
 import org.kPaas.kdi.com.member.mapper.MemberMapper;
 import org.kPaas.kdi.com.member.service.UserInfoService;
@@ -56,8 +55,8 @@ public class UserInfoServiceImpl implements UserInfoService {
 	}
 
 	/**
-	 * 최초 기동시에 사용자테이블(KDI_USER)의 유무를 확인하고<br>
-	 * 해당 테이블이 없으면 사용자테이블을 생성하는 기
+	 * 최초 기동시에 사용자 테이블(KDI_USER)의 유무를 확인하고<br>
+	 * 해당 테이블이 없으면 테이블 생성하는 기능
 	 */
 	@PostConstruct
 	private void init() {
@@ -65,4 +64,5 @@ public class UserInfoServiceImpl implements UserInfoService {
 			mapper.createTable();
 		}
 	}
+
 }

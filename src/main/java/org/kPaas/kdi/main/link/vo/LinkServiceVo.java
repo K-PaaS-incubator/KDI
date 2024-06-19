@@ -12,6 +12,7 @@ public class LinkServiceVo {
 	private String svc_id;
 	private String ds_nm;
 	private String svc_nm;
+	private String tp_nm;
 	private char svc_type;	
 	private String reg_id;
 	private String reg_dt;	

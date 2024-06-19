@@ -132,7 +132,12 @@
 	flex-direction: column;
 	width: 65%;
 }
-
+.common-input-box select{
+	width:15em;
+	height:3.5em;
+	border:1px solid var(--gray300);
+	padding-left:1em;
+}
 .link-inputs-row{
 	display: flex;
 	flex-direction: row;

@@ -2,12 +2,8 @@ package org.kPaas.kdi.main.link.service.impl;
 
 import java.util.List;
 import java.util.Map;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import org.json.JSONObject;
-import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.link.mapper.LinkServiceMapper;
@@ -23,20 +19,6 @@ public class LinkServiceImpl implements LinkService {
 
 	@Resource
 	private LinkServiceMapper mapper;
-
-	@Resource
-	private DBCheckService dbCheckService;
-
-	/**
-	 * 최초 기동시에 연계서비스 테이블(KDI_LINK_SERVICE)의 유무를 확인하고<br>
-	 * 해당 테이블이 없으면 연계서비스 테이블을 생성하는 기능
-	 */
-	@PostConstruct
-	private void init() {
-		if (!dbCheckService.isExists("KDI_LINK_SERVICE")) {
-			mapper.createTable();
-		}
-	}
 
 	@Override
 	public ResponseEntity<String> getLinkList(KdiParam kdiParam) {
@@ -72,12 +54,12 @@ public class LinkServiceImpl implements LinkService {
 	}
 
 	@Override
-	public ResponseEntity<String> duplicateCheck(String svc_nm) {
+	public ResponseEntity<String> duplicateCheck(String svc_id) {
 		JSONObject result = new JSONObject();
 		result.put("stateCode", 0);
 		result.put("state", "조회 성공");
 		JSONObject data = new JSONObject();
-		data.put("cnt", mapper.getSameLinkCheck(svc_nm));
+		data.put("cnt", mapper.getSameLinkCheck(svc_id));
 		result.put("data", data);
 		return ResponseEntity.ok(result.toString());
 	}

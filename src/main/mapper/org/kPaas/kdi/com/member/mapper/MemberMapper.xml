@@ -4,6 +4,20 @@
 
 <mapper namespace="org.kPaas.kdi.com.member.mapper.MemberMapper">
 
+	<insert id="createTable">
+		CREATE TABLE `KDI_USER` (
+		`USR_ID` VARCHAR2(20) NOT NULL,
+		`USR_PW` VARCHAR2(100) NULL,
+		`USR_NM` VARCHAR2(20) NULL,
+		`USR_PHONE` VARCHAR2(13) NULL,
+		`USR_EMAIL`	VARCHAR2(100) NULL,
+		`USR_GRADE` CHAR(1) NULL,
+		`REG_DT` DATE NULL,
+		`MOD_DT` DATE NULL,
+		PRIMARY KEY (`USR_ID`)
+		)
+	</insert>
+
 	<select id="getUser_Info" resultType="org.kPaas.kdi.com.member.vo.MemberVo">
 		SELECT * FROM KDI_USER
 		<where>USR_ID = #{usrId}</where>
@@ -19,18 +33,4 @@
 		VALUES(#{usrId},#{usrPw},#{usrNm},#{usrPhone},#{usrEmail},'1',current_timestamp(),current_timestamp())
 	</insert>
 
-	<insert id="createTable">
-		CREATE TABLE `KDI_USER` (
-		`USR_ID` VARCHAR2(20) NOT NULL,
-		`USR_PW` VARCHAR2(100) NULL,
-		`USR_NM` VARCHAR2(20) NULL,
-		`USR_PHONE` VARCHAR2(13) NULL,
-		`USR_EMAIL`
-		VARCHAR2(100) NULL,
-		`USR_GRADE` CHAR(1) NULL,
-		`REG_DT` DATE NULL,
-		`MOD_DT` DATE NULL,
-		PRIMARY KEY (`USR_ID`)
-		)
-	</insert>
 </mapper>

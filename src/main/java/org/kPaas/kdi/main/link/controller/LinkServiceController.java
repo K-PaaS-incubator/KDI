@@ -38,18 +38,21 @@ public class LinkServiceController extends AbstractController {
 	public ResponseEntity<String> getLinkList(@RequestParam Map<String, Object> params) {
 		return service.getLinkList(mapToKdiParam(params));
 	}
-
+	
+	//연계서비스 등록화면
 	@GetMapping("reg")
 	public String getReg(Model model) {
 		model.addAttribute("selectDsList", service.selectDsList());
 		return layout("reg");
 	}
 
+	//연계서비스중복검사(svc_id)
 	@PostMapping("duplicateCheck.json")
-	public ResponseEntity<String> linkCntCheck(@RequestParam("svc_nm") String svc_nm) {
-		return service.duplicateCheck(svc_nm);
+	public ResponseEntity<String> linkCntCheck(@RequestParam("svc_id") String svc_id) {
+		return service.duplicateCheck(svc_id);
 	}
 
+	//연계서비스 등록 로직
 	@PostMapping("reg.json")
 	public ResponseEntity<String> linkInsert(LinkServiceVo linkService_vo) {
 		return service.insertLink(linkService_vo);

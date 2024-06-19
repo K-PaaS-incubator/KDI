@@ -15,34 +15,39 @@
 			<div class="link-wrapper">
 				<div class="link-box-left">
 					<div class="common-input-box">
-						<div class="header6 label-title">연계서비스명</div>
-						<input class="common-input subtitle1 gray400" type="text"
-							id="svc_nm" name="svc_nm" required>
+						<div class="header6 label-title">연계서비스ID</div>
+						<input class="common-input subtitle1 gray400" type="text" placeholder="영어,숫자,특수문자(@_)만 허용" id="svc_id" name="svc_id"  maxlength="50" required>
 					</div>
-					<div class="link-input-box">
-						<div class="header6 label-title">데이터소스 선택</div>
-						<select class="link-input subtitle1 gray400" name="ds_nm"
-							id="ds_nm">
-							<option selected disabled>--선택--</option>
-							<c:forEach var="dsList" items="${selectDsList}">
-								<option value="${dsList}">${dsList}</option>
-							</c:forEach>
-						</select>
+					<div class="common-input-box">
+						<div class="header6 label-title">연계서비스명</div>
+						<input class="common-input subtitle1 gray400" type="text" placeholder="자유롭게 작성" id="svc_nm" name="svc_nm" maxlength="50" required>
+					</div>
+					<div class="common-input-box">
+						<div class="header6 label-title">TOPIC명</div>
+						<input class="common-input subtitle1 gray400" type="text" placeholder="영어,숫자,특수문자(_)만 허용" id="tp_nm" name="tp_nm" maxlength="50" required>
 					</div>
 				</div>
+				
 				<div class="link-box-right">
-					<div class="link-input-box">
+					<div class="common-input-box">
 						<div class="header6 label-title">연계서비스 구분</div>
 						<div class="link-radio-box">
-							<label class="subtitle1 gray400"><input type="radio"
-								name="svc_type" value="P" checked="checked">송신</label> <label
-								class="subtitle1 gray400"><input type="radio"
-								name="svc_type" value="S">수신</label>
+							<label class="subtitle1 gray400"><input type="radio" name="svc_type" value="P" checked="checked">송신</label> 
+							<label class="subtitle1 gray400"><input type="radio" name="svc_type" value="S">수신</label>
 						</div>
 					</div>
-					<div class="link-input-box"></div>
+					<div class="common-input-box">
+							<div class="header6 label-title">데이터소스 선택</div>
+							<select class="link-input subtitle1 gray400" name="ds_nm" id="ds_nm">
+								<option selected disabled>--선택--</option>
+								<c:forEach var="dsList" items="${selectDsList}">
+									<option value="${dsList}">${dsList}</option>
+								</c:forEach>
+							</select>
+					</div>
 				</div>
 			</div>
+			
 			<div class="link-button-box">
 				<input class="button-second-gray" type="button" value="취소"
 					onclick="location.href='${linkUrl}'"> <input
@@ -60,16 +65,36 @@
 			$('.main-title-text').text('연계서비스 등록');
 			$('.navi-arrow').text(' > 연계서비스 > 연계서비스 등록')
 		});
+		
+		//svc_id 유효성체크
+		$('#svc_id').on('change', function() {
+			   var value = $(this).val();
+			   var regex = /^[a-zA-Z0-9@_-]*$/;
+			   //if (!regex.test(value)) {
+			      //$(this).val(value.slice(0, -1));
+				   $(this).val(value.replace(/[^a-zA-Z0-9@_-]/gi,''));
+			   //}
+			}); 
+		
+		//tp_nm 유효성체크
+		$('#tp_nm').on('change', function() {
+			   var value = $(this).val();
+			   var regex = /^[a-zA-Z0-9_-]*$/;
+			   if (!regex.test(value)) {
+			      //$(this).val(value.slice(0, -1));
+				   $(this).val(value.replace(/[^a-zA-Z0-9_-]/gi,''));
+			   }
+			}); 
 
 		function fn_check_duplicate_link() {
-			var svc_nm = $('#svc_nm').val();
+			var svc_id = $('#svc_id').val();
 			var checkResult = false;
 			$.ajax({
 				url : '${linkUrl}duplicateCheck.json', //컨트롤러에서 요청받을 주소
 				type : 'POST',
 				async : false,
 				data : {
-					'svc_nm' : svc_nm,
+					'svc_id' : svc_id,
 				},
 				dataType : 'json',
 				success : function(result) { //컨트롤러에서 넘어온 cnt값을 받는다
@@ -88,17 +113,15 @@
 
 		$('#regbtn').click(
 				function LinkServiceSave() {
-					$('form').validate();
 					if (!fn_check_duplicate_link()) {
-						alert('중복된 연계서비스명 입니다.');
+						alert('중복된 연계서비스ID 입니다.');
 						return;
 					}
-
 					$.ajax({
 						url : '${linkUrl}reg.json',
 						type : 'POST',
 						async : false,
-						data : $('#linkCreate').serialize(), //연계서비스생성(svc_id)
+						data : $('#linkCreate').serialize(), //연계서비스생성
 						success : function(result) {
 							location.href = '${homeUrl}link';
 						},

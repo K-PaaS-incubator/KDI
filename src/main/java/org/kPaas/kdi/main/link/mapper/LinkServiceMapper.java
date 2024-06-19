@@ -9,8 +9,6 @@ import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 
 @Mapper
 public interface LinkServiceMapper {
-	// 연계서비스 테이블 생성
-	public void createTable();
 
 	public Long getLinkListCnt(KdiParam kdiParam);
 
@@ -20,13 +18,13 @@ public interface LinkServiceMapper {
 	public List<LinkServiceVo> selectLinkList();
 
 	// 연계서비스 등록 시작
-	public List<String> selectDsList();
+	public List<String> selectDsList();//데이터소스리스트출력
 
-	public Integer getSameLinkCheck(String svc_nm);
+	public Integer getSameLinkCheck(String svc_id);//연계서비스ID 중복검사
 
-	public void insertLink(LinkServiceVo linkService_vo);
+	public void insertLink(LinkServiceVo linkService_vo);//연계서비스 등록로직
 
-	public void lnkDel(Map<String, Object> params);
+	public void lnkDel(Map<String, Object> params);//연계서비스 삭제로직
 
 	// public List<LinkServiceVo> getLinkListAll();
 	// public List<LinkDetailVo> getInterfaceList(String svc_nm);
