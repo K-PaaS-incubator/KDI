@@ -27,9 +27,6 @@ public class DatasourceServiceImpl extends KdiGridServiceImpl implements Datasou
 	@Autowired
 	private KdiRoutingDataSource kdiRoutingDataSource;
 	
-	@Resource
-	private DBCheckService dbCheckService;
-	
 	@Override
 	protected KdiGridMapper getMapper() {
 		return mapper;
@@ -63,16 +60,7 @@ public class DatasourceServiceImpl extends KdiGridServiceImpl implements Datasou
 		for (DatasourceVo vo : getDsListAll()) {
 			loadDataSource(vo);
 		}
-		/**
-		 * 최초 기동시에 연계서비스 테이블(KDI_LINK_SERVICE,KDI_LINK_DETAIL,KDI_LINK_TABLE)의 유무를 확인하고<br>
-		 * 해당 테이블이 없으면 연계서비스관련 테이블을 순서맞춰 생성하는 기능(테이블간의 FK관계 때문에 테이블생성순서 보장)
-		 */
 
-		if (!dbCheckService.isExists("KDI_LINK_SERVICE") || !dbCheckService.isExists("KDI_LINK_DETAIL") || !dbCheckService.isExists("KDI_LINK_TABLE")) {
-			dbCheckService.createTableKDI_LINK_SERVICE();
-			dbCheckService.createTableKDI_LINK_DETAIL();
-			dbCheckService.createTableKDI_LINK_TABLE();
-		}
 	}
 
 	private List<DatasourceVo> getDsListAll() {
@@ -102,7 +90,7 @@ public class DatasourceServiceImpl extends KdiGridServiceImpl implements Datasou
 			result.put("msg", "DB URL정보가 확인되지 않습니다.");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		// 현제 쓰레드의 데이터소스명 저장
+		// 현재 쓰레드의 데이터소스명 저장
 		String orgContext = getContext();
 		// 임시로 사용할 DataSourceName 정의
 		String testDataSourceName = System.currentTimeMillis() + "-" + Thread.currentThread().getId();

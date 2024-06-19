@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractService;
+import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper;
@@ -17,17 +18,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service("LinkInterfaceService")
-@DependsOn("DatasourceService")
+@DependsOn("LinkService")
 public class LinkInterfaceServiceImpl extends AbstractService implements LinkInterfaceService {
 
 	@Resource
 	private LinkInterfaceMapper mapper;
+	
+	@Resource
+	private DBCheckService dbCheckService;
 
+	/**
+	 * 최초 기동시에 연계서비스 테이블의 유무를 확인하고 DependsOn(명칭)<br>
+	 * 해당 테이블이 없으면 연계서비스관련 테이블을 순서맞춰 생성하는 기능(테이블간의 FK관계 때문에 테이블생성순서 보장)
+	 */
 	@PostConstruct
-	public void init() {
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
+	protected void init() {
+		if (!dbCheckService.isExists("KDI_LINK_DETAIL")) {
+			mapper.createTable();
 		}
 	}
 

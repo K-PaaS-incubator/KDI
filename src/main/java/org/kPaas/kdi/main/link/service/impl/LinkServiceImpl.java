@@ -2,24 +2,43 @@ package org.kPaas.kdi.main.link.service.impl;
 
 import java.util.List;
 import java.util.Map;
+
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import org.json.JSONObject;
+import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.link.mapper.LinkServiceMapper;
 import org.kPaas.kdi.main.link.service.LinkService;
 import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 import org.mybatis.spring.MyBatisSystemException;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("LinkService")
+@DependsOn("DatasourceService")
 public class LinkServiceImpl implements LinkService {
 
 	@Resource
 	private LinkServiceMapper mapper;
+	
+	@Resource
+	private DBCheckService dbCheckService;
 
+	/**
+	 * 최초 기동시에 연계서비스 테이블의 유무를 확인하고 DependsOn(명칭)<br>
+	 * 해당 테이블이 없으면 연계서비스관련 테이블을 순서맞춰 생성하는 기능(테이블간의 FK관계 때문에 테이블생성순서 보장)
+	 */
+	@PostConstruct
+	protected void init() {
+		if (!dbCheckService.isExists("KDI_LINK_SERVICE")) {
+			mapper.createTable();
+		}
+	}
+	
 	@Override
 	public ResponseEntity<String> getLinkList(KdiParam kdiParam) {
 		JSONObject result = new JSONObject();

@@ -4,6 +4,25 @@
 
 <mapper namespace="org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper">
 
+	<insert id="createTable">
+		CREATE TABLE `KDI_LINK_DETAIL` (
+			`svc_lnk_id` varchar2(100) NOT NULL,
+			`svc_id` varchar2(50) NOT NULL REFERENCES KDI_LINK_SERVICE(svc_id) ON DELETE CASCADE,
+			`ds_nm` varchar2(100) NOT NULL REFERENCES KDI_LINK_SERVICE(ds_nm) ON DELETE CASCADE,
+			`svc_lnk_nm` varchar2(100) NOT NULL,
+			`tbl_nm` varchar2(100) NULL,
+			`sch_nm` varchar2(100) NULL,
+			`flag_type` char(1) NULL, <!-- 1:status, 2:query, 3:where -->
+			`flag_query` varchar2(2000) NULL, <!-- 2:query, 3:where 인 경우 입력받는 쿼리문 -->
+			`lnk_time` varchar2(50) NULL, <!-- 쿼츠스케줄 -->
+			`reg_id` varchar2(20) NULL,
+			`reg_dt` date NULL,
+			`mod_id` varchar2(20) NULL,
+			`mod_dt` date NULL,
+			PRIMARY KEY (`svc_lnk_id`,`svc_id`,`ds_nm`)
+		)
+	</insert>
+
 	<sql id="getInterfaceListWhere">
 			KDI_LINK_DETAIL TB1
 		JOIN

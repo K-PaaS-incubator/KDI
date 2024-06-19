@@ -9,6 +9,8 @@ import org.kPaas.kdi.main.link.vo.LinkServiceVo;
 
 @Mapper
 public interface LinkServiceMapper {
+	
+	public void createTable();
 
 	public Long getLinkListCnt(KdiParam kdiParam);
 

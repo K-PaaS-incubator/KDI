@@ -3,6 +3,23 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="org.kPaas.kdi.main.link.mapper.LinkTableMapper">
+	
+	<insert id="createTable">
+		CREATE TABLE `KDI_LINK_TABLE` (
+			`col_nm` varchar2(100) NOT NULL,
+			`svc_lnk_id` varchar2(100) NOT NULL REFERENCES KDI_LINK_DETAIL(svc_lnk_id) ON DELETE CASCADE,	
+			`svc_id` varchar2(50) NOT NULL REFERENCES KDI_LINK_DETAIL(svc_id) ON DELETE CASCADE,
+			`ds_nm` varchar2(100) NOT NULL REFERENCES KDI_LINK_DETAIL(ds_nm) ON DELETE CASCADE,
+			`col_type` varchar2(20) NULL, <!-- 컬럼타입: 컬럼 자료형 -->
+			`col_lnk_type` char(1) NULL, <!-- Y:사용(연계함), N:미사용(연계안함), O:OP대체컬럼, S:STATUS대체컬럼 -->
+			`col_mp_nm` varchar2(100) NULL,
+			`reg_id` varchar2(20) NULL,
+			`reg_dt` date NULL,
+			`mod_id` varchar2(20) NULL,
+			`mod_dt` date NULL,
+			PRIMARY KEY (`col_nm`,`svc_lnk_id`,`svc_id`,`ds_nm`)
+		)
+	</insert>
 
 	<select id="getDetailVo" resultType="org.kPaas.kdi.main.link.vo.LinkDetailVo" parameterType="string">
 		 SELECT * FROM KDI_LINK_DETAIL

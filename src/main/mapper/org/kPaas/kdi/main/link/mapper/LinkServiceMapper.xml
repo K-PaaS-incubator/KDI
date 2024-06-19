@@ -4,6 +4,21 @@
 
 <mapper namespace="org.kPaas.kdi.main.link.mapper.LinkServiceMapper">
 
+	<insert id="createTable">
+		CREATE TABLE `KDI_LINK_SERVICE` (
+			`svc_id` varchar2(50) NOT NULL ,
+			`ds_nm` varchar2(100) NOT NULL REFERENCES KDI_DATASOURCE(ds_nm) ON DELETE CASCADE,
+			`svc_nm` varchar2(100) NOT NULL, <!-- 서비스명화면출력용 -->
+			`tp_nm` varchar2(10), <!-- 토픽명 -->
+			`svc_type` char(1) NULL,
+			`reg_id` varchar2(20) NULL,
+			`reg_dt` date NULL,
+			`mod_id` varchar2(20) NULL,
+			`mod_dt` date NULL,
+			PRIMARY KEY (`svc_id`,`ds_nm`)
+		)
+	</insert>
+
 	<select id="selectLinkList" resultType="org.kPaas.kdi.main.link.vo.LinkServiceVo">
 		SELECT rownum as NUM,* FROM KDI_LINK_SERVICE
 	</select>

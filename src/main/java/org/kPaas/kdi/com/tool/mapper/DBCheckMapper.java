@@ -8,8 +8,4 @@ public interface DBCheckMapper {
 
 	Integer isExists(@Param("tableName")String tableName);
 
-	public void createTableKDI_LINK_SERVICE();
-	public void createTableKDI_LINK_DETAIL();
-	public void createTableKDI_LINK_TABLE();
-
 }
