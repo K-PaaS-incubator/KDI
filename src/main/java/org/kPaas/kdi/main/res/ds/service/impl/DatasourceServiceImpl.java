@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("DatasourceService")
 public class DatasourceServiceImpl extends KdiGridServiceImpl implements DatasourceService {
 
 	@Resource

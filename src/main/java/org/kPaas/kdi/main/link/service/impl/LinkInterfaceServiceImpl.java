@@ -2,6 +2,7 @@ package org.kPaas.kdi.main.link.service.impl;
 
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.json.JSONObject;
@@ -11,14 +12,24 @@ import org.kPaas.kdi.com.util.pagination.PageInfo;
 import org.kPaas.kdi.main.link.mapper.LinkInterfaceMapper;
 import org.kPaas.kdi.main.link.service.LinkInterfaceService;
 import org.mybatis.spring.MyBatisSystemException;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("LinkInterfaceService")
+@DependsOn("DatasourceService")
 public class LinkInterfaceServiceImpl extends AbstractService implements LinkInterfaceService {
 
 	@Resource
 	private LinkInterfaceMapper mapper;
+
+	@PostConstruct
+	public void init() {
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+		}
+	}
 
 	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
 	@Override
@@ -98,7 +109,7 @@ public class LinkInterfaceServiceImpl extends AbstractService implements LinkInt
 		result.put("state", "조회 성공");
 		return ResponseEntity.ok(result.toString());
 	}
-	
+
 	@Override
 	public ResponseEntity<String> insertSubInterface(Map<String, Object> params) {
 		return null;
@@ -109,7 +120,6 @@ public class LinkInterfaceServiceImpl extends AbstractService implements LinkInt
 	public ResponseEntity<String> updateSubInterface(Map<String, Object> params) {
 		return null;
 	}
-
 
 	@Override
 	public ResponseEntity<String> selectSubInterface(Map<String, Object> params) {
