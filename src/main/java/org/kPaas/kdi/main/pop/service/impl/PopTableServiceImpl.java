@@ -1,7 +1,5 @@
 package org.kPaas.kdi.main.pop.service.impl;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.json.JSONObject;
@@ -34,7 +32,7 @@ public class PopTableServiceImpl extends AbstractService implements PopTableServ
 			result.put("state", "스키마 조회 실패");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
-		
+
 		if (!kdiRoutingDataSource.contains(ds_nm)) {
 			result.put("errMsg", "데이터소스를 찾을 수 없습니다.");
 			result.put("stateCode", 2);
@@ -57,6 +55,7 @@ public class PopTableServiceImpl extends AbstractService implements PopTableServ
 		}
 		return ResponseEntity.ok(result.toString());
 	}
+
 	/** 연계서비스 항목 설정 - 스키마 선택시 테이블 리스트 출력 */
 	@Override
 	public ResponseEntity<String> getTables(KdiParam kdiParam) {
@@ -89,21 +88,6 @@ public class PopTableServiceImpl extends AbstractService implements PopTableServ
 		}
 		result.put("stateCode", 0);
 		result.put("state", "조회 성공");
-		return ResponseEntity.ok(result.toString());
-	}
-	@Override
-	public ResponseEntity<String> editIF_SvcDs(Map<String, Object> params) {
-		JSONObject result = new JSONObject();
-		try {
-			mapper.editIF_SvcDs(params);
-		} catch (MyBatisSystemException e) {
-			result.put("stateCode", 1);
-			result.put("state", "수정 실패");
-			result.put("errMsg", e.getMessage());
-			return ResponseEntity.badRequest().body(result.toString());
-		} 
-		result.put("stateCode", 0);
-		result.put("state", "수정 성공");
 		return ResponseEntity.ok(result.toString());
 	}
 }

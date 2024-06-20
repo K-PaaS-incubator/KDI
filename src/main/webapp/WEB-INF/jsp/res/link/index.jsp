@@ -16,10 +16,11 @@
 	</form>
 	<table class="data-list">
 		<colgroup>
-			<col width="15%">
-			<col width="15%">
-			<col width="32%">
-			<col width="32%">
+			<col width="10%">
+			<col width="10%">
+			<col>
+			<col width="24%">
+			<col width="20%">
 			<col width="6%">
 		</colgroup>
 		<thead class="list-head">
@@ -28,13 +29,14 @@
 				<th>유형</th>
 				<th>연계서비스명</th>
 				<th>데이터소스명</th>
+				<th>토픽명</th>
 				<th>🚮</th>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</thead>
 		<tbody id="gridTableDataBody" class="list-body">
 			<tr class="detailTr gray500">
-				<td colspan="4">로딩중</td>
+				<td colspan="6">로딩중</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
@@ -60,6 +62,7 @@
 			<td><input type="hidden" name="svcType" value="#SVC_TYPE#">#SVC_TYPE_NAME#</td>
 			<td><input type="hidden" name="svcNm" value="#SVC_NM#">#SVC_NM#</td>
 			<td><input type="hidden" name="dsDm" value="#DS_NM#">#DS_NM#</td>
+			<td><input type="hidden" name="tpDm" value="#TP_NM#">#TP_NM#</td>
 			<td hidden="hidden"><input type="hidden" name="svcId" value="#SVC_ID#"></td>
 			<td id="lnkDelBtn" onclick="fn_del('#SVC_ID#');">🗑️</td>
 		</tr>
@@ -67,13 +70,13 @@
 	</tbody>
 	<tbody id="gridNoDataHtmlFormatId">
 		<tr class="detailTr">
-			<td colspan="4">연계서비스가 존재하지 않습니다.</td>
+			<td colspan="6">연계서비스가 존재하지 않습니다.</td>
 		</tr>
 		<tr class="table-spacing"></tr>
 	</tbody>
 	<tbody id="gridLoadingHtmlFormatId">
 		<tr class="detailTr">
-			<td colspan="4">로딩중...</td>
+			<td colspan="6">로딩중...</td>
 		</tr>
 		<tr class="table-spacing"></tr>
 	</tbody>
@@ -86,10 +89,11 @@
 	gridEnv.setMapping({
 		'#SVC_ID#' : 'SVC_ID',
 		'#DS_NM#' : 'DS_NM',
+		'#TP_NM#' : 'TP_NM',
 		'#SVC_NM#' : 'SVC_NM',
 		'#SVC_TYPE#' : 'SVC_TYPE',
 		'#SVC_TYPE_NAME#' : 'SVC_TYPE_NAME'
-	})
+	});
 
 	gridEnv.loading.enable();
 	gridEnv.nodata.enable();
@@ -110,11 +114,21 @@
 	});
 
 	grid.event.setPostEvent(function() {
-		$('#gridTableDataBody tr.dataTr').click(function() {
-			const svcType = $(this).find('input[name="svcType"]').val();
-			const svcId = $(this).find('input[name="svcId"]').serialize();
-			location.href = '${pageUrl}detail/' + svcType + '?' + svcId;
-		});
+		$('#gridTableDataBody tr.dataTr').click(
+				function() {
+					let svcTypeUrl = $(this).find('input[name="svcType"]')
+							.val()
+							|| 'P';
+					const svcId = $(this).find('input[name="svcId"]')
+							.serialize();
+					console.log(svcTypeUrl);
+					if ('P' == svcTypeUrl) {
+						svcTypeUrl = 'pub';
+					} else {
+						svcTypeUrl = 'sub';
+					}
+					location.href = '${pageUrl}' + svcTypeUrl + '?' + svcId;
+				});
 	});
 
 	var fn_del = function(svcId) {

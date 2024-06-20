@@ -1,17 +1,16 @@
 package org.kPaas.kdi.main.res.si.service.impl;
 
-import javax.annotation.Resource;
-
 import org.kPaas.kdi.com.base.KdiGridMapper;
 import org.kPaas.kdi.com.base.KdiGridServiceImpl;
 import org.kPaas.kdi.main.res.si.mapper.SvcInfoMapper;
 import org.kPaas.kdi.main.res.si.service.SvcInfoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class SvcInfoServiceImpl extends KdiGridServiceImpl implements SvcInfoService {
 
-	@Resource
+	@Autowired
 	private SvcInfoMapper mapper;
 
 	public SvcInfoServiceImpl() {
@@ -21,7 +20,13 @@ public class SvcInfoServiceImpl extends KdiGridServiceImpl implements SvcInfoSer
 		putStringByteLengthCheck("dsNm", "데이터소스명", 100);
 		putStringByteLengthCheck("tpiId", "전송경로정보ID", 100);
 	}
-
+	
+	@Override
+	protected void init() {
+		// 작업중 테이블 자동생성 방지
+///		super.init();
+	}
+	
 	@Override
 	protected KdiGridMapper getMapper() {
 		return mapper;

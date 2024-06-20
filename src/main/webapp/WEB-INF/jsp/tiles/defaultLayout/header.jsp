@@ -59,7 +59,7 @@
 	<script defer>
 		var hoveringMenu = false;
 		var menuDatas = [ {
-			title : '데이소스',
+			title : '데이터소스',
 			uri : 'res/ds',
 			submenu : [ // submenu START
 			{

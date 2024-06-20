@@ -20,7 +20,7 @@ public abstract class KdiGridController extends AbstractController {
 
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자가 아닌 일반 사용자)
 	@GetMapping()
-	public String getIndex(Model model, @RequestParam Map<String, Object> params) {
+	public String getIndexPage(Model model, @RequestParam Map<String, Object> params) {
 		model.addAllAttributes(params);
 		return layout("index");
 	}
@@ -38,7 +38,7 @@ public abstract class KdiGridController extends AbstractController {
 	}
 
 	@GetMapping("/insert")
-	public String dsCreate(Model model, @RequestParam Map<String, Object> params) {
+	public String getInserPage(Model model, @RequestParam Map<String, Object> params) {
 		model.addAllAttributes(params);
 		return layout("insert");
 	}
@@ -49,24 +49,24 @@ public abstract class KdiGridController extends AbstractController {
 	}
 
 	@PostMapping("/insert.json")
-	public ResponseEntity<String> insert(@RequestParam Map<String, Object> params) {
+	public ResponseEntity<String> postInsert(@RequestParam Map<String, Object> params) {
 		return getService().insert(mapToKdiParam(params));
 	}
 
 	@GetMapping("/modify")
-	public String getModify(Model model, @RequestParam Map<String, Object> params) {
+	public String getModifyPage(Model model, @RequestParam Map<String, Object> params) {
 		model.addAllAttributes(params);
 		return layout("modify");
 	}
 
 	@PostMapping("/modify.json")
-	public ResponseEntity<String> modify(@RequestParam Map<String, Object> params) {
+	public ResponseEntity<String> postModify(@RequestParam Map<String, Object> params) {
 		return getService().modify(mapToKdiParam(params));
 	}
 
 	@ResponseBody
 	@PostMapping("/delete.json")
-	public ResponseEntity<String> delete(@RequestParam Map<String, Object> params) {
+	public ResponseEntity<String> postDelete(@RequestParam Map<String, Object> params) {
 		return getService().delete(mapToKdiParam(params));
 	}
 

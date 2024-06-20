@@ -1,20 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:url var="pageUrl" value="/res/link/detail/s" />
+<c:url var="pageUrl" value="/res/link/sub/" />
 <c:url var="imgUrl" value="/img/" />
 <c:url var="cssUrl" value="/css/" />
+<c:url var="jsUrl" value="/js/" />
 <link rel="stylesheet" href="${cssUrl}link.css">
+<script src="${jsUrl}kdi/kdi-grid-option.js"></script>
 
 <div class="mainContent">
 	<form action="${pageUrl}" method="GET" id="searchForm">
 		<input type="hidden" name="svcId" value="${svcId}">
 		<div class="link-table-box-top">
-			<div class="search-box button-second-gray" id="optionPop" style="display: none;">⚙️ 서비스명 및 데이터소스 변경</div>
+			<div class="search-box button-second-gray" id="svc-info-change-pop">⚙️ 서비스 정보 변경</div>
 			<!-- 추후 개발범위(설계추가) -->
 		</div>
 		<div class="search-box">
 			<div>
-				<input id="searchKeyword" type="text" name="svc_lnk_id" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
+				<input id="searchKeyword" type="text" name="svcLnkId" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
 			</div>
 			<button id="searchBtn" type="submit" class="button-second-gray">확인</button>
 		</div>
@@ -44,10 +46,10 @@
 			<tr class="table-spacing"></tr>
 		</tbody>
 	</table>
-	<div class="link-list-button-box">
-		<input class="button-second" type="button" id="regbtn" value="인터페이스등록" onclick="fn_reg();">
-		<div class="body2 pagination-ul pageCtlZone"></div>
-		<!-- 일단 임시로 이 영역에 구현함 -->
+
+	<!-- 일단 임시로 이 영역에 구현함 -->
+	<div class="link-list-button-box" style="margin-bottom: 15px">
+		<div></div>
 		<div class="body2 gray500">
 			<div class="body2">
 				<span>전체 :</span> <span class="totalCnt">1</span>건
@@ -56,6 +58,11 @@
 				<span class="currentPageNum">1</span> / <span class="totalPage">1</span> 페이지
 			</div>
 		</div>
+	</div>
+	<div class="link-list-button-box">
+		<input class="button-second-gray" type="button" value="이전" id="previousBtn">
+		<div class="body2 pagination-ul pageCtlZone"></div>
+		<input class="button-second" type="button" id="regbtn" value="테이블정보등록" onclick="fn_reg();">
 	</div>
 </div>
 
@@ -72,7 +79,7 @@
 	</tbody>
 	<tbody id="gridNoDataHtmlFormatId">
 		<tr class="detailTr">
-			<td colspan="5">등록된 인터페이스가 없습니다.</td>
+			<td colspan="5">등록된 연계 수신업무 정보가 없습니다.</td>
 		</tr>
 		<tr class="table-spacing"></tr>
 	</tbody>
@@ -86,8 +93,8 @@
 
 <script defer>
 	//그리드 객체 생성
-	var grid = KdiListGrid('grid', '${linkUrl}interface/list.json');
-	var gridEnv = grid.env;
+	const grid = KdiListGrid('grid', '${linkUrl}interface/list.json');
+	const gridEnv = grid.env;
 	gridEnv.setMapping({
 		'#SVC_LNK_ID#' : 'SVC_LNK_ID',
 		'#SVC_LNK_NM#' : 'SVC_LNK_NM',
@@ -129,16 +136,9 @@
 		location.href = interfaceUri;
 	};
 
-	var fn_iF_option_click = function() {
-		const ds_nm = new URL(location.href).searchParams.get('ds_nm');
-		const svc_nm = new URL(location.href).searchParams.get('svc_nm');
-		const svc_id = new URL(location.href).searchParams.get('svc_id');
-		const svc_type = new URL(location.href).searchParams.get('svc_type');
-		const parent_id = encodeURIComponent('#searchForm');
-		const param = 'svc_type=' + svc_type + '&ds_nm=' + ds_nm + '&svc_nm='
-				+ svc_nm + '&svc_id=' + svc_id;
-		const interfacePopUri = '${homeUrl}pop/table/interfacePop?' + param;
-		const testUri = 'http://localhost:8080/pop/table/interfacePop'
+	const fn_svc_info_change_pop = function() {
+		const param = $('input[name="svcId"]').serialize();
+		const interfacePopUri = contextPath + 'res/link/pop?' + param;
 
 		let popOption = 'toolbar=no,menubar=no,location=no,status=no';
 		popOption += ',scrollbars=yes,resizeable=yes';
@@ -149,17 +149,24 @@
 	}
 
 	$().ready(function() {
+		const _page_url = new URL(location.href).pathname + '/../';
+		fn_previous_button_click(_page_url);
 		//배너 타이틀 세팅
-		$('.banner-title').text('연계서비스');
-		$('.banner-sub-title').text('연계서비스를 제공합니다');
+		$('.banner-title').text('연계 수신업무 정보');
+		$('.banner-sub-title').text('연계 수신업무 정보를 제공합니다');
 		//페이지 타이틀 세팅
-		$('.main-title-text').text('연계 인터페이스 조회');
-		$('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회 > 연계 인터페이스 조회');
+		$('.main-title-text').text('연계 수신업무 정보 조회');
+		$('.navi-arrow').text(' > 연계서비스 > 연계서비스 조회 > 연계 수신업무 정보 조회');
 
 		// 그리드 작업 실행
 		grid.ready();
 		grid.search(1, paramData);
 
-		$('#optionPop').click(fn_iF_option_click);
+		$('#svc-info-change-pop').click(fn_svc_info_change_pop);
 	});
+	
+	const fn_reg = function() {
+		const param = $('input[name="svcId"]').serialize();
+		location.href = '${pageUrl}insert?' + param;
+	};
 </script>

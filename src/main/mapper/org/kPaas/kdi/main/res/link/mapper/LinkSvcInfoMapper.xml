@@ -62,12 +62,13 @@
 		TB1.SVC_ID,
 		TB1.DS_NM,
 		TB1.SVC_NM,
+		TB1.TP_NM,
 		TB1.SVC_TYPE,
 		DECODE(TB1.SVC_TYPE,'P','송신','수신') AS SVC_TYPE_NAME
 		FROM
 		<include refid="getLinkSvcInfListWhere" />
 		ORDER BY
-		TB1.REG_DT, TB1.DS_NM
+		TB1.SVC_NM, TB1.SVC_ID, TB1.SVC_TYPE
 		LIMIT
 		#{param.pagePerRow}
 		OFFSET
@@ -108,9 +109,8 @@
 	<update id="modify">
 		UPDATE KDI_LINK_SVC_INF
 		<set>
-			SVC_LNK_NM = #{param.value.svcLnkMm},
-			DS_NM = #{param.value.dsNm},
 			SVC_NM = #{param.value.svcNm},
+			DS_NM = #{param.value.dsNm},
 			TP_NM = #{param.value.tpNm},
 			MOD_ID = #{param.value.modifyId},
 			MOD_DT = current_timestamp()
