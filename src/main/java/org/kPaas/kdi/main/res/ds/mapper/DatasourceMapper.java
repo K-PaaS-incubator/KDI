@@ -13,4 +13,9 @@ public interface DatasourceMapper extends KdiGridMapper {
 	public List<DatasourceVo> getDsListAll();
 
 	public String validationQuery(@Param("dsType") String ds_type);
+
+	/**
+	 * 임시
+	 */
+	public List<String> getAllDsNm();
 }

@@ -144,7 +144,7 @@ div[class*='detail-'] {
 	$('#connTestBtn').click(function databaseCheck() {
 		$('form').validate();
 		$.ajax({
-			url : contextPath + 'res/ds/testConnection',
+			url : contextPath + 'res/ds/testConnection.json',
 			type : 'POST',
 			data : $('form').serialize(),
 			dataType : 'JSON',

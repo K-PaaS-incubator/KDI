@@ -108,7 +108,7 @@
 		$('.banner-sub-title').text('데이터소스 정보를 제공합니다.')
 		//페이지 타이틀 세팅
 		$('.main-title-text').text('데이터소스 조회');
-		$('.navi-arrow').text(' > 자원관리 > 데이터소스')
+		$('.navi-arrow').text(' > 데이터소스 > 데이터소스 조회')
 
 		grid.ready();
 		grid.search();

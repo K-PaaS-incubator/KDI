@@ -17,6 +17,7 @@
 <script src="${jqueryUrl}jquery.validate.min.js"></script>
 <script src="${jqueryUrl}additional-methods.min.js"></script>
 <script src="${jqueryUrl}messages_ko.min.js"></script>
+<script src="${jsUrl}kdi/kdi-main-data.js"></script>
 <script src="${jsUrl}kdi/kdi-grid.js"></script>
 <script type="text/javascript">
 	const contextPath = '${homeUrl}';

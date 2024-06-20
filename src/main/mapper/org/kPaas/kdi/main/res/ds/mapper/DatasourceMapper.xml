@@ -23,26 +23,6 @@
 			<otherwise>select 1 from dual</otherwise>
 		</choose>
 	</select>
-	<sql id="getDsListWhere">
-		KDI_DATASOURCE TB1
-		<where>
-			1=1
-			<if test="param.value.dsNm != null and param.value.dsNm != ''">
-				AND TB1.DS_NM LIKE '%' || #{param.value.dsNm} || '%'
-			</if>
-			<if test="param.value.dsType != null and param.value.dsType != ''">
-				AND TB1.DS_TYPE LIKE '%' || #{param.value.dsType} || '%'
-			</if>
-			<if test="param.value.dsAddr != null and param.value.dsAddr != ''">
-				AND TB1.DS_ADDR LIKE '%' || #{param.value.dsAddr} || '%'
-			</if>
-			<if test="param.value.all_search != null and param.value.all_search != ''">
-				OR TB1.DS_NM LIKE '%' || #{param.value.dsNm} || '%'
-				OR TB1.DS_TYPE LIKE '%' || #{param.value.dsType} || '%'
-				OR TB1.DS_ADDR LIKE '%' || #{param.value.dsAddr} || '%'
-			</if>
-		</where>
-	</sql>
 
 	<insert id="createTable">
 		CREATE TABLE `KDI_DATASOURCE` (
@@ -64,7 +44,27 @@
 		PRIMARY KEY (`DS_NM`)
 		)
 	</insert>
-	
+	<sql id="getDsListWhere">
+		KDI_DATASOURCE TB1
+		<where>
+			1=1
+			<if test="param.value.dsNm != null and param.value.dsNm != ''">
+				AND TB1.DS_NM LIKE '%' || #{param.value.dsNm} || '%'
+			</if>
+			<if test="param.value.dsType != null and param.value.dsType != ''">
+				AND TB1.DS_TYPE LIKE '%' || #{param.value.dsType} || '%'
+			</if>
+			<if test="param.value.dsAddr != null and param.value.dsAddr != ''">
+				AND TB1.DS_ADDR LIKE '%' || #{param.value.dsAddr} || '%'
+			</if>
+			<if test="param.value.all_search != null and param.value.all_search != ''">
+				OR TB1.DS_NM LIKE '%' || #{param.value.dsNm} || '%'
+				OR TB1.DS_TYPE LIKE '%' || #{param.value.dsType} || '%'
+				OR TB1.DS_ADDR LIKE '%' || #{param.value.dsAddr} || '%'
+			</if>
+		</where>
+	</sql>
+
 	<select id="getListCnt" resultType="Long">
 		SELECT
 		COUNT(TB1.*)
@@ -87,8 +87,19 @@
 	</select>
 
 	<insert id="insert">
-		INSERT INTO KDI_DATASOURCE
-		VALUES(
+		INSERT INTO KDI_DATASOURCE (
+		DS_NM,
+		DS_TYPE,
+		DS_DRIVER,
+		DS_ADDR,
+		DS_PORT,
+		DS_SID,
+		DS_URL,
+		DS_USR_NM,
+		DS_USR_PW,
+		REG_ID,
+		REG_DT
+		) VALUES (
 		#{param.value.dsNm},
 		#{param.value.dsType},
 		#{param.value.dsDriver},
@@ -99,8 +110,6 @@
 		#{param.value.dsUsrNm},
 		#{param.value.dsUsrPw},
 		#{param.value.regId},
-		current_timestamp(),
-		#{param.value.modId},
 		current_timestamp()
 		)
 	</insert>
@@ -108,28 +117,31 @@
 
 	<select id="duplicateCheck" resultType="Integer">
 		SELECT count(*) FROM KDI_DATASOURCE
-		<where>ds_nm = #{param.value.dsNm}</where>
+		<where>DS_NM = #{param.value.dsNm}</where>
 	</select>
 
 	<select id="get" resultType="Map">
 		SELECT * FROM KDI_DATASOURCE
 		<where>
-			ds_nm = #{param.value.dsNm}
+			DS_NM = #{param.value.dsNm}
 		</where>
 	</select>
 
 	<update id="modify">
 		UPDATE KDI_DATASOURCE
 		<set>
-			ds_url = #{param.value.dsUrl},
-			ds_addr = #{param.value.dsAddr},
-			ds_port = #{param.value.dsPort},
-			ds_sid = #{param.value.dsSid},
-			ds_usr_nm = #{param.value.dsUsrNm},
-			ds_usr_pw = #{param.value.dsUsrPw}
+			DS_URL = #{param.value.dsUrl},
+			DS_ADDR = #{param.value.dsAddr},
+			DS_PORT = #{param.value.dsPort},
+			DS_SID = #{param.value.dsSid},
+			DS_USR_NM = #{param.value.dsUsrNm},
+			DS_USR_PW =
+			#{param.value.dsUsrPw},
+			MOD_ID = #{param.value.modifyId},
+			MOD_DT = current_timestamp()
 		</set>
 		<where>
-			ds_nm = #{param.value.dsNm}
+			DS_NM = #{param.value.dsNm}
 		</where>
 	</update>
 
@@ -138,7 +150,11 @@
 		FROM
 		KDI_DATASOURCE
 		<where>
-			ds_nm = #{param.value.dsNm}
+			DS_NM = #{param.value.dsNm}
 		</where>
 	</delete>
+
+	<select id="getAllDsNm" resultType="String" fetchSize="10">
+		SELECT DS_NM FROM KDI_DATASOURCE
+	</select>
 </mapper>

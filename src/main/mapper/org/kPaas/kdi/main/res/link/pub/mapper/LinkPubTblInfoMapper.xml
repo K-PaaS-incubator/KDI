@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.kPaas.kdi.main.res.link.pub.mapper.LinkPubTblInfoMapper">
+
+	<insert id="createTable">
+		CREATE TABLE `KDI_LINK_PUB_TBL_INF` (
+		`COL_NM` VARCHAR2(100) NOT NULL,
+		`SVC_LNK_ID` VARCHAR2(100) NOT NULL REFERENCES KDI_LINK_PUB_INF(SVC_LNK_ID) ON DELETE CASCADE,
+		`COL_TYPE`
+		varchar2(20) NULL, <!-- 컬럼타입: 컬럼 자료형 -->
+		`COL_LNK_TYPE` char(1) NULL, <!-- Y:사용(연계함), N:미사용(연계안함), O:OP대체컬럼, S:STATUS대체컬럼 -->
+		`COL_MP_NM` varchar2(100) NULL,
+		`REG_ID` VARCHAR2(20) NULL,
+		`REG_DT` DATE NULL,
+		`MOD_ID` VARCHAR2(20) NULL,
+		`MOD_DT` DATE NULL,
+		PRIMARY KEY (`COL_NM`,`SVC_LNK_ID`)
+		)
+	</insert>
+
+	<sql id="getLinkPubTblInfListWhere">
+		KDI_LINK_PUB_INF TB1
+		<where>
+			TB1.COL_NM = #{param.value.colNm}
+			AND TB1.SVC_LNK_ID = #{param.value.svcLnkId}
+		</where>
+	</sql>
+
+	<select id="getListCnt" resultType="Long">
+		SELECT
+		COUNT(TB1.*)
+		FROM
+		<include refid="getLinkPubTblInfListWhere" />
+	</select>
+
+	<select id="getList" resultType="Map">
+		SELECT
+		TB1.COL_NM,
+		TB1.SVC_LNK_ID,
+		TB1.COL_TYPE,
+		TB1.COL_LNK_TYPE,
+		TB1.COL_MP_NM
+		FROM
+		<include refid="getLinkPubTblInfListWhere" />
+		LIMIT
+		#{param.pagePerRow}
+		OFFSET
+		(#{param.pageNum} - 1) * #{param.pagePerRow}
+	</select>
+
+	<insert id="insertPubInterface">
+		INSERT INTO KDI_LINK_PUB_TBL_INF (
+		COL_NM,
+		SVC_LNK_ID,
+		COL_TYPE,
+		COL_LNK_TYPE,
+		COL_MP_NM,
+		REG_ID,
+		REG_DT
+		) VALUES (
+		#{param.value.colNm},
+		#{param.value.svcLnkId},
+		#{param.value.colType},
+		#{param.value.colLnkType},
+		#{param.value.colMpNm},
+		#{param.value.lnkTime},
+		#{param.value.regId},
+		current_timestamp()
+		)
+	</insert>
+
+	<select id="duplicateCheck" resultType="Integer">
+		SELECT count(*) FROM KDI_LINK_PUB_TBL_INF
+		<where>
+			COL_NM = #{param.value.colNm}
+			AND SVC_LNK_ID = #{param.value.svcLnkId}
+		</where>
+	</select>
+
+	<select id="get" resultType="Map">
+		SELECT * FROM KDI_LINK_PUB_INF
+		<where>
+			COL_NM = #{param.value.colNm}
+			AND SVC_LNK_ID = #{param.value.svcLnkId}
+		</where>
+	</select>
+
+	<update id="modify">
+		UPDATE KDI_LINK_PUB_INF
+		<set>
+			COL_TYPE = #{param.value.colType},
+			COL_LNK_TYPE = #{param.value.colLnkType},
+			COL_MP_NM = #{param.value.colMpNm},
+			MOD_ID = #{param.value.modifyId},
+			MOD_DT = current_timestamp()
+		</set>
+		<where>
+			COL_NM = #{param.value.colNm}
+			AND SVC_LNK_ID = #{param.value.svcLnkId}
+		</where>
+	</update>
+
+	<delete id="delete" parameterType="String">
+		DELETE
+		FROM
+		KDI_LINK_PUB_INF
+		<where>
+			COL_NM = #{param.value.colNm}
+			AND SVC_LNK_ID = #{param.value.svcLnkId}
+		</where>
+	</delete>
+</mapper>

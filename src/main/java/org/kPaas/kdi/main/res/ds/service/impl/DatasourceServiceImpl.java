@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.kPaas.kdi.com.base.KdiGridMapper;
 import org.kPaas.kdi.com.base.KdiGridServiceImpl;
@@ -122,6 +123,28 @@ public class DatasourceServiceImpl extends KdiGridServiceImpl implements Datasou
 			kdiRoutingDataSource.remove(testDataSourceName);
 			// 현재 쓰레드의 데이터소스를 원복하는 행위
 			setContext(orgContext);
+		}
+	}
+
+	/**
+	 * 모든 데이터소스 목록 반환
+	 */
+	@Override
+	public ResponseEntity<String> getAllDsNm() {
+		JSONObject result = new JSONObject();
+		try {
+			result.put("state", getBizName() + " 데이터 조회 성공");
+			result.put("stateCode", 0);
+			JSONArray dataArray = new JSONArray();
+			dataArray.putAll(this.mapper.getAllDsNm());
+			result.put("data", dataArray);
+			return ResponseEntity.ok(result.toString());
+		} catch (MyBatisSystemException e) {
+			result.put("stateCode", 3);
+			result.put("state", "테스트 실패");
+			result.put("msg", e.getRootCause().getMessage());
+			log.error("접속 테스트 실패", e);
+			return ResponseEntity.badRequest().body(result.toString());
 		}
 	}
 

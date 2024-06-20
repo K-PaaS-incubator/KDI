@@ -17,4 +17,7 @@
 	<definition name="subBannerLayout/*/*/*" extends="subBannerLayout">
 		<put-attribute name="section" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
 	</definition>
+	<definition name="subBannerLayout/*/*/*/*" extends="subBannerLayout">
+		<put-attribute name="section" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
 </tiles-definitions>

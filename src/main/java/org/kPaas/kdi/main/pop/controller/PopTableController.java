@@ -2,10 +2,9 @@ package org.kPaas.kdi.main.pop.controller;
 
 import java.util.Map;
 
-import org.json.JSONObject;
 import org.kPaas.kdi.com.abs.AbstractController;
-import org.kPaas.kdi.main.link.service.LinkService;
 import org.kPaas.kdi.main.pop.service.PopTableService;
+import org.kPaas.kdi.main.res.ds.service.DatasourceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,7 +22,7 @@ public class PopTableController extends AbstractController {
 	@Autowired
 	private PopTableService service;
 	@Autowired
-	private LinkService lnkService;
+	private DatasourceService datasourceService;
 
 	public PopTableController() {
 		super("pop/table");
@@ -48,7 +47,6 @@ public class PopTableController extends AbstractController {
 	public String getInterfacePop(Model model,@RequestParam("svc_type") String svc_type, 
 			@RequestParam("ds_nm") String ds_nm, @RequestParam("svc_nm") String svc_nm, @RequestParam("svc_id") String svc_id) {
 
-		model.addAttribute("selectDsList", lnkService.selectDsList());
 		model.addAttribute("svc_type",svc_type);
 		model.addAttribute("ds_nm",ds_nm);
 		model.addAttribute("svc_nm",svc_nm);

@@ -35,63 +35,68 @@
 	<div class="mainContent" style="margin: 15px;">
 		<form id="editIF">
 			<div class="link-table-box-top">
-			<div class="link-interface-box-top">
-			<div class="header4 label-title" >서비스명 및 데이터소스 변경</div>
-			</div>
+				<div class="link-interface-box-top">
+					<div class="header4 label-title">서비스명 및 데이터소스 변경</div>
+				</div>
 			</div>
 			<div class="link-table-box-top">
 				<div class="link-interface-box-top">
 					<div class="link-inputs-row">
 						<div class="common-input-box">
 							<div class="header6 label-title">서비스명</div>
-								<input type="text" class="interface-input subtitle1 gray400 tableSearch" value="${svc_nm}" name="svc_nm">
-								<input type="hidden" value="${svc_id}" name="svc_id">
-								<input type="hidden" value="${svc_type}" name="svc_type">
+							<input type="text" class="interface-input subtitle1 gray400 tableSearch" value="${svc_nm}" name="svc_nm"> <input type="hidden" value="${svc_id}" name="svc_id">
+							<input type="hidden" value="${svc_type}" name="svc_type">
 							<div class="header6 label-title">데이터소스명</div>
-							<select class="interface-input subtitle1 gray400" name="ds_nm">
-						    	<c:forEach var="ds" items="${selectDsList}">
-									<option value="${ds}" <c:if test="${ds eq ds_nm}">selected</c:if>>${ds}</option>
-								</c:forEach>
+							<select class="interface-input subtitle1 gray400" name="dsNm">
+								<option value="">로딩중...</option>
 							</select>
 						</div>
 					</div>
 					<input class="button-primary" type="button" id="popIFbtn" value="저장">
 				</div>
 			</div>
-			
-		
+
+
 		</form>
 	</div>
+	<div style="display: none;">
+		<select id="dsNmFromat">
+			<option value="#DS_NM#">#DS_NM#</option>
+		</select>
+	</div>
 	<script type="text/javascript">
-	
-		var fn_editIF_SvcDs = function(){
+		var fn_editIF_SvcDs = function() {
 			var data = $('#editIF').serialize();
-			$.ajax({
-				url : '${popUrl}table/editIF.json',
-				type : 'POST',
-				data : data ,
-				dataType : 'JSON',
-				success : function(result) {
-					alert('수정이 완료되었습니다.');
-					//serialize()에서 value값 가져오는 방법
-					//svc_nm=$('#editIF [name="svc_nm"]').val(); 
-					
-					window.opener.parent.location.href='${homeUrl}link/interface?'+data;
-					window.close();
-				},
-				error : function(result) {
-					console.log('statusCode:' + result.statusCode);
-					console.log('responseJSON:' + result.responseJSON.state);
-					console.log('responseJSON:' + result.responseJSON.msg);
-					alert('수정 실패');
-				}
-			});
-		};	
+			$
+					.ajax({
+						url : '${popUrl}table/editIF.json',
+						type : 'POST',
+						data : data,
+						dataType : 'JSON',
+						success : function(result) {
+							alert('수정이 완료되었습니다.');
+							//serialize()에서 value값 가져오는 방법
+							//svc_nm=$('#editIF [name="svc_nm"]').val(); 
+
+							window.opener.parent.location.href = '${homeUrl}link/interface?'
+									+ data;
+							window.close();
+						},
+						error : function(result) {
+							console.log('statusCode:' + result.statusCode);
+							console.log('responseJSON:'
+									+ result.responseJSON.state);
+							console.log('responseJSON:'
+									+ result.responseJSON.msg);
+							alert('수정 실패');
+						}
+					});
+		};
 
 		$().ready(function() {
 			$('#popIFbtn').click(fn_editIF_SvcDs);
+
 		});
-		
 	</script>
 </body>
 </head>

@@ -5,6 +5,7 @@ import java.util.Map;
 import org.kPaas.kdi.com.abs.AbstractController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +20,8 @@ public abstract class KdiGridController extends AbstractController {
 
 	@PreAuthorize("isAuthenticated()") // 로그인한 사용자(관리자가 아닌 일반 사용자)
 	@GetMapping()
-	public String getIndex() {
+	public String getIndex(Model model, @RequestParam Map<String, Object> params) {
+		model.addAllAttributes(params);
 		return layout("index");
 	}
 
@@ -36,7 +38,8 @@ public abstract class KdiGridController extends AbstractController {
 	}
 
 	@GetMapping("/insert")
-	public String dsCreate() {
+	public String dsCreate(Model model, @RequestParam Map<String, Object> params) {
+		model.addAllAttributes(params);
 		return layout("insert");
 	}
 
@@ -51,7 +54,8 @@ public abstract class KdiGridController extends AbstractController {
 	}
 
 	@GetMapping("/modify")
-	public String getModify() {
+	public String getModify(Model model, @RequestParam Map<String, Object> params) {
+		model.addAllAttributes(params);
 		return layout("modify");
 	}
 

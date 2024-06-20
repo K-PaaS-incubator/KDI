@@ -71,13 +71,13 @@
 			} ]
 		}, {
 			title : '연계서비스',
-			uri : 'link',
+			uri : 'res/link',
 			submenu : [ {
 				title : '연계서비스 조회',
-				uri : 'link'
+				uri : 'res/link'
 			}, {
 				title : '연계서비스 등록',
-				uri : 'link/reg'
+				uri : 'res/link/insert'
 			} ]
 		},
 

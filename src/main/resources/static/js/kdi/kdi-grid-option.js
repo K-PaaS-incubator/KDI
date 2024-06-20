@@ -4,7 +4,7 @@ const fn_title_init = function(menuNm, pageNm, pageType) {
 	$('.banner-sub-title').text(pageNm + '를 ' + pageType + ' 합니다.');
 	//페이지 타이틀 세팅
 	$('.main-title-text').text(pageNm + ' ' + pageType);
-	$('.navi-arrow').text(' > ' + menuNm + ' > ' + pageNm + ' > ' + pageType);
+	$('.navi-arrow').text(' > ' + menuNm + ' > ' + pageNm + ' ' + pageType);
 };
 
 const fn_duplicate_check = function(pageUri, pkNm) {
@@ -207,7 +207,7 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 				}
 			});
 		});
-
+		
 		$('#deleteBtn').click(function() {
 			if (confirm(pageNm + '을(를) 삭제하시겠습니까?')) {
 				$.ajax({
