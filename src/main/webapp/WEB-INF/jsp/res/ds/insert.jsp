@@ -4,7 +4,11 @@
 <c:url var="jsUrl" value="/js/" />
 <link rel="stylesheet" href="${cssUrl}ds.css">
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
-
+<style>
+div[class*='detail-'] {
+	display: none;
+}
+</style>
 <div class="mainContent">
 	<form id="insert">
 		<!-- 데이터소스명 -->
@@ -15,34 +19,42 @@
 					<input class="ds-input subtitle1 gray400 pk id-pattern" type="text" id="DS_NM" name="dsNm" required>
 				</div>
 				<div class="ds-input-box">
-					<div class="header6 label-title">Server Host</div>
-					<input class="ds-input subtitle1 gray400" type="text" id="DS_ADDR" name="dsAddr" onkeyup="printName()" placeholder="localhost" required>
-				</div>
-				<div class="ds-input-box">
-					<div class="header6 label-title">Database</div>
-					<input class="ds-input subtitle1 gray400" type="text" id="DS_SID" name="dsSid" onkeyup="printName()" required>
-				</div>
-				<div class="ds-input-box">
-					<div class="header6 label-title">UserName</div>
-					<input class="ds-input subtitle1 gray400" type="text" id="DS_USR_NM" name="dsUsrNm" onkeyup="printName()" required>
-				</div>
-			</div>
-			<div class="ds-box-right">
-				<div class="ds-input-box">
 					<div class="header6 label-title">DB Type</div>
 					<select class="ds-input subtitle1 gray400" id="DS_TYPE" name="dsType" onchange="printName()">
 						<option value="oracle" selected="selected">Oracle</option>
 						<option value="mysql">Mysql</option>
+						<option value="mariadb">MariaDB</option>
 					</select>
+				</div>
+				<div class="ds-input-box detail-oracle-con-type">
+					<div class="header6 label-title">접근방식</div>
+					<select class="ds-input subtitle1 gray400" id="ORACLE_CON_TYPE" name="oracleConType" onchange="printName()">
+						<option value=":">SID</option>
+						<option value="/">서비스명</option>
+					</select>
+				</div>
+				<div class="ds-input-box">
+					<div id="DS_TITLE" class="header6 label-title">데이터베이스명</div>
+					<input class="ds-input subtitle1 gray400" type="text" id="DS_SID" name="dsSid" onkeyup="printName()" required>
+				</div>
+				<div class="ds-input-box">
+					<!-- 주소와 포트 자동완성-키업사용-->
+					<div class="header6 label-title">URL</div>
+					<input class="ds-input subtitle1 gray400" id="DS_URL" name="dsUrl" readonly />
+				</div>
+			</div>
+			<div class="ds-box-right">
+				<div class="ds-input-box">
+					<div class="header6 label-title">Server Host</div>
+					<input class="ds-input subtitle1 gray400" type="text" id="DS_ADDR" name="dsAddr" onkeyup="printName()" placeholder="localhost" required>
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">Port</div>
 					<input class="ds-input subtitle1 gray400" type="text" id="DS_PORT" name="dsPort" onkeyup="printName()" placeholder="PORT" required>
 				</div>
 				<div class="ds-input-box">
-					<!-- 주소와 포트 자동완성-키업사용-->
-					<div class="header6 label-title">URL</div>
-					<input class="ds-input subtitle1 gray400" id="DS_URL" name="dsUrl" readonly />
+					<div class="header6 label-title">UserName</div>
+					<input class="ds-input subtitle1 gray400" type="text" id="DS_USR_NM" name="dsUsrNm" onkeyup="printName()" required>
 				</div>
 				<div class="ds-input-box">
 					<div class="header6 label-title">Password</div>
@@ -66,27 +78,49 @@
 </div>
 
 <script>
+	const dsTypeMapping = {
+		oracle : 'oracle-con-type',
+		mysql : '',
+		mariadb : '',
+	};
+	const fn_change_ds_title = function() {
+		const dsType = $('#DS_TYPE').val();
+		if ('oracle' == dsType) {
+			const dsTitle = $('#ORACLE_CON_TYPE option:selected').text();
+			$('#DS_TITLE').text(dsTitle);
+			return;
+		}
+		$('#DS_TITLE').text('데이터베이스명');
+	};
 	$(document).ready(function() {
 		fn_insert_page_load('데이터소스', '데이터소스');
+		fn_input_box_display_event('dsType', dsTypeMapping).select();
+		fn_change_ds_title();
 		printName();
+	});
+
+	$('#DS_TYPE, #ORACLE_CON_TYPE').change(function() {
+		fn_change_ds_title();
 	});
 
 	const portMap = {
 		oracle : '1521',
 		mysql : '3306',
+		mariadb : '3306',
 		postgres : '5432',
 		mssql : '1433'
 	};
 	const urlMap = {
 		oracle : 'jdbc:oracle:thin:@',
-		mysql : 'jdbc:mysql://'
+		mysql : 'jdbc:mysql://',
+		mariadb : 'jdbc:mariadb://'
 	};
 
 	function printName() {
-		var ds_addr = $('#DS_ADDR').val();
-		var ds_port = $('#DS_PORT').val();
-		var ds_sid = $('#DS_SID').val();
-		var ds_type = $("#DS_TYPE").val();
+		let ds_addr = $('#DS_ADDR').val() || '';
+		let ds_port = $('#DS_PORT').val() || '';
+		let ds_sid = $('#DS_SID').val() || '';
+		let ds_type = $("#DS_TYPE").val() || '';
 
 		if (ds_addr == '') {
 			ds_addr = 'localhost';
@@ -96,8 +130,19 @@
 			ds_port = portMap[ds_type];
 			$('#DS_PORT').val(portMap[ds_type]);
 		}
-		$('#DS_URL').val(
-				urlMap[ds_type] + ds_addr + ':' + ds_port + ':' + ds_sid);
+		let ds_url = urlMap[ds_type];
+		switch (ds_type) {
+		case 'mysql':
+		case 'mariadb':
+			ds_url += ds_addr + ':' + ds_port + '/' + ds_sid;
+			break;
+		case 'oracle':
+		default:
+			const oracleConType = $('select[name="oracleConType"]').val();
+			ds_url += ds_addr + ':' + ds_port + oracleConType + ds_sid;
+			break;
+		}
+		$('#DS_URL').val(ds_url);
 	}
 
 	$('#connTestBtn').click(function databaseCheck() {

@@ -9,7 +9,6 @@ import org.json.JSONObject;
 import org.kPaas.kdi.com.base.KdiGridMapper;
 import org.kPaas.kdi.com.base.KdiGridServiceImpl;
 import org.kPaas.kdi.com.config.KdiRoutingDataSource;
-import org.kPaas.kdi.com.tool.service.DBCheckService;
 import org.kPaas.kdi.main.res.ds.mapper.DatasourceMapper;
 import org.kPaas.kdi.main.res.ds.service.DatasourceService;
 import org.kPaas.kdi.main.res.ds.vo.DatasourceVo;
