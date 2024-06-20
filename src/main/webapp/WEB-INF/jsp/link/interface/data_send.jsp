@@ -30,23 +30,23 @@
 								<div class="header6 label-title">테이블명</div>
 								<input class="common-input subtitle1 gray400 tableSearch" type="text" name="tableName" readonly="readonly">
 								<div class="header6 label-title">인터페이스ID</div>
-								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id" value="${svc_lnk_id}">
+								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_id">
 								<div class="header6 label-title">인터페이스제목</div>
 								<input class="common-input subtitle1 gray400" type="text" name="svc_lnk_nm" placeholder="인터페이스 제목">
 							</div>
 						</div>
 						<div>
 							<!-- 크론탭 문법을 input에 직접 입력하는 UI, UI 확정 후 제거 필요 -->
-							<%--                            <div class="common-input-box">--%>
-							<%--                                <div class="header6 label-title">스케줄 1안--%>
-							<%--                                    <span class="guide-icon">--%>
-							<%--                                        <img src="/img/icon-guide-mark.png" alt="">--%>
-							<%--                                        ️<span id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>--%>
-							<%--                                    </span>--%>
-							<%--                                </div>--%>
-							<%--                                <input class="common-input subtitle1 gray400" type="text" name="lnk_time" placeholder="스케줄">--%>
-							<%--                            </div>--%>
-							<div class="schedule-input-box">
+							<div class="common-input-box">
+								<div class="header6 label-title">스케줄
+									<span class="guide-icon">
+									  <img src="/img/icon-guide-mark.png" alt="">
+									  ️<span id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>
+									</span>
+								</div>
+								<input class="common-input subtitle1 gray400" type="text" name="lnk_time" placeholder="0/10 * * * * ? (매 십초마다 실행)">
+							</div>
+<!-- 							<div class="schedule-input-box">
 								<div class="header6 label-title">
 									스케줄 <span class="guide-icon"> <img src="/img/icon-guide-mark.png" alt=""> ️<span id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>
 									</span>
@@ -59,7 +59,7 @@
 										placeholder="월" value="0"> <span class="subtitle1 gray500">월</span> <input class="schedule-input subtitle1 gray400" type="number" max="6" min="0" maxlength="1"
 										name="lnk_time" placeholder="요일" value="0"> <span class="subtitle1 gray500">요일</span>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 					<div class="link-table-box-top-right">
@@ -155,9 +155,10 @@
 				dataType : 'JSON',
 				success : function(result) {
 					console.log('로딩화면 구현했으면 여기쯤에서 로딩 종료하는 위치');
+					$('input[name="svc_lnk_nm"]').val(result.data.SVC_LNK_NM);
 					$('input[name="schemaName"]').val(result.data.SCH_NM);
 					$('input[name="tableName"]').val(result.data.TBL_NM);
-					$('input[name="svc_lnk_nm"]').val(result.data.SVC_LNK_NM);
+					$('input[name="svc_lnk_id"]').val(result.data.SVC_LNK_ID);
 					let flagTypeId = 'input[name="flag_type"][value="';
 					flagTypeId += result.data.FLAG_TYPE;
 					flagTypeId += '"]';
@@ -172,6 +173,10 @@
 			});
 		}
 		var fn_tb_nm_click = function() {
+			if ('' != '${svc_lnk_id}') {
+				$('input[name="svc_lnk_id"]').classList.add('readonly');
+				return;
+			}
 			const ds_nm = encodeURIComponent('${ds_nm}');
 			const parent_id = encodeURIComponent('#LinkDetail');
 			const param = 'ds_nm=' + ds_nm + '&parent_id=' + parent_id;
@@ -183,8 +188,9 @@
 			window.open(tablePopUri, '_blank', popOption);
 		}
 		var fn_back = function() {
-			const backParam = new URL(location.href).search;
-			location.href = '${homeUrl}link/interface' + backParam;
+			const backParam = new URL(location.href).searchParams;
+			backParam.delete("svc_lnk_id");
+			location.href = '${homeUrl}link/interface?' + backParam.toString();
 		};
 		var fn_save = function() {
 			$.ajax({
@@ -305,8 +311,8 @@
 									+ $(this).val());
 				});
 
-		//크론탭 가이드
-		$(".guide-icon").on(
+		//크론탭 가이드11
+		$(".guide-icon11").on(
 				{
 					mouseenter : function() {
 						$('.guide-box').css('display', 'block');
@@ -315,6 +321,23 @@
 										+ ' 분 : 1-59,\n' + ' 시간 : 1-23,\n'
 										+ ' 날짜 : 1-31,\n' + ' 월 : 1-12,\n'
 										+ ' 요일 : 0-6\n' + '(일요일 = 0)');
+					},
+					mouseleave : function() {
+						$('.guide-box').css('display', 'none');
+					},
+				})
+		
+		//크론탭 가이드
+		$(".guide-icon").on(
+				{
+					mouseenter : function() {
+						$('.guide-box').css('display', 'block');
+						$('.guide-box').text(
+								'쿼리가 실행되는 주기를 설정할 수 있습니다.\n' + '\n'
+										+ ' 각 자리수의 의미는\n\n'
+										+ ' *     *    *   *    *    *     *           \n'
+										+ ' 초  분  시  일  월 요일 년도(생락가능)\n'
+										+ '요일은 일요일부터 1로 표기 토요일은 7');
 					},
 					mouseleave : function() {
 						$('.guide-box').css('display', 'none');

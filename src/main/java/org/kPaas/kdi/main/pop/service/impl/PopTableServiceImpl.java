@@ -28,13 +28,13 @@ public class PopTableServiceImpl extends AbstractService implements PopTableServ
 	@Override
 	public ResponseEntity<String> getSchemas(String ds_nm) {
 		JSONObject result = new JSONObject();
-
 		if (null == ds_nm || 0 == ds_nm.trim().length()) {
 			result.put("errMsg", "데이터소스명 누락");
 			result.put("stateCode", 1);
 			result.put("state", "스키마 조회 실패");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
+		
 		if (!kdiRoutingDataSource.contains(ds_nm)) {
 			result.put("errMsg", "데이터소스를 찾을 수 없습니다.");
 			result.put("stateCode", 2);

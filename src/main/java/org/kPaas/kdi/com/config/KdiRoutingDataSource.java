@@ -47,7 +47,7 @@ public class KdiRoutingDataSource extends AbstractRoutingDataSource {
 
 		// 데이터소스 호출시 사용될 Key값
 		String dataSourceName = vo.getDsNm();
-		// 데이터소스 반여작업
+		// 데이터소스 반영작업
 		try {
 			if (!kdiDataSourceMap.containsKey(dataSourceName)) {
 				return;
@@ -93,6 +93,8 @@ public class KdiRoutingDataSource extends AbstractRoutingDataSource {
 	}
 
 	public boolean contains(final String dataSourceName) {
+		//System.out.println(kdiDataSourceMap.containsKey(dataSourceName));
+		
 		return kdiDataSourceMap.containsKey(dataSourceName);
 	}
 }
