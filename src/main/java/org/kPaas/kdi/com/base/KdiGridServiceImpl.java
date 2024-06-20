@@ -166,7 +166,7 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 		try {
 			result.put("stateCode", 0);
 			result.put("state", "중복검사 요청 성공");
-			result.put("data", 0 == getMapper().duplicateCheck(kdiParam));
+			result.put("data", 0 != getMapper().duplicateCheck(kdiParam));
 			return ResponseEntity.ok(result.toString());
 		} catch (MyBatisSystemException e) {
 			result.put("state", "중복검사 요청 실패");

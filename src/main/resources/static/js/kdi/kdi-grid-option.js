@@ -19,6 +19,7 @@ const fn_duplicate_check = function(pageUri, pkNm) {
 		dataType: 'json',
 		data: data,
 		success: function(result) {
+			// 중복이면 true
 			checkResult = result.data;
 		},
 		error: function(result) {
@@ -50,6 +51,27 @@ const fn_detail_display_event = function(dtlName, dtlMapping) {
 		select: _fn_select
 	}
 };
+const fn_input_box_display_event = function(dtlName, dtlMapping) {
+	const _dtlName = dtlName;
+	const _dtlMapping = dtlMapping;
+	const _init = function() {
+		$('[name="' + _dtlName + '"]').change(function() {
+			$('div[class*="detail-"]').css('display', 'none');
+			$('.detail-' + _dtlMapping[this.value]).css('display', 'block');
+		});
+	};
+	const _fn_select = function() {
+		$('div[class*="detail-"]').css('display', 'none');
+		if (!_dtlMapping[$('[name="' + _dtlName + '"]')]) {
+			return;
+		}
+		$('.detail-' + _dtlMapping[$('[name="' + _dtlName + '"]').val()]).css('display', 'block');
+	}
+	_init();
+	return {
+		select: _fn_select
+	}
+};
 
 const fn_pattern_event = function() {
 	$('.id-pattern').keyup(function() {
@@ -69,7 +91,7 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 		$('#regbtn').click(function databaseSave() {
 			$('form').validate();
 			const duplicate = fn_duplicate_check(_page_url, _pkNm);
-			if (!duplicate) {
+			if (duplicate) {
 				alert('"' + _pkTitle + '"가(이) 중복되었습니다.');
 				return;
 			}
@@ -163,7 +185,7 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 			if (_org_pk_data != $('input.pk').val()) {
 				duplicate = fn_duplicate_check(_page_url, _pkNm);
 			}
-			if (!duplicate) {
+			if (duplicate) {
 				alert('"' + _pkTitle + '"가(이) 중복되었습니다.');
 				return;
 			}
