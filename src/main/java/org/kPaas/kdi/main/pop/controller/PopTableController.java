@@ -29,8 +29,8 @@ public class PopTableController extends AbstractController {
 	}
 
 	@GetMapping("schemas.json")
-	public ResponseEntity<String> getSchemas(@RequestParam("ds_nm") String ds_nm) {
-		return service.getSchemas(ds_nm);
+	public ResponseEntity<String> getSchemas(@RequestParam("dsNm") String dsNm) {
+		return service.getSchemas(dsNm);
 	}
 
 	@GetMapping("tables.json")

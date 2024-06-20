@@ -38,7 +38,7 @@
 		<form>
 			<div class="content-wrapper">
 				<div class="left-content">
-					<div class="left-content-title header4 gray500" id="ds_nm" title="데이터소스명"></div>
+					<div class="left-content-title header4 gray500" id="DS_NM" title="데이터소스명"></div>
 					<div class="left-content-box">
 						<div class="left-title header5 white100">스키마 선택</div>
 						<ul id="schemaNames" class="left-content-list-box">
@@ -124,8 +124,12 @@
 		</table>
 	</div>
 	<script type="text/javascript">
-		const ds_nm = new URL(location.href).searchParams.get('ds_nm');
-		const parent_id = new URL(location.href).searchParams.get('parent_id');
+		const dsNm = new URL(location.href).searchParams.get('dsNm');
+		const parentId = new URL(location.href).searchParams.get('parentId');
+		const parentSchNm = new URL(location.href).searchParams.get('schNm') || 'schNm';
+		const parentTblNm = new URL(location.href).searchParams.get('tblNm') || 'tblNm';
+		console.log(parentSchNm);
+		
 		let selectSchema = "";
 		
 		let schemaNameLoadingHtmlFormat = "";
@@ -185,8 +189,8 @@
 
 		// 파라미터 JSON포맷
 		let paramData = {
-			'ds_nm' : ds_nm,
-			'sch_nm' : ''
+			'dsNm' : dsNm,
+			'schNm' : ''
 		};
 		
 		// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제
@@ -204,8 +208,8 @@
 		
 		var fn_select_table = function(el) {
 			const tableName = $(el).find('input[name="tableName"]').val();
-			$(parent_id +' input[name="schemaName"]', opener.document).val(selectSchema);
-			$(parent_id +' input[name="tableName"]', opener.document).val(tableName);
+			$(parentId +' input[name="'+parentSchNm+'"]', opener.document).val(selectSchema);
+			$(parentId +' input[name="'+parentTblNm+'"]', opener.document).val(tableName);
 			self.close();
 		}
 		
@@ -215,7 +219,7 @@
 			$('#schemaNames li').removeClass('selectSch');
 			$(this).addClass('selectSch');
 			selectSchema = $(this).children('input[name="schemaName"]').val()
-			paramData['sch_nm'] = selectSchema;
+			paramData['schNm'] = selectSchema;
 			grid.search(1, paramData);
 		}
 		
@@ -224,7 +228,7 @@
 				url : '${homeUrl}pop/table/schemas.json',
 				type : 'GET',
 				data : {
-					'ds_nm' : ds_nm,
+					'dsNm' : dsNm,
 				},
 				dataType : 'json',
 				beforeSend: function() {
@@ -243,12 +247,12 @@
 					$('#schemaNames .schemaName').click(fn_load_tables);
 				},
 				error : function(result) {
-					alert(result.responseJSON.state);
+					alert(result.responseJSON.error);
 				}
 			});
 		}
 		$().ready(function() {
-			$('#ds_nm').text(ds_nm);
+			$('#DS_NM').text(dsNm);
 			schemaNameLoadingHtmlFormat = $('li.schemaLoading').parent().html();
 			schemaNameListHtmlFormat = $('#schemaNameListHtmlFormat').html();
 			fn_load_schema();

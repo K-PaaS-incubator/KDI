@@ -67,18 +67,18 @@
 		</select>
 	</div>
 	<script type="text/javascript">
-		var fn_editIF_SvcDs = function() {
+		var fn_modify = function() {
 			$('#modify').validate();
 			$.ajax({
-				url: contextPath + 'res/link/modify.json',
-				type: 'POST',
-				data: $('#modify').serialize(),
-				dataType: 'json',
-				success: function() {
+				url : contextPath + 'res/link/modify.json',
+				type : 'POST',
+				data : $('#modify').serialize(),
+				dataType : 'json',
+				success : function() {
 					window.opener.parent.location.reload();
 					window.close();
 				},
-				error: function(result) {
+				error : function(result) {
 					console.log('statusCode:' + result.statusCode);
 					console.log('responseJSON:' + result.responseJSON.state);
 					console.log('responseJSON:' + result.responseJSON.msg);
@@ -86,33 +86,24 @@
 				}
 			});
 		};
+		const fn_load_svc_info_data = function() {
+			const svcId = $('#SVC_ID').val();
+			const data = KdiData().getSvcInfo(svcId);
+			$('#SVC_NM').val(data.SVC_NM);
+			$('#TP_NM').val(data.TP_NM)
+			$('#DS_NM').val(data.DS_NM).prop('selected', true);
+		}
 		const fn_load_ds_nm = function() {
 			const dsNmFormat = $('#DS_NM_FORMAT').html();
 			$('#DS_NM').html('');
-			$.each(kdiData().getAllDataSourceName(), function(idx, dsNm) {
+			$.each(KdiData().getAllDataSourceName(), function(idx, dsNm) {
 				$('#DS_NM').append(dsNmFormat.replaceAll('#DS_NM#', dsNm));
 			});
 		};
-		const fn_get_data = function() {
-			const svcId = encodeURIComponent($('#SVC_ID').val());
-			$.ajax({
-				url : contextPath + 'res/link/get.json',
-				type : 'GET',
-				data : {
-					svcId : svcId
-				},
-				dataType : 'json',
-				success : function(result) {
-					$('#SVC_NM').val(result.data.SVC_NM);
-					$('#TP_NM').val(result.data.TP_NM)
-					$('#DS_NM').val(result.data.DS_NM).prop('selected', true);
-				}
-			});
-		}
 		$().ready(function() {
+			fn_load_svc_info_data();
 			fn_load_ds_nm();
-			fn_get_data();
-			$('#popIFbtn').click(fn_editIF_SvcDs);
+			$('#popIFbtn').click(fn_modify);
 
 		});
 	</script>

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface PopTableService {
 
-	ResponseEntity<String> getSchemas(String ds_nm);
+	ResponseEntity<String> getSchemas(String dsNm);
 
 	ResponseEntity<String> getTables(KdiParam mapToKdiParam);
 }

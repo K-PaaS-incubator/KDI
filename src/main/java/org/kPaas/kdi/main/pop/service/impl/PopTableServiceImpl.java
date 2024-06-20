@@ -24,16 +24,16 @@ public class PopTableServiceImpl extends AbstractService implements PopTableServ
 	private KdiRoutingDataSource kdiRoutingDataSource;
 
 	@Override
-	public ResponseEntity<String> getSchemas(String ds_nm) {
+	public ResponseEntity<String> getSchemas(String dsNm) {
 		JSONObject result = new JSONObject();
-		if (null == ds_nm || 0 == ds_nm.trim().length()) {
+		if (null == dsNm || 0 == dsNm.trim().length()) {
 			result.put("errMsg", "데이터소스명 누락");
 			result.put("stateCode", 1);
 			result.put("state", "스키마 조회 실패");
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 
-		if (!kdiRoutingDataSource.contains(ds_nm)) {
+		if (!kdiRoutingDataSource.contains(dsNm)) {
 			result.put("errMsg", "데이터소스를 찾을 수 없습니다.");
 			result.put("stateCode", 2);
 			result.put("state", "데이터소스 불러오기 실패");
@@ -41,7 +41,7 @@ public class PopTableServiceImpl extends AbstractService implements PopTableServ
 		}
 		final String orgContext = getContext();
 		try {
-			setContext(ds_nm);
+			setContext(dsNm);
 			result.put("data", mapper.getSchemas());
 			result.put("stateCode", 0);
 			result.put("state", "조회 성공");
@@ -65,11 +65,11 @@ public class PopTableServiceImpl extends AbstractService implements PopTableServ
 		// 이전 DB접속정보 (H2)
 		final String orgContext = getContext();
 		try {
-			String dsNm = kdiParam.getValue("ds_nm", String.class);
+			String dsNm = kdiParam.getValue("dsNm", String.class);
 			if (null == dsNm) {
 				result.put("stateCode", 2);
 				result.put("state", "조회 실패");
-				result.put("errMsg", "ds_nm is null");
+				result.put("errMsg", "데이터소스 정보를 찾을 수 없습니다.");
 				return ResponseEntity.badRequest().body(result.toString());
 			}
 			// 사용자가 선택한 디비접속정보로 접속

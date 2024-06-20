@@ -61,7 +61,7 @@ div[class*='detail-'] {
 	const fn_load_ds_nm = function() {
 		const dsNmFormat = $('#DS_NM_FORMAT').html();
 		$('#DS_NM').html('');
-		$.each(kdiData().getAllDataSourceName(), function(idx, dsNm) {
+		$.each(KdiData().getAllDataSourceName(), function(idx, dsNm) {
 			$('#DS_NM').append(dsNmFormat.replaceAll('#DS_NM#', dsNm));
 		});
 	};

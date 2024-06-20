@@ -25,27 +25,27 @@
 		<where>
 			TB1.OWNER = TB2.OWNER
 			AND TB1.TABLE_NAME = TB2.TABLE_NAME
-			AND TB1.OWNER = #{value.sch_nm}
+			AND TB1.OWNER = #{value.schNm}
 			AND (
 			1=1
 			-- 선택검색
-			<if test="value.tb_nm != null and value.tb_nm != ''">
-				OR TB1.TABLE_NAME LIKE '%'||#{value.tb_nm}||'%'
+			<if test="value.tbNm != null and value.tbNm != ''">
+				OR TB1.TABLE_NAME LIKE '%'||#{value.tbNm}||'%'
 			</if>
-			<if test="value.link_yn != null and value.link_yn != ''">
+			<if test="value.linkYn != null and value.linkYn != ''">
 				-- 미구현
-				-- OR LINK_YN = UPPER(#{value.link_yn})
+				-- OR LINK_YN = UPPER(#{value.linkYn})
 			</if>
-			<if test="value.tb_comments!= null and value.tb_comments != ''">
-				OR TB2.COMMENTS = UPPER(#{value.tb_comments})
+			<if test="value.tbComments!= null and value.tbComments != ''">
+				OR TB2.COMMENTS = UPPER(#{value.tbComments})
 			</if>
 
 			-- 통합검색
-			<if test="value.all_search != null and value.all_search != ''">
-				OR TB1.TABLE_NAME LIKE '%'||#{value.all_search}||'%'
+			<if test="value.allSearch != null and value.allSearch != ''">
+				OR TB1.TABLE_NAME LIKE '%'||#{value.allSearch}||'%'
 				-- 미구현
-				-- OR LINK_YN = UPPER(#{value.all_search})
-				OR TB2.COMMENTS = UPPER(#{value.all_search})
+				-- OR LINK_YN = UPPER(#{value.allSearch})
+				OR TB2.COMMENTS = UPPER(#{value.allSearch})
 			</if>
 
 			)
@@ -73,16 +73,4 @@
 		ROWS FETCH NEXT #{pagePerRow}
 		ROWS ONLY
 	</select>
-	
-	<update id="editIF_SvcDs" parameterType="Map">
-		UPDATE KDI_LINK_SERVICE
-		<set>
-		DS_NM = #{ds_nm}, SVC_NM = #{svc_nm}
-		</set>
-		<where>
-		SVC_ID = #{svc_id}
-		</where>
-	</update>
-	
-	
 </mapper>
