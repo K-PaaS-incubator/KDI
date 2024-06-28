@@ -7,13 +7,13 @@
 <link rel="stylesheet" href="${cssUrl}link.css">
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
 
-<div class="mainContent">
+<div class="mainContent">  <!-- 연계 수신업무 정보 조회 (KDI_LINK_SUB_INF)-->
 	<form action="${pageUrl}" method="GET" id="searchForm">
-		<input type="hidden" name="svcId" value="${svcId}">
-		<div class="link-table-box-top">
+		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}">
+		<!-- div class="link-table-box-top">
 			<div class="search-box button-second-gray" id="svc-info-change-pop">⚙️ 서비스 정보 변경</div>
-			<!-- 추후 개발범위(설계추가) -->
-		</div>
+			TODO_추후 개발범위(설계추가)// 수신은 서비스정보 변경 팝업(서비스명,토픽명,데이터소스명)이 필요없지 않을까..
+		</div-->
 		<div class="search-box">
 			<div>
 				<input id="searchKeyword" type="text" name="svcLnkId" placeholder="검색어 입력" value=""> <img src="${imgUrl}icon-search.png" alt="">
@@ -93,7 +93,7 @@
 
 <script defer>
 	//그리드 객체 생성
-	const grid = KdiListGrid('grid', '${linkUrl}interface/list.json');
+	const grid = KdiListGrid('grid', '${pageUrl}list.json');
 	const gridEnv = grid.env;
 	gridEnv.setMapping({
 		'#SVC_LNK_ID#' : 'SVC_LNK_ID',
@@ -110,9 +110,8 @@
 	gridEnv.setPageCtlInfo('.pageCtlZone', '${homeUrl}');
 
 	var paramData = {
-		'svc_id' : '${svc_id}',
-		'svc_nm' : '${svc_nm}',
-		'ds_nm' : '${ds_nm}'
+			'svcId' : '${param.svcId}',
+			'svcLnkId' : ''
 	};
 
 	grid.event.setErrEvent(function(xhr) {
@@ -120,13 +119,20 @@
 		console.log('responseJSON' + xhr.responseJSON.state);
 		console.log('responseJSON' + xhr.responseJSON.errMsg);
 	});
-
-	var fn_reg = function() {
-		let interfaceUri = '${linkUrl}interface/data/reg?';
-		location.href = '${linkUrl}interface/data/reg'
-				+ new URL(location.href).search;
-	};
-
+	
+	grid.event.setPostEvent(function() {
+		$('#gridTableDataBody tr.dataTr')
+				.click(
+						function() {
+							const svcId = $(this).find('input[name="svcId"]')
+									.serialize();
+							const svcLnkId = $(this).find(
+									'input[name="svcLnkId"]').serialize();
+							location.href = '${pageUrl}' + '?' + svcId + '&'
+									+ svcLnkId;
+						});
+	});
+	
 	var fn_modify = function(svc_lnk_id) {
 		let tmpUrl = new URL(location.href);
 		tmpUrl.searchParams.set('svc_lnk_id', svc_lnk_id);
@@ -135,18 +141,6 @@
 		interfaceUri += tmpUrl.search;
 		location.href = interfaceUri;
 	};
-
-	const fn_svc_info_change_pop = function() {
-		const param = $('input[name="svcId"]').serialize();
-		const interfacePopUri = contextPath + 'res/link/pop?' + param;
-
-		let popOption = 'toolbar=no,menubar=no,location=no,status=no';
-		popOption += ',scrollbars=yes,resizeable=yes';
-		popOption += ',width=510,height=400';
-		popOption += ',top=300,left=700';
-
-		window.open(interfacePopUri, '_blank', popOption);
-	}
 
 	$().ready(function() {
 		const _page_url = new URL(location.href).pathname + '/../';
@@ -169,4 +163,5 @@
 		const param = $('input[name="svcId"]').serialize();
 		location.href = '${pageUrl}insert?' + param;
 	};
+
 </script>

@@ -4,25 +4,25 @@
 <c:url var="cssUrl" value="/css/" />
 <c:url var="jsUrl" value="/js/" />
 <link rel="stylesheet" href="${cssUrl}link.css">
-<script src="${jsUrl}kdi/kdi-main-data.js"></script>
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
 <style>
 div[class*='detail-'] {
 	display: none;
 }
 </style>
-<div class="mainContent">
-	<form id="insert">
-		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
+<div class="mainContent">  <!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
+	<form id="modify" onsubmit="return false;">
+		<input type="hidden" id="pk" name="svcLnkId">
+		<!-- input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"><input type="hidden" id="DS_NM" name="dsNm" -->
 		<div class="link-table-wrapper">
 			<div class="link-table-box-top">
 				<div class="link-table-box-top-left">
 					<div class="link-inputs-row">
 						<div class="common-input-box">
-							<div class="header6 label-title">인터페이스ID</div>
-							<input class="common-input subtitle1 gray400 pk id-pattern" type="text" id="SVC_LNK_ID" name="svc_lnk_id">
+							<div class="header6 label-title pk-title">인터페이스ID</div>
+							<input class="common-input subtitle1 gray400 pk id-pattern" type="text" id="SVC_LNK_ID" name="svcLnkId" readonly="readonly">
 							<div class="header6 label-title">인터페이스명</div>
-							<input class="common-input subtitle1 gray400" type="text" id="SVC_LNK_NM" name="svc_lnk_nm" placeholder="인터페이스명">
+							<input class="common-input subtitle1 gray400" type="text" id="SVC_LNK_NM" name="svcLnkNm" >
 							<div class="header6 label-title">스키마명</div>
 							<input class="common-input subtitle1 gray400 tableSearch" type="text" id="SCH_NM" name="schNm" readonly="readonly">
 							<div class="header6 label-title">테이블명</div>
@@ -132,8 +132,9 @@ div[class*='detail-'] {
 			<div id="queryResult" class="query-text subtitle1 gray400 bg-gray200 border-gray300"></div>
 		</div>
 		<div class="link-button-box">
-			<input id="backBtn" class="button-second" type="button" value="이전"><input class="button-second-gray" type="button" value="삭제" id="deleteBtn"> <input id="saveBtn"
-				class="button-primary" type="button" value="저장">
+			<input id="previousBtn" class="button-second" type="button" value="이전">
+			<input id="deleteBtn" class="button-second-gray" type="button" value="삭제" > 
+			<input id="modifyBtn" class="button-primary" type="button" value="저장">
 		</div>
 	</form>
 </div>
@@ -224,7 +225,7 @@ div[class*='detail-'] {
 	};
 	
 	$(document).ready(function() {
-		fn_insert_page_load('연계서비스', '테이블 정보 등록');
+		fn_modify_page_load('연계서비스', '테이블 정보');
 
 		$('#flagTypeBoxQuery').css('display', 'none');
 		$('#flagTypeBoxWhere').css('display', 'none');

@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="${cssUrl}link.css">
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
 
-<div class="mainContent">
+<div class="mainContent">  <!-- 연계 송신업무 정보 조회 (KDI_LINK_PUB_INF)-->
 	<form action="${pageUrl}" method="GET" id="searchForm">
 		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}">
 		<div class="link-table-box-top">
@@ -68,7 +68,7 @@
 
 <table hidden="hidden">
 	<tbody id="gridHtmlFormatId">
-		<tr class="detailTr">
+		<tr class="detailTr" onclick="fn_modify('#SVC_LNK_ID#');">
 			<td>#NO#</td>
 			<td>#SVC_LNK_ID#</td>
 			<td>#SVC_LNK_NM#</td>
@@ -120,19 +120,21 @@
 		console.log('responseJSON' + xhr.responseJSON.errMsg);
 	});
 
-	grid.event.setPostEvent(function() {
-		$('#gridTableDataBody tr.dataTr')
-				.click(
-						function() {
-							const svcId = $(this).find('input[name="svcId"]')
-									.serialize();
-							const svcLnkId = $(this).find(
-									'input[name="svcLnkId"]').serialize();
-							location.href = '${pageUrl}' + '?' + svcId + '&'
-									+ svcLnkId;
-						});
-	});
+/* 	grid.event.setPostEvent(function() {
+		$('#gridTableDataBody tr.dataTr').click(
+			var svcId = $('input[name="svcId"]').val();
+				function(svcId) {
+					const svcLnkId = $(this).find('td:nth-child(2)').text();						
+					location.href = '${pageUrl}modify?svcId=' + encodeURIComponent(svcId) + '&svcLnkId='+ encodeURIComponent(svcLnkId);
+				}
+			);
+	}); */
+	
+	var fn_modify = function(svcLnkId) {
+		location.href = '${pageUrl}modify?svcLnkId='+encodeURIComponent(svcLnkId);
+	};
 
+	//서비스정보 변경 팝업(서비스명,토픽명,데이터소스명)
 	const fn_svc_info_change_pop = function() {
 		const param = $('input[name="svcId"]').serialize();
 		const interfacePopUri = contextPath + 'res/link/pop?' + param;

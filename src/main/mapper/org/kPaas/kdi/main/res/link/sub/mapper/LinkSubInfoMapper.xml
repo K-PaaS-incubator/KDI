@@ -19,7 +19,7 @@
 		)
 	</insert>
 
-	<sql id="getLinkPubInfListWhere">
+	<sql id="getLinkSubInfListWhere">
 		KDI_LINK_SUB_INF TB1
 		JOIN
 		KDI_LINK_SVC_INF TB2
@@ -34,7 +34,7 @@
 		SELECT
 		COUNT(TB1.*)
 		FROM
-		<include refid="getLinkPubInfListWhere" />
+		<include refid="getLinkSubInfListWhere" />
 	</select>
 
 	<select id="getList" resultType="Map">
@@ -46,15 +46,15 @@
 		TB1.TBL_NM,
 		TB2.SVC_NM
 		FROM
-		<include refid="getLinkPubInfListWhere" />
+		<include refid="getLinkSubInfListWhere" />
 		LIMIT
 		#{param.pagePerRow}
 		OFFSET
 		(#{param.pageNum} - 1) * #{param.pagePerRow}
 	</select>
 
-	<insert id="insertPubInterface">
-		INSERT INTO KDI_LINK_SVC_INF (
+	<insert id="insert">
+		INSERT INTO KDI_LINK_SUB_INF (
 		SVC_LNK_ID,
 		SVC_ID,
 		SVC_LNK_NM,
@@ -74,7 +74,7 @@
 	</insert>
 
 	<select id="duplicateCheck" resultType="Integer">
-		SELECT count(*) FROM KDI_LINK_SVC_INF
+		SELECT count(*) FROM KDI_LINK_SUB_INF
 		<where>SVC_LNK_ID = #{param.value.svcLnkId}</where>
 	</select>
 

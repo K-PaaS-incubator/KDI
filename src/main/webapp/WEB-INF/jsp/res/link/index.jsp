@@ -5,7 +5,7 @@
 <c:url var="cssUrl" value="/css/" />
 <link rel="stylesheet" href="${cssUrl}link.css">
 
-<div class="mainContent">
+<div class="mainContent">  <!-- 연계서비스 조회 (KDI_LINK_SVC_INF)-->
 	<form action="${pageUrl}" method="GET" id="searchForm">
 		<div class="search-box">
 			<div>
@@ -118,14 +118,14 @@
 				function() {
 					let svcTypeUrl = $(this).find('input[name="svcType"]')
 							.val()
-							|| 'P';
+							|| 'S';
 					const svcId = $(this).find('input[name="svcId"]')
 							.serialize();
 					console.log(svcTypeUrl);
-					if ('P' == svcTypeUrl) {
-						svcTypeUrl = 'pub';
-					} else {
+					if ('S' == svcTypeUrl) {
 						svcTypeUrl = 'sub';
+					} else {
+						svcTypeUrl = 'pub';
 					}
 					location.href = '${pageUrl}' + svcTypeUrl + '?' + svcId;
 				});

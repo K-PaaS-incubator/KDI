@@ -9,7 +9,7 @@
 <jsp:include page="../../component/subBanner.jsp"></jsp:include>
 <section class="contents">
 	<jsp:include page="../../component/subTitle.jsp"></jsp:include>
-	<div class="mainContent">
+	<div class="mainContent">  <!-- 연계 수신 정보 등록 (KDI_LINK_SUB_INF)--> 
 		<form id="LinkDetail">
 			<div class="link-table-wrapper">
 				<div class="link-table-box-top">

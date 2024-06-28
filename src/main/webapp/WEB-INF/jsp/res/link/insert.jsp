@@ -10,7 +10,7 @@ div[class*='detail-'] {
 }
 </style>
 
-<div class="mainContent">
+<div class="mainContent">  <!-- 연계 서비스 등록 (KDI_LINK_SVC_INF)-->
 	<form id="insert">
 		<div class="link-wrapper">
 			<div class="link-box-left">
@@ -46,8 +46,8 @@ div[class*='detail-'] {
 		</div>
 
 		<div class="link-button-box">
-			<input class="button-second-gray" type="button" value="취소" onclick="location.href='${linkUrl}'"> <input class="button-primary" type="button" value="연계서비스 등록 >"
-				id="regbtn">
+			<input class="button-second-gray" type="button" value="취소" onclick="location.href='${linkUrl}'">
+			<input class="button-primary" type="button" value="연계서비스 등록 >" id="regbtn">
 		</div>
 	</form>
 </div>

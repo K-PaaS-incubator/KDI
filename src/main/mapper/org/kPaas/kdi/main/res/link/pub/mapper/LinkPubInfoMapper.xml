@@ -8,8 +8,7 @@
 		CREATE TABLE `KDI_LINK_PUB_INF` (
 		`SVC_LNK_ID` VARCHAR2(100) NOT NULL,
 		`SVC_ID` VARCHAR2(50) NOT NULL REFERENCES KDI_LINK_SVC_INF(SVC_ID) ON DELETE CASCADE,
-		`SVC_LNK_NM`
-		VARCHAR2(100) NOT NULL,
+		`SVC_LNK_NM` VARCHAR2(100) NOT NULL,
 		`SCH_NM` VARCHAR2(100) NULL,
 		`TBL_NM` VARCHAR2(100) NULL,
 		`FLAG_TYPE` CHAR(1) NULL, <!-- 1:STATUS, 2:QUERY, 3:WHERE -->
@@ -57,8 +56,8 @@
 		(#{param.pageNum} - 1) * #{param.pagePerRow}
 	</select>
 
-	<insert id="insertPubInterface">
-		INSERT INTO KDI_LINK_SVC_INF (
+	<insert id="insert">
+		INSERT INTO KDI_LINK_PUB_INF (
 		SVC_LNK_ID,
 		SVC_ID,
 		SVC_LNK_NM,
@@ -84,7 +83,7 @@
 	</insert>
 
 	<select id="duplicateCheck" resultType="Integer">
-		SELECT count(*) FROM KDI_LINK_SVC_INF
+		SELECT count(*) FROM KDI_LINK_PUB_INF
 		<where>SVC_LNK_ID = #{param.value.svcLnkId}</where>
 	</select>
 
@@ -96,6 +95,7 @@
 	<update id="modify">
 		UPDATE KDI_LINK_PUB_INF
 		<set>
+			SVC_LNK_NM = #{param.value.svcLnkNm},
 			FLAG_TYPE = #{param.value.flagType},
 			FLAG_QUERY = #{param.value.flagQuery},
 			LNK_TIME = #{param.value.lnkTime},
