@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="${cssUrl}link.css">
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
 
-<div class="mainContent">  <!-- 연계 송신업무 정보 조회 (KDI_LINK_PUB_INF)-->
+<div class="mainContent">
+	<!-- 연계 송신업무 정보 조회 (KDI_LINK_PUB_INF)-->
 	<form action="${pageUrl}" method="GET" id="searchForm">
 		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}">
 		<div class="link-table-box-top">
@@ -100,7 +101,7 @@
 		'#SVC_LNK_NM#' : 'SVC_LNK_NM',
 		'#SCH_NM#' : 'SCH_NM',
 		'#TBL_NM#' : 'TBL_NM',
-	})
+	});
 
 	gridEnv.loading.enable();
 	gridEnv.nodata.enable();
@@ -120,18 +121,10 @@
 		console.log('responseJSON' + xhr.responseJSON.errMsg);
 	});
 
-/* 	grid.event.setPostEvent(function() {
-		$('#gridTableDataBody tr.dataTr').click(
-			var svcId = $('input[name="svcId"]').val();
-				function(svcId) {
-					const svcLnkId = $(this).find('td:nth-child(2)').text();						
-					location.href = '${pageUrl}modify?svcId=' + encodeURIComponent(svcId) + '&svcLnkId='+ encodeURIComponent(svcLnkId);
-				}
-			);
-	}); */
-	
 	var fn_modify = function(svcLnkId) {
-		location.href = '${pageUrl}modify?svcLnkId='+encodeURIComponent(svcLnkId);
+		let param = $('input[name="svcId"]').serialize();
+		param += '&svcLnkId=' + encodeURIComponent(svcLnkId);
+		location.href = '${pageUrl}modify?' + param;
 	};
 
 	//서비스정보 변경 팝업(서비스명,토픽명,데이터소스명)

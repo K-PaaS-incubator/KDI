@@ -7,7 +7,8 @@
 <link rel="stylesheet" href="${cssUrl}link.css">
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
 
-<div class="mainContent">  <!-- 연계 수신업무 정보 조회 (KDI_LINK_SUB_INF)-->
+<div class="mainContent">
+	<!-- 연계 수신업무 정보 조회 (KDI_LINK_SUB_INF)-->
 	<form action="${pageUrl}" method="GET" id="searchForm">
 		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}">
 		<!-- div class="link-table-box-top">
@@ -100,7 +101,7 @@
 		'#SVC_LNK_NM#' : 'SVC_LNK_NM',
 		'#SCH_NM#' : 'SCH_NM',
 		'#TBL_NM#' : 'TBL_NM',
-	})
+	});
 
 	gridEnv.loading.enable();
 	gridEnv.nodata.enable();
@@ -110,8 +111,8 @@
 	gridEnv.setPageCtlInfo('.pageCtlZone', '${homeUrl}');
 
 	var paramData = {
-			'svcId' : '${param.svcId}',
-			'svcLnkId' : ''
+		'svcId' : '${param.svcId}',
+		'svcLnkId' : ''
 	};
 
 	grid.event.setErrEvent(function(xhr) {
@@ -119,28 +120,23 @@
 		console.log('responseJSON' + xhr.responseJSON.state);
 		console.log('responseJSON' + xhr.responseJSON.errMsg);
 	});
-	
-	grid.event.setPostEvent(function() {
-		$('#gridTableDataBody tr.dataTr')
-				.click(
-						function() {
-							const svcId = $(this).find('input[name="svcId"]')
-									.serialize();
-							const svcLnkId = $(this).find(
-									'input[name="svcLnkId"]').serialize();
-							location.href = '${pageUrl}' + '?' + svcId + '&'
-									+ svcLnkId;
-						});
-	});
-	
-	var fn_modify = function(svc_lnk_id) {
-		let tmpUrl = new URL(location.href);
-		tmpUrl.searchParams.set('svc_lnk_id', svc_lnk_id);
 
-		let interfaceUri = '${linkUrl}interface/data/modify';
-		interfaceUri += tmpUrl.search;
-		location.href = interfaceUri;
+	var fn_modify = function(svcLnkId) {
+		location.href = '${pageUrl}modify?svcLnkId='+encodeURIComponent(svcLnkId);
 	};
+	
+	//서비스정보 변경 팝업(서비스명,토픽명,데이터소스명)
+	const fn_svc_info_change_pop = function() {
+		const param = $('input[name="svcId"]').serialize();
+		const interfacePopUri = contextPath + 'res/link/pop?' + param;
+
+		let popOption = 'toolbar=no,menubar=no,location=no,status=no';
+		popOption += ',scrollbars=yes,resizeable=yes';
+		popOption += ',width=510,height=480';
+		popOption += ',top=300,left=700';
+
+		window.open(interfacePopUri, '_blank', popOption);
+	}
 
 	$().ready(function() {
 		const _page_url = new URL(location.href).pathname + '/../';
@@ -158,10 +154,9 @@
 
 		$('#svc-info-change-pop').click(fn_svc_info_change_pop);
 	});
-	
+
 	const fn_reg = function() {
 		const param = $('input[name="svcId"]').serialize();
 		location.href = '${pageUrl}insert?' + param;
 	};
-
 </script>

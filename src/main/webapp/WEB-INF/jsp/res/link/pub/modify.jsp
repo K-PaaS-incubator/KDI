@@ -13,7 +13,7 @@ div[class*='detail-'] {
 <div class="mainContent">  <!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
 	<form id="modify" onsubmit="return false;">
 		<input type="hidden" id="pk" name="svcLnkId">
-		<!-- input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"><input type="hidden" id="DS_NM" name="dsNm" -->
+		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"><input type="hidden" id="DS_NM" name="dsNm">
 		<div class="link-table-wrapper">
 			<div class="link-table-box-top">
 				<div class="link-table-box-top-left">
@@ -181,52 +181,16 @@ div[class*='detail-'] {
 		popOption += ',width=900,height=800';
 		window.open(tablePopUri, '_blank', popOption);
 	}
-	var fn_back = function() {
-		const backParam = new URL(location.href).searchParams;
-		backParam.delete("svc_lnk_id");
-		location.href = '${homeUrl}link/interface?' + backParam.toString();
-	};
-	var fn_save = function() {
-		$.ajax({
-			url : '${interfaceUrl}data/${pageType}.json',
-			type : 'POST',
-			data : $('#LinkDetail').serialize(),
-			dataType : 'JSON',
-			beforeSend : function() {
-				console.log('저장관련 로딩 여기에 구현');
-			},
-			success : fn_back,
-			error : function(result) {
-				console.log('statusCode:' + result.statusCode);
-				console.log('responseJSON.state:' + result.responseJSON.state);
-				console.log('responseJSON.msg:' + result.responseJSON.msg);
-				alert('연계서비스 수정 실패');
-			}
-		});
-	};
-	var fn_del = function() {
-		if (confirm('연계 인터페이스를 삭제하시겠습니까?')) {
-			$.ajax({
-				url : '${interfaceUrl}IfDelProc',
-				type : 'POST',
-				data : $('#LinkDetail').serialize(),
-				dataType : 'JSON',
-				success : fn_back,
-				error : function(result) {
-					console.log('statusCode:' + result.responseJSON.statusCode);
-					console.log('responseJSON.state:' + result.responseJSON.state);
-					console.log('responseJSON.errMsg:' + result.responseJSON.errMsg);
-					alert('연계 인터페이스 삭제 실패');
-				}
-			});
-		} else {
-			alert('삭제 취소');
-		}
-	};
 	
 	$(document).ready(function() {
-		fn_modify_page_load('연계서비스', '테이블 정보');
+		const pageLoader = fn_modify_page_load('연계서비스', '테이블 정보');
+		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
 
+		// 데이터 소스 정보 불러오기
+		var svcId = $('#SVC_ID').val();
+		const svcInfoData = KdiData().getSvcInfo(svcId);
+		$('#DS_NM').val(svcInfoData.DS_NM);
+		
 		$('#flagTypeBoxQuery').css('display', 'none');
 		$('#flagTypeBoxWhere').css('display', 'none');
 
@@ -235,9 +199,6 @@ div[class*='detail-'] {
 		}
 
 		$('input.tableSearch').click(fn_tb_nm_click);
-		$('#backBtn').click(fn_back);
-		$('#saveBtn').click(fn_save);
-		$('#deleteBtn').click(fn_del);
 	});
 
 	function colUseCheck() {

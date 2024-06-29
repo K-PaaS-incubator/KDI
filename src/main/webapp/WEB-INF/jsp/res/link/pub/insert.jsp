@@ -138,7 +138,7 @@ div[class*='detail-'] {
 			<div id="queryResult" class="query-text subtitle1 gray400 bg-gray200 border-gray300"></div>
 		</div>
 		<div class="link-button-box">
-			<input id="backBtn" class="button-second" type="button" value="이전"> 
+			<input id="previousBtn" class="button-second" type="button" value="이전"> 
 			<input id="regbtn" class="button-primary" type="button" value="저장">
 		</div>
 	</form>
@@ -175,7 +175,8 @@ div[class*='detail-'] {
 		W : 'flag-type-where'
 	};
 	$(document).ready(function() {
-		fn_insert_page_load('연계서비스', '테이블 정보');
+		const pageLoader = fn_insert_page_load('연계서비스', '테이블 정보');
+		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
 		fn_detail_display_event('flagType', flagTypeMapping);
 
 		// 데이터 소스 정보 불러오기
