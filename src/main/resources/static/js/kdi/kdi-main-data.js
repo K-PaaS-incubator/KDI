@@ -1,12 +1,12 @@
 const KdiData = function() {
 	const _fn_get_svc_info = function(svcId) {
-		svcId = encodeURIComponent(svcId);
+		let _svcId = encodeURIComponent(svcId);
 		let data;
 		$.ajax({
 			url: contextPath + 'res/link/get.json',
 			type: 'GET',
 			data: {
-				svcId: svcId
+				svcId: _svcId
 			},
 			async: false,
 			dataType: 'json',
@@ -20,7 +20,7 @@ const KdiData = function() {
 			}
 		});
 		return data;
-	}
+	};
 	const _fn_get_all_data_source_name = function() {
 		let data;
 		$.ajax({
@@ -40,7 +40,7 @@ const KdiData = function() {
 			}
 		});
 		return data;
-	}
+	};
 	return {
 		getSvcInfo : _fn_get_svc_info,
 		getAllDataSourceName: _fn_get_all_data_source_name

@@ -4,16 +4,17 @@
 <c:url var="cssUrl" value="/css/" />
 <c:url var="jsUrl" value="/js/" />
 <link rel="stylesheet" href="${cssUrl}link.css">
+<script src="${jsUrl}kdi/kdi-main-data.js"></script>
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
 <style>
 div[class*='detail-'] {
 	display: none;
 }
 </style>
-<div class="mainContent">  <!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
-	<form id="modify" onsubmit="return false;">
-		<input type="hidden" id="pk" name="svcLnkId">
-		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"><input type="hidden" id="DS_NM" name="dsNm">
+<div class="mainContent">
+	<!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
+	<form id="modify">
+		<input type="hidden" id="pk" name="svcLnkId"> <input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
 		<div class="link-table-wrapper">
 			<div class="link-table-box-top">
 				<div class="link-table-box-top-left">
@@ -22,7 +23,7 @@ div[class*='detail-'] {
 							<div class="header6 label-title pk-title">인터페이스ID</div>
 							<input class="common-input subtitle1 gray400 pk id-pattern" type="text" id="SVC_LNK_ID" name="svcLnkId" readonly="readonly">
 							<div class="header6 label-title">인터페이스명</div>
-							<input class="common-input subtitle1 gray400" type="text" id="SVC_LNK_NM" name="svcLnkNm" >
+							<input class="common-input subtitle1 gray400" type="text" id="SVC_LNK_NM" name="svcLnkNm">
 							<div class="header6 label-title">스키마명</div>
 							<input class="common-input subtitle1 gray400 tableSearch" type="text" id="SCH_NM" name="schNm" readonly="readonly">
 							<div class="header6 label-title">테이블명</div>
@@ -132,73 +133,65 @@ div[class*='detail-'] {
 			<div id="queryResult" class="query-text subtitle1 gray400 bg-gray200 border-gray300"></div>
 		</div>
 		<div class="link-button-box">
-			<input id="previousBtn" class="button-second" type="button" value="이전">
-			<input id="deleteBtn" class="button-second-gray" type="button" value="삭제" > 
-			<input id="modifyBtn" class="button-primary" type="button" value="저장">
+			<input id="previousBtn" class="button-second" type="button" value="이전"> <input id="deleteBtn" class="button-second-gray" type="button" value="삭제"> <input
+				id="modifyBtn" class="button-primary" type="button" value="저장">
 		</div>
 	</form>
 </div>
 
 <script>
-	const naviText = ' > 연계서비스 > 연계서비스 조회 > 연계 인터페이스 조회 > 연계서비스 테이블 상세';
-	var fn_data_load = function() {
-		$.ajax({
-			url : '${interfaceUrl}data.json',
-			type : 'GET',
-			data : $('#LinkDetail').serialize(),
-			dataType : 'JSON',
-			success : function(result) {
-				console.log('로딩화면 구현했으면 여기쯤에서 로딩 종료하는 위치');
-				$('input[name="svc_lnk_nm"]').val(result.data.SVC_LNK_NM);
-				$('input[name="schemaName"]').val(result.data.SCH_NM);
-				$('input[name="tableName"]').val(result.data.TBL_NM);
-				$('input[name="svc_lnk_id"]').val(result.data.SVC_LNK_ID);
-				let flagTypeId = 'input[name="flag_type"][value="';
-				flagTypeId += result.data.FLAG_TYPE;
-				flagTypeId += '"]';
-				$(flagTypeId).prop('checked', 'true');
-			},
-			error : function(result) {
-				console.log('statusCode:' + result.statusCode);
-				console.log('responseJSON:' + result.responseJSON.state);
-				console.log('responseJSON:' + result.responseJSON.msg);
-				alert('연계서비스 조회 실패');
-			}
-		});
-	}
-	var fn_tb_nm_click = function() {
-		if ('' != '${svc_lnk_id}') {
-			$('input[name="svc_lnk_id"]').classList.add('readonly');
-			return;
-		}
-		const ds_nm = encodeURIComponent('${ds_nm}');
-		const parent_id = encodeURIComponent('#LinkDetail');
-		const param = 'ds_nm=' + ds_nm + '&parent_id=' + parent_id;
-		const tablePopUri = '${homeUrl}pop/table?' + param;
+	const fn_tb_nm_click = function() {
+		const ds_nm = $('#DS_NM').serialize();
+		const parentId = encodeURIComponent('form');
+		const param = ds_nm + '&parentId=' + parentId;
+		const tablePopUri = contextPath + 'pop/table?' + param;
 
 		let popOption = 'toolbar=no,menubar=no,location=no,status=no';
 		popOption += ',scrollbars=yes,resizeable=yes';
 		popOption += ',width=900,height=800';
 		window.open(tablePopUri, '_blank', popOption);
-	}
-	
+	};
+
+	let crontab_guid_text = '쿼리가 실행되는 주기를 설정할 수 있습니다.\n\n';
+	crontab_guid_text += ' 각 자리수의 의미는\n\n';
+	crontab_guid_text += ' *     *    *   *    *    *     *\n';
+	crontab_guid_text += ' 초  분  시  일  월 요일 년도(생락가능)\n\n';
+	crontab_guid_text += '요일은 일요일부터 1로 표기 토요일은 7';
+
+	const fn_crontab_guid_show = function() {
+		$('.guide-box').css('display', 'block');
+	};
+	const fn_crontab_guid_hide = function() {
+		$('.guide-box').css('display', 'none');
+	};
+
+	const flagTypeMapping = {
+		Q : 'flag-type-query',
+		W : 'flag-type-where'
+	};
+
 	$(document).ready(function() {
-		const pageLoader = fn_modify_page_load('연계서비스', '테이블 정보');
+		const fn_data_source_load = function() {
+			// 데이터 소스 정보 불러오기
+			var svcId = $('#SVC_ID').val();
+			const svcInfoData = KdiData().getSvcInfo(svcId);
+			$('#DS_NM').val(svcInfoData.DS_NM);
+		};
+		const postEvent = [ fn_data_source_load ];
+		const pageLoader = fn_modify_page_load('연계서비스', '테이블 정보', postEvent);
 		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
+		fn_detail_display_event('flagType', flagTypeMapping);
 
-		// 데이터 소스 정보 불러오기
-		var svcId = $('#SVC_ID').val();
-		const svcInfoData = KdiData().getSvcInfo(svcId);
-		$('#DS_NM').val(svcInfoData.DS_NM);
-		
-		$('#flagTypeBoxQuery').css('display', 'none');
-		$('#flagTypeBoxWhere').css('display', 'none');
+		// 스키마명 테이블명 검색 팝업 이벤트 등록
+		$('form input.tableSearch').click(fn_tb_nm_click);
 
-		if ('' != '${svc_lnk_id}') {
-			fn_data_load();
-		}
-
-		$('input.tableSearch').click(fn_tb_nm_click);
+		// 크론탭 가이드 >>>
+		$('.guide-box').text(crontab_guid_text);
+		$(".guide-icon").on({
+			mouseenter : fn_crontab_guid_show,
+			mouseleave : fn_crontab_guid_hide
+		});
+		// 크론탭 가이드 <<<
 	});
 
 	function colUseCheck() {
@@ -207,38 +200,38 @@ div[class*='detail-'] {
 	}
 
 	// 연계플래그 타입 선택에 따른 onChange Event
-	$('input[name="flag_type"]').change(function() {
-		let currentType = $(this).val();
-		const queryType = '#flagTypeBoxQuery';
-		const whereType = '#flagTypeBoxWhere';
+	$('input[name="flag_type"]').change(
+			function() {
+				let currentType = $(this).val();
+				const queryType = '#flagTypeBoxQuery';
+				const whereType = '#flagTypeBoxWhere';
 
-		$(queryType).css('display',
-				currentType === 'QUERY' ? 'block' : 'none');
-		$(whereType).css('display',
-				currentType === 'WHERE' ? 'block' : 'none');
+				$(queryType).css('display',
+						currentType === 'QUERY' ? 'block' : 'none');
+				$(whereType).css('display',
+						currentType === 'WHERE' ? 'block' : 'none');
 
-		$('#flagTypeInputQuery, #flagTypeInputWhere').val(
-				'');
-		$('#queryResult').text('')
+				$('#flagTypeInputQuery, #flagTypeInputWhere').val('');
+				$('#queryResult').text('')
 
-		if (currentType === 'QUERY') {
-			$('.tdIsConnect, .tdLinkSelect').css('display',
-					'none');
-		} else if (currentType === 'WHERE') {
-			$('.tdLinkSelect').css('display', 'none');
-			$('.tdIsConnect')
-					.css('display', 'inline-block');
-			$('#queryResult').text('SELECT * WHERE ');
-		} else {
-			$('.tdIsConnect, .tdLinkSelect').css('display',
-					'inline-block');
-		}
-	});
+				if (currentType === 'QUERY') {
+					$('.tdIsConnect, .tdLinkSelect').css('display', 'none');
+				} else if (currentType === 'WHERE') {
+					$('.tdLinkSelect').css('display', 'none');
+					$('.tdIsConnect').css('display', 'inline-block');
+					$('#queryResult').text('SELECT * WHERE ');
+				} else {
+					$('.tdIsConnect, .tdLinkSelect').css('display',
+							'inline-block');
+				}
+			});
 	//연계플래그 input 입력 시 조회쿼리 TEXT로 적용되는 함수
 	$('#flagTypeInputQuery').on('input', function() {
 		$('#queryResult').text($(this).val());
 	});
-	$('#flagTypeInputWhere').on('input', function() {
+	$('#flagTypeInputWhere').on(
+			'input',
+			function() {
 				var selectColumn = '';
 
 				$('input[name="connect_use_yn"]:checked').each(function() {
@@ -252,37 +245,6 @@ div[class*='detail-'] {
 					selectColumn = '*';
 				}
 				$('#queryResult').text(
-						'SELECT ' + selectColumn + ' WHERE '
-								+ $(this).val());
-		});
-
-	//크론탭 가이드11
-	/* $(".guide-icon11").on({
-				mouseenter : function() {
-					$('.guide-box').css('display', 'block');
-					$('.guide-box').text(
-							'쿼리가 실행되는 주기를 설정할 수 있습니다.\n' + '\n'
-									+ ' 분 : 1-59,\n' + ' 시간 : 1-23,\n'
-									+ ' 날짜 : 1-31,\n' + ' 월 : 1-12,\n'
-									+ ' 요일 : 0-6\n' + '(일요일 = 0)');
-				},
-				mouseleave : function() {
-					$('.guide-box').css('display', 'none');
-				},
-	}); */
-	//크론탭 가이드
-	/* $(".guide-icon").on({
-		mouseenter : function() {
-			$('.guide-box').css('display', 'block');
-			$('.guide-box').text(
-					'쿼리가 실행되는 주기를 설정할 수 있습니다.\n' + '\n'
-							+ ' 각 자리수의 의미는\n\n'
-							+ ' *     *    *   *    *    *     *           \n'
-							+ ' 초  분  시  일  월 요일 년도(생락가능)\n'
-							+ '요일은 일요일부터 1로 표기 토요일은 7');
-		},
-		mouseleave : function() {
-			$('.guide-box').css('display', 'none');
-		},
-	}); */
+						'SELECT ' + selectColumn + ' WHERE ' + $(this).val());
+			});
 </script>

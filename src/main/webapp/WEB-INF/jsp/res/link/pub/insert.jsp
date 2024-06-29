@@ -145,7 +145,7 @@ div[class*='detail-'] {
 </div>
 
 <script>
-	var fn_tb_nm_click = function() {
+	const fn_tb_nm_click = function() {
 		const ds_nm = $('#DS_NM').serialize();
 		const parentId = encodeURIComponent('form');
 		const param = ds_nm + '&parentId=' + parentId;
@@ -174,6 +174,7 @@ div[class*='detail-'] {
 		Q : 'flag-type-query',
 		W : 'flag-type-where'
 	};
+	
 	$(document).ready(function() {
 		const pageLoader = fn_insert_page_load('연계서비스', '테이블 정보');
 		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());

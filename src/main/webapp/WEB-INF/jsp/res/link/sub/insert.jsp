@@ -125,7 +125,8 @@ div[class*='detail-'] {
 		popOption += ',scrollbars=yes,resizeable=yes';
 		popOption += ',width=900,height=800';
 		window.open(tablePopUri, '_blank', popOption);
-	};
+	}
+	
 	const flagTypeMapping = {
 		Q : 'flag-type-query',
 		W : 'flag-type-where'
@@ -167,32 +168,32 @@ div[class*='detail-'] {
 	}
 
 	// 연계플래그 타입 선택에 따른 onChange Event
-	$('input[name="flag_type"]').on(
-			'change',
-			function() {
-				let currentType = $(this).val();
-				const queryType = '#flagTypeBoxQuery';
-				const whereType = '#flagTypeBoxWhere';
+	/**	$('input[name="flag_type"]').on(
+	 'change',
+	 function() {
+	 let currentType = $(this).val();
+	 const queryType = '#flagTypeBoxQuery';
+	 const whereType = '#flagTypeBoxWhere';
 
-				$(queryType).css('display',
-						currentType === 'QUERY' ? 'block' : 'none');
-				$(whereType).css('display',
-						currentType === 'WHERE' ? 'block' : 'none');
+	 $(queryType).css('display',
+	 currentType === 'QUERY' ? 'block' : 'none');
+	 $(whereType).css('display',
+	 currentType === 'WHERE' ? 'block' : 'none');
 
-				$('#flagTypeInputQuery, #flagTypeInputWhere').val('');
-				$('#queryResult').text('')
+	 $('#flagTypeInputQuery, #flagTypeInputWhere').val('');
+	 $('#queryResult').text('')
 
-				if (currentType === 'QUERY') {
-					$('.tdIsConnect, .tdLinkSelect').css('display', 'none');
-				} else if (currentType === 'WHERE') {
-					$('.tdLinkSelect').css('display', 'none');
-					$('.tdIsConnect').css('display', 'inline-block');
-					$('#queryResult').text('SELECT * WHERE ');
-				} else {
-					$('.tdIsConnect, .tdLinkSelect').css('display',
-							'inline-block');
-				}
-			})
+	 if (currentType === 'QUERY') {
+	 $('.tdIsConnect, .tdLinkSelect').css('display', 'none');
+	 } else if (currentType === 'WHERE') {
+	 $('.tdLinkSelect').css('display', 'none');
+	 $('.tdIsConnect').css('display', 'inline-block');
+	 $('#queryResult').text('SELECT * WHERE ');
+	 } else {
+	 $('.tdIsConnect, .tdLinkSelect').css('display',
+	 'inline-block');
+	 }
+	 });
 	//연계플래그 input 입력 시 조회쿼리 TEXT로 적용되는 함수
 	$('#flagTypeInputQuery').on('input', function() {
 		$('#queryResult').text($(this).val());
@@ -214,21 +215,5 @@ div[class*='detail-'] {
 				}
 				$('#queryResult').text(
 						'SELECT ' + selectColumn + ' WHERE ' + $(this).val());
-			});
-
-	//크론탭 가이드
-	$(".guide-icon").on(
-			{
-				mouseenter : function() {
-					$('.guide-box').css('display', 'block');
-					$('.guide-box').text(
-							'쿼리가 실행되는 주기를 설정할 수 있습니다.\n' + '\n'
-									+ ' 분 : 1-59,\n' + ' 시간 : 1-23,\n'
-									+ ' 날짜 : 1-31,\n' + ' 월 : 1-12,\n'
-									+ ' 요일 : 0-6\n' + '(일요일 = 0)');
-				},
-				mouseleave : function() {
-					$('.guide-box').css('display', 'none');
-				},
-			})
+			}); */
 </script>
