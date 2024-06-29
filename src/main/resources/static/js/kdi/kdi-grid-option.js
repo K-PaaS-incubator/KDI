@@ -29,11 +29,6 @@ const fn_duplicate_check = function(pageUri, pkNm) {
 	return checkResult;
 };
 
-const fn_previous_button_click = function(_page_url) {
-	$('#previousBtn').click(function() {
-		location.href = _page_url
-	});
-};
 const fn_detail_display_event = function(dtlName, dtlMapping) {
 	const _dtlName = dtlName;
 	const _dtlMapping = dtlMapping;
@@ -80,7 +75,7 @@ const fn_pattern_event = function() {
 }
 
 const fn_insert_page_load = function(menuNm, pageNm) {
-	const _page_url = new URL(location.href).pathname + '/../';
+	const _page_url = (new URL(location.href).pathname + '/../').replaceAll('//', '/');
 	let _previouParam = '';
 	const _pkNm = $('input.pk')[0].name;
 	const _pkTitle = $('.pk-title').text();
@@ -108,7 +103,9 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 				}
 			});
 		});
-		fn_previous_button_click(_page_url);
+		$('#previousBtn').click(function() {
+			location.href = _page_url + ('' != _previouParam ? '?' + _previouParam : '');
+		});
 	};
 	const _init = function() {
 		fn_title_init(menuNm, pageNm, '등록');
@@ -125,7 +122,7 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 };
 
 const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
-	const _page_url = new URL(location.href).pathname + '/../';
+	const _page_url = (new URL(location.href).pathname + '/../').replaceAll('//', '/');
 	let _previouParam = '';
 	const _pkNm = $('input.pk')[0].name;
 	const _pkTitle = $('.pk-title').text();
@@ -231,8 +228,9 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 				alert('삭제 취소');
 			}
 		});
-
-		fn_previous_button_click(_page_url);
+		$('#previousBtn').click(function() {
+			location.href = _page_url + ('' != _previouParam ? '?' + _previouParam : '');
+		});
 	};
 
 	const _init = function() {
@@ -246,7 +244,7 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 		_get_data();
 		_event_join();
 	};
-	
+
 	const _fn_set_previou_param = function(previouParam) {
 		_previouParam = previouParam || ''
 	}
@@ -255,3 +253,13 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 		'setPreviouParam': _fn_set_previou_param
 	}
 };
+
+/**
+ * 인덱스 페이지용으로 유지
+ */
+const fn_previous_button_click = function(_page_url) {
+	$('#previousBtn').click(function() {
+		location.href = _page_url.replaceAll('//', '/');
+	});
+};
+
