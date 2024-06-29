@@ -81,12 +81,9 @@ const fn_pattern_event = function() {
 
 const fn_insert_page_load = function(menuNm, pageNm) {
 	const _page_url = new URL(location.href).pathname + '/../';
+	let _previouParam = '';
 	const _pkNm = $('input.pk')[0].name;
 	const _pkTitle = $('.pk-title').text();
-	const _init = function() {
-		fn_title_init(menuNm, pageNm, '등록');
-		fn_pattern_event();
-	};
 	const _event_join = function() {
 		$('#regbtn').click(function databaseSave() {
 			$('form').validate();
@@ -103,7 +100,7 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 				dataType: 'json',
 				success: function() {
 					alert('등록 완료');
-					location.href = _page_url;
+					location.href = _page_url + ('' != _previouParam ? '?' + _previouParam : '');
 				},
 				error: function(result) {
 					console.log(result.responseJSON);
@@ -113,23 +110,26 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 		});
 		fn_previous_button_click(_page_url);
 	};
+	const _init = function() {
+		fn_title_init(menuNm, pageNm, '등록');
+		fn_pattern_event();
+		_event_join();
+	};
+	const _fn_set_previou_param = function(previouParam) {
+		_previouParam = previouParam || ''
+	}
 	_init();
-	_event_join();
+	return {
+		'setPreviouParam': _fn_set_previou_param
+	}
 };
 
 const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 	const _page_url = new URL(location.href).pathname + '/../';
+	let _previouParam = '';
 	const _pkNm = $('input.pk')[0].name;
 	const _pkTitle = $('.pk-title').text();
 	let _org_pk_data = '';
-	const _init = function() {
-		fn_title_init(menuNm, pageNm, '수정');
-		fn_pattern_event();
-
-		_org_pk_data = new URL(location.href).searchParams.get($('input.pk')[0].name);
-		$('input#pk').val(_org_pk_data);
-		$('input.pk').val(_org_pk_data);
-	};
 	const _get_data = function() {
 		let data = {};
 		const pkId = $('input.pk')[0].name;
@@ -197,7 +197,7 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 				data: $('#modify').serialize(),
 				dataType: 'json',
 				success: function() {
-					location.href = _page_url;
+					location.href = _page_url + ('' != _previouParam ? '?' + _previouParam : '');
 				},
 				error: function(result) {
 					console.log('statusCode:' + result.statusCode);
@@ -207,7 +207,7 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 				}
 			});
 		});
-		
+
 		$('#deleteBtn').click(function() {
 			if (confirm(pageNm + '을(를) 삭제하시겠습니까?')) {
 				$.ajax({
@@ -216,7 +216,7 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 					data: $('#modify').serialize(),
 					dataType: 'json',
 					success: function() {
-						location.href = _page_url;
+						location.href = _page_url + ('' != _previouParam ? '?' + _previouParam : '');
 						alert('정상적으로 삭제되었습니다.');
 					},
 					error: function(result) {
@@ -234,7 +234,24 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 
 		fn_previous_button_click(_page_url);
 	};
+
+	const _init = function() {
+		fn_title_init(menuNm, pageNm, '수정');
+		fn_pattern_event();
+
+		_org_pk_data = new URL(location.href).searchParams.get($('input.pk')[0].name);
+		$('input#pk').val(_org_pk_data);
+		$('input.pk').val(_org_pk_data);
+
+		_get_data();
+		_event_join();
+	};
+	
+	const _fn_set_previou_param = function(previouParam) {
+		_previouParam = previouParam || ''
+	}
 	_init();
-	_get_data();
-	_event_join();
+	return {
+		'setPreviouParam': _fn_set_previou_param
+	}
 };
