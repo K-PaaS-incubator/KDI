@@ -148,6 +148,7 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 	const _page_url = (new URL(location.href).pathname + '/../').replaceAll('//', '/');
 	let _previouParam = '';
+	let _child_table_id = '';
 	const _pkNm = $('input.pk')[0].name;
 	const _pkTitle = $('.pk-title').text();
 	let _org_pk_data = '';
@@ -213,6 +214,14 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 
 			$('#modify').validate();
 			let data = $('#modify').serializeJson();
+			
+			if ('' != _child_table_id) {
+				data['#CHILD_DATA_LIST#'] = [];
+				$.each($(_child_table_id), function(idx, item) {
+					data['#CHILD_DATA_LIST#'].push($(item).find('input,select').serializeJson());
+				});
+			}
+			
 			$.ajax({
 				url: _page_url + 'modify.json',
 				type: 'POST',
@@ -273,9 +282,13 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 	const _fn_set_previou_param = function(previouParam) {
 		_previouParam = previouParam || ''
 	}
+	const _fn_set_child_table = function(child_table_id) {
+		_child_table_id = child_table_id || '';
+	}
 	_init();
 	return {
-		'setPreviouParam': _fn_set_previou_param
+		'setPreviouParam': _fn_set_previou_param		,
+				'setChildTable': _fn_set_child_table
 	}
 };
 
