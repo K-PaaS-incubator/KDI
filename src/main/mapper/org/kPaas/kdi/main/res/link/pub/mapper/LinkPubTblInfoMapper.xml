@@ -50,7 +50,7 @@
 		(#{param.pageNum} - 1) * #{param.pagePerRow}
 	</select>
 
-	<insert id="insertPubInterface">
+	<insert id="insertChild">
 		INSERT INTO KDI_LINK_PUB_TBL_INF (
 		COL_NM,
 		SVC_LNK_ID,
@@ -59,14 +59,14 @@
 		COL_MP_NM,
 		REG_ID,
 		REG_DT
-		) VALUES (
-		#{param.value.colNm},
-		#{param.value.svcLnkId},
-		#{param.value.colType},
-		#{param.value.colLnkType},
-		#{param.value.colMpNm},
-		#{param.value.lnkTime},
-		#{param.value.regId},
+		)
+		VALUES (
+		#{param.colName},
+		#{param.svcLnkId},
+		#{param.colType},
+		#{param.colLnkType},
+		#{param.colMpNm},
+		#{param.regId},
 		current_timestamp()
 		)
 	</insert>

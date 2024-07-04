@@ -49,7 +49,7 @@
 		(#{param.pageNum} - 1) * #{param.pagePerRow}
 	</select>
 
-	<insert id="insertSubInterface">
+	<insert id="insertChild">
 		INSERT INTO KDI_LINK_SUB_TBL_INF (
 		COL_NM,
 		SVC_LNK_ID,
@@ -58,13 +58,14 @@
 		COL_MP_NM,
 		REG_ID,
 		REG_DT
-		) VALUES (
-		#{param.value.svcLnkId},
-		#{param.value.svcId},
-		#{param.value.svcLnkNm},
-		#{param.value.schNm},
-		#{param.value.tblNm},
-		#{param.value.regId},
+		)
+		VALUES (
+		#{param.colName},
+		#{param.svcLnkId},
+		#{param.colType},
+		#{param.colLnkType},
+		#{param.colMpNm},
+		#{param.regId},
 		current_timestamp()
 		)
 	</insert>

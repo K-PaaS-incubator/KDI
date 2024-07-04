@@ -7,6 +7,7 @@ import org.kPaas.kdi.com.base.KdiGridMapper;
 import org.kPaas.kdi.com.base.KdiGridServiceImpl;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.main.res.link.pub.mapper.LinkPubInfoMapper;
+import org.kPaas.kdi.main.res.link.pub.mapper.LinkPubTblInfoMapper;
 import org.kPaas.kdi.main.res.link.pub.service.LinkPubInfoService;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class LinkPubInfoServiceImpl extends KdiGridServiceImpl implements LinkPu
 
 	@Autowired
 	private LinkPubInfoMapper mapper;
+	@Autowired
+	private LinkPubTblInfoMapper childMapper;
 
 	@Override
 	protected KdiGridMapper getMapper() {
@@ -41,18 +44,19 @@ public class LinkPubInfoServiceImpl extends KdiGridServiceImpl implements LinkPu
 	@Override
 	public ResponseEntity<String> insert(KdiParam kdiParam) {
 		ResponseEntity<String> result = super.insert(kdiParam);
+		//부모데이터 정상적 insert 됬는지 검증
 		if (null == result || HttpStatus.OK != result.getStatusCode() || null == kdiParam.getChildValues()) {
 			return result;
 		}
+		//자식데이터 insert건 있는지 확인
 		if (0 == kdiParam.getChildValues().size()) {
 			return result;
 		}
 		try {
 			for (Map<String, Object> childParam : kdiParam.getChildValues()) {
-				childParam.put("svcLnkId", kdiParam.getValue("svcLnkId"));
+				childParam.put("svcLnkId", kdiParam.getValue("svcLnkId"));//부모테이블 pk
 				childParam.put("regId", getLoginUserId());
-				System.out.println(childParam.get("colName"));
-				mapper.insertChild(childParam);
+				childMapper.insertChild(childParam);
 			}
 		} catch (DuplicateKeyException e) {
 			JSONObject jsonResult = new JSONObject();

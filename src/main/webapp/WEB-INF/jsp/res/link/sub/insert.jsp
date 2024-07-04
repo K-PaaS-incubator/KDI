@@ -11,7 +11,8 @@ div[class*='detail-'] {
 	display: none;
 }
 </style>
-<div class="mainContent"> <!-- 연계 수신 정보 등록 (KDI_LINK_SUB_INF)-->
+<div class="mainContent">
+	<!-- 연계 수신 정보 등록 (KDI_LINK_SUB_INF)-->
 	<form id="insert">
 		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
 		<div class="link-table-wrapper">
@@ -55,42 +56,52 @@ div[class*='detail-'] {
 						<tr class="table-spacing"></tr>
 					</thead>
 					<tbody class="list-body" id="gridTableDataBody">
-							<tr class="detailTr">
-								<td colspan="5">연계할 스키마와 테이블을 선택하세요.</td>
-							</tr>
+						<tr class="detailTr">
+							<td colspan="5">연계할 스키마와 테이블을 선택하세요.</td>
+						</tr>
 					</tbody>
 				</table>
-					<div style="display: none;">
+				<div style="display: none;">
 					<table>
-					<tbody id="gridHtmlFormatId">
-						<tr class="subtitle1 gray500">
-							<td><input type="hidden" value="#COL_NAME#">#COL_NAME#</td>	<!-- COLUMN_NAME -->
-							<td><input type="hidden" value="#COL_TYPE#">#COL_TYPE#</td>	<!-- DATA_TYPE -->
-							<td><input type="hidden" value="#COL_DEFAULT#">#COL_DEFAULT#</td> <!-- DATA_DEFAULT -->
-							<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_1" onclick="colUseCheck()"></td>
-							<td><select class="tdLinkSelect">
-									<option value="S">STATUS</option>
-									<option value="O">OPCODE</option>
-							</select></td>
-						</tr>
-					</tbody>
+						<tbody id="gridHtmlFormatId">
+							<tr class="subtitle1 gray500 child_row">
+								<td style="display: none;">
+									<!-- input 항목을 한눈에 보기위해서 만들어진 숨겨진 td임 큰의미는 없음 -->
+									<ul>
+										<!-- 코드 정렬시 줄바꿈 방지 목적 ul li는 큰의미는 없음 -->
+										<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
+										<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
+										<li><input type="hidden" name="colDefault" value="#COL_DEFAULT#"></li>
+										<li><input type="hidden" name="colMpNm" value="#COL_MP_NM#"></li>
+									</ul>
+								</td>
+								<td>#COL_NAME#</td>
+								<td>#COL_TYPE#</td>
+								<td>#COL_DEFAULT#</td>
+								<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" onclick="colUseCheck()"></td>
+								<td><select class="tdLinkSelect">
+										<option value="S">STATUS</option>
+										<option value="O">OPCODE</option>
+								</select></td>
+							</tr>
+						</tbody>
 					</table>
-				<table>
-					<tbody id="gridNoDataHtmlFormatId">
-						<tr class="detailTr">
-							<td colspan="5">컬럼이 존재하지 않습니다.</td>
-						</tr>
-						<tr class="table-spacing"></tr>
-					</tbody>
-				</table>
-				<table>
-					<tbody id="gridLoadingHtmlFormatId">
-						<tr class="detailTr">
-							<td colspan="5">로딩중...</td>
-						</tr>
-						<tr class="table-spacing"></tr>
-					</tbody>
-				</table>
+					<table>
+						<tbody id="gridNoDataHtmlFormatId">
+							<tr class="detailTr">
+								<td colspan="5">컬럼이 존재하지 않습니다.</td>
+							</tr>
+							<tr class="table-spacing"></tr>
+						</tbody>
+					</table>
+					<table>
+						<tbody id="gridLoadingHtmlFormatId">
+							<tr class="detailTr">
+								<td colspan="5">로딩중...</td>
+							</tr>
+							<tr class="table-spacing"></tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -107,7 +118,6 @@ div[class*='detail-'] {
 </div>
 
 <script>
-
 	//KdiListGrid 시작 >>>>>
 	const grid = KdiListGrid('grid', '/res/link/sub/tbl/columns.json');
 	const gridEnv = grid.env;
@@ -124,11 +134,11 @@ div[class*='detail-'] {
 		alert(xhr.responseJSON.errMsg);
 	}
 	grid.event.setErrEvent(errEvent);
-	
+
 	gridEnv.loading.enable();
 	gridEnv.nodata.enable();
 	// KdiListGrid 끝 <<<<<
-	
+
 	var fn_tb_nm_click = function() {
 		const ds_nm = $('#DS_NM').serialize();
 		const parentId = encodeURIComponent('form');
@@ -144,15 +154,16 @@ div[class*='detail-'] {
 	$(document).ready(function() {
 		const insertPageLoader = fn_insert_page_load('연계 수신서비스', '수신 테이블 정보');
 		insertPageLoader.setPreviouParam($('input[name="svcId"]').serialize());
+		insertPageLoader.setChildTable('.child_row');
 
 		// 데이터 소스 정보 불러오기
 		var svcId = $('#SVC_ID').val();
 		const svcInfoData = KdiData().getSvcInfo(svcId);
 		$('#DS_NM').val(svcInfoData.DS_NM);
-		
+
 		// 스키마명 테이블명 검색 팝업 이벤트 등록
 		$('form input.tableSearch').click(fn_tb_nm_click);
-		
+
 		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
 		grid.ready();
 
@@ -177,13 +188,13 @@ div[class*='detail-'] {
 			const query = 'SELECT ' + selectColumn + ' WHERE ' + $(this).val();
 			$('#queryResult').text(query);
 		});
-		**/
+		 **/
 	});
 
 	function colUseCheck() {
 		const use_yn = $("#use_yn").val;
 	}
-	
+
 	// 선택한 스키마,테이블 내 전 컬럼 로드
 	var fn_load_columns = function() {
 

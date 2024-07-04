@@ -12,5 +12,8 @@ import org.kPaas.kdi.com.util.KdiParam;
 public interface LinkPubTblInfoMapper extends KdiGridMapper {
 
 	List<Map<String, String>> getColumns(@Param("param") KdiParam kdiParam);
+	
+	void insertChild(@Param("param") Map<String, Object> childParam);
+
 
 }
