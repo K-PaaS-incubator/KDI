@@ -210,6 +210,7 @@
 			const tableName = $(el).find('input[name="tableName"]').val();
 			$(parentId +' input[name="'+parentSchNm+'"]', opener.document).val(selectSchema);
 			$(parentId +' input[name="'+parentTblNm+'"]', opener.document).val(tableName);
+			window.opener.fn_load_columns();
 			self.close();
 		}
 		

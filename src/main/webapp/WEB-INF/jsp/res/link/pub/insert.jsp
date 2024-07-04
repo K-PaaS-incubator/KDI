@@ -104,33 +104,44 @@ div[class*='detail-'] {
 						</tr>
 						<tr class="table-spacing"></tr>
 					</thead>
-					<tbody class="list-body">
+					<tbody class="list-body" id="gridTableDataBody">
+							<tr class="detailTr">
+								<td colspan="5">연계할 스키마와 테이블을 선택하세요.</td>
+							</tr>
+					</tbody>
+				</table>
+					<div style="display: none;">
+					<table>
+					<tbody id="gridHtmlFormatId">
 						<tr class="subtitle1 gray500">
-							<td id="column_1">COLUMN1</td>
-							<td>VARCHAR2(100)</td>
-							<td>timestamp();</td>
+							<td><input type="hidden" value="#COL_NAME#">#COL_NAME#</td>	<!-- COLUMN_NAME -->
+							<td><input type="hidden" value="#COL_TYPE#">#COL_TYPE#</td>	<!-- DATA_TYPE -->
+							<td><input type="hidden" value="#COL_DEFAULT#">#COL_DEFAULT#</td> <!-- DATA_DEFAULT -->
 							<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_1" onclick="colUseCheck()"></td>
 							<td><select class="tdLinkSelect">
-									<option value="1">STATUS</option>
-									<option value="2">QUERY</option>
-									<option value="3">WHERE</option>
+									<option value="S">STATUS</option>
+									<option value="O">OPCODE</option>
 							</select></td>
 						</tr>
-						<tr class="table-spacing"></tr>
-						<tr class="subtitle1 gray500">
-							<td class="column_2">COLUMN2</td>
-							<td>VARCHAR2(100)</td>
-							<td>timestamp();</td>
-							<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_2" onclick="colUseCheck()"></td>
-							<td><select class="tdLinkSelect">
-									<option value="1">STATUS</option>
-									<option value="2">QUERY</option>
-									<option value="3">WHERE</option>
-							</select></td>
+					</tbody>
+					</table>
+				<table>
+					<tbody id="gridNoDataHtmlFormatId">
+						<tr class="detailTr">
+							<td colspan="5">컬럼이 존재하지 않습니다.</td>
 						</tr>
 						<tr class="table-spacing"></tr>
 					</tbody>
 				</table>
+				<table>
+					<tbody id="gridLoadingHtmlFormatId">
+						<tr class="detailTr">
+							<td colspan="5">로딩중...</td>
+						</tr>
+						<tr class="table-spacing"></tr>
+					</tbody>
+				</table>
+				</div>
 			</div>
 		</div>
 		<div class="query-box">
@@ -145,6 +156,28 @@ div[class*='detail-'] {
 </div>
 
 <script>
+
+	//KdiListGrid 시작 >>>>>
+	const grid = KdiListGrid('grid', '/res/link/pub/tbl/columns.json');
+	const gridEnv = grid.env;
+	gridEnv.setMapping({
+		'#COL_NAME#' : 'COLUMN_NAME',
+		'#COL_TYPE#' : 'DATA_TYPE',
+		'#COL_DEFAULT#' : 'DATA_DEFAULT'
+	});
+	// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제 ( 안쓰려면 호출안하면 됨)
+	var errEvent = function(xhr) {
+		/* console.log('statusCode:' + xhr.statusCode);
+		console.log('responseJSON:' + xhr.responseJSON.state);
+		console.log('responseJSON:' + xhr.responseJSON.errMsg); */
+		alert(xhr.responseJSON.errMsg);
+	}
+	grid.event.setErrEvent(errEvent);
+	
+	gridEnv.loading.enable();
+	gridEnv.nodata.enable();
+	// KdiListGrid 끝 <<<<<
+
 	const fn_tb_nm_click = function() {
 		const ds_nm = $('#DS_NM').serialize();
 		const parentId = encodeURIComponent('form');
@@ -174,7 +207,7 @@ div[class*='detail-'] {
 		Q : 'flag-type-query',
 		W : 'flag-type-where'
 	};
-	
+
 	$(document).ready(function() {
 		const pageLoader = fn_insert_page_load('연계서비스', '테이블 정보');
 		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
@@ -184,7 +217,7 @@ div[class*='detail-'] {
 		var svcId = $('#SVC_ID').val();
 		const svcInfoData = KdiData().getSvcInfo(svcId);
 		$('#DS_NM').val(svcInfoData.DS_NM);
-		
+
 		// 스키마명 테이블명 검색 팝업 이벤트 등록
 		$('form input.tableSearch').click(fn_tb_nm_click);
 
@@ -196,40 +229,72 @@ div[class*='detail-'] {
 		});
 		// 크론탭 가이드 <<<
 
-		//연계플래그 input 입력 시 조회쿼리 TEXT로 적용되는 함수
-		$('#flagTypeInputQuery').on('input', function() {
-			$('#queryResult').text($(this).val());
-		});
-		$('#flagTypeInputWhere').on('input', function() {
-			var selectColumn = '';
-
-			$('input[name="connect_use_yn"]:checked').each(function() {
-				var inputId = $(this).attr('id');
-				var columnName = $('#' + inputId.substring(7)).text()
-
-				selectColumn += columnName;
-			});
-
-			if (selectColumn === '') {
-				selectColumn = '*';
-			}
-			const query = 'SELECT ' + selectColumn + ' WHERE ' + $(this).val();
-			$('#queryResult').text(query);
-		});
+		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
+		grid.ready();
 	});
 
-	//크론탭 가이드11
-	/* $(".guide-icon11").on({
-				mouseenter : function() {
-					$('.guide-box').css('display', 'block');
-					$('.guide-box').text(
-							'쿼리가 실행되는 주기를 설정할 수 있습니다.\n' + '\n'
-									+ ' 분 : 1-59,\n' + ' 시간 : 1-23,\n'
-									+ ' 날짜 : 1-31,\n' + ' 월 : 1-12,\n'
-									+ ' 요일 : 0-6\n' + '(일요일 = 0)');
-				},
-				mouseleave : function() {
-					$('.guide-box').css('display', 'none');
-				},
-	}); */
+	function colUseCheck() {
+		const use_yn = $("#use_yn").val;
+		console.log("@@@@@@@@@@@@" + use_yn);
+	}
+
+	// 연계플래그 타입 선택에 따른 onChange Event
+	$('input[name="flag_type"]').change(
+			function() {
+				let currentType = $(this).val();
+				const queryType = '#flagTypeBoxQuery';
+				const whereType = '#flagTypeBoxWhere';
+
+				$(queryType).css('display',
+						currentType === 'QUERY' ? 'block' : 'none');
+				$(whereType).css('display',
+						currentType === 'WHERE' ? 'block' : 'none');
+
+				$('#flagTypeInputQuery, #flagTypeInputWhere').val('');
+				$('#queryResult').text('')
+
+				if (currentType === 'QUERY') {
+					$('.tdIsConnect, .tdLinkSelect').css('display', 'none');
+				} else if (currentType === 'WHERE') {
+					$('.tdLinkSelect').css('display', 'none');
+					$('.tdIsConnect').css('display', 'inline-block');
+					$('#queryResult').text('SELECT * WHERE ');
+				} else {
+					$('.tdIsConnect, .tdLinkSelect').css('display',
+							'inline-block');
+				}
+			});
+	//연계플래그 input 입력 시 조회쿼리 TEXT로 적용되는 함수
+	$('#flagTypeInputQuery').on('input', function() {
+		$('#queryResult').text($(this).val());
+	});
+	$('#flagTypeInputWhere').on('input', function() {
+		var selectColumn = '';
+
+		$('input[name="connect_use_yn"]:checked').each(function() {
+			var inputId = $(this).attr('id');
+			var columnName = $('#' + inputId.substring(7)).text()
+
+			selectColumn += columnName;
+		});
+
+		if (selectColumn === '') {
+			selectColumn = '*';
+		}
+		const query = 'SELECT ' + selectColumn + ' WHERE ' + $(this).val();
+		$('#queryResult').text(query);
+	});
+
+	// 선택한 스키마,테이블 내 전 컬럼 로드
+	var fn_load_columns = function() {
+
+		// 파라미터 JSON포맷
+		let paramData = {
+			'dsNm' : $('#DS_NM').val(),
+			'schemaName' : $('#SCH_NM').val(),
+			'tableName' : $('#TBL_NM').val()
+		};
+
+		grid.search(1, paramData);
+	}
 </script>

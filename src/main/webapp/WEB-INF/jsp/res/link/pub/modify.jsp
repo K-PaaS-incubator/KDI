@@ -11,8 +11,7 @@ div[class*='detail-'] {
 	display: none;
 }
 </style>
-<div class="mainContent">
-	<!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
+<div class="mainContent"><!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
 	<form id="modify">
 		<input type="hidden" id="pk" name="svcLnkId"> <input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
 		<div class="link-table-wrapper">
@@ -72,14 +71,20 @@ div[class*='detail-'] {
 					</div>
 				</div>
 			</div>
-			<div class="common-input-box" id="flagTypeBoxWhere">
-				<div class="header6 label-title">WHERE</div>
+		</div>
+		<div class="link-table-wrapper">
+			<div class="query-box detail-flag-type-where">
+				<div class="header6 label-title">조건문 작성</div>
 				<input class="common-input subtitle1 gray400" id="flagTypeInputWhere" type="text" name="" placeholder="조건문을 입력하세요">
 			</div>
-			<div class="common-input-box" id="flagTypeBoxQuery">
-				<div class="header6 label-title">조회쿼리</div>
-				<input class="common-input subtitle1 gray400" id="flagTypeInputQuery" type="text" name="" placeholder="쿼리를 입력하세요">
+			<div class="query-box detail-flag-type-query">
+				<div class="query-box">
+					<div class="header6 label-title">임의 조회문 작성</div>
+					<input class="common-input subtitle1 gray400" id="flagTypeInputQuery" type="text" name="" placeholder="쿼리를 입력하세요">
+				</div>
 			</div>
+		</div>
+		<div class="link-table-wrapper">
 			<div class="link-table-box-bottom">
 				<table class="link-table-list">
 					<colgroup>
@@ -99,33 +104,44 @@ div[class*='detail-'] {
 						</tr>
 						<tr class="table-spacing"></tr>
 					</thead>
-					<tbody class="list-body">
+					<tbody class="list-body" id="gridTableDataBody">
+							<tr class="detailTr">
+								<td colspan="5">연계할 스키마와 테이블을 선택하세요.</td>
+							</tr>
+					</tbody>
+				</table>
+					<div style="display: none;">
+					<table>
+					<tbody id="gridHtmlFormatId">
 						<tr class="subtitle1 gray500">
-							<td id="column_1">COLUMN1</td>
-							<td>VARCHAR2(100)</td>
-							<td>timestamp();</td>
+							<td><input type="hidden" value="#COL_NAME#">#COL_NAME#</td>	<!-- COLUMN_NAME -->
+							<td><input type="hidden" value="#COL_TYPE#">#COL_TYPE#</td>	<!-- DATA_TYPE -->
+							<td><input type="hidden" value="#COL_DEFAULT#">#COL_DEFAULT#</td> <!-- DATA_DEFAULT -->
 							<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_1" onclick="colUseCheck()"></td>
 							<td><select class="tdLinkSelect">
-									<option value="1">STATUS</option>
-									<option value="2">QUERY</option>
-									<option value="3">WHERE</option>
+									<option value="S">STATUS</option>
+									<option value="O">OPCODE</option>
 							</select></td>
 						</tr>
-						<tr class="table-spacing"></tr>
-						<tr class="subtitle1 gray500">
-							<td class="column_2">COLUMN2</td>
-							<td>VARCHAR2(100)</td>
-							<td>timestamp();</td>
-							<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_2" onclick="colUseCheck()"></td>
-							<td><select class="tdLinkSelect">
-									<option value="1">STATUS</option>
-									<option value="2">QUERY</option>
-									<option value="3">WHERE</option>
-							</select></td>
+					</tbody>
+					</table>
+				<table>
+					<tbody id="gridNoDataHtmlFormatId">
+						<tr class="detailTr">
+							<td colspan="5">컬럼이 존재하지 않습니다.</td>
 						</tr>
 						<tr class="table-spacing"></tr>
 					</tbody>
 				</table>
+				<table>
+					<tbody id="gridLoadingHtmlFormatId">
+						<tr class="detailTr">
+							<td colspan="5">로딩중...</td>
+						</tr>
+						<tr class="table-spacing"></tr>
+					</tbody>
+				</table>
+				</div>
 			</div>
 		</div>
 		<div class="query-box">
@@ -140,17 +156,27 @@ div[class*='detail-'] {
 </div>
 
 <script>
-	const fn_tb_nm_click = function() {
-		const ds_nm = $('#DS_NM').serialize();
-		const parentId = encodeURIComponent('form');
-		const param = ds_nm + '&parentId=' + parentId;
-		const tablePopUri = contextPath + 'pop/table?' + param;
 
-		let popOption = 'toolbar=no,menubar=no,location=no,status=no';
-		popOption += ',scrollbars=yes,resizeable=yes';
-		popOption += ',width=900,height=800';
-		window.open(tablePopUri, '_blank', popOption);
-	};
+	//KdiListGrid 시작 >>>>>
+	const grid = KdiListGrid('grid', '/res/link/pub/tbl/columns.json');
+	const gridEnv = grid.env;
+	gridEnv.setMapping({
+		'#COL_NAME#' : 'COLUMN_NAME',
+		'#COL_TYPE#' : 'DATA_TYPE',
+		'#COL_DEFAULT#' : 'DATA_DEFAULT'
+	});
+	// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제 ( 안쓰려면 호출안하면 됨)
+	var errEvent = function(xhr) {
+		/* console.log('statusCode:' + xhr.statusCode);
+		console.log('responseJSON:' + xhr.responseJSON.state);
+		console.log('responseJSON:' + xhr.responseJSON.errMsg); */
+		alert(xhr.responseJSON.errMsg);
+	}
+	grid.event.setErrEvent(errEvent);
+	
+	gridEnv.loading.enable();
+	gridEnv.nodata.enable();
+	// KdiListGrid 끝 <<<<<
 
 	let crontab_guid_text = '쿼리가 실행되는 주기를 설정할 수 있습니다.\n\n';
 	crontab_guid_text += ' 각 자리수의 의미는\n\n';
@@ -182,9 +208,6 @@ div[class*='detail-'] {
 		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
 		fn_detail_display_event('flagType', flagTypeMapping);
 
-		// 스키마명 테이블명 검색 팝업 이벤트 등록
-		$('form input.tableSearch').click(fn_tb_nm_click);
-
 		// 크론탭 가이드 >>>
 		$('.guide-box').text(crontab_guid_text);
 		$(".guide-icon").on({
@@ -192,6 +215,11 @@ div[class*='detail-'] {
 			mouseleave : fn_crontab_guid_hide
 		});
 		// 크론탭 가이드 <<<
+		
+		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
+		grid.ready();
+		
+		fn_load_columns();
 	});
 
 	function colUseCheck() {
@@ -247,4 +275,18 @@ div[class*='detail-'] {
 				$('#queryResult').text(
 						'SELECT ' + selectColumn + ' WHERE ' + $(this).val());
 			});
+
+	// 선택한 스키마,테이블 내 컬럼 로드 (KDI_LINK_PUB_TBL_INF) 구현하기
+	//TODO
+	var fn_load_columns = function() {
+
+		// 파라미터 JSON포맷
+		let paramData = {
+			'dsNm' : $('#DS_NM').val(),
+			'schemaName' : $('#SCH_NM').val(),
+			'tableName' : $('#TBL_NM').val()
+		};
+
+		grid.search(1, paramData);
+	}
 </script>

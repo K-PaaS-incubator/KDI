@@ -111,4 +111,17 @@
 			AND SVC_LNK_ID = #{param.value.svcLnkId}
 		</where>
 	</delete>
+	
+	<select id="getColumns" resultType="Map">
+		SELECT
+			COLUMN_NAME,
+			DATA_TYPE,
+			DATA_DEFAULT
+		FROM
+			ALL_TAB_COLUMNS
+		<where>
+			TABLE_NAME = #{param.value.tableName} and OWNER = #{param.value.schemaName}
+		</where>
+	</select>
+	
 </mapper>
