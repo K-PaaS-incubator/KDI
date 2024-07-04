@@ -209,7 +209,7 @@ div[class*='detail-'] {
 	};
 
 	$(document).ready(function() {
-		const pageLoader = fn_insert_page_load('연계서비스', '테이블 정보');
+		const pageLoader = fn_insert_page_load('연계 송신서비스', '송신 테이블 정보');
 		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
 		fn_detail_display_event('flagType', flagTypeMapping);
 
