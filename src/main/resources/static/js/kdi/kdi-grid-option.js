@@ -1,3 +1,16 @@
+// jquery에 serializeJson 기능 추가
+jQuery.fn.serializeJson = function() {
+	let result = {};
+	var arr = this.serializeArray();
+	if (!arr) {
+		return result;
+	}
+	$.each(arr, function() {
+		result[this.name] = this.value;
+	});
+	return result;
+};
+
 const fn_title_init = function(menuNm, pageNm, pageType) {
 	//배너 타이틀 세팅
 	$('.banner-title').text(pageNm + ' ' + pageType);
@@ -11,7 +24,6 @@ const fn_duplicate_check = function(pageUri, pkNm) {
 	let data = {};
 	data[pkNm] = encodeURIComponent($('input[name="' + pkNm + '"]'));
 	let checkResult = false;
-	console.log(data);
 	$.ajax({
 		url: pageUri + 'duplicateCheck.json', //컨트롤러에서 요청받을 주소
 		type: 'GET',
@@ -77,6 +89,7 @@ const fn_pattern_event = function() {
 const fn_insert_page_load = function(menuNm, pageNm) {
 	const _page_url = (new URL(location.href).pathname + '/../').replaceAll('//', '/');
 	let _previouParam = '';
+	let _child_table_id = '';
 	const _pkNm = $('input.pk')[0].name;
 	const _pkTitle = $('.pk-title').text();
 	const _event_join = function() {
@@ -87,11 +100,18 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 				alert('"' + _pkTitle + '"가(이) 중복되었습니다.');
 				return;
 			}
+			let data = $('#insert').serializeJson();
+			if ('' != _child_table_id) {
+				data['#CHILD_DATA_LIST#'] = [];
+				$.each($(_child_table_id), function(idx, item) {
+					data['#CHILD_DATA_LIST#'].push($(item).find('input,select').serializeJson());
+				});
+			}
 			$.ajax({
 				url: _page_url + 'insert.json', //컨트롤러에서 요청받을 주소
 				type: 'POST',
 				async: false,
-				data: $('#insert').serialize(),
+				data: data,
 				dataType: 'json',
 				success: function() {
 					alert('등록 완료');
@@ -113,11 +133,15 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 		_event_join();
 	};
 	const _fn_set_previou_param = function(previouParam) {
-		_previouParam = previouParam || ''
+		_previouParam = previouParam || '';
+	}
+	const _fn_set_child_table = function(child_table_id) {
+		_child_table_id = child_table_id || '';
 	}
 	_init();
 	return {
-		'setPreviouParam': _fn_set_previou_param
+		'setPreviouParam': _fn_set_previou_param,
+		'setChildTable': _fn_set_child_table
 	}
 };
 
@@ -188,10 +212,11 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 			}
 
 			$('#modify').validate();
+			let data = $('#modify').serializeJson();
 			$.ajax({
 				url: _page_url + 'modify.json',
 				type: 'POST',
-				data: $('#modify').serialize(),
+				data: data,
 				dataType: 'json',
 				success: function() {
 					location.href = _page_url + ('' != _previouParam ? '?' + _previouParam : '');

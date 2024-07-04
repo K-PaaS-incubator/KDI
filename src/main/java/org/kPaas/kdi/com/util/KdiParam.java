@@ -1,5 +1,7 @@
 package org.kPaas.kdi.com.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.kPaas.kdi.com.util.pagination.PageParam;
@@ -7,6 +9,7 @@ import org.kPaas.kdi.com.util.pagination.PageParam;
 public class KdiParam extends PageParam {
 	private static final long serialVersionUID = 7510320053790479642L;
 	private Map<String, Object> value;
+	private List<Map<String, Object>> childValues = null;
 
 	public Map<String, Object> String() {
 		return value;
@@ -35,5 +38,20 @@ public class KdiParam extends PageParam {
 
 	public void putValue(String key, Object value) {
 		this.value.put(key, value);
+	}
+
+	public List<Map<String, Object>> getChildValues() {
+		return childValues;
+	}
+
+	public void setChildValues(List<Map<String, Object>> childValue) {
+		this.childValues = childValue;
+	}
+
+	public void addChildValues(Map<String, Object> childValue) {
+		if (null == this.childValues) {
+			this.childValues = new ArrayList<Map<String,Object>>();
+		}
+		this.childValues.add(childValue);
 	}
 }

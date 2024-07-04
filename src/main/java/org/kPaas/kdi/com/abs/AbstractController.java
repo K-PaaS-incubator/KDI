@@ -1,5 +1,6 @@
 package org.kPaas.kdi.com.abs;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.kPaas.kdi.com.util.KdiParam;
@@ -100,6 +101,28 @@ public abstract class AbstractController extends AbsCom {
 			params.remove("pagePerRow");
 		}
 		kdiParam.setValue(params);
+		Map<String, Map<String, Object>> childParamMap = null;
+		String childKey;
+		String childValueName;
+		for (String key : params.keySet()) {
+			if (!key.startsWith("#CHILD_DATA_LIST#")) {
+				continue;
+			}
+			if (null == childParamMap) {
+				childParamMap = new HashMap<String, Map<String, Object>>();
+			}
+			childKey = key.substring(key.indexOf("[") + 1, key.indexOf("]"));
+			if (!childParamMap.containsKey(childKey)) {
+				childParamMap.put(childKey, new HashMap<String, Object>());
+			}
+			childValueName = key.substring(key.lastIndexOf("[") + 1, key.length() - 1);
+			childParamMap.get(childKey).put(childValueName, params.get(key));
+		}
+		if (null != childParamMap) {
+			for (String key : childParamMap.keySet()) {
+				kdiParam.addChildValues(childParamMap.get(key));
+			}
+		}
 		return kdiParam;
 	}
 }

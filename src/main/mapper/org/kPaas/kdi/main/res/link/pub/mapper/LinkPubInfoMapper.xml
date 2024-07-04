@@ -8,7 +8,8 @@
 		CREATE TABLE `KDI_LINK_PUB_INF` (
 		`SVC_LNK_ID` VARCHAR2(100) NOT NULL,
 		`SVC_ID` VARCHAR2(50) NOT NULL REFERENCES KDI_LINK_SVC_INF(SVC_ID) ON DELETE CASCADE,
-		`SVC_LNK_NM` VARCHAR2(100) NOT NULL,
+		`SVC_LNK_NM`
+		VARCHAR2(100) NOT NULL,
 		`SCH_NM` VARCHAR2(100) NULL,
 		`TBL_NM` VARCHAR2(100) NULL,
 		`FLAG_TYPE` CHAR(1) NULL, <!-- 1:STATUS, 2:QUERY, 3:WHERE -->
@@ -99,7 +100,8 @@
 			FLAG_TYPE = #{param.value.flagType},
 			FLAG_QUERY = #{param.value.flagQuery},
 			LNK_TIME = #{param.value.lnkTime},
-			MOD_ID = #{param.value.modifyId},
+			MOD_ID =
+			#{param.value.modifyId},
 			MOD_DT = current_timestamp()
 		</set>
 		<where>
@@ -115,4 +117,25 @@
 			SVC_LNK_ID = #{param.value.svcLnkId}
 		</where>
 	</delete>
+
+	<insert id="insertChild">
+		INSERT INTO KDI_LINK_PUB_TBL_INF (
+		COL_NM,
+		SVC_LNK_ID,
+		COL_TYPE,
+		COL_LNK_TYPE,
+		COL_MP_NM,
+		REG_ID,
+		REG_DT
+		)
+		VALUES (
+		#{param.colName},
+		#{param.svcLnkId},
+		#{param.colType},
+		#{param.colLnkType},
+		#{param.colMpNm},
+		#{param.regId},
+		current_timestamp()
+		)
+	</insert>
 </mapper>
