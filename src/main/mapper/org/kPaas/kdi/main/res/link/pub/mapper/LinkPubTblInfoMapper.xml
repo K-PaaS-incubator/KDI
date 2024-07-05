@@ -8,7 +8,8 @@
 		CREATE TABLE `KDI_LINK_PUB_TBL_INF` (
 		`COL_NM` VARCHAR2(100) NOT NULL,
 		`SVC_LNK_ID` VARCHAR2(100) NOT NULL REFERENCES KDI_LINK_PUB_INF(SVC_LNK_ID) ON DELETE CASCADE,
-		`COL_TYPE` VARCHAR2(20) NULL, <!-- 컬럼타입: 컬럼 자료형 -->
+		`COL_TYPE`
+		VARCHAR2(20) NULL, <!-- 컬럼타입: 컬럼 자료형 -->
 		`COL_LNK_TYPE` CHAR(1) NULL, <!-- D:데이터컬럼, O:OP대체컬럼, S:STATUS대체컬럼 -->
 		`COL_NM_MP` VARCHAR2(100) NULL, <!-- 컬럼명을 변경하여 송신할때 사용 -->
 		`COL_LNK_YN` CHAR(1) NULL, <!-- 컬럼연계여부로 시스템컬럼을 첨부안하려면 해당 값을 N으로 저장 -->
@@ -57,6 +58,7 @@
 		COL_TYPE,
 		COL_LNK_TYPE,
 		COL_NM_MP,
+		COL_LNK_YN,
 		REG_ID,
 		REG_DT
 		)
@@ -66,6 +68,7 @@
 		#{param.colType},
 		#{param.colLnkType},
 		#{param.colNmMp},
+		#{param.colLnkYn},
 		#{param.regId},
 		current_timestamp()
 		)
@@ -93,6 +96,7 @@
 			COL_TYPE = #{param.value.colType},
 			COL_LNK_TYPE = #{param.value.colLnkType},
 			COL_NM_MP = #{param.value.colNmMp},
+			COL_LNK_YN = #{param.value.colLnkYn},
 			MOD_ID = #{param.value.modifyId},
 			MOD_DT = current_timestamp()
 		</set>
@@ -111,17 +115,23 @@
 			AND SVC_LNK_ID = #{param.value.svcLnkId}
 		</where>
 	</delete>
-	
+
 	<select id="getColumns" resultType="Map">
 		SELECT
-			COLUMN_NAME,
-			DATA_TYPE,
-			DATA_DEFAULT
+		T1.COLUMN_NAME,
+		T1.DATA_TYPE,
+		T2.COMMENTS
 		FROM
-			ALL_TAB_COLUMNS
+		ALL_TAB_COLS T1,
+		ALL_COL_COMMENTS T2
 		<where>
-			TABLE_NAME = #{param.value.tableName} and OWNER = #{param.value.schemaName}
+			T1.OWNER = T2.OWNER
+			AND T1.TABLE_NAME = T2.TABLE_NAME
+			AND T1.COLUMN_NAME = T2.COLUMN_NAME
+			AND T1.TABLE_NAME = #{param.value.tableName}
+			AND T1.OWNER = #{param.value.schemaName}
 		</where>
+		ORDER BY T1.COLUMN_ID
 	</select>
-	
+
 </mapper>
