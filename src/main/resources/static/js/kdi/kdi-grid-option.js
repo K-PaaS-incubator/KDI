@@ -103,7 +103,7 @@ const fn_insert_page_load = function(menuNm, pageNm) {
 			let data = $('#insert').serializeJson();
 			if ('' != _child_table_id) {
 				data['#CHILD_DATA_LIST#'] = [];
-				$.each($(_child_table_id), function(idx, item) {
+				$.each($('form ' + _child_table_id), function(idx, item) {
 					data['#CHILD_DATA_LIST#'].push($(item).find('input,select').serializeJson());
 				});
 			}
@@ -214,14 +214,14 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 
 			$('#modify').validate();
 			let data = $('#modify').serializeJson();
-			
+
 			if ('' != _child_table_id) {
 				data['#CHILD_DATA_LIST#'] = [];
 				$.each($(_child_table_id), function(idx, item) {
 					data['#CHILD_DATA_LIST#'].push($(item).find('input,select').serializeJson());
 				});
 			}
-			
+
 			$.ajax({
 				url: _page_url + 'modify.json',
 				type: 'POST',
@@ -287,8 +287,8 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 	}
 	_init();
 	return {
-		'setPreviouParam': _fn_set_previou_param		,
-				'setChildTable': _fn_set_child_table
+		'setPreviouParam': _fn_set_previou_param,
+		'setChildTable': _fn_set_child_table
 	}
 };
 
