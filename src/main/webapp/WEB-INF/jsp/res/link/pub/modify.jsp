@@ -11,7 +11,8 @@ div[class*='detail-'] {
 	display: none;
 }
 </style>
-<div class="mainContent"><!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
+<div class="mainContent">
+	<!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
 	<form id="modify">
 		<input type="hidden" id="pk" name="svcLnkId"> <input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
 		<div class="link-table-wrapper">
@@ -105,42 +106,45 @@ div[class*='detail-'] {
 						<tr class="table-spacing"></tr>
 					</thead>
 					<tbody class="list-body" id="gridTableDataBody">
-							<tr class="detailTr">
-								<td colspan="5">연계할 스키마와 테이블을 선택하세요.</td>
-							</tr>
+						<tr class="detailTr">
+							<td colspan="5">연계할 스키마와 테이블을 선택하세요.</td>
+						</tr>
 					</tbody>
 				</table>
-					<div style="display: none;">
+				<div style="display: none;">
 					<table>
-					<tbody id="gridHtmlFormatId">
-						<tr class="subtitle1 gray500">
-							<td><input type="hidden" value="#COL_NAME#">#COL_NAME#</td>	<!-- COLUMN_NAME -->
-							<td><input type="hidden" value="#COL_TYPE#">#COL_TYPE#</td>	<!-- DATA_TYPE -->
-							<td><input type="hidden" value="#COL_DEFAULT#">#COL_DEFAULT#</td> <!-- DATA_DEFAULT -->
-							<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_1" onclick="colUseCheck()"></td>
-							<td><select class="tdLinkSelect">
-									<option value="S">STATUS</option>
-									<option value="O">OPCODE</option>
-							</select></td>
-						</tr>
-					</tbody>
+						<tbody id="gridHtmlFormatId">
+							<tr class="subtitle1 gray500">
+								<td><input type="hidden" value="#COL_NAME#">#COL_NAME#</td>
+								<!-- COLUMN_NAME -->
+								<td><input type="hidden" value="#COL_TYPE#">#COL_TYPE#</td>
+								<!-- DATA_TYPE -->
+								<td><input type="hidden" value="#COL_DEFAULT#">#COL_DEFAULT#</td>
+								<!-- DATA_DEFAULT -->
+								<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_1" onclick="colUseCheck()"></td>
+								<td><select class="tdLinkSelect">
+										<option value="S">STATUS</option>
+										<option value="O">OPCODE</option>
+								</select></td>
+							</tr>
+						</tbody>
 					</table>
-				<table>
-					<tbody id="gridNoDataHtmlFormatId">
-						<tr class="detailTr">
-							<td colspan="5">컬럼이 존재하지 않습니다.</td>
-						</tr>
-						<tr class="table-spacing"></tr>
-					</tbody>
-				</table>
-				<table>
-					<tbody id="gridLoadingHtmlFormatId">
-						<tr class="detailTr">
-							<td colspan="5">로딩중...</td>
-						</tr>
-						<tr class="table-spacing"></tr>
-					</tbody>
-				</table>
+					<table>
+						<tbody id="gridNoDataHtmlFormatId">
+							<tr class="detailTr">
+								<td colspan="5">컬럼이 존재하지 않습니다.</td>
+							</tr>
+							<tr class="table-spacing"></tr>
+						</tbody>
+					</table>
+					<table>
+						<tbody id="gridLoadingHtmlFormatId">
+							<tr class="detailTr">
+								<td colspan="5">로딩중...</td>
+							</tr>
+							<tr class="table-spacing"></tr>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
@@ -156,7 +160,6 @@ div[class*='detail-'] {
 </div>
 
 <script>
-
 	//KdiListGrid 시작 >>>>>
 	const grid = KdiListGrid('grid', '/res/link/pub/tbl/columns.json');
 	const gridEnv = grid.env;
@@ -173,7 +176,7 @@ div[class*='detail-'] {
 		alert(xhr.responseJSON.errMsg);
 	}
 	grid.event.setErrEvent(errEvent);
-	
+
 	gridEnv.loading.enable();
 	gridEnv.nodata.enable();
 	// KdiListGrid 끝 <<<<<
@@ -215,10 +218,10 @@ div[class*='detail-'] {
 			mouseleave : fn_crontab_guid_hide
 		});
 		// 크론탭 가이드 <<<
-		
+
 		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
 		grid.ready();
-		
+
 		fn_load_columns();
 	});
 

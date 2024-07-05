@@ -72,7 +72,7 @@ div[class*='detail-'] {
 										<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
 										<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
 										<li><input type="hidden" name="colDefault" value="#COL_DEFAULT#"></li>
-										<li><input type="hidden" name="colMpNm" value="#COL_MP_NM#"></li>
+										<li><input type="hidden" name="colNmMp" value="#COL_NM_MP#"></li>
 									</ul>
 								</td>
 								<td>#COL_NAME#</td>

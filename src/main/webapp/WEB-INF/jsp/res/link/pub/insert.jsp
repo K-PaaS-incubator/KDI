@@ -57,16 +57,16 @@ div[class*='detail-'] {
 				</div>
 				<div class="link-table-box-top-right">
 					<div class="flag-box">
-						<div class="flag-title body1 gray500 bg-gray200 border-gray300">연계플래그 타입</div>
+						<div class="flag-title body1 gray500 bg-gray200 border-gray300">연계 데이터 추출 방법</div>
 						<div class="flag-radio-box subtitle1 gray400">
 							<div>
-								<label><input type="radio" name="flagType" value="S" checked="checked">STATUS</label>
+								<label><input type="radio" name="flagType" value="S" checked="checked">상태값 기준 추출</label>
 							</div>
 							<div>
-								<label><input type="radio" name="flagType" value="Q">QUERY</label>
+								<label><input type="radio" name="flagType" value="W">조회문 임의 작성</label>
 							</div>
 							<div>
-								<label><input type="radio" name="flagType" value="W">WHERE</label>
+								<label><input type="radio" name="flagType" value="Q">사용자 임의 작성</label>
 							</div>
 						</div>
 					</div>
@@ -101,7 +101,7 @@ div[class*='detail-'] {
 							<th>컬럼타입</th>
 							<th>DEFUALT</th>
 							<th>연계여부</th>
-							<th>연계 플래그 매핑</th>
+							<th>연계 컬럼 유형</th>
 						</tr>
 						<tr class="table-spacing"></tr>
 					</thead>
@@ -133,7 +133,7 @@ div[class*='detail-'] {
 						<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
 						<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
 						<li><input type="hidden" name="colDefault" value="#COL_DEFAULT#"></li>
-						<li><input type="hidden" name="colMpNm" value="#COL_MP_NM#"></li>
+						<li><input type="hidden" name="colNmMp" value="#COL_NM_MP#"></li>
 					</ul>
 				</td>
 				<td>#COL_NAME#</td>
@@ -141,9 +141,9 @@ div[class*='detail-'] {
 				<td>#COL_DEFAULT#</td>
 				<td><input class="tdIsConnect" type="checkbox" name="connectUseYn" onclick="colUseCheck()"></td>
 				<td><select class="tdLinkSelect" name="colLnkType">
-						<option value="N">데이터</option>
-						<option value="S">진행상태</option>
-						<option value="O">이벤트 유형</option>
+						<option value="D">데이터</option>
+						<option value="S">연계상태(S,)</option>
+						<option value="O">연계유형(I,U,D)</option>
 				</select></td>
 			</tr>
 		</tbody>
@@ -249,23 +249,23 @@ div[class*='detail-'] {
 	}
 
 	// 연계플래그 타입 선택에 따른 onChange Event
-	$('input[name="flag_type"]').change(
+	$('input[name="flagType"]').change(
 			function() {
 				let currentType = $(this).val();
-				const queryType = '#flagTypeBoxQuery';
-				const whereType = '#flagTypeBoxWhere';
+				//const queryType = '#flagTypeBoxQuery';
+				//const whereType = '#flagTypeBoxWhere';
 
-				$(queryType).css('display',
-						currentType === 'QUERY' ? 'block' : 'none');
+				/* $(queryType).css('display',
+						currentType === 'Q' ? 'block' : 'none');
 				$(whereType).css('display',
-						currentType === 'WHERE' ? 'block' : 'none');
+						currentType === 'W' ? 'block' : 'none'); */
 
 				$('#flagTypeInputQuery, #flagTypeInputWhere').val('');
-				$('#queryResult').text('')
-
-				if (currentType === 'QUERY') {
+				$('#queryResult').text('');
+console.log('###########'+currentType);
+				if (currentType === 'Q') {
 					$('.tdIsConnect, .tdLinkSelect').css('display', 'none');
-				} else if (currentType === 'WHERE') {
+				} else if (currentType === 'W') {
 					$('.tdLinkSelect').css('display', 'none');
 					$('.tdIsConnect').css('display', 'inline-block');
 					$('#queryResult').text('SELECT * WHERE ');

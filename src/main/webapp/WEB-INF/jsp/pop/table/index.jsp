@@ -128,7 +128,6 @@
 		const parentId = new URL(location.href).searchParams.get('parentId');
 		const parentSchNm = new URL(location.href).searchParams.get('schNm') || 'schNm';
 		const parentTblNm = new URL(location.href).searchParams.get('tblNm') || 'tblNm';
-		console.log(parentSchNm);
 		
 		let selectSchema = "";
 		
