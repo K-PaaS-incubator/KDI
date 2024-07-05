@@ -1,4 +1,4 @@
-const KdiData = function() {
+var KdiData = function() {
 	const _fn_get_svc_info = function(svcId) {
 		let _svcId = encodeURIComponent(svcId);
 		let data;
