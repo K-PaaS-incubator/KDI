@@ -37,6 +37,7 @@ public abstract class KdiGridController extends AbstractController {
 		return getService().getList(mapToKdiParam(params));
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/insert")
 	public String getInserPage(Model model, @RequestParam Map<String, Object> params) {
 		model.addAllAttributes(params);
@@ -47,23 +48,27 @@ public abstract class KdiGridController extends AbstractController {
 	public ResponseEntity<String> getDuplicateCheck(@RequestParam Map<String, Object> params) {
 		return getService().duplicateCheck(mapToKdiParam(params));
 	}
-
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/insert.json")
 	public ResponseEntity<String> postInsert(@RequestParam Map<String, Object> params) {
 		return getService().insert(mapToKdiParam(params));
 	}
-
+	
+	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/modify")
 	public String getModifyPage(Model model, @RequestParam Map<String, Object> params) {
 		model.addAllAttributes(params);
 		return layout("modify");
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping("/modify.json")
 	public ResponseEntity<String> postModify(@RequestParam Map<String, Object> params) {
 		return getService().modify(mapToKdiParam(params));
 	}
 
+	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseBody
 	@PostMapping("/delete.json")
 	public ResponseEntity<String> postDelete(@RequestParam Map<String, Object> params) {
