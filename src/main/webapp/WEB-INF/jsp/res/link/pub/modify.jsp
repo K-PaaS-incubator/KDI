@@ -25,6 +25,10 @@ div[class*='detail-'] {
 .hide {
 	display: none;
 }
+
+tr.col-del {
+	background-color: #fff0f0 !important;
+}
 </style>
 <div class="mainContent">
 	<!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
@@ -94,33 +98,34 @@ div[class*='detail-'] {
 				<table class="link-table-list">
 					<colgroup>
 						<col width="21%">
-						<col width="21%">
-						<col width="9%">
-						<col width="10%">
-						<col width="8%">
 						<col>
+						<col width="9%">
+						<col width="9%">
+						<col width="7%">
+						<col width="5%">
+						<col width="6%">
 						<col width="5%">
 					</colgroup>
 					<thead class="list-head">
 						<tr class="subtitle1 gray500">
 							<th>컬럼명</th>
-							<th>컬럼명 매핑<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+							<th>컬럼명 매핑&nbsp;&nbsp;<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
 											value="컬럼명을 변경하여 송신할 경우 명시" escapeXml="false" /></span></span></th>
 							<th>컬럼 타입</th>
-							<th class="ta-c">연계 컬럼 정보<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+							<th class="ta-c">연계 컬럼 정보&nbsp;&nbsp;<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
 											value="● 일반 컬럼<br>&nbsp;&nbsp;&nbsp;&nbsp;연계 업무관련 컬럼이 아닌것을 의미함<br><br>● 명령 코드값<br>&nbsp;&nbsp;&nbsp;&nbsp;설정된 컬럼의 값 'I','U','D'에 따라 업무 수행<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I : Insert 메시지 생성요청<br>&nbsp;&nbsp;&nbsp;&nbsp;U : Update 메시지 생성요청<br>&nbsp;&nbsp;&nbsp;&nbsp;D : Delete 메시지 생성요청<br><br>● 연계 상태값<br>&nbsp;&nbsp;&nbsp;&nbsp;설정된 컬럼의 값이 'N'인 데이터 감지"
 											escapeXml="false" /></span></span></th>
 							<th class="ta-c">연계 여부</th>
-							<th>컬럼 설명<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
-											value="데이터베이스에 명시된 컬럼 Comment 출력" escapeXml="false" /></span></span></th>
-							<th>삭제<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+							<th>정렬순서</th>
+							<th>정렬방식</th>
+							<th>삭제&nbsp;&nbsp;<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
 											value="삭제 되었거나 임의추가한 컬럼만 삭제 가능함" escapeXml="false" /></span></span></th>
 						</tr>
 						<tr class="table-spacing"></tr>
 					</thead>
 					<tbody class="list-body" id="gridTableDataBody">
 						<tr class="detailTr">
-							<td colspan="6">연계할 스키마와 테이블을 선택하세요.</td>
+							<td colspan="7">연계할 스키마와 테이블을 선택하세요.</td>
 						</tr>
 					</tbody>
 				</table>
@@ -151,23 +156,26 @@ div[class*='detail-'] {
 						<li><input type="hidden" name="colCurrentType" value="#COL_CURRENT_TYPE#"></li>
 					</ul>
 				</td>
-				<td>#COL_NAME#</td>
+				<td class="col-name">#COL_NAME#&nbsp;</td>
 				<td><input type="text" class="w90ps" name="colNmMp" value="#COL_NM_MP#" maxlength="60"></td>
 				<td class="ta-l">#COL_TYPE#</td>
-				<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_LNK_TYPE#" name="colLnkType">
+				<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_LNK_TYPE#" name="colLnkType" style="width: 10em;">
 						<option value="D">일반 컬럼</option>
 						<option value="O">명령 코드값</option>
 						<option value="S">연계 상태값</option>
 				</select></td>
 				<td class="ta-c"><input class="tdIsConnect check-#COL_LNK_YN#" type="checkbox" name="colLnkYn" value="Y"></td>
-				<td class="ta-l">#COMMENTS#</td>
+				<td class="ta-r"><input name="colOrderNum" type="number" style="width: 4em;" min="1" max="99" maxlength="2" value="#COL_ORDER_NUM#"></td>
+				<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_ORDER_TYPE#" name="colOrderType"><option value="N">NONE</option>
+						<option value="A">ASC</option>
+						<option value="D">DESC</option></select></td>
 				<td class="ta-l"><a class="hide" href="javascript:delOneChild('#COL_NAME#');">🗑️</a></td>
 		</tbody>
 	</table>
 	<table>
 		<tbody id="gridNoDataHtmlFormatId">
 			<tr class="detailTr">
-				<td colspan="6">컬럼이 존재하지 않습니다.</td>
+				<td colspan="7">컬럼이 존재하지 않습니다.</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
@@ -175,11 +183,14 @@ div[class*='detail-'] {
 	<table>
 		<tbody id="gridLoadingHtmlFormatId">
 			<tr class="detailTr">
-				<td colspan="6">로딩중...</td>
+				<td colspan="7">로딩중...</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
 	</table>
+	<div id="commentsFormatId">
+		<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100">#COMMENTS#</span></span>
+	</div>
 </div>
 <script>
 	//KdiListGrid 시작 >>>>>
@@ -193,6 +204,8 @@ div[class*='detail-'] {
 		'#COL_NM_MP#' : 'COL_NM_MP',
 		'#COL_LNK_TYPE#' : 'COL_LNK_TYPE',
 		'#COL_LNK_YN#' : 'COL_LNK_YN',
+		'#COL_ORDER_NUM#' : 'COL_ORDER_NUM',
+		'#COL_ORDER_TYPE#' : 'COL_ORDER_TYPE',
 		'#COL_CURRENT_TYPE#' : 'COL_CURRENT_TYPE'
 	});
 	// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제 ( 안쓰려면 호출안하면 됨)
@@ -203,7 +216,7 @@ div[class*='detail-'] {
 		alert(xhr.responseJSON.errMsg);
 	}
 	grid.event.setErrEvent(errEvent);
-	grid.event.setPostEvent(function() {
+	grid.event.setPostEvent(function(result) {
 		$('.check-Y').prop('checked', true);
 		$('.select-D').val('D').prop('selected', true);
 		$('.select-O').val('O').prop('selected', true);
@@ -218,10 +231,39 @@ div[class*='detail-'] {
 		// 삭제된 컬럼은 삭제할 수 있도록 버튼 활성화
 		$('input[name="colCurrentType"][value="DEL"]').parents('tr').find('a')
 				.removeClass('hide');
+		$('input[name="colCurrentType"][value="DEL"]').parents('tr').addClass(
+				'col-del');
 		// 임의추가된 컬럼은 삭제할 수 있도록 버튼 활성화
 		$('input[name="colCurrentType"][value="USR"]').parents('tr').find('a')
 				.removeClass('hide');
 		fn_make_lnk_qry();
+
+		// 컬럼 설명이 존재하는 경우 컬럼 설명 추가하기
+		var _commentsFormatId = $('#commentsFormatId').html();
+		var _commentsTmp = '';
+		var _colName = '';
+		for (var i = 0; i < result.data.length; i++) {
+			// row 데이터 가져오기
+			var rowData = result.data[i];
+			_commentsTmp = rowData['COMMENTS'] || '';
+			if ('' == _commentsTmp) {
+				continue;
+			}
+			_colName = rowData['COLUMN_NAME'] || '';
+			$('#' + _colName + ' .col-name').append(
+					_commentsFormatId.replaceAll('#COMMENTS#', _commentsTmp));
+		}
+
+		// 컬럼설명 >>>
+		$(".child_row .guide-icon").on({
+			mouseenter : function() {
+				$(this).addClass('show')
+			},
+			mouseleave : function() {
+				$(this).removeClass('show')
+			}
+		});
+		// 컬럼설명 <<<
 	});
 
 	gridEnv.loading.enable();
@@ -286,7 +328,7 @@ div[class*='detail-'] {
 		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
 		pageLoader.setChildTable('.child_row');
 
-		// 크론탭 가이드 >>>
+		// 가이드 >>>
 		$(".guide-icon").on({
 			mouseenter : function() {
 				$(this).addClass('show')
@@ -295,7 +337,7 @@ div[class*='detail-'] {
 				$(this).removeClass('show')
 			}
 		});
-		// 크론탭 가이드 <<<
+		// 가이드 <<<
 
 	});
 

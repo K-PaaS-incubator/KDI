@@ -92,31 +92,33 @@ div[class*='detail-'] {
 			<div class="link-table-box-bottom">
 				<table class="link-table-list">
 					<colgroup>
-						<col width="22%">
-						<col width="22%">
-						<col width="9%">
-						<col width="9%">
-						<col width="8%">
+						<col width="24%">
 						<col>
+						<col width="10%">
+						<col width="10%">
+						<col width="8%">
+						<col width="6%">
+						<col width="8%">
 					</colgroup>
 					<thead class="list-head">
 						<tr class="subtitle1 gray500">
 							<th>컬럼명</th>
-							<th>컬럼명 매핑<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+							<th>컬럼명 매핑&nbsp;&nbsp;<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
 											value="컬럼명을 변경하여 송신할 경우 명시" escapeXml="false" /></span></span></th>
 							<th>컬럼 타입</th>
-							<th class="ta-c">연계 컬럼 정보<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+							<th class="ta-c">연계 컬럼 정보&nbsp;&nbsp;<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span
+									class="guide-box bg-gray400 subtitle2 white100"><c:out
 											value="● 일반 컬럼<br>&nbsp;&nbsp;&nbsp;&nbsp;연계 업무관련 컬럼이 아닌것을 의미함<br><br>● 명령 코드값<br>&nbsp;&nbsp;&nbsp;&nbsp;설정된 컬럼의 값 'I','U','D'에 따라 업무 수행<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I : Insert 메시지 생성요청<br>&nbsp;&nbsp;&nbsp;&nbsp;U : Update 메시지 생성요청<br>&nbsp;&nbsp;&nbsp;&nbsp;D : Delete 메시지 생성요청<br><br>● 연계 상태값<br>&nbsp;&nbsp;&nbsp;&nbsp;설정된 컬럼의 값이 'N'인 데이터 감지"
 											escapeXml="false" /></span></span></th>
 							<th class="ta-c">연계 여부</th>
-							<th>컬럼 설명<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
-											value="데이터베이스에 명시된 컬럼 Comment 출력" escapeXml="false" /></span></span></th>
+							<th>정렬순서</th>
+							<th>정렬방식</th>
 						</tr>
 						<tr class="table-spacing"></tr>
 					</thead>
 					<tbody class="list-body" id="gridTableDataBody">
 						<tr class="detailTr">
-							<td colspan="5">연계할 스키마와 테이블을 선택하세요.</td>
+							<td colspan="6">연계할 스키마와 테이블을 선택하세요.</td>
 						</tr>
 					</tbody>
 				</table>
@@ -143,23 +145,26 @@ div[class*='detail-'] {
 						<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
 					</ul>
 				</td>
-				<td>#COL_NAME#</td>
+				<td class="col-name">#COL_NAME#&nbsp;</td>
 				<td><input type="text" class="w90ps" name="colNmMp" value="" maxlength="60"></td>
 				<td class="ta-l">#COL_TYPE#</td>
-				<td class="ta-l"><select class="tdLinkSelect ta-c" name="colLnkType">
+				<td class="ta-l"><select class="tdLinkSelect ta-c" name="colLnkType" style="width: 10em;">
 						<option value="D">일반 컬럼</option>
 						<option value="O">명령 코드값</option>
 						<option value="S">연계 상태값</option>
 				</select></td>
 				<td class="ta-c"><input class="tdIsConnect" type="checkbox" name="colLnkYn" checked="checked" value="Y"></td>
-				<td class="ta-l">#COMMENTS#</td>
+				<td class="ta-r"><input id="COL_ORDER_NUM" name="colOrderNum" type="number" style="width: 4em;" min="1" max="99" maxlength="2"></td>
+				<td class="ta-l"><select class="tdLinkSelect ta-c" id="COL_ORDER_TYPE" name="colOrderType"><option value="N">NONE</option>
+						<option value="A">ASC</option>
+						<option value="D">DESC</option></select></td>
 			</tr>
 		</tbody>
 	</table>
 	<table>
 		<tbody id="gridNoDataHtmlFormatId">
 			<tr class="detailTr">
-				<td colspan="5">컬럼이 존재하지 않습니다.</td>
+				<td colspan="6">컬럼이 존재하지 않습니다.</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
@@ -167,11 +172,14 @@ div[class*='detail-'] {
 	<table>
 		<tbody id="gridLoadingHtmlFormatId">
 			<tr class="detailTr">
-				<td colspan="5">로딩중...</td>
+				<td colspan="6">로딩중...</td>
 			</tr>
 			<tr class="table-spacing"></tr>
 		</tbody>
 	</table>
+	<div id="commentsFormatId">
+		<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100">#COMMENTS#</span></span>
+	</div>
 </div>
 <script>
 	//KdiListGrid 시작 >>>>>
@@ -194,13 +202,76 @@ div[class*='detail-'] {
 
 	gridEnv.loading.enable();
 	gridEnv.nodata.enable();
-	grid.event.setPostEvent(function() {
+	grid.event.setPostEvent(function(result) {
 		// 연계 여부 변동시 이벤트 등록
 		$('form input[name="colLnkYn"]').change(fn_make_lnk_qry);
 		$('form select[name="colLnkType"]').change(fn_make_lnk_qry);
 		$('form input[name="colNmMp"]').keyup(fn_make_lnk_qry);
+		$('form input[name="colOrderNum"]').change(
+				function() {
+					var _colOrderType = $(this).parents('tr').find(
+							'select[name="colOrderType"]');
+					console.log(_colOrderType.val() + '2222####' + this.value)
+					if ('' == this.value) {
+						_colOrderType.val('N').prop('selected', true);
+					} else if ('N' == _colOrderType.val()) {
+						_colOrderType.val('A').prop('selected', true);
+					}
+					fn_make_lnk_qry();
+				});
+		$('form select[name="colOrderType"]').change(
+				function() {
+					var _colOrderNum = $(this).parents('tr').find(
+							'input[name="colOrderNum"]');
+					if ('N' == this.value) {
+						_colOrderNum.val('');
+					} else if ('' == _colOrderNum.val()) {
+						var _max = 0;
+						$.each($('input[name="colOrderNum"]'), function() {
+							if (!this.value) {
+								return;
+							}
+							if (_max < this.value) {
+								_max = this.value
+							}
+						});
+						_max++;
+						if (99 < _max) {
+							_max = 99;
+						}
+						_colOrderNum.val(_max);
+					}
+					fn_make_lnk_qry();
+				});
 
 		fn_make_lnk_qry();
+
+		// 컬럼 설명이 존재하는 경우 컬럼 설명 추가하기
+		var _commentsFormatId = $('#commentsFormatId').html();
+		var _commentsTmp = '';
+		var _colName = '';
+		for (var i = 0; i < result.data.length; i++) {
+			// row 데이터 가져오기
+			var rowData = result.data[i];
+			_commentsTmp = rowData['COMMENTS'] || '';
+			if ('' == _commentsTmp) {
+				continue;
+			}
+			_colName = rowData['COLUMN_NAME'] || '';
+			$('#' + _colName + ' .col-name').append(
+					_commentsFormatId.replaceAll('#COMMENTS#', _commentsTmp));
+		}
+
+		// 컬럼설명 >>>
+		$(".child_row .guide-icon").on({
+			mouseenter : function() {
+				$(this).addClass('show')
+			},
+			mouseleave : function() {
+				$(this).removeClass('show')
+			}
+		});
+		// 컬럼설명 <<<
 	});
 	// KdiListGrid 끝 <<<<<
 
@@ -235,7 +306,7 @@ div[class*='detail-'] {
 		// 스키마명 테이블명 검색 팝업 이벤트 등록
 		$('form input.tableSearch').click(fn_tb_nm_click);
 
-		// 크론탭 가이드 >>>
+		// 가이드 >>>
 		$(".guide-icon").on({
 			mouseenter : function() {
 				$(this).addClass('show')
@@ -244,7 +315,7 @@ div[class*='detail-'] {
 				$(this).removeClass('show')
 			}
 		});
-		// 크론탭 가이드 <<<
+		// 가이드 <<<
 
 		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
 		grid.ready();

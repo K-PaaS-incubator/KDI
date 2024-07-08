@@ -324,7 +324,7 @@ var KdiListGrid = function(varName, url) {
 					_pageCtlInfo._ctlFn._load(_pageInfo.maxPageNumView);
 				}
 				if (_event._postEvent) {
-					_event._postEvent();
+					_event._postEvent(result);
 				}
 			},
 			error: _event._errEvent

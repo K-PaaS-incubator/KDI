@@ -14,6 +14,8 @@
 		`COL_LNK_TYPE` CHAR(1) NULL, <!-- D:데이터컬럼, O:OP대체컬럼, S:STATUS대체컬럼 -->
 		`COL_NM_MP` VARCHAR2(100) NULL, <!-- 컬럼명을 변경하여 송신할때 사용 -->
 		`COL_LNK_YN` CHAR(1) NULL, <!-- 컬럼연계여부로 시스템컬럼을 첨부안하려면 해당 값을 N으로 저장 -->
+		`COL_ORDER_NUM` NUMBER(2) NULL, <!-- 컬럼 ORDER BY 출력 순서 -->
+		`COL_ORDER_TYPE` CHAR(1) NULL, <!-- 컬럼 ORDER BY 유형 (ASC, DESC) -->
 		`REG_ID` VARCHAR2(20) NULL,
 		`REG_DT` DATE NULL,
 		`MOD_ID` VARCHAR2(20) NULL,
@@ -43,7 +45,9 @@
 		TB1.COL_TYPE AS DATA_TYPE,
 		TB1.COL_LNK_TYPE,
 		TB1.COL_NM_MP,
-		TB1.COL_LNK_YN
+		TB1.COL_LNK_YN,
+		TB1.COL_ORDER_NUM,
+		TB1.COL_ORDER_TYPE
 		FROM
 		<include refid="getLinkPubTblInfListWhere" />
 		LIMIT
@@ -60,6 +64,8 @@
 		COL_LNK_TYPE,
 		COL_NM_MP,
 		COL_LNK_YN,
+		COL_ORDER_NUM,
+		COL_ORDER_TYPE,
 		REG_ID,
 		REG_DT
 		)
@@ -69,10 +75,25 @@
 		#{param.colType},
 		#{param.colLnkType},
 		#{param.colNmMp},
+		
 		<if test="param.colLnkYn != null and param.colLnkYn != ''">
 			#{param.colLnkYn},
 		</if>
 		<if test="param.colLnkYn == null or param.colLnkYn == ''">
+			'N',
+		</if>
+		
+		<if test="param.colOrderNum != null and param.colOrderNum != ''">
+			#{param.colOrderNum},
+		</if>
+		<if test="param.colOrderNum == null or param.colOrderNum == ''">
+			NULL,
+		</if>
+		
+		<if test="param.colOrderType != null and param.colOrderType != ''">
+			#{param.colOrderType},
+		</if>
+		<if test="param.colOrderType == null or param.colOrderType == ''">
 			'N',
 		</if>
 		#{param.regId},
@@ -114,6 +135,23 @@
 			'N'
 		</if>
 		AS CHARACTER) COL_LNK_YN,
+		
+		<if test="param.colOrderNum != null and param.colOrderNum != ''">
+		CAST(#{param.colOrderNum}AS NUMBER) COL_ORDER_NUM,
+		</if>
+		<if test="param.colOrderNum == null or param.colOrderNum == ''">
+		NULL COL_ORDER_NUM,
+		</if>
+		
+		CAST(
+		<if test="param.colOrderType != null and param.colOrderType != ''">
+			#{param.colOrderType}
+		</if>
+		<if test="param.colOrderType == null or param.colOrderType == ''">
+			'N'
+		</if>
+		AS CHARACTER) COL_ORDER_TYPE,	
+		
 		CAST(#{param.modifyId} AS CHARACTER VARYING) MOD_ID
 		FROM DUAL
 		) T2
@@ -125,6 +163,8 @@
 			COL_NM_MP =T2.COL_NM_MP,
 			COL_LNK_YN = T2.COL_LNK_YN,
 			MOD_ID = T2.MOD_ID,
+			COL_ORDER_NUM = T2.COL_ORDER_NUM,
+			COL_ORDER_TYPE = T2.COL_ORDER_TYPE,
 			MOD_DT = current_timestamp()
 		</set>
 		WHEN NOT MATCHED THEN INSERT (
@@ -135,6 +175,8 @@
 		COL_LNK_TYPE,
 		COL_NM_MP,
 		COL_LNK_YN,
+		COL_ORDER_NUM,
+		COL_ORDER_TYPE,
 
 		REG_ID,
 		REG_DT,
@@ -148,6 +190,8 @@
 		T2.COL_LNK_TYPE,
 		T2.COL_NM_MP,
 		T2.COL_LNK_YN,
+		T2.COL_ORDER_NUM,
+		T2.COL_ORDER_TYPE,
 
 		T2.MOD_ID,
 		current_timestamp(),

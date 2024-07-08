@@ -74,7 +74,7 @@ public class LinkPubTblInfoServiceImpl extends KdiGridServiceImpl implements Lin
 				currentColumn = null;
 				// 임의 컬럼 여부를 저장하는 컬럼이 추가되어야함
 				// 임의 컬럼이 아닌 경우 삭제된 컬럼을 출력
-				data.put("COMMENTS", "<span style=\"color:red;\">[삭제된 컬럼]</span>");
+				data.put("COMMENTS", "<span style=\"color:#fff0f0;\">[삭제된 컬럼]</span>");
 				data.put("COL_CURRENT_TYPE", "DEL");
 			}
 		}
