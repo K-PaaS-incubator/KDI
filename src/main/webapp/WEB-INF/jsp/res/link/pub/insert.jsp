@@ -95,7 +95,7 @@ div[class*='detail-'] {
 						<col width="24%">
 						<col>
 						<col width="10%">
-						<col width="10%">
+						<col width="11%">
 						<col width="8%">
 						<col width="6%">
 						<col width="8%">
@@ -211,7 +211,6 @@ div[class*='detail-'] {
 				function() {
 					var _colOrderType = $(this).parents('tr').find(
 							'select[name="colOrderType"]');
-					console.log(_colOrderType.val() + '2222####' + this.value)
 					if ('' == this.value) {
 						_colOrderType.val('N').prop('selected', true);
 					} else if ('N' == _colOrderType.val()) {

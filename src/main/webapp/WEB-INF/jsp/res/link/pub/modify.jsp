@@ -58,7 +58,7 @@ tr.col-del {
 											escapeXml="false" /></span>
 								</span>
 							</div>
-							<input class="common-input subtitle1 gray400" type="text" id="LNK_TIME" name="lnk_time" placeholder="0/10 * * * * ? (매 10초마다 쿼리수행)">
+							<input class="common-input subtitle1 gray400" type="text" id="LNK_TIME" name="lnkTime" placeholder="0/10 * * * * ? (매 10초마다 쿼리수행)">
 						</div>
 					</div>
 				</div>
@@ -100,10 +100,10 @@ tr.col-del {
 						<col width="21%">
 						<col>
 						<col width="9%">
-						<col width="9%">
+						<col width="11%">
 						<col width="7%">
-						<col width="5%">
 						<col width="6%">
+						<col width="7%">
 						<col width="5%">
 					</colgroup>
 					<thead class="list-head">
@@ -112,7 +112,8 @@ tr.col-del {
 							<th>컬럼명 매핑&nbsp;&nbsp;<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
 											value="컬럼명을 변경하여 송신할 경우 명시" escapeXml="false" /></span></span></th>
 							<th>컬럼 타입</th>
-							<th class="ta-c">연계 컬럼 정보&nbsp;&nbsp;<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+							<th class="ta-c">연계 컬럼 정보&nbsp;&nbsp;<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span
+									class="guide-box bg-gray400 subtitle2 white100"><c:out
 											value="● 일반 컬럼<br>&nbsp;&nbsp;&nbsp;&nbsp;연계 업무관련 컬럼이 아닌것을 의미함<br><br>● 명령 코드값<br>&nbsp;&nbsp;&nbsp;&nbsp;설정된 컬럼의 값 'I','U','D'에 따라 업무 수행<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I : Insert 메시지 생성요청<br>&nbsp;&nbsp;&nbsp;&nbsp;U : Update 메시지 생성요청<br>&nbsp;&nbsp;&nbsp;&nbsp;D : Delete 메시지 생성요청<br><br>● 연계 상태값<br>&nbsp;&nbsp;&nbsp;&nbsp;설정된 컬럼의 값이 'N'인 데이터 감지"
 											escapeXml="false" /></span></span></th>
 							<th class="ta-c">연계 여부</th>
@@ -218,9 +219,13 @@ tr.col-del {
 	grid.event.setErrEvent(errEvent);
 	grid.event.setPostEvent(function(result) {
 		$('.check-Y').prop('checked', true);
-		$('.select-D').val('D').prop('selected', true);
-		$('.select-O').val('O').prop('selected', true);
-		$('.select-S').val('S').prop('selected', true);
+		$('.select-D[name="colLnkType"]').val('D').prop('selected', true);
+		$('.select-O[name="colLnkType"]').val('O').prop('selected', true);
+		$('.select-S[name="colLnkType"]').val('S').prop('selected', true);
+
+		$('.select-N[name="colOrderType"]').val('N').prop('selected', true);
+		$('.select-A[name="colOrderType"]').val('A').prop('selected', true);
+		$('.select-D[name="colOrderType"]').val('D').prop('selected', true);
 		// 컬럼정보까지 불러와졌으면 쿼리생성관련 이벤트 적용
 
 		// 연계 여부 변동시 이벤트 등록
@@ -236,6 +241,43 @@ tr.col-del {
 		// 임의추가된 컬럼은 삭제할 수 있도록 버튼 활성화
 		$('input[name="colCurrentType"][value="USR"]').parents('tr').find('a')
 				.removeClass('hide');
+
+		$('form input[name="colOrderNum"]').change(
+				function() {
+					var _colOrderType = $(this).parents('tr').find(
+							'select[name="colOrderType"]');
+					console.log(_colOrderType.val() + '2222####' + this.value)
+					if ('' == this.value) {
+						_colOrderType.val('N').prop('selected', true);
+					} else if ('N' == _colOrderType.val()) {
+						_colOrderType.val('A').prop('selected', true);
+					}
+					fn_make_lnk_qry();
+				});
+		$('form select[name="colOrderType"]').change(
+				function() {
+					var _colOrderNum = $(this).parents('tr').find(
+							'input[name="colOrderNum"]');
+					if ('N' == this.value) {
+						_colOrderNum.val('');
+					} else if ('' == _colOrderNum.val()) {
+						var _max = 0;
+						$.each($('input[name="colOrderNum"]'), function() {
+							if (!this.value) {
+								return;
+							}
+							if (_max < this.value) {
+								_max = this.value
+							}
+						});
+						_max++;
+						if (99 < _max) {
+							_max = 99;
+						}
+						_colOrderNum.val(_max);
+					}
+					fn_make_lnk_qry();
+				});
 		fn_make_lnk_qry();
 
 		// 컬럼 설명이 존재하는 경우 컬럼 설명 추가하기

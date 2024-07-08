@@ -51,11 +51,15 @@ const fn_make_lnk_qry = function() {
 			var cols = fn_get_col_data();
 			cols.oper = cols.oper || '';
 			cols.state = cols.state || '';
+			cols.order = cols.order || '';
 			if ('' == cols.oper) {
 				cols.oper = '<span class="c-red fw-bold">\'명령 코드값 지정필요\'</span>';
 			}
 			if ('' == cols.state) {
 				cols.state = '<span class="c-red ">\'연계 상태값 지정필요\'</span>';
+			}
+			if ('' == cols.order) {
+				cols.order = [{nm:'<span class="c-red fw-bold">\'정렬순서와 정렬방식 지정필요\'</span>',type:''}];
 			}
 			$('#flagTypeInputQuery').removeAttr('name');
 			$('#flagTypeInputWhere').attr('name', 'flagQuery');
@@ -66,14 +70,25 @@ const fn_make_lnk_qry = function() {
 				+ $('input[name="tblNm"]').val()
 				+ '<br>WHERE<br>&nbsp;&nbsp;&nbsp;&nbsp;'
 				+ $('#flagTypeInputWhere').val();
+			var orderQry = '';
+			$.each(cols.order, function() {
+				if ('' == orderQry) {
+					orderQry = '<br>ORDER BY<br>&nbsp;&nbsp;&nbsp;&nbsp;'
+				} else {
+					orderQry += ', '
+				}
+				orderQry += this.nm;
+				orderQry += '&nbsp;';
+				orderQry += this.type;
+			});
+			qry += orderQry;
 			break;
 		case 'Q': // 임의 조회문 작성
 			$('#flagTypeInputWhere').removeAttr('name');
 			$('#flagTypeInputQuery').attr('name', 'flagQuery');
 			qry = $('#flagTypeInputQuery').val();
-			$('form select[name="colLnkType"],form input[name="colLnkYn"]')
+			$('form select[name="colLnkType"],form input[name="colLnkYn"],form input[name="colOrderNum"],form select[name="colOrderType"]')
 				.addClass('hide');
-			console.log(qry);
 			break;
 	}
 	$('#queryResult').html(qry);
