@@ -9,7 +9,6 @@
 		`COL_NM` VARCHAR2(100) NOT NULL,
 		`SVC_LNK_ID` VARCHAR2(100) NOT NULL REFERENCES KDI_LINK_SUB_INF(SVC_LNK_ID) ON DELETE CASCADE,
 		`COL_TYPE` VARCHAR2(20) NOT NULL, <!-- 컬럼타입: 컬럼 자료형 -->
-		`COL_LNK_TYPE` CHAR(1) NULL, <!-- D:데이터컬럼, O:OP대체컬럼, S:STATUS대체컬럼 -->
 		`COL_NM_MP` VARCHAR2(100) NULL, <!-- 수신받은 컬럼명 변경하여 저장할때 사용 -->
 		`COL_LNK_YN` CHAR(1) NULL, <!-- 컬럼연계여부로 시스템컬럼을 첨부안하려면 해당 값을 N으로 저장 -->
 		`REG_ID` VARCHAR2(20) NULL,
@@ -30,18 +29,18 @@
 
 	<select id="getListCnt" resultType="Long">
 		SELECT
-		COUNT(TB1.*)
+			COUNT(TB1.*)
 		FROM
 		<include refid="getLinkSubInfListWhere" />
 	</select>
 
 	<select id="getList" resultType="Map">
 		SELECT
-		TB1.COL_NM,
-		TB1.SVC_LNK_ID,
-		TB1.COL_TYPE,
-		TB1.COL_LNK_TYPE,
-		TB1.COL_NM_MP
+			TB1.COL_NM,
+			TB1.SVC_LNK_ID,
+			TB1.COL_TYPE,
+			TB1.COL_LNK_TYPE,
+			TB1.COL_NM_MP
 		FROM
 		<include refid="getLinkSubInfListWhere" />
 		LIMIT
@@ -52,22 +51,22 @@
 
 	<insert id="insertChild">
 		INSERT INTO KDI_LINK_SUB_TBL_INF (
-		COL_NM,
-		SVC_LNK_ID,
-		COL_TYPE,
-		COL_LNK_TYPE,
-		COL_NM_MP,
-		REG_ID,
-		REG_DT
+			COL_NM,
+			SVC_LNK_ID,
+			COL_TYPE,
+			COL_NM_MP,
+			COL_LNK_YN,
+			REG_ID,
+			REG_DT
 		)
 		VALUES (
-		#{param.colName},
-		#{param.svcLnkId},
-		#{param.colType},
-		#{param.colLnkType},
-		#{param.colNmMp},
-		#{param.regId},
-		current_timestamp()
+			#{param.colName},
+			#{param.svcLnkId},
+			#{param.colType},
+			#{param.colNmMp},
+			#{param.colLnkYn},
+			#{param.regId},
+			current_timestamp()
 		)
 	</insert>
 
@@ -91,8 +90,8 @@
 		UPDATE KDI_LINK_SUB_TBL_INF
 		<set>
 			COL_TYPE = #{param.value.colType},
-			COL_LNK_TYPE = #{param.value.colLnkType},
 			COL_NM_MP = #{param.value.colNmMp},
+			COL_LNK_YN = #{param.value.colLnkYn},
 			MOD_ID = #{param.value.modifyId},
 			MOD_DT = current_timestamp()
 		</set>

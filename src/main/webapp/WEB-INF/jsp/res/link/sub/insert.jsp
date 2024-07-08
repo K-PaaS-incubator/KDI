@@ -39,19 +39,32 @@ div[class*='detail-'] {
 			<div class="link-table-box-bottom">
 				<table class="link-table-list">
 					<colgroup>
-						<col width="45%">
+						<col width="25%">
+						<col width="25%">
 						<col width="15%">
 						<col width="10%">
-						<col width="10%">
-						<col width="20%">
+						<col width="25%">
 					</colgroup>
 					<thead class="list-head">
 						<tr class="subtitle1 gray500">
 							<th>컬럼명</th>
-							<th>컬럼타입</th>
-							<th>DEFUALT</th>
-							<th>연계여부</th>
-							<th>연계 플래그 매핑</th>
+							<th>컬럼명 매핑
+								<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt="">
+									<span class="guide-box bg-gray400 subtitle2 white100">
+										<c:out value="컬럼명을 변경하여 송신할 경우 명시" escapeXml="false" />
+									</span>
+								</span>
+							</th>
+							<th>컬럼 타입</th>
+							<th>연계 여부</th>
+							<!-- th>연계 플래그 매핑</th -->
+							<th>컬럼 설명
+								<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt="">
+									<span class="guide-box bg-gray400 subtitle2 white100">
+										<c:out value="데이터베이스에 명시된 컬럼 Comment 출력" escapeXml="false" />
+									</span>
+								</span>
+							</th>
 						</tr>
 						<tr class="table-spacing"></tr>
 					</thead>
@@ -64,25 +77,24 @@ div[class*='detail-'] {
 				<div style="display: none;">
 					<table>
 						<tbody id="gridHtmlFormatId">
-							<tr class="subtitle1 gray500 child_row">
+							<tr id="#COL_NAME#" class="subtitle1 gray500 child_row">
 								<td style="display: none;">
 									<!-- input 항목을 한눈에 보기위해서 만들어진 숨겨진 td임 큰의미는 없음 -->
 									<ul>
 										<!-- 코드 정렬시 줄바꿈 방지 목적 ul li는 큰의미는 없음 -->
 										<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
 										<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
-										<li><input type="hidden" name="colDefault" value="#COL_DEFAULT#"></li>
-										<li><input type="hidden" name="colNmMp" value="#COL_NM_MP#"></li>
 									</ul>
 								</td>
 								<td>#COL_NAME#</td>
-								<td>#COL_TYPE#</td>
-								<td>#COL_DEFAULT#</td>
-								<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" onclick="colUseCheck()"></td>
-								<td><select class="tdLinkSelect">
+								<td><input type="text" class="w90ps" name="colNmMp" value="" maxlength="60"></td>
+								<td class="ta-l">#COL_TYPE#</td>
+								<!-- td class="ta-l"><select class="tdLinkSelect ta-c" name="colLnkType">
 										<option value="S">STATUS</option>
 										<option value="O">OPCODE</option>
-								</select></td>
+								</select></td -->
+								<td class="ta-c"><input class="tdIsConnect" type="checkbox" name="colLnkYn" checked="checked" value="Y"></td>
+								<td class="ta-l">#COMMENTS#</td>
 							</tr>
 						</tbody>
 					</table>
@@ -124,7 +136,7 @@ div[class*='detail-'] {
 	gridEnv.setMapping({
 		'#COL_NAME#' : 'COLUMN_NAME',
 		'#COL_TYPE#' : 'DATA_TYPE',
-		'#COL_DEFAULT#' : 'DATA_DEFAULT'
+		'#COMMENTS#' : 'COMMENTS'
 	});
 	// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제 ( 안쓰려면 호출안하면 됨)
 	var errEvent = function(xhr) {
