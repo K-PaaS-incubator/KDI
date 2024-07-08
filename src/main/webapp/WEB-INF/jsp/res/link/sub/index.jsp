@@ -69,7 +69,7 @@
 
 <table hidden="hidden">
 	<tbody id="gridHtmlFormatId">
-		<tr class="detailTr">
+		<tr class="detailTr" onclick="fn_modify('#SVC_LNK_ID#');">
 			<td>#NO#</td>
 			<td>#SVC_LNK_ID#</td>
 			<td>#SVC_LNK_NM#</td>
@@ -122,7 +122,9 @@
 	});
 
 	var fn_modify = function(svcLnkId) {
-		location.href = '${pageUrl}modify?svcLnkId='+encodeURIComponent(svcLnkId);
+		let param = $('input[name="svcId"]').serialize();
+		param += '&svcLnkId=' + encodeURIComponent(svcLnkId);
+		location.href = '${pageUrl}modify?' + param;
 	};
 	
 	//서비스정보 변경 팝업(서비스명,토픽명,데이터소스명)
