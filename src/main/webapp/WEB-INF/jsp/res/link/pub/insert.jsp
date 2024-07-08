@@ -177,7 +177,7 @@ div[class*='detail-'] {
 	//KdiListGrid 시작 >>>>>
 	const grid = KdiListGrid('grid', '${pageUrl}tbl/columns.json');
 	const gridEnv = grid.env;
-	gridEnv.setPagePerRow(30);
+	gridEnv.setPagePerRow(100);
 	gridEnv.setMapping({
 		'#COL_NAME#' : 'COLUMN_NAME',
 		'#COL_TYPE#' : 'DATA_TYPE',
