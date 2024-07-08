@@ -136,51 +136,51 @@ div[class*='detail-'] {
 				id="modifyBtn" class="button-primary" type="button" value="저장">
 		</div>
 	</form>
-	<div style="display: none;">
-		<table>
-			<tbody id="gridHtmlFormatId">
-				<tr id="#COL_NAME#" class="subtitle1 gray500 child_row">
-					<td style="display: none;">
-						<!-- input 항목을 한눈에 보기위해서 만들어진 숨겨진 td임 큰의미는 없음 -->
-						<ul>
-							<!-- 코드 정렬시 줄바꿈 방지 목적 ul li는 큰의미는 없음 -->
-							<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
-							<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
-							<li><input type="hidden" name="colCurrentType" value="#COL_CURRENT_TYPE#"></li>
-						</ul>
-					</td>
-					<td>#COL_NAME#</td>
-					<td><input type="text" class="w90ps" name="colNmMp" value="#COL_NM_MP#" maxlength="60"></td>
-					<td class="ta-l">#COL_TYPE#</td>
-					<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_LNK_TYPE#" name="colLnkType">
-							<option value="D">일반 컬럼</option>
-							<option value="O">명령 코드값</option>
-							<option value="S">연계 상태값</option>
-					</select></td>
-					<td class="ta-c"><input class="tdIsConnect check-#COL_LNK_YN#" type="checkbox" name="colLnkYn" value="Y"></td>
-					<td class="ta-l">#COMMENTS#</td>
-					<td class="ta-l"><a class="hide" href="javascript:delOneChild('#COL_NAME#');">🗑️</a></td>
-			</tbody>
-		</table>
-		<table>
-			<tbody id="gridNoDataHtmlFormatId">
-				<tr class="detailTr">
-					<td colspan="6">컬럼이 존재하지 않습니다.</td>
-				</tr>
-				<tr class="table-spacing"></tr>
-			</tbody>
-		</table>
-		<table>
-			<tbody id="gridLoadingHtmlFormatId">
-				<tr class="detailTr">
-					<td colspan="6">로딩중...</td>
-				</tr>
-				<tr class="table-spacing"></tr>
-			</tbody>
-		</table>
-	</div>
 </div>
 
+<div style="display: none;">
+	<table>
+		<tbody id="gridHtmlFormatId">
+			<tr id="#COL_NAME#" class="subtitle1 gray500 child_row">
+				<td style="display: none;">
+					<!-- input 항목을 한눈에 보기위해서 만들어진 숨겨진 td임 큰의미는 없음 -->
+					<ul>
+						<!-- 코드 정렬시 줄바꿈 방지 목적 ul li는 큰의미는 없음 -->
+						<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
+						<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
+						<li><input type="hidden" name="colCurrentType" value="#COL_CURRENT_TYPE#"></li>
+					</ul>
+				</td>
+				<td>#COL_NAME#</td>
+				<td><input type="text" class="w90ps" name="colNmMp" value="#COL_NM_MP#" maxlength="60"></td>
+				<td class="ta-l">#COL_TYPE#</td>
+				<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_LNK_TYPE#" name="colLnkType">
+						<option value="D">일반 컬럼</option>
+						<option value="O">명령 코드값</option>
+						<option value="S">연계 상태값</option>
+				</select></td>
+				<td class="ta-c"><input class="tdIsConnect check-#COL_LNK_YN#" type="checkbox" name="colLnkYn" value="Y"></td>
+				<td class="ta-l">#COMMENTS#</td>
+				<td class="ta-l"><a class="hide" href="javascript:delOneChild('#COL_NAME#');">🗑️</a></td>
+		</tbody>
+	</table>
+	<table>
+		<tbody id="gridNoDataHtmlFormatId">
+			<tr class="detailTr">
+				<td colspan="6">컬럼이 존재하지 않습니다.</td>
+			</tr>
+			<tr class="table-spacing"></tr>
+		</tbody>
+	</table>
+	<table>
+		<tbody id="gridLoadingHtmlFormatId">
+			<tr class="detailTr">
+				<td colspan="6">로딩중...</td>
+			</tr>
+			<tr class="table-spacing"></tr>
+		</tbody>
+	</table>
+</div>
 <script>
 	//KdiListGrid 시작 >>>>>
 	const grid = KdiListGrid('grid', '${pageUrl}tbl/list.json');
