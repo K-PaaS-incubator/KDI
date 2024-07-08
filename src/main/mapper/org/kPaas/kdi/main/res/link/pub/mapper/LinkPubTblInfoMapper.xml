@@ -9,7 +9,8 @@
 		`COL_NM` VARCHAR2(100) NOT NULL,
 		`SVC_LNK_ID` VARCHAR2(100) NOT NULL REFERENCES KDI_LINK_PUB_INF(SVC_LNK_ID) ON DELETE CASCADE,
 		`COL_TYPE`
-		VARCHAR2(20) NULL, <!-- 컬럼타입: 컬럼 자료형 -->
+		VARCHAR2(20) NULL, <!-- 컬럼타입: 
+			컬럼 자료형 -->
 		`COL_LNK_TYPE` CHAR(1) NULL, <!-- D:데이터컬럼, O:OP대체컬럼, S:STATUS대체컬럼 -->
 		`COL_NM_MP` VARCHAR2(100) NULL, <!-- 컬럼명을 변경하여 송신할때 사용 -->
 		`COL_LNK_YN` CHAR(1) NULL, <!-- 컬럼연계여부로 시스템컬럼을 첨부안하려면 해당 값을 N으로 저장 -->
@@ -96,25 +97,63 @@
 	</select>
 
 	<update id="modifyChild">
-		UPDATE KDI_LINK_PUB_TBL_INF
+		MERGE INTO KDI_LINK_PUB_TBL_INF T1
+		USING (
+		SELECT
+		CAST(#{param.colName} AS CHARACTER VARYING) COL_NM,
+		CAST(#{param.svcLnkId} AS CHARACTER VARYING) SVC_LNK_ID,
+
+		CAST(#{param.colType} AS CHARACTER VARYING) COL_TYPE,
+		CAST(#{param.colLnkType} AS CHARACTER) COL_LNK_TYPE,
+		CAST(#{param.colNmMp} AS CHARACTER VARYING) COL_NM_MP,
+		CAST(
+		<if test="param.colLnkYn != null and param.colLnkYn != ''">
+			#{param.colLnkYn}
+		</if>
+		<if test="param.colLnkYn == null or param.colLnkYn == ''">
+			'N'
+		</if>
+		AS CHARACTER) COL_LNK_YN,
+		CAST(#{param.modifyId} AS CHARACTER VARYING) MOD_ID
+		FROM DUAL
+		) T2
+		ON (T1.COL_NM = T2.COL_NM AND T1.SVC_LNK_ID = T2.SVC_LNK_ID)
+		WHEN MATCHED THEN UPDATE
 		<set>
-			COL_TYPE = #{param.colType},
-			COL_LNK_TYPE = #{param.colLnkType},
-			COL_NM_MP = #{param.colNmMp},
-			COL_LNK_YN =
-			<if test="param.colLnkYn != null and param.colLnkYn != ''">
-				#{param.colLnkYn},
-			</if>
-			<if test="param.colLnkYn == null or param.colLnkYn == ''">
-				'N',
-			</if>
-			MOD_ID = #{param.modifyId},
+			COL_TYPE = T2.COL_TYPE,
+			COL_LNK_TYPE = T2.COL_LNK_TYPE,
+			COL_NM_MP =T2.COL_NM_MP,
+			COL_LNK_YN = T2.COL_LNK_YN,
+			MOD_ID = T2.MOD_ID,
 			MOD_DT = current_timestamp()
 		</set>
-		<where>
-			COL_NM = #{param.colName}
-			AND SVC_LNK_ID = #{param.svcLnkId}
-		</where>
+		WHEN NOT MATCHED THEN INSERT (
+		COL_NM,
+		SVC_LNK_ID,
+
+		COL_TYPE,
+		COL_LNK_TYPE,
+		COL_NM_MP,
+		COL_LNK_YN,
+
+		REG_ID,
+		REG_DT,
+		MOD_ID,
+		MOD_DT
+		) VALUES (
+		T2.COL_NM,
+		T2.SVC_LNK_ID,
+
+		T2.COL_TYPE,
+		T2.COL_LNK_TYPE,
+		T2.COL_NM_MP,
+		T2.COL_LNK_YN,
+
+		T2.MOD_ID,
+		current_timestamp(),
+		T2.MOD_ID,
+		current_timestamp()
+		)
 	</update>
 
 	<delete id="delete" parameterType="String">
@@ -126,6 +165,18 @@
 			AND SVC_LNK_ID = #{param.value.svcLnkId}
 		</where>
 	</delete>
+
+	<select id="columnExists" resultType="boolean">
+		SELECT
+		COUNT(*)
+		FROM
+		ALL_TAB_COLS T1
+		<where>
+			T1.OWNER = #{schNm}
+			AND T1.TABLE_NAME = #{tbNm}
+			AND T1.COLUMN_NAME = #{colNm}
+		</where>
+	</select>
 
 	<select id="getColumns" resultType="Map">
 		SELECT
@@ -139,8 +190,8 @@
 			T1.OWNER = T2.OWNER
 			AND T1.TABLE_NAME = T2.TABLE_NAME
 			AND T1.COLUMN_NAME = T2.COLUMN_NAME
-			AND T1.TABLE_NAME = #{param.value.tableName}
 			AND T1.OWNER = #{param.value.schemaName}
+			AND T1.TABLE_NAME = #{param.value.tableName}
 		</where>
 		ORDER BY T1.COLUMN_ID
 	</select>

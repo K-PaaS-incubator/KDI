@@ -11,8 +11,10 @@ import org.kPaas.kdi.com.util.KdiParam;
 @Mapper
 public interface LinkPubTblInfoMapper extends KdiGridMapper {
 
+	boolean columnExists(@Param("schNm") String schemaName, @Param("tbNm") String tableName, @Param("colNm") String columnName);
+
 	List<Map<String, Object>> getColumns(@Param("param") KdiParam kdiParam);
-	
+
 	void insertChild(@Param("param") Map<String, Object> childParam);
 
 	void modifyChild(@Param("param") Map<String, Object> childParam);

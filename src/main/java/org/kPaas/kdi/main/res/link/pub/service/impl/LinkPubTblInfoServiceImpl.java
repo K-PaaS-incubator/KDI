@@ -68,12 +68,14 @@ public class LinkPubTblInfoServiceImpl extends KdiGridServiceImpl implements Lin
 					currentColumn = currentColumnMap.get(columnName);
 					data.put("COMMENTS", currentColumn.get("COMMENTS"));
 					currentColumnMap.remove(columnName);
+					data.put("COL_CURRENT_TYPE", "ORG");
 					continue;
 				}
 				currentColumn = null;
 				// 임의 컬럼 여부를 저장하는 컬럼이 추가되어야함
 				// 임의 컬럼이 아닌 경우 삭제된 컬럼을 출력
-				data.put("COMMENTS", "<span style=\"color:red;\">[삭제된 컬럼 식별]</span>");
+				data.put("COMMENTS", "<span style=\"color:red;\">[삭제된 컬럼]</span>");
+				data.put("COL_CURRENT_TYPE", "DEL");
 			}
 		}
 		{ // 추가된 컬럼 식별 기능
@@ -82,8 +84,9 @@ public class LinkPubTblInfoServiceImpl extends KdiGridServiceImpl implements Lin
 			for (String columnName : currentColumnMap.keySet()) {
 				currentColumn = currentColumnMap.get(columnName);
 				currentColumn.put("COMMENTS",
-						"<span style=\"color:blue;\">[신규 추가된 컬럼 식별]</span>" + null == currentColumn.get("COMMENTS") ? ""
-								: currentColumn.get("COMMENTS"));
+						"<span style=\"color:blue;\">[신규 컬럼]</span>" + (null == currentColumn.get("COMMENTS") ? ""
+								: currentColumn.get("COMMENTS")));
+				currentColumn.put("COL_CURRENT_TYPE", "NEW");
 				datas.add(currentColumn);
 			}
 		}
@@ -123,5 +126,27 @@ public class LinkPubTblInfoServiceImpl extends KdiGridServiceImpl implements Lin
 		result.put("stateCode", 0);
 		result.put("state", "조회 성공");
 		return ResponseEntity.ok(result.toString());
+	}
+
+	@Override
+	public ResponseEntity<String> delete(KdiParam kdiParam) {
+		// 이전 DB접속정보 (H2)
+		final String orgContext = getContext();
+		try {
+			String dsNm = kdiParam.getValue("dsNm", String.class);
+			if (null == dsNm) {
+				throw new NullPointerException("데이터소스 정보를 찾을 수 없습니다.");
+			}
+			// 사용자가 선택한 디비접속정보로 접속
+			setContext(dsNm);
+			if (mapper.columnExists(kdiParam.getValue("schNm", String.class), kdiParam.getValue("tblNm", String.class),
+					kdiParam.getValue("colNm", String.class))) {
+				return ResponseEntity.badRequest().body("임의추가된 컬럼 또는 삭제된 컬럼이 아닙니다.");
+			}
+		} finally {
+			// 다시 이전 DB접속정보로 접속 (H2)
+			setContext(orgContext);
+		}
+		return super.delete(kdiParam);
 	}
 }

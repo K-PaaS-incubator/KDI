@@ -3,6 +3,7 @@
 <c:url var="imgUrl" value="/img/" />
 <c:url var="cssUrl" value="/css/" />
 <c:url var="jsUrl" value="/js/" />
+<c:url var="pageUrl" value="/res/link/pub/" />
 <link rel="stylesheet" href="${cssUrl}link.css">
 <script src="${jsUrl}kdi/kdi-main-data.js"></script>
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
@@ -92,12 +93,13 @@ div[class*='detail-'] {
 			<div class="link-table-box-bottom">
 				<table class="link-table-list">
 					<colgroup>
-						<col width="22%">
-						<col width="22%">
+						<col width="21%">
+						<col width="21%">
 						<col width="9%">
-						<col width="9%">
+						<col width="10%">
 						<col width="8%">
 						<col>
+						<col width="5%">
 					</colgroup>
 					<thead class="list-head">
 						<tr class="subtitle1 gray500">
@@ -111,56 +113,17 @@ div[class*='detail-'] {
 							<th class="ta-c">연계 여부</th>
 							<th>컬럼 설명<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
 											value="데이터베이스에 명시된 컬럼 Comment 출력" escapeXml="false" /></span></span></th>
+							<th>삭제<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+											value="삭제 되었거나 임의추가한 컬럼만 삭제 가능함" escapeXml="false" /></span></span></th>
 						</tr>
 						<tr class="table-spacing"></tr>
 					</thead>
 					<tbody class="list-body" id="gridTableDataBody">
 						<tr class="detailTr">
-							<td colspan="5">연계할 스키마와 테이블을 선택하세요.</td>
+							<td colspan="6">연계할 스키마와 테이블을 선택하세요.</td>
 						</tr>
 					</tbody>
 				</table>
-				<div style="display: none;">
-					<table>
-						<tbody id="gridHtmlFormatId">
-							<tr id="#COL_NAME#" class="subtitle1 gray500 child_row">
-								<td style="display: none;">
-									<!-- input 항목을 한눈에 보기위해서 만들어진 숨겨진 td임 큰의미는 없음 -->
-									<ul>
-										<!-- 코드 정렬시 줄바꿈 방지 목적 ul li는 큰의미는 없음 -->
-										<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
-										<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
-									</ul>
-								</td>
-								<td>#COL_NAME#</td>
-								<td><input type="text" class="w90ps" name="colNmMp" value="#COL_NM_MP#" maxlength="60"></td>
-								<td class="ta-l">#COL_TYPE#</td>
-								<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_LNK_TYPE#" name="colLnkType">
-										<option value="D">일반 컬럼</option>
-										<option value="O">명령 코드값</option>
-										<option value="S">연계 상태값</option>
-								</select></td>
-								<td class="ta-c"><input class="tdIsConnect check-#COL_LNK_YN#" type="checkbox" name="colLnkYn" value="Y"></td>
-								<td class="ta-l">#COMMENTS#</td>
-						</tbody>
-					</table>
-					<table>
-						<tbody id="gridNoDataHtmlFormatId">
-							<tr class="detailTr">
-								<td colspan="5">컬럼이 존재하지 않습니다.</td>
-							</tr>
-							<tr class="table-spacing"></tr>
-						</tbody>
-					</table>
-					<table>
-						<tbody id="gridLoadingHtmlFormatId">
-							<tr class="detailTr">
-								<td colspan="5">로딩중...</td>
-							</tr>
-							<tr class="table-spacing"></tr>
-						</tbody>
-					</table>
-				</div>
 			</div>
 		</div>
 		<input type="hidden" id="FLAG_QUERY" name="flagQueryTmp">
@@ -173,6 +136,49 @@ div[class*='detail-'] {
 				id="modifyBtn" class="button-primary" type="button" value="저장">
 		</div>
 	</form>
+	<div style="display: none;">
+		<table>
+			<tbody id="gridHtmlFormatId">
+				<tr id="#COL_NAME#" class="subtitle1 gray500 child_row">
+					<td style="display: none;">
+						<!-- input 항목을 한눈에 보기위해서 만들어진 숨겨진 td임 큰의미는 없음 -->
+						<ul>
+							<!-- 코드 정렬시 줄바꿈 방지 목적 ul li는 큰의미는 없음 -->
+							<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
+							<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
+							<li><input type="hidden" name="colCurrentType" value="#COL_CURRENT_TYPE#"></li>
+						</ul>
+					</td>
+					<td>#COL_NAME#</td>
+					<td><input type="text" class="w90ps" name="colNmMp" value="#COL_NM_MP#" maxlength="60"></td>
+					<td class="ta-l">#COL_TYPE#</td>
+					<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_LNK_TYPE#" name="colLnkType">
+							<option value="D">일반 컬럼</option>
+							<option value="O">명령 코드값</option>
+							<option value="S">연계 상태값</option>
+					</select></td>
+					<td class="ta-c"><input class="tdIsConnect check-#COL_LNK_YN#" type="checkbox" name="colLnkYn" value="Y"></td>
+					<td class="ta-l">#COMMENTS#</td>
+					<td class="ta-l"><a class="hide" href="javascript:delOneChild('#COL_NAME#');">🗑️</a></td>
+			</tbody>
+		</table>
+		<table>
+			<tbody id="gridNoDataHtmlFormatId">
+				<tr class="detailTr">
+					<td colspan="6">컬럼이 존재하지 않습니다.</td>
+				</tr>
+				<tr class="table-spacing"></tr>
+			</tbody>
+		</table>
+		<table>
+			<tbody id="gridLoadingHtmlFormatId">
+				<tr class="detailTr">
+					<td colspan="6">로딩중...</td>
+				</tr>
+				<tr class="table-spacing"></tr>
+			</tbody>
+		</table>
+	</div>
 </div>
 
 <script>
@@ -186,7 +192,8 @@ div[class*='detail-'] {
 		'#COMMENTS#' : 'COMMENTS',
 		'#COL_NM_MP#' : 'COL_NM_MP',
 		'#COL_LNK_TYPE#' : 'COL_LNK_TYPE',
-		'#COL_LNK_YN#' : 'COL_LNK_YN'
+		'#COL_LNK_YN#' : 'COL_LNK_YN',
+		'#COL_CURRENT_TYPE#' : 'COL_CURRENT_TYPE'
 	});
 	// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제 ( 안쓰려면 호출안하면 됨)
 	var errEvent = function(xhr) {
@@ -208,6 +215,12 @@ div[class*='detail-'] {
 		$('form select[name="colLnkType"]').change(fn_make_lnk_qry);
 		$('form input[name="colNmMp"]').keyup(fn_make_lnk_qry);
 
+		// 삭제된 컬럼은 삭제할 수 있도록 버튼 활성화
+		$('input[name="colCurrentType"][value="DEL"]').parents('tr').find('a')
+				.removeClass('hide');
+		// 임의추가된 컬럼은 삭제할 수 있도록 버튼 활성화
+		$('input[name="colCurrentType"][value="USR"]').parents('tr').find('a')
+				.removeClass('hide');
 		fn_make_lnk_qry();
 	});
 
@@ -290,4 +303,34 @@ div[class*='detail-'] {
 	$('input[name="flagType"]').change(fn_make_lnk_qry);
 	//연계플래그 input 입력 시 조회쿼리 TEXT로 적용되는 함수
 	$('#flagTypeInputQuery, #flagTypeInputWhere').on('input', fn_make_lnk_qry);
+
+	// 삭제기능 추가
+	const delOneChild = function(colNm) {
+		let svcLnkId = $('input[name="svcLnkId"]').val();
+		let schNm = $('input[name="schNm"]').val();
+		let tblNm = $('input[name="tblNm"]').val();
+		let dsNm = $('input[name="dsNm"]').val();
+		$.ajax({
+			url : '${pageUrl}tbl/delete.json',
+			type : 'POST',
+			dataType : 'JSON',
+			data : {
+				colNm : colNm,
+				svcLnkId : svcLnkId,
+				schNm : schNm,
+				tblNm : tblNm,
+				dsNm : dsNm
+			},
+			success : function(result) {
+				location.reload();
+			},
+			error : function(result) {
+				if (result.status != '400') {
+					alert(responseJSON.state + "\n" + responseJSON.msg);
+				} else {
+					alert("삭제실패\n" + result);
+				}
+			}
+		});
+	}
 </script>

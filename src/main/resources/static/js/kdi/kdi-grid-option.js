@@ -237,7 +237,7 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 				return;
 			}
 
-			$('#modify').validate();
+			$('form').validate();
 			let data = $('#modify').serializeJson();
 
 			if ('' != _child_table_id) {
