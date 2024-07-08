@@ -242,7 +242,7 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 
 			if ('' != _child_table_id) {
 				data['#CHILD_DATA_LIST#'] = [];
-				$.each($(_child_table_id), function(idx, item) {
+				$.each($('form '+_child_table_id), function(idx, item) {
 					data['#CHILD_DATA_LIST#'].push($(item).find('input,select').serializeJson());
 				});
 			}
