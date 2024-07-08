@@ -88,9 +88,7 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 		try {
 			result.put("state", getBizName() + " 데이터 조회 성공");
 			result.put("stateCode", 0);
-			Map<String, Object> data = getMapper().get(kdiParam);
-			selectDataProc(kdiParam, data);
-			result.put("data", data);
+			result.put("data", getData(kdiParam));
 			return ResponseEntity.ok(result.toString());
 		} catch (MyBatisSystemException e) {
 			result.put("state", getBizName() + " 데이터 조회 실패");
@@ -106,19 +104,19 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 	}
 
 	@Override
+	public Map<String, Object> getData(KdiParam kdiParam) throws Exception {
+		Map<String, Object> data = getMapper().get(kdiParam);
+		selectDataProc(kdiParam, data);
+		return data;
+	}
+
+	@Override
 	public ResponseEntity<String> getList(KdiParam kdiParam) {
 		JSONObject result = new JSONObject();
 		PageInfo pageInfo = new PageInfo(kdiParam);
-
 		try {
 			pageInfo.setTotal(getMapper().getListCnt(kdiParam));
-
-			List<Map<String, Object>> datas = getMapper().getList(kdiParam);
-			selectDataPreProc(kdiParam, datas);
-			for (Map<String, Object> data : datas) {
-				selectDataProc(kdiParam, data);
-			}
-			result.put("data", datas);
+			result.put("data", getListData(kdiParam));
 			result.put("stateCode", 0);
 			result.put("state", getBizName() + " 리스트 조회 성공");
 		} catch (MyBatisSystemException e) {
@@ -135,6 +133,16 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 			result.put("page", new JSONObject(pageInfo));
 		}
 		return ResponseEntity.ok(result.toString());
+	}
+
+	@Override
+	public List<Map<String, Object>> getListData(KdiParam kdiParam) throws Exception {
+		List<Map<String, Object>> datas = getMapper().getList(kdiParam);
+		selectDataPreProc(kdiParam, datas);
+		for (Map<String, Object> data : datas) {
+			selectDataProc(kdiParam, data);
+		}
+		return datas;
 	}
 
 	@Override
