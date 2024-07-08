@@ -33,7 +33,7 @@
 </style>
 </head>
 <body>
-	<%-- window.open('http://localhost:8080/pop/table?ds_nm=데이터소스명&parent_id=부모창명','_blank', 'toolbar=no,menubar=no,location=no,status=no,scrollbars=yes,resizeable=yes,width=900,height=800'); --%>
+	<%-- window.open('http://localhost:8080/res/table?ds_nm=데이터소스명&parent_id=부모창명','_blank', 'toolbar=no,menubar=no,location=no,status=no,scrollbars=yes,resizeable=yes,width=900,height=800'); --%>
 	<div class="mainContent" style="margin: 15px;">
 		<form>
 			<div class="content-wrapper">
@@ -136,7 +136,7 @@
 		
 		// KdiListGrid 시작 >>>>>
 		// 선언한 변수명, 주소
-		const grid = KdiListGrid('grid', '${homeUrl}pop/table/tables.json');
+		const grid = KdiListGrid('grid', '${homeUrl}res/table/tables.json');
 
 		// 그리드 세부조작시 사용하는 환경설정
 		const gridEnv = grid.env;
@@ -225,7 +225,7 @@
 		
 		var fn_load_schema = function() {
 			$.ajax({
-				url : '${homeUrl}pop/table/schemas.json',
+				url : '${homeUrl}res/table/schemas.json',
 				type : 'GET',
 				data : {
 					'dsNm' : dsNm,

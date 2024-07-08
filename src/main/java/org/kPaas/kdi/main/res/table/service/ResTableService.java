@@ -1,9 +1,9 @@
-package org.kPaas.kdi.main.pop.service;
+package org.kPaas.kdi.main.res.table.service;
 
 import org.kPaas.kdi.com.util.KdiParam;
 import org.springframework.http.ResponseEntity;
 
-public interface PopTableService {
+public interface ResTableService {
 
 	ResponseEntity<String> getSchemas(String dsNm);
 

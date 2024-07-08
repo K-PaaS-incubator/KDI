@@ -22,10 +22,9 @@
 	</insert>
 
 	<sql id="getLinkPubTblInfListWhere">
-		KDI_LINK_PUB_INF TB1
+		KDI_LINK_PUB_TBL_INF TB1
 		<where>
-			TB1.COL_NM = #{param.value.colNm}
-			AND TB1.SVC_LNK_ID = #{param.value.svcLnkId}
+			TB1.SVC_LNK_ID = #{param.value.svcLnkId}
 		</where>
 	</sql>
 
@@ -38,11 +37,12 @@
 
 	<select id="getList" resultType="Map">
 		SELECT
-		TB1.COL_NM,
+		TB1.COL_NM AS COLUMN_NAME,
 		TB1.SVC_LNK_ID,
-		TB1.COL_TYPE,
+		TB1.COL_TYPE AS DATA_TYPE,
 		TB1.COL_LNK_TYPE,
-		TB1.COL_NM_MP
+		TB1.COL_NM_MP,
+		TB1.COL_LNK_YN
 		FROM
 		<include refid="getLinkPubTblInfListWhere" />
 		LIMIT
@@ -68,7 +68,12 @@
 		#{param.colType},
 		#{param.colLnkType},
 		#{param.colNmMp},
-		#{param.colLnkYn},
+		<if test="param.colLnkYn != null and param.colLnkYn != ''">
+			#{param.colLnkYn},
+		</if>
+		<if test="param.colLnkYn == null or param.colLnkYn == ''">
+			'N',
+		</if>
 		#{param.regId},
 		current_timestamp()
 		)
@@ -83,33 +88,39 @@
 	</select>
 
 	<select id="get" resultType="Map">
-		SELECT * FROM KDI_LINK_PUB_INF
+		SELECT * FROM KDI_LINK_PUB_TBL_INF
 		<where>
 			COL_NM = #{param.value.colNm}
 			AND SVC_LNK_ID = #{param.value.svcLnkId}
 		</where>
 	</select>
 
-	<update id="modify">
-		UPDATE KDI_LINK_PUB_INF
+	<update id="modifyChild">
+		UPDATE KDI_LINK_PUB_TBL_INF
 		<set>
-			COL_TYPE = #{param.value.colType},
-			COL_LNK_TYPE = #{param.value.colLnkType},
-			COL_NM_MP = #{param.value.colNmMp},
-			COL_LNK_YN = #{param.value.colLnkYn},
-			MOD_ID = #{param.value.modifyId},
+			COL_TYPE = #{param.colType},
+			COL_LNK_TYPE = #{param.colLnkType},
+			COL_NM_MP = #{param.colNmMp},
+			COL_LNK_YN =
+			<if test="param.colLnkYn != null and param.colLnkYn != ''">
+				#{param.colLnkYn},
+			</if>
+			<if test="param.colLnkYn == null or param.colLnkYn == ''">
+				'N',
+			</if>
+			MOD_ID = #{param.modifyId},
 			MOD_DT = current_timestamp()
 		</set>
 		<where>
-			COL_NM = #{param.value.colNm}
-			AND SVC_LNK_ID = #{param.value.svcLnkId}
+			COL_NM = #{param.colName}
+			AND SVC_LNK_ID = #{param.svcLnkId}
 		</where>
 	</update>
 
 	<delete id="delete" parameterType="String">
 		DELETE
 		FROM
-		KDI_LINK_PUB_INF
+		KDI_LINK_PUB_TBL_INF
 		<where>
 			COL_NM = #{param.value.colNm}
 			AND SVC_LNK_ID = #{param.value.svcLnkId}

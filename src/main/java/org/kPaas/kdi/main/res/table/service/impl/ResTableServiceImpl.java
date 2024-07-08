@@ -1,4 +1,4 @@
-package org.kPaas.kdi.main.pop.service.impl;
+package org.kPaas.kdi.main.res.table.service.impl;
 
 import javax.annotation.Resource;
 
@@ -7,8 +7,8 @@ import org.kPaas.kdi.com.abs.AbstractService;
 import org.kPaas.kdi.com.config.KdiRoutingDataSource;
 import org.kPaas.kdi.com.util.KdiParam;
 import org.kPaas.kdi.com.util.pagination.PageInfo;
-import org.kPaas.kdi.main.pop.mapper.PopTableMapper;
-import org.kPaas.kdi.main.pop.service.PopTableService;
+import org.kPaas.kdi.main.res.table.mapper.ResTableMapper;
+import org.kPaas.kdi.main.res.table.service.ResTableService;
 import org.mybatis.spring.MyBatisSystemException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,9 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PopTableServiceImpl extends AbstractService implements PopTableService {
+public class ResTableServiceImpl extends AbstractService implements ResTableService {
 	@Resource
-	private PopTableMapper mapper;
+	private ResTableMapper mapper;
 
 	@Autowired
 	private KdiRoutingDataSource kdiRoutingDataSource;

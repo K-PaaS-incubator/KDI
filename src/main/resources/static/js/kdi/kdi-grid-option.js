@@ -51,7 +51,26 @@ const fn_detail_display_event = function(dtlName, dtlMapping) {
 		});
 	};
 	const _fn_select = function() {
-		$('.detail-' + _dtlMapping[$('[name="' + _dtlName + '"]').val()]).css('display', 'flex');
+		$('div[class*="detail-"]').css('display', 'none');
+		let dtlTagName = $('[name="' + _dtlName + '"]').prop('tagName');
+		let dtlType = '';
+		if ('input' == dtlTagName.toLowerCase()) {
+			dtlType = $('[name="' + _dtlName + '"]').attr('type');
+		}
+		let dtlVal = '';
+		if ('radio' == dtlType) {
+			dtlVal = $('[name="' + _dtlName + '"]:checked').val() || '';
+		} else {
+			dtlVal = $('[name="' + _dtlName + '"]').val() || '';
+		}
+		if ('' == dtlVal) {
+			return;
+		}
+		const dtlMappingVal = _dtlMapping[dtlVal] || '';
+		if ('' == dtlMappingVal) {
+			return;
+		}
+		$('.detail-' + _dtlMapping[dtlVal]).css('display', 'flex');
 	}
 	_init();
 	return {
@@ -168,6 +187,12 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 					let thisData = result.data[nameId.id];
 					if ('SELECT' == nameId.tagName) {
 						$('#' + nameId.id).val(thisData).prop('selected', true);
+						return;
+					}
+					if ('INPUT' == nameId.tagName && 'checkbox' == nameId.type) {
+						if (nameId.value == thisData) {
+							$('#' + nameId.id).prop('checked', true);
+						}
 						return;
 					}
 					$('#' + nameId.id).val(thisData);

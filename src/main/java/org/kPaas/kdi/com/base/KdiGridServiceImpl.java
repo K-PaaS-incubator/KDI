@@ -65,7 +65,20 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 		}
 	}
 
-	protected Map<String, Object> selectDataProc(Map<String, Object> data) {
+	/**
+	 * 'getList'에서 조회한 데이터를 가공할때 호출하는데 호출시점이<br>
+	 * 'selectDataProc'를 반복적으로 호출하기전 단계임
+	 */
+	protected List<Map<String, Object>> selectDataPreProc(KdiParam kdiParam, List<Map<String, Object>> datas)
+			throws Exception {
+		return datas;
+	}
+
+	/**
+	 * 조회한 데이터를 가공할때 호출<br>
+	 * 'getList'에서는 row 단위로 호출
+	 */
+	protected Map<String, Object> selectDataProc(KdiParam kdiParam, Map<String, Object> data) throws Exception {
 		return data;
 	}
 
@@ -76,13 +89,18 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 			result.put("state", getBizName() + " 데이터 조회 성공");
 			result.put("stateCode", 0);
 			Map<String, Object> data = getMapper().get(kdiParam);
-			selectDataProc(data);
+			selectDataProc(kdiParam, data);
 			result.put("data", data);
 			return ResponseEntity.ok(result.toString());
 		} catch (MyBatisSystemException e) {
 			result.put("state", getBizName() + " 데이터 조회 실패");
-			result.put("stateCode", 1);
+			result.put("stateCode", 2);
 			result.put("msg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		} catch (Exception e) {
+			result.put("stateCode", 1);
+			result.put("state", getBizName() + " 리스트 조회 실패");
+			result.put("errMsg", e.getMessage());
 			return ResponseEntity.badRequest().body(result.toString());
 		}
 	}
@@ -96,13 +114,19 @@ public abstract class KdiGridServiceImpl extends AbstractService implements KdiG
 			pageInfo.setTotal(getMapper().getListCnt(kdiParam));
 
 			List<Map<String, Object>> datas = getMapper().getList(kdiParam);
+			selectDataPreProc(kdiParam, datas);
 			for (Map<String, Object> data : datas) {
-				selectDataProc(data);
+				selectDataProc(kdiParam, data);
 			}
 			result.put("data", datas);
 			result.put("stateCode", 0);
 			result.put("state", getBizName() + " 리스트 조회 성공");
 		} catch (MyBatisSystemException e) {
+			result.put("stateCode", 2);
+			result.put("state", getBizName() + " 리스트 조회 실패");
+			result.put("errMsg", e.getMessage());
+			return ResponseEntity.badRequest().body(result.toString());
+		} catch (Exception e) {
 			result.put("stateCode", 1);
 			result.put("state", getBizName() + " 리스트 조회 실패");
 			result.put("errMsg", e.getMessage());

@@ -6,15 +6,29 @@
 <link rel="stylesheet" href="${cssUrl}link.css">
 <script src="${jsUrl}kdi/kdi-main-data.js"></script>
 <script src="${jsUrl}kdi/kdi-grid-option.js"></script>
+<script src="${jsUrl}kdi/kdi-link.js"></script>
 <style>
 div[class*='detail-'] {
+	display: none;
+}
+
+.guide-box {
+	display: none;
+	text-align: left;
+}
+
+.show .guide-box {
+	display: block;
+}
+
+.hide {
 	display: none;
 }
 </style>
 <div class="mainContent">
 	<!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
 	<form id="modify">
-		<input type="hidden" id="pk" name="svcLnkId"> <input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
+		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
 		<div class="link-table-wrapper">
 			<div class="link-table-box-top">
 				<div class="link-table-box-top-left">
@@ -34,39 +48,28 @@ div[class*='detail-'] {
 						<!-- 크론탭 문법을 input에 직접 입력하는 UI, UI 확정 후 제거 필요 -->
 						<div class="common-input-box">
 							<div class="header6 label-title">
-								스케줄 <span class="guide-icon"> <img src="${imgUrl}icon-guide-mark.png" alt=""> ️<span id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>
+								스케줄 <span class="guide-icon"> <img src="${imgUrl}icon-guide-mark.png" alt=""> ️<span id="schGuideText" class="guide-box bg-gray400 subtitle2 white100"><c:out
+											value="쿼리가 실행되는 주기를 설정할 수 있습니다.<br><br> 각 자리수의 의미는<br><br> *     *    *   *    *    *     *<br> 초  분  시  일  월 요일 년도(생락가능)<br><br>요일은 일요일부터 1로 표기 토요일은 7"
+											escapeXml="false" /></span>
 								</span>
 							</div>
-							<input class="common-input subtitle1 gray400" type="text" name="lnk_time" placeholder="0/10 * * * * ? (매 십초마다 실행)">
+							<input class="common-input subtitle1 gray400" type="text" id="LNK_TIME" name="lnk_time" placeholder="0/10 * * * * ? (매 10초마다 쿼리수행)">
 						</div>
-						<!-- 							<div class="schedule-input-box">
-								<div class="header6 label-title">
-									스케줄 <span class="guide-icon"> <img src="${imgUrl}icon-guide-mark.png" alt=""> ️<span id="guideText" class="guide-box bg-gray400 subtitle2 white100"></span>
-									</span>
-								</div>
-								<div class="schedule-inputs">
-									<input class="schedule-input subtitle1 gray400" type="number" max="59" min="0" maxlength="2" name="lnk_time" placeholder="분" value="0"> <span
-										class="subtitle1 gray500">분</span> <input class="schedule-input subtitle1 gray400" type="number" max="23" min="0" maxlength="2" name="lnk_time" placeholder="시간" value="0">
-									<span class="subtitle1 gray500">시간</span> <input class="schedule-input subtitle1 gray400" type="number" max="31" min="0" maxlength="2" name="lnk_time" placeholder="일"
-										value="0"> <span class="subtitle1 gray500">일</span> <input class="schedule-input subtitle1 gray400" type="number" max="12" min="0" maxlength="2" name="lnk_time"
-										placeholder="월" value="0"> <span class="subtitle1 gray500">월</span> <input class="schedule-input subtitle1 gray400" type="number" max="6" min="0" maxlength="1"
-										name="lnk_time" placeholder="요일" value="0"> <span class="subtitle1 gray500">요일</span>
-								</div>
-							</div> -->
 					</div>
 				</div>
 				<div class="link-table-box-top-right">
 					<div class="flag-box">
-						<div class="flag-title body1 gray500 bg-gray200 border-gray300">연계플래그 타입</div>
+						<div class="flag-title body1 gray500 bg-gray200 border-gray300">연계 데이터 감지 방법</div>
 						<div class="flag-radio-box subtitle1 gray400">
+							<input type="hidden" id="FLAG_TYPE" name="flagTypeTmp">
 							<div>
-								<label><input type="radio" name="flag_type" value="S" checked="checked">STATUS</label>
+								<label><input type="radio" name="flagType" value="S">상태값 기준 감지</label>
 							</div>
 							<div>
-								<label><input type="radio" name="flag_type" value="Q">QUERY</label>
+								<label><input type="radio" name="flagType" value="W">조건문 임의 작성</label>
 							</div>
 							<div>
-								<label><input type="radio" name="flag_type" value="W">WHERE</label>
+								<label><input type="radio" name="flagType" value="Q">임의 조회문 작성</label>
 							</div>
 						</div>
 					</div>
@@ -89,19 +92,25 @@ div[class*='detail-'] {
 			<div class="link-table-box-bottom">
 				<table class="link-table-list">
 					<colgroup>
-						<col width="45%">
-						<col width="15%">
-						<col width="10%">
-						<col width="10%">
-						<col width="20%">
+						<col width="22%">
+						<col width="22%">
+						<col width="9%">
+						<col width="9%">
+						<col width="8%">
+						<col>
 					</colgroup>
 					<thead class="list-head">
 						<tr class="subtitle1 gray500">
 							<th>컬럼명</th>
-							<th>컬럼타입</th>
-							<th>DEFUALT</th>
-							<th>연계여부</th>
-							<th>연계 플래그 매핑</th>
+							<th>컬럼명 매핑<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+											value="컬럼명을 변경하여 송신할 경우 명시" escapeXml="false" /></span></span></th>
+							<th>컬럼 타입</th>
+							<th class="ta-c">연계 컬럼 정보<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+											value="● 일반 컬럼<br>&nbsp;&nbsp;&nbsp;&nbsp;연계 업무관련 컬럼이 아닌것을 의미함<br><br>● 명령 코드값<br>&nbsp;&nbsp;&nbsp;&nbsp;설정된 컬럼의 값 'I','U','D'에 따라 업무 수행<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;I : Insert 메시지 생성요청<br>&nbsp;&nbsp;&nbsp;&nbsp;U : Update 메시지 생성요청<br>&nbsp;&nbsp;&nbsp;&nbsp;D : Delete 메시지 생성요청<br><br>● 연계 상태값<br>&nbsp;&nbsp;&nbsp;&nbsp;설정된 컬럼의 값이 'N'인 데이터 감지"
+											escapeXml="false" /></span></span></th>
+							<th class="ta-c">연계 여부</th>
+							<th>컬럼 설명<span class="guide-icon"><img src="${imgUrl}icon-guide-mark.png" alt=""><span class="guide-box bg-gray400 subtitle2 white100"><c:out
+											value="데이터베이스에 명시된 컬럼 Comment 출력" escapeXml="false" /></span></span></th>
 						</tr>
 						<tr class="table-spacing"></tr>
 					</thead>
@@ -114,19 +123,25 @@ div[class*='detail-'] {
 				<div style="display: none;">
 					<table>
 						<tbody id="gridHtmlFormatId">
-							<tr class="subtitle1 gray500">
-								<td><input type="hidden" value="#COL_NAME#">#COL_NAME#</td>
-								<!-- COLUMN_NAME -->
-								<td><input type="hidden" value="#COL_TYPE#">#COL_TYPE#</td>
-								<!-- DATA_TYPE -->
-								<td><input type="hidden" value="#COL_DEFAULT#">#COL_DEFAULT#</td>
-								<!-- DATA_DEFAULT -->
-								<td><input class="tdIsConnect" type="checkbox" name="connect_use_yn" id="use_yn_column_1" onclick="colUseCheck()"></td>
-								<td><select class="tdLinkSelect">
-										<option value="S">STATUS</option>
-										<option value="O">OPCODE</option>
+							<tr id="#COL_NAME#" class="subtitle1 gray500 child_row">
+								<td style="display: none;">
+									<!-- input 항목을 한눈에 보기위해서 만들어진 숨겨진 td임 큰의미는 없음 -->
+									<ul>
+										<!-- 코드 정렬시 줄바꿈 방지 목적 ul li는 큰의미는 없음 -->
+										<li><input type="hidden" name="colName" value="#COL_NAME#"></li>
+										<li><input type="hidden" name="colType" value="#COL_TYPE#"></li>
+									</ul>
+								</td>
+								<td>#COL_NAME#</td>
+								<td><input type="text" class="w90ps" name="colNmMp" value="#COL_NM_MP#" maxlength="60"></td>
+								<td class="ta-l">#COL_TYPE#</td>
+								<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_LNK_TYPE#" name="colLnkType">
+										<option value="D">일반 컬럼</option>
+										<option value="O">명령 코드값</option>
+										<option value="S">연계 상태값</option>
 								</select></td>
-							</tr>
+								<td class="ta-c"><input class="tdIsConnect check-#COL_LNK_YN#" type="checkbox" name="colLnkYn" value="Y"></td>
+								<td class="ta-l">#COMMENTS#</td>
 						</tbody>
 					</table>
 					<table>
@@ -148,6 +163,7 @@ div[class*='detail-'] {
 				</div>
 			</div>
 		</div>
+		<input type="hidden" id="FLAG_QUERY" name="flagQueryTmp">
 		<div class="query-box">
 			<h4 class="query-title body1 gray500">조회쿼리</h4>
 			<div id="queryResult" class="query-text subtitle1 gray400 bg-gray200 border-gray300"></div>
@@ -161,12 +177,16 @@ div[class*='detail-'] {
 
 <script>
 	//KdiListGrid 시작 >>>>>
-	const grid = KdiListGrid('grid', '/res/link/pub/tbl/columns.json');
+	const grid = KdiListGrid('grid', '${pageUrl}tbl/list.json');
 	const gridEnv = grid.env;
+	gridEnv.setPagePerRow(100);
 	gridEnv.setMapping({
 		'#COL_NAME#' : 'COLUMN_NAME',
 		'#COL_TYPE#' : 'DATA_TYPE',
-		'#COL_DEFAULT#' : 'DATA_DEFAULT'
+		'#COMMENTS#' : 'COMMENTS',
+		'#COL_NM_MP#' : 'COL_NM_MP',
+		'#COL_LNK_TYPE#' : 'COL_LNK_TYPE',
+		'#COL_LNK_YN#' : 'COL_LNK_YN'
 	});
 	// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제 ( 안쓰려면 호출안하면 됨)
 	var errEvent = function(xhr) {
@@ -176,120 +196,98 @@ div[class*='detail-'] {
 		alert(xhr.responseJSON.errMsg);
 	}
 	grid.event.setErrEvent(errEvent);
+	grid.event.setPostEvent(function() {
+		$('.check-Y').prop('checked', true);
+		$('.select-D').val('D').prop('selected', true);
+		$('.select-O').val('O').prop('selected', true);
+		$('.select-S').val('S').prop('selected', true);
+		// 컬럼정보까지 불러와졌으면 쿼리생성관련 이벤트 적용
+
+		// 연계 여부 변동시 이벤트 등록
+		$('form input[name="colLnkYn"]').change(fn_make_lnk_qry);
+		$('form select[name="colLnkType"]').change(fn_make_lnk_qry);
+		$('form input[name="colNmMp"]').keyup(fn_make_lnk_qry);
+
+		fn_make_lnk_qry();
+	});
 
 	gridEnv.loading.enable();
 	gridEnv.nodata.enable();
 	// KdiListGrid 끝 <<<<<
 
-	let crontab_guid_text = '쿼리가 실행되는 주기를 설정할 수 있습니다.\n\n';
-	crontab_guid_text += ' 각 자리수의 의미는\n\n';
-	crontab_guid_text += ' *     *    *   *    *    *     *\n';
-	crontab_guid_text += ' 초  분  시  일  월 요일 년도(생락가능)\n\n';
-	crontab_guid_text += '요일은 일요일부터 1로 표기 토요일은 7';
-
-	const fn_crontab_guid_show = function() {
-		$('.guide-box').css('display', 'block');
-	};
-	const fn_crontab_guid_hide = function() {
-		$('.guide-box').css('display', 'none');
+	const fn_data_source_load = function() {
+		// 데이터 소스 정보 불러오기
+		var svcId = $('#SVC_ID').val();
+		const svcInfoData = KdiData().getSvcInfo(svcId);
+		$('#DS_NM').val(svcInfoData.DS_NM);
 	};
 
+	// 저장된 '연계 데이터 감지 방법' 체크
+	const fn_load_flag_type = function() {
+		$('input[name="flagType"]').removeAttr('checked');
+		$('input[name="flagType"][value="' + $('#FLAG_TYPE').val() + '"]')
+				.attr('checked', true);
+	};
+
+	// '연계 데이터 감지 방법'에 따른 조건문이라 쿼리문 출력 기능
 	const flagTypeMapping = {
 		Q : 'flag-type-query',
 		W : 'flag-type-where'
 	};
-
-	$(document).ready(function() {
-		const fn_data_source_load = function() {
-			// 데이터 소스 정보 불러오기
-			var svcId = $('#SVC_ID').val();
-			const svcInfoData = KdiData().getSvcInfo(svcId);
-			$('#DS_NM').val(svcInfoData.DS_NM);
-		};
-		const postEvent = [ fn_data_source_load ];
-		const pageLoader = fn_modify_page_load('연계서비스', '테이블 정보', postEvent);
-		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
-		fn_detail_display_event('flagType', flagTypeMapping);
-
-		// 크론탭 가이드 >>>
-		$('.guide-box').text(crontab_guid_text);
-		$(".guide-icon").on({
-			mouseenter : fn_crontab_guid_show,
-			mouseleave : fn_crontab_guid_hide
-		});
-		// 크론탭 가이드 <<<
-
-		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
-		grid.ready();
-
-		fn_load_columns();
-	});
-
-	function colUseCheck() {
-		const use_yn = $("#use_yn").val;
-		console.log("@@@@@@@@@@@@" + use_yn);
-	}
-
-	// 연계플래그 타입 선택에 따른 onChange Event
-	$('input[name="flag_type"]').change(
-			function() {
-				let currentType = $(this).val();
-				const queryType = '#flagTypeBoxQuery';
-				const whereType = '#flagTypeBoxWhere';
-
-				$(queryType).css('display',
-						currentType === 'QUERY' ? 'block' : 'none');
-				$(whereType).css('display',
-						currentType === 'WHERE' ? 'block' : 'none');
-
-				$('#flagTypeInputQuery, #flagTypeInputWhere').val('');
-				$('#queryResult').text('')
-
-				if (currentType === 'QUERY') {
-					$('.tdIsConnect, .tdLinkSelect').css('display', 'none');
-				} else if (currentType === 'WHERE') {
-					$('.tdLinkSelect').css('display', 'none');
-					$('.tdIsConnect').css('display', 'inline-block');
-					$('#queryResult').text('SELECT * WHERE ');
-				} else {
-					$('.tdIsConnect, .tdLinkSelect').css('display',
-							'inline-block');
-				}
-			});
-	//연계플래그 input 입력 시 조회쿼리 TEXT로 적용되는 함수
-	$('#flagTypeInputQuery').on('input', function() {
-		$('#queryResult').text($(this).val());
-	});
-	$('#flagTypeInputWhere').on(
-			'input',
-			function() {
-				var selectColumn = '';
-
-				$('input[name="connect_use_yn"]:checked').each(function() {
-					var inputId = $(this).attr('id');
-					var columnName = $('#' + inputId.substring(7)).text()
-
-					selectColumn += columnName;
-				});
-
-				if (selectColumn === '') {
-					selectColumn = '*';
-				}
-				$('#queryResult').text(
-						'SELECT ' + selectColumn + ' WHERE ' + $(this).val());
-			});
-
-	// 선택한 스키마,테이블 내 컬럼 로드 (KDI_LINK_PUB_TBL_INF) 구현하기
-	//TODO
-	var fn_load_columns = function() {
-
+	const detail_display_select = fn_detail_display_event('flagType',
+			flagTypeMapping);
+	// '연계 데이터 감지 방법'에 따른 조건문이나 쿼리문 이전 값 불러오기
+	const fn_post_event_set_flag_query = function() {
+		const flagType = $('form input[name="flagType"]:checked').val() || 'S';
+		if ('S' == flagType) {
+			return;
+		}
+		const flagQuery = $('#FLAG_QUERY').val();
+		if ('W' == flagType) {
+			$('#flagTypeInputWhere').val(flagQuery);
+		} else { // Q
+			$('#flagTypeInputQuery').val(flagQuery);
+		}
+	};
+	const fn_child_grid = function() {
 		// 파라미터 JSON포맷
 		let paramData = {
+			'svcLnkId' : $('#SVC_LNK_ID').val(),
 			'dsNm' : $('#DS_NM').val(),
 			'schemaName' : $('#SCH_NM').val(),
 			'tableName' : $('#TBL_NM').val()
+		//{svcLnkId=TEST001, dsNm=PPS@0.151, schemaName=, tableName=}
 		};
 
 		grid.search(1, paramData);
-	}
+	};
+	// 페이지 기본 정보 불러온 다음 해야할 업무 순서 정보 
+	const postEvent = [ fn_data_source_load, fn_load_flag_type,
+			detail_display_select.select, fn_post_event_set_flag_query,
+			fn_child_grid ];
+
+	$(document).ready(function() {
+		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
+		grid.ready();
+		const pageLoader = fn_modify_page_load('연계서비스', '테이블 정보', postEvent);
+		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
+		pageLoader.setChildTable('.child_row');
+
+		// 크론탭 가이드 >>>
+		$(".guide-icon").on({
+			mouseenter : function() {
+				$(this).addClass('show')
+			},
+			mouseleave : function() {
+				$(this).removeClass('show')
+			}
+		});
+		// 크론탭 가이드 <<<
+
+	});
+
+	// 연계 데이터 감지 방법 변동시 이벤트 등록
+	$('input[name="flagType"]').change(fn_make_lnk_qry);
+	//연계플래그 input 입력 시 조회쿼리 TEXT로 적용되는 함수
+	$('#flagTypeInputQuery, #flagTypeInputWhere').on('input', fn_make_lnk_qry);
 </script>

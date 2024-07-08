@@ -118,7 +118,7 @@ public class TransPathServiceImpl extends KdiGridServiceImpl implements TransPat
 	}
 
 	@Override
-	protected Map<String, Object> selectDataProc(Map<String, Object> data) {
+	protected Map<String, Object> selectDataProc(KdiParam kdiParam, Map<String, Object> data) throws Exception {
 		if (null == data.get("TRNS_PATH_TYPE")) {
 			data.put("TRNS_PATH_TYPE_NM", "미정");
 			return data;
