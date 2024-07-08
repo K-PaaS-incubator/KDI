@@ -86,7 +86,7 @@
 	<update id="modify">
 		UPDATE KDI_LINK_SUB_INF
 		<set>
-			SVC_LNK_NM = #{param.value.svcLnkMm},
+			SVC_LNK_NM = #{param.value.svcLnkNm},
 			MOD_ID = #{param.value.modifyId},
 			MOD_DT = current_timestamp()
 		</set>

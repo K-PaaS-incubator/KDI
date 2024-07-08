@@ -19,11 +19,10 @@
 		)
 	</insert>
 
-	<sql id="getLinkSubInfListWhere">
-		KDI_LINK_SUB_INF TB1
+	<sql id="getLinkSubTblInfListWhere">
+		KDI_LINK_SUB_TBL_INF TB1
 		<where>
-			TB1.COL_NM = #{param.value.colNm}
-			AND TB1.SVC_LNK_ID = #{param.value.svcLnkId}
+			TB1.SVC_LNK_ID = #{param.value.svcLnkId}
 		</where>
 	</sql>
 
@@ -31,18 +30,18 @@
 		SELECT
 			COUNT(TB1.*)
 		FROM
-		<include refid="getLinkSubInfListWhere" />
+		<include refid="getLinkSubTblInfListWhere" />
 	</select>
 
 	<select id="getList" resultType="Map">
 		SELECT
-			TB1.COL_NM,
+			TB1.COL_NM AS COLUMN_NAME,
 			TB1.SVC_LNK_ID,
-			TB1.COL_TYPE,
-			TB1.COL_LNK_TYPE,
-			TB1.COL_NM_MP
+			TB1.COL_TYPE AS DATA_TYPE,
+			TB1.COL_NM_MP,
+			TB1.COL_LNK_YN
 		FROM
-		<include refid="getLinkSubInfListWhere" />
+		<include refid="getLinkSubTblInfListWhere" />
 		LIMIT
 		#{param.pagePerRow}
 		OFFSET
@@ -64,7 +63,12 @@
 			#{param.svcLnkId},
 			#{param.colType},
 			#{param.colNmMp},
-			#{param.colLnkYn},
+			<if test="param.colLnkYn != null and param.colLnkYn != ''">
+				#{param.colLnkYn},
+			</if>
+			<if test="param.colLnkYn == null or param.colLnkYn == ''">
+				'N',
+			</if>	
 			#{param.regId},
 			current_timestamp()
 		)
@@ -86,19 +90,59 @@
 		</where>
 	</select>
 
-	<update id="modify">
-		UPDATE KDI_LINK_SUB_TBL_INF
+	<update id="modifyChild">
+		MERGE INTO KDI_LINK_SUB_TBL_INF T1
+		USING (
+		SELECT 
+		CAST(#{param.colName} AS CHARACTER VARYING) COL_NM,
+		CAST(#{param.svcLnkId} AS CHARACTER VARYING) SVC_LNK_ID,
+		CAST(#{param.colType} AS CHARACTER VARYING) COL_TYPE,
+		CAST(#{param.colNmMp} AS CHARACTER VARYING) COL_NM_MP,
+		CAST(
+		<if test="param.colLnkYn != null and param.colLnkYn != ''">
+			#{param.colLnkYn}
+		</if>
+		<if test="param.colLnkYn == null or param.colLnkYn == ''">
+			'N'
+		</if>
+		AS CHARACTER) COL_LNK_YN,
+		CAST(#{param.modifyId} AS CHARACTER VARYING) MOD_ID
+		FROM DUAL
+		) T2
+		ON (T1.COL_NM = T2.COL_NM AND T1.SVC_LNK_ID = T2.SVC_LNK_ID)
+		WHEN MATCHED THEN UPDATE
 		<set>
-			COL_TYPE = #{param.value.colType},
-			COL_NM_MP = #{param.value.colNmMp},
-			COL_LNK_YN = #{param.value.colLnkYn},
-			MOD_ID = #{param.value.modifyId},
+			COL_TYPE = T2.COL_TYPE,
+			COL_NM_MP = T2.COL_NM_MP,
+			COL_LNK_YN = T2.COL_LNK_YN,
+			MOD_ID = T2.MOD_ID,
 			MOD_DT = current_timestamp()
 		</set>
-		<where>
-			COL_NM = #{param.value.colNm}
-			AND SVC_LNK_ID = #{param.value.svcLnkId}
-		</where>
+		WHEN NOT MATCHED THEN INSERT (
+		COL_NM,
+		SVC_LNK_ID,
+
+		COL_TYPE,
+		COL_NM_MP,
+		COL_LNK_YN,
+
+		REG_ID,
+		REG_DT,
+		MOD_ID,
+		MOD_DT
+		) VALUES (
+		T2.COL_NM,
+		T2.SVC_LNK_ID,
+
+		T2.COL_TYPE,
+		T2.COL_NM_MP,
+		T2.COL_LNK_YN,
+
+		T2.MOD_ID,
+		current_timestamp(),
+		T2.MOD_ID,
+		current_timestamp()
+		)
 	</update>
 
 	<delete id="delete" parameterType="String">
@@ -111,15 +155,33 @@
 		</where>
 	</delete>
 	
+	<select id="columnExists" resultType="boolean">
+		SELECT
+		COUNT(*)
+		FROM
+		ALL_TAB_COLS T1
+		<where>
+			T1.OWNER = #{schNm}
+			AND T1.TABLE_NAME = #{tbNm}
+			AND T1.COLUMN_NAME = #{colNm}
+		</where>
+	</select>
+	
 	<select id="getColumns" resultType="Map">
 		SELECT
-			COLUMN_NAME,
-			DATA_TYPE,
-			DATA_DEFAULT
+			T1.COLUMN_NAME,
+			T1.DATA_TYPE,
+			T2.COMMENTS
 		FROM
-			ALL_TAB_COLUMNS
+		ALL_TAB_COLS T1,
+		ALL_COL_COMMENTS T2
 		<where>
-			TABLE_NAME = #{param.value.tableName} and OWNER = #{param.value.schemaName}
+			T1.OWNER = T2.OWNER
+			AND T1.TABLE_NAME = T2.TABLE_NAME
+			AND T1.COLUMN_NAME = T2.COLUMN_NAME
+			AND T1.OWNER = #{param.value.schemaName}
+			AND T1.TABLE_NAME = #{param.value.tableName}
 		</where>
+		ORDER BY T1.COLUMN_ID
 	</select>
 </mapper>

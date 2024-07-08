@@ -74,4 +74,47 @@ public class LinkSubInfoServiceImpl extends KdiGridServiceImpl implements LinkSu
 		}
 		return result;
 	}
+	
+	@Override
+	public ResponseEntity<String> modify(KdiParam kdiParam) {
+		ResponseEntity<String> result = super.modify(kdiParam);
+
+		// 자식데이터 update건 있는지 확인
+		if (null == kdiParam.getChildValues() || 0 == kdiParam.getChildValues().size()) {
+			log.debug("child value is empty");
+			return result;
+		}
+		log.debug("child value size = " + kdiParam.getChildValues().size());
+
+		try {
+			for (Map<String, Object> childParam : kdiParam.getChildValues()) {
+				childParam.put("svcLnkId", kdiParam.getValue("svcLnkId"));// 부모테이블 pk
+				childParam.put("modifyId", getLoginUserId());
+				childMapper.modifyChild(childParam);
+			}
+		} catch (DuplicateKeyException e) {
+			JSONObject jsonResult = new JSONObject();
+			jsonResult.put("state", getBizName() + " 컬럼정보 수정 실패");
+			jsonResult.put("stateCode", 1);
+			jsonResult.put("msg", "중복된 값이 존재합니다.");
+			try {
+				super.delete(kdiParam);
+			} catch (Exception e1) {
+				log.error("부모데이터 삭제 실패", e1);
+			}
+			return ResponseEntity.badRequest().body(jsonResult.toString());
+		} catch (MyBatisSystemException e) {
+			JSONObject jsonResult = new JSONObject();
+			jsonResult.put("state", getBizName() + " 컬럼정보 수정 실패");
+			jsonResult.put("stateCode", 1);
+			jsonResult.put("msg", e.getMessage());
+			try {
+				super.delete(kdiParam);
+			} catch (Exception e1) {
+				log.error("부모데이터 삭제 실패", e1);
+			}
+			return ResponseEntity.badRequest().body(jsonResult.toString());
+		}
+		return result;
+	}
 }
