@@ -5,7 +5,6 @@ import org.kPaas.kdi.com.util.KdiParam;
 import org.springframework.http.ResponseEntity;
 
 public interface LinkPubTblInfoService extends KdiGridService {
-
 	ResponseEntity<String> getColumns(KdiParam mapToKdiParam);
 
 }

@@ -189,6 +189,12 @@ const fn_modify_page_load = function(menuNm, pageNm, postEvent) {
 						$('#' + nameId.id).val(thisData).prop('selected', true);
 						return;
 					}
+					if ('INPUT' == nameId.tagName && 'checkbox' == nameId.type) {
+						if (nameId.value == thisData) {
+							$('#' + nameId.id).prop('checked', true);
+						}
+						return;
+					}
 					$('#' + nameId.id).val(thisData);
 				});
 				if (postEvent) {

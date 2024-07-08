@@ -28,7 +28,7 @@ div[class*='detail-'] {
 <div class="mainContent">
 	<!-- 연계 송신업무 서비스 수정(KDI_LINK_PUB_INF, KDI_LINK_PUB_TBL_INF )-->
 	<form id="modify">
-		<input type="hidden" id="pk" name="svcLnkId"> <input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
+		<input type="hidden" id="SVC_ID" name="svcId" value="${svcId}"> <input type="hidden" id="DS_NM" name="dsNm">
 		<div class="link-table-wrapper">
 			<div class="link-table-box-top">
 				<div class="link-table-box-top-left">
@@ -133,14 +133,14 @@ div[class*='detail-'] {
 									</ul>
 								</td>
 								<td>#COL_NAME#</td>
-								<td><input type="text" class="w90ps" name="colNmMp" value="" maxlength="60"></td>
+								<td><input type="text" class="w90ps" name="colNmMp" value="#COL_NM_MP#" maxlength="60"></td>
 								<td class="ta-l">#COL_TYPE#</td>
-								<td class="ta-l"><select class="tdLinkSelect ta-c" name="colLnkType">
+								<td class="ta-l"><select class="tdLinkSelect ta-c select-#COL_LNK_TYPE#" name="colLnkType">
 										<option value="D">일반 컬럼</option>
 										<option value="O">명령 코드값</option>
 										<option value="S">연계 상태값</option>
 								</select></td>
-								<td class="ta-c"><input class="tdIsConnect" type="checkbox" name="colLnkYn" checked="checked" value="Y"></td>
+								<td class="ta-c"><input class="tdIsConnect check-#COL_LNK_YN#" type="checkbox" name="colLnkYn" value="Y"></td>
 								<td class="ta-l">#COMMENTS#</td>
 						</tbody>
 					</table>
@@ -177,12 +177,16 @@ div[class*='detail-'] {
 
 <script>
 	//KdiListGrid 시작 >>>>>
-	const grid = KdiListGrid('grid', '${pageUrl}tbl/columns.json');
+	const grid = KdiListGrid('grid', '${pageUrl}tbl/list.json');
 	const gridEnv = grid.env;
+	gridEnv.setPagePerRow(100);
 	gridEnv.setMapping({
 		'#COL_NAME#' : 'COLUMN_NAME',
 		'#COL_TYPE#' : 'DATA_TYPE',
-		'#COMMENTS#' : 'COMMENTS'
+		'#COMMENTS#' : 'COMMENTS',
+		'#COL_NM_MP#' : 'COL_NM_MP',
+		'#COL_LNK_TYPE#' : 'COL_LNK_TYPE',
+		'#COL_LNK_YN#' : 'COL_LNK_YN'
 	});
 	// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제 ( 안쓰려면 호출안하면 됨)
 	var errEvent = function(xhr) {
@@ -192,6 +196,20 @@ div[class*='detail-'] {
 		alert(xhr.responseJSON.errMsg);
 	}
 	grid.event.setErrEvent(errEvent);
+	grid.event.setPostEvent(function() {
+		$('.check-Y').prop('checked', true);
+		$('.select-D').val('D').prop('selected', true);
+		$('.select-O').val('O').prop('selected', true);
+		$('.select-S').val('S').prop('selected', true);
+		// 컬럼정보까지 불러와졌으면 쿼리생성관련 이벤트 적용
+
+		// 연계 여부 변동시 이벤트 등록
+		$('form input[name="colLnkYn"]').change(fn_make_lnk_qry);
+		$('form select[name="colLnkType"]').change(fn_make_lnk_qry);
+		$('form input[name="colNmMp"]').keyup(fn_make_lnk_qry);
+
+		fn_make_lnk_qry();
+	});
 
 	gridEnv.loading.enable();
 	gridEnv.nodata.enable();
@@ -231,16 +249,29 @@ div[class*='detail-'] {
 			$('#flagTypeInputQuery').val(flagQuery);
 		}
 	};
+	const fn_child_grid = function() {
+		// 파라미터 JSON포맷
+		let paramData = {
+			'svcLnkId' : $('#SVC_LNK_ID').val(),
+			'dsNm' : $('#DS_NM').val(),
+			'schemaName' : $('#SCH_NM').val(),
+			'tableName' : $('#TBL_NM').val()
+		//{svcLnkId=TEST001, dsNm=PPS@0.151, schemaName=, tableName=}
+		};
+
+		grid.search(1, paramData);
+	};
 	// 페이지 기본 정보 불러온 다음 해야할 업무 순서 정보 
-	const postEvent = [ fn_load_flag_type, detail_display_select.select,
-			fn_post_event_set_flag_query ];
+	const postEvent = [ fn_data_source_load, fn_load_flag_type,
+			detail_display_select.select, fn_post_event_set_flag_query,
+			fn_child_grid ];
 
 	$(document).ready(function() {
-		// 데이터 소스명 불러오는 기능 호출
-		fn_data_source_load();
-
+		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
+		grid.ready();
 		const pageLoader = fn_modify_page_load('연계서비스', '테이블 정보', postEvent);
 		pageLoader.setPreviouParam($('input[name="svcId"]').serialize());
+		pageLoader.setChildTable('.child_row');
 
 		// 크론탭 가이드 >>>
 		$(".guide-icon").on({
@@ -253,16 +284,10 @@ div[class*='detail-'] {
 		});
 		// 크론탭 가이드 <<<
 
-		// 검색 준비가 된 시점으로 최소 document 준비된 시점에 호출되어야 한다.
-		grid.ready();
-
-		// 파라미터 JSON포맷
-		let paramData = {
-			'dsNm' : $('#DS_NM').val(),
-			'schemaName' : $('#SCH_NM').val(),
-			'tableName' : $('#TBL_NM').val()
-		};
-
-		grid.search(1, paramData);
 	});
+
+	// 연계 데이터 감지 방법 변동시 이벤트 등록
+	$('input[name="flagType"]').change(fn_make_lnk_qry);
+	//연계플래그 input 입력 시 조회쿼리 TEXT로 적용되는 함수
+	$('#flagTypeInputQuery, #flagTypeInputWhere').on('input', fn_make_lnk_qry);
 </script>

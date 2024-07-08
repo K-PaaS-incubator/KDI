@@ -196,14 +196,7 @@ div[class*='detail-'] {
 	gridEnv.nodata.enable();
 	grid.event.setPostEvent(function() {
 		// 연계 여부 변동시 이벤트 등록
-		$('form input[name="colLnkYn"]').change(function() {
-			if (this.checked) {
-				$(this).attr('value', 'Y');
-			} else {
-				$(this).attr('value', 'N');
-			}
-			fn_make_lnk_qry();
-		});
+		$('form input[name="colLnkYn"]').change(fn_make_lnk_qry);
 		$('form select[name="colLnkType"]').change(fn_make_lnk_qry);
 		$('form input[name="colNmMp"]').keyup(fn_make_lnk_qry);
 
