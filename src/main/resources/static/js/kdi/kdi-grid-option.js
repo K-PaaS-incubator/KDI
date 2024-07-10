@@ -88,7 +88,7 @@ const fn_input_box_display_event = function(dtlName, dtlMapping) {
 	};
 	const _fn_select = function() {
 		$('div[class*="detail-"]').css('display', 'none');
-		if (!_dtlMapping[$('[name="' + _dtlName + '"]')]) {
+		if (!_dtlMapping[$('[name="' + _dtlName + '"]').val()]) {
 			return;
 		}
 		$('.detail-' + _dtlMapping[$('[name="' + _dtlName + '"]').val()]).css('display', 'block');

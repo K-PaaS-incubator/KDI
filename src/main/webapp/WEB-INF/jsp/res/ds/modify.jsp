@@ -81,7 +81,7 @@ div[class*='detail-'] {
 		mariadb : '',
 	};
 	const fn_change_ds_title = function() {
-		const dsType = $('#DS_TYPE').val();
+		const dsType = $('#DS_TYPE').val() || '';
 		if ('oracle' == dsType) {
 			const dsTitle = $('#ORACLE_CON_TYPE option:selected').text();
 			$('#DS_TITLE').text(dsTitle);
@@ -89,9 +89,22 @@ div[class*='detail-'] {
 		}
 		$('#DS_TITLE').text('데이터베이스명');
 	};
+	const fn_ora_con_type_sel = function() {
+		var dsType = $('select[name="dsType"]').val() || '';
+		if ('oracle' != dsType) {
+			return;
+		}
+		var dsUrl = $('input[name="dsUrl"]').val();
+		var dsSid = $('input[name="dsSid"]').val();
+		var oraConTypeVal = dsUrl.substr(dsUrl.lastIndexOf(dsSid) - 1, 1);
+		$('select[name="oracleConType"]').val(oraConTypeVal).prop('selected', true);
+
+	}
+	const fn_ds_type_sel = fn_input_box_display_event('dsType', dsTypeMapping);
+	const fn_page_load_post_event = [ fn_ora_con_type_sel,
+			fn_ds_type_sel.select, fn_change_ds_title ];
 	$(document).ready(function() {
-		fn_modify_page_load('데이터소스', '데이터소스');
-		fn_input_box_display_event('dsType', dsTypeMapping).select();
+		fn_modify_page_load('데이터소스', '데이터소스', fn_page_load_post_event);
 		fn_change_ds_title();
 	});
 
