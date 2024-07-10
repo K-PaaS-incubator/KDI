@@ -194,9 +194,9 @@
 		
 		// 데이터 Load과정에서 에러 발생시 이벤트 정의 예제
 		var errEvent = function(xhr) {
-			/* console.log('statusCode:' + xhr.statusCode);
+			console.log('statusCode:' + xhr.statusCode);
 			console.log('responseJSON:' + xhr.responseJSON.state);
-			console.log('responseJSON:' + xhr.responseJSON.errMsg); */
+			console.log('responseJSON:' + xhr.responseJSON.errMsg);
 			alert(xhr.responseJSON.errMsg);
 		}
 		// 안쓰려면 호출안하면 됨
